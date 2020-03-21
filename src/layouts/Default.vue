@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="layout container">
     <header class="header">
       <strong>
         <g-link to="/">{{ $static.metadata.siteName }}</g-link>
@@ -29,12 +29,12 @@ body {
   line-height: 1.5;
 }
 
-.layout {
-  max-width: 760px;
+/* .layout {
+  max-width: 960px;
   margin: 0 auto;
   padding-left: 20px;
   padding-right: 20px;
-}
+} */
 
 .header {
   display: flex;

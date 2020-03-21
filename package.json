@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@gridsome/vue-remark": "^0.1.10",
+    "buefy": "^0.8.13",
     "gridsome": "^0.7.0"
   }
 }
