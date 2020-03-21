@@ -1,4 +1,4 @@
-# # Combat Covid 
+# Combat Covid 
 
 ## Platform to facilitate the replication of useful covid-19 related equipment developed by communities around the world.
 ### Technology stack: GraphQL, Apollo, Vuejs, Gridsome
