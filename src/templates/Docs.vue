@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout class="content">
     <!-- <h1>{{ $page.documentation.title }}</h1>
     <p class="intro">{{ $page.documentation.excerpt }}</p> -->
     <VueRemarkContent />
