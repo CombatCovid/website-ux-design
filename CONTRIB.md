@@ -1,10 +1,10 @@
 # How to contribute?
-If you can contribute then:
-  - Join the [chat](https://discord.gg/HaXuRQ5) if you decide to contribute
+  - Check the different ways in you can help 👇 
+  - Join the [chat](https://discord.gg/HaXuRQ5) 
   - Give us your username in github to add you to the organization
 
 
-## Development
+## Help in Development
 **Technology stack**: GraphQL, Apollo, Vuejs, Gridsome
 
 Are you experienced with this technology stack? 
@@ -15,7 +15,7 @@ Do know people experienced with this stack?
 - [ ] Lead engineers and developers currently working on initiatives that provide minimum structure of equipment documentation
 - [ ] People that want to help out with translation and documentation
 
-## Help us find designs that have been used and operating
+## Find designs that have been used and operating
 - Open an issue and point to the source
 
 ## Document hardware designs and source files using this structure:
