@@ -1,4 +1,7 @@
 # How to contribute?
+  - Join the githuborganization start working directly on repos inside the github organization
+  - Join the [chat](https://discord.gg/HaXuRQ5) if you decide to contribute
+
 ## Development
 Are you experienced with this stack, or know people experienced with this stack?
 - [x] Designer(s) with frontend backend experience
@@ -12,13 +15,14 @@ Are you experienced with this stack, or know people experienced with this stack?
 
 ## Document hardware designs and source files using this structure:
 Can you help out with technical documentation? Here are several things you can do.
-- Find one of the models online ([here are some examples](https://www.appropedia.org/Open_source_ventilator) )
+- Find one of the models online ([here are some examples](https://www.appropedia.org/Open_source_ventilator))
+- Open an issue mentioning that you are documenting a specific model
 - Make a repo and structure it considering the following folders:
   - `content/docs` folder subfolder for documentation. (Here we can make guides, usage etc.) This can help us later on to present the content in a nice documentation website.
   - `src/` folder for source files, stls, etc
   - Make a simple readme to give context
-To list the project under the github organization
-  - [Give your username in the chat]()
+- List the project under the github organization
+  - [Provide your repo in the chat](https://discord.gg/HaXuRQ5)
 
 ## Make replication guides of the hardware above
 ## Make translations of the guides
