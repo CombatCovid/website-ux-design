@@ -1,6 +1,5 @@
 # Combat Covid 
 ## Easy to find hardware designs to replicate and combat covid19 around the world
-- Help me! I am a just designer with some frontend experience
 - 👉 Check the [contributing guidelines](https://github.com/CombatCovid/SPA-website/blob/develop/CONTRIB.md)
 - 👉 [Join the chat](https://discord.gg/HaXuRQ5)
 - Take a look at the [project board](https://github.com/CombatCovid/SPA-website/projects/2?fullscreen=true)
