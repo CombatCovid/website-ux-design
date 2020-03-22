@@ -5,7 +5,10 @@ If you can contribute then:
 
 
 ## Development
-Are you experienced with this stack, or know people experienced with this stack?
+**Technology stack**: GraphQL, Apollo, Vuejs, Gridsome
+
+Are you experienced with this technology stack? 
+Do know people experienced with this stack?
 - [x] Designer(s) with frontend backend experience
 - [ ] Backend developer(s) with expertise in GraphQL and apollo
 - [ ] Frontend developer(s) experienced with Vuejs and apollo

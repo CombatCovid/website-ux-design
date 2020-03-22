@@ -6,7 +6,7 @@
 - Take over a feature in the issues
 - Open a new issue
 
-**Technology stack**: GraphQL, Apollo(?), Vuejs, Gridsome
+**Technology stack**: GraphQL, Apollo, Vuejs, Gridsome
 
 ## Why doing this and what is the problem ?
 Around the world many initiatives are poping up to mitigate the shortage of equipment and accesories to treat covid19.
