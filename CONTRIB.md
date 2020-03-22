@@ -1,6 +1,8 @@
 # How to contribute?
-  - Join the githuborganization start working directly on repos inside the github organization
+If you can contribute then:
   - Join the [chat](https://discord.gg/HaXuRQ5) if you decide to contribute
+  - Give us your username in github to add you to the organization
+
 
 ## Development
 Are you experienced with this stack, or know people experienced with this stack?
