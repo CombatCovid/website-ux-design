@@ -1,7 +1,12 @@
 # Combat Covid 
+## Easy to find and replicate hardware designs to combat covid19 around the world
+- Help me! I am a just designer with some frontend experience
+- 👉 [Join the chat](https://discord.gg/HaXuRQ5)
+- Take a look at the [project board](https://github.com/CombatCovid/SPA-website/projects/2?fullscreen=true)
+- Comment on issues
+- Open a new issue
 
-## Platform to facilitate the replication of useful covid-19 related equipment developed by communities around the world.
-### Technology stack: GraphQL, Apollo, Vuejs, Gridsome
+**Technology stack**: GraphQL, Apollo(?), Vuejs, Gridsome
 
 ## People are currently developing many solutions and initiaves
 Around the world many initiatives are poping up to mitigate the shortage of equipment and accesories to treat covid19.
