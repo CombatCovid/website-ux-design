@@ -35,23 +35,8 @@ Many designs and groups working on them have been released in various ways and f
 
 
 ## Fastrack approach to facilitate design accesibility (1-2 weeks)
-- Use current github platform to capture guides
-  - If project leads generate a folder call `docs` containing files in numeric order we could capture those files in the repositories. If people want to do it with different languages the folder could have subfolders with specific notation EN/ES/NL..
+- Work with gridsome
 - Present list of projects with images and stars in github.
-
-
-## Using and deploying gridsome locally
-
-This is the project you get when you run `gridsome create new-project`.
-
-### 1. Install Gridsome CLI tool if you don't have
-
-`npm install --global @gridsome/cli`
-
-### 2. Create a Gridsome project
-
-1. `gridsome create my-gridsome-site` to install default starter
-2. `cd my-gridsome-site` to open the folder
-3. `gridsome develop` to start a local dev server at `http://localhost:8080`
-4. Happy coding 🎉🙌
-``
+- Use current github platform to capture repos
+  - Invite project leads to generate a folder call `docs` containing files in numeric order we could capture those files in the repositories. If people want to do it with different languages the folder could have subfolders with specific notation EN/ES/NL..
+- Present other relevant metadata that is relevant for this context (designs that are clinically validated, etc.)
