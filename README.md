@@ -27,6 +27,7 @@ Many designs and groups working on them have been released in various ways and f
   - Contact makers or facilities available to manufacture a design
 
 ## Help wanted for development
+Experienced with Gridsome is a plus!!
 - [x] Designer(s) with frontend backend experience
 - [ ] Backend developer(s) with expertise in GraphQL and apollo
 - [ ] Frontend developer(s) experienced with Vuejs and apollo
