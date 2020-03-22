@@ -14,7 +14,7 @@ Many designs and groups working on them have been released in various ways and f
 
 **The problem we are trying to solve**: The designs(data) being generated is not easy to find, is in different languages, and when it scales to many people participating it becomes a maze of content. Currently the formats, channels and threads are difficult to follow and understand due to the urgency of the moment. We would like to help to improve the process of finding, deciding, replicating and deploying these equipments. 
 
-## How we would like to contribute to this spontaneous response around the world
+## What we want to do with this solution
 - Improve accessibility of the current designs
 - Make easy for contributors to generate replication guides and protocols
   - Experts and lead engineers should be guiding on how to replicate and test this equipment
