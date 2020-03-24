@@ -4,5 +4,13 @@
 src/.temp
 node_modules
 dist
+
+# essential security
 .env
 .env.*
+
+# JetBrains IDEs
+.idea/
+
+# Keep clean this way?
+package-lock.json

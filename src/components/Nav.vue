@@ -1,20 +1,22 @@
 <template>
-  <b-navbar fixed-top="true" transparent="true" class="is-dark" wrapper-class="container">
+  <b-navbar transparent class="is-dark" wrapper-class="container">
     <template slot="brand">
      
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
+<!--        <p class="nav-title">Hardware Combats Covid</p>-->
         <img
-          src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
-          alt="Lightweight UI components for Vue.js based on Bulma"
+          src="/resources/images/combatcovid.png"
+          alt="Hardware Combats Covid"
         />
       </b-navbar-item>
     </template>
     <template slot="start">
-      <b-navbar-item href="#" tag="router-link" :to="{ path: '/' }">Home</b-navbar-item>
-      <b-navbar-item href="#">Documentation</b-navbar-item>
+      <b-navbar-item href="/" tag="router-link" :to="{ path: '/' }">Home</b-navbar-item>
+      <b-navbar-item href="documentation">Documentation</b-navbar-item>
+      <b-navbar-item href="demo-connect">Demo Connect</b-navbar-item>
       <b-navbar-dropdown label="Info">
-        <b-navbar-item href="#">About</b-navbar-item>
-        <b-navbar-item href="#">Contact</b-navbar-item>
+        <b-navbar-item href="about">About</b-navbar-item>
+        <b-navbar-item href="contact">Contact</b-navbar-item>
       </b-navbar-dropdown>
     </template>
 
@@ -36,3 +38,10 @@ export default {
   name: "Nav"
 };
 </script>
+
+<style scoped>
+  .nav-title {
+    color: darkgoldenrod;
+    margin-right: 20px;
+  }
+</style>
