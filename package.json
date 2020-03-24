@@ -7,8 +7,19 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
+    "@gridsome/source-graphql": "^0.1.0",
     "@gridsome/vue-remark": "^0.1.10",
     "buefy": "^0.8.13",
-    "gridsome": "^0.7.0"
-  }
+    "gridsome": "^0.7.0",
+    "graphql": "^14.6.0"
+  },
+  "devDependencies": {
+    "lerna": "^3.20.2",
+    "prettier": "^1.18.2"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ]
 }
