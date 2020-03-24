@@ -15,6 +15,17 @@ module.exports = {
         pathPrefix: '/docs', // Add route prefix. Optional
         template: './src/templates/Docs.vue' // Optional
       }
+    },
+    {
+      use: '@gridsome/source-graphql',
+      options: {
+        url: 'https://api.github.com/graphql',
+        fieldName: 'gitapi',
+        typeName: 'GitApi',
+        headers: {
+          Authorization: 'Bearer ' + process.env.CC_SINGLE_AUTH
+        }
+      },
     }
   ]
 }

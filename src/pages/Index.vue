@@ -1,12 +1,14 @@
 <template>
   <div>
-    <Carousel></Carousel>
     <Layout class="content">
       <!-- Learn how to use images here: https://gridsome.org/docs/images -->
+      <Carousel></Carousel>
 
       <h1>Hello, world!</h1>
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur excepturi labore tempore expedita, et iste tenetur suscipit explicabo! Dolores, aperiam non officia eos quod asperiores</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Pariatur excepturi labore tempore expedita, et iste tenetur suscipit explicabo!
+        Dolores, aperiam non officia eos quod asperiores</p>
 
       <p class="home-links">
         <a href="https://gridsome.org/docs/" target="_blank" rel="noopener">Gridsome Docs</a>
@@ -20,7 +22,7 @@
 import Carousel from "~/components/Carousel.vue";
 export default {
   metaInfo: {
-    title: "Hello, world!"
+    title: "Home"
   },
   components: {
     Carousel: Carousel

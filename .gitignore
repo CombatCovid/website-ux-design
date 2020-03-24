@@ -4,5 +4,10 @@
 src/.temp
 node_modules
 dist
+
+# essential security
 .env
 .env.*
+
+# JetBrains IDEs
+.idea/

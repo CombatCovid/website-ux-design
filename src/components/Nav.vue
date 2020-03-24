@@ -1,5 +1,5 @@
 <template>
-  <b-navbar fixed-top="true" transparent="true" class="is-dark" wrapper-class="container">
+  <b-navbar transparent class="is-dark" wrapper-class="container">
     <template slot="brand">
      
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
@@ -10,11 +10,12 @@
       </b-navbar-item>
     </template>
     <template slot="start">
-      <b-navbar-item href="#" tag="router-link" :to="{ path: '/' }">Home</b-navbar-item>
-      <b-navbar-item href="#">Documentation</b-navbar-item>
+      <b-navbar-item href="/" tag="router-link" :to="{ path: '/' }">Home</b-navbar-item>
+      <b-navbar-item href="documentation">Documentation</b-navbar-item>
+      <b-navbar-item href="demo-connect">Demo Connect</b-navbar-item>
       <b-navbar-dropdown label="Info">
-        <b-navbar-item href="#">About</b-navbar-item>
-        <b-navbar-item href="#">Contact</b-navbar-item>
+        <b-navbar-item href="about">About</b-navbar-item>
+        <b-navbar-item href="contact">Contact</b-navbar-item>
       </b-navbar-dropdown>
     </template>
 
