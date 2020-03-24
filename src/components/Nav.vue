@@ -3,10 +3,10 @@
     <template slot="brand">
      
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
-        <h2 class="nav-title">(Combat Covid)</h2>
+<!--        <p class="nav-title">Hardware Combats Covid</p>-->
         <img
-          src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
-          alt="Lightweight UI components for Vue.js based on Bulma"
+          src="/resources/images/combatcovid.png"
+          alt="Hardware Combats Covid"
         />
       </b-navbar-item>
     </template>
