@@ -3,6 +3,7 @@
     <template slot="brand">
      
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
+        <h2 class="nav-title">(Combat Covid)</h2>
         <img
           src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
           alt="Lightweight UI components for Vue.js based on Bulma"
@@ -37,3 +38,10 @@ export default {
   name: "Nav"
 };
 </script>
+
+<style scoped>
+  .nav-title {
+    color: darkgoldenrod;
+    margin-right: 20px;
+  }
+</style>

@@ -11,3 +11,6 @@ dist
 
 # JetBrains IDEs
 .idea/
+
+# Keep clean this way?
+package-lock.json

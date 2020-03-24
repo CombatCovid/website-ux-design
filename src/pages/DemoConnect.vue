@@ -5,9 +5,9 @@
       actual app will need to dynamically manage multiple connections,
       one at a time, for each tool repo.</p>
     <div class="query-content">
-      <div v-if="repoData">
+      <div v-if="$page">
         <h2>Repo owner = {{ $page.gitapi.repos.name }}</h2>
-        <div v-for="node in $page.gitapi.repos.repositories.nodes">
+        <div class="repo-list" v-for="node in $page.gitapi.repos.repositories.nodes">
           <p>Repo name is {{ node.name }}</p>
         </div>
       </div>
@@ -26,31 +26,21 @@ export default {
   },
   data: function () {
     return {
-      number: 3
-    }
-  },
-  context: {
-    number: 3,
-  },
-  created () {
-    this.$context.number = 3
-    console.log('context: ' + JSON.stringify(this.$context))
-    console.log ('mounted: ' + JSON.stringify(this.$page))
-  },
-  computed: {
-    repoData: function () {
-      return JSON.stringify (this.$page)
+      numberRepos: 3
     }
   }
 }
 </script>
 
+// this is hardwired, as api graphql requires a first: or last: value,
+// but I believe this isn't settable in Gridsome unless creating page
+// programatically, via createPage()
 <page-query>
-  query DemoConnect($number: Int)  {
+  query DemoConnect  {
     gitapi {
       repos: viewer {
         name
-        repositories(last: $number) {
+        repositories(last: 99) {
           nodes {
             name
           }
@@ -66,5 +56,8 @@ export default {
     padding: 15px;
     color: darkslategray;
     background-color: beige;
+  }
+  .repo-list {
+    padding: 2px 10px;
   }
 </style>
