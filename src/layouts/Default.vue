@@ -42,19 +42,31 @@
     padding-right: 20px;
   }
   /* these next because Buefy clears all expected formats -- probably need to define more, as needed */
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     color: darkblue;
     font-weight: bold;
-    display: block;
+    margin-bottom: 1em;
   }
   h1 {
     font-size: x-large;
-    line-height: 2em;
   }
   h2 {
     font-size: large;
   }
   h3 {
     font-size: medium;
+  }
+  h4 {
+    font-size: smaller;
+  }
+  ul {
+    list-style: disc;
+    margin-left: 2em;
+  }
+  li {
+    margin-bottom: 1em;
+  }
+  p {
+    margin-bottom: 1em;
   }
 </style>
