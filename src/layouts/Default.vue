@@ -1,9 +1,18 @@
 <template>
   <div>
     <Nav/>
-    <div class="layout container is-fullheight hero-body">
-      <slot/>
-    </div>
+    <!-- <v-container grid-list-xs> -->
+       <v-row
+      align="center"
+      class="mb-6"
+      justify="center"
+      >
+      
+      <v-layout column>
+          <slot/>
+      </v-layout>
+      </v-row>
+    <!-- </v-container> -->
   </div>
 </template>
 

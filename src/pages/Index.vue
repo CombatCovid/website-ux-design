@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Layout class="content">
+    <Layout class="">
       <!-- Learn how to use images here: https://gridsome.org/docs/images -->
-      <Carousel></Carousel>
+      <!-- <Carousel></Carousel> -->
 
       <h1>Hello, world!</h1>
 
@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import Carousel from "~/components/Carousel.vue";
+// import Carousel from "~/components/Carousel.vue";
 export default {
   metaInfo: {
     title: "Home"
   },
   components: {
-    Carousel: Carousel
+    // Carousel: Carousel
   }
 };
 </script>
