@@ -3,7 +3,7 @@
     <h1>Demo Connect</h1>
     <p>Demonstrate a single connection to GitHub API -- the
       actual app will need to dynamically manage multiple connections,
-      one at a time, for each tool repo.</p>
+      one at a time, for each participating Github account.</p>
     <div class="query-content">
       <div v-if="$page">
         <h2>Repo owner = {{ $page.gitapi.repos.name }}</h2>

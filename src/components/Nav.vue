@@ -14,6 +14,7 @@
       <b-navbar-item href="/" tag="router-link" :to="{ path: '/' }">Home</b-navbar-item>
       <b-navbar-item href="documentation">Documentation</b-navbar-item>
       <b-navbar-item href="demo-connect">Demo Connect</b-navbar-item>
+      <b-navbar-item href="repo-docs">Repo Docs</b-navbar-item>
       <b-navbar-dropdown label="Info">
         <b-navbar-item href="about">About</b-navbar-item>
         <b-navbar-item href="contact">Contact</b-navbar-item>
