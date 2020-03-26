@@ -1,8 +1,8 @@
 <template>
-    <v-toolbar app dark>
+    <v-app-bar app dark>
       <span class="hidden-sm-and-up">
-        <v-toolbar-side-icon @click="sidebar = !sidebar">
-        </v-toolbar-side-icon>
+        <v-app-bar-nav-icon @click="sidebar = !sidebar" src="navIcon">
+        </v-app-bar-nav-icon>
       </span>
       <v-toolbar-title >
         <router-link to="/" tag="span" style="cursor: pointer">
@@ -11,17 +11,17 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
-        <v-btn flat to="/demo-connect">List of designs</v-btn>
-        <v-btn flat to="/repo-docs">Doc demo</v-btn>
-        <v-btn flat to="/master-docs">Designs</v-btn>
-        <v-btn flat>
+        <v-btn text to="/demo-connect">List of designs</v-btn>
+        <v-btn text to="/repo-docs">Doc demo</v-btn>
+        <v-btn text to="/design-choices">Design Choices</v-btn>
+        <v-btn text>
           <g-link to="/Documentation">Documentation</g-link>
         </v-btn>
-        <v-btn flat>
+        <v-btn text>
           <g-link to="/About">About</g-link>
         </v-btn>
       </v-toolbar-items>
-    </v-toolbar>
+    </v-app-bar>
 </template>
 <static-query>
 query{
@@ -35,7 +35,12 @@ query{
 
 
 export default {
-  name: "Nav"
+  name: "Nav",
+  data: function () {
+    return {
+      navIcon: '/resources/images/combatcovid.png'
+    }
+  }
 };
 </script>
 

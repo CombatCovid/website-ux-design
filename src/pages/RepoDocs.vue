@@ -12,9 +12,7 @@
         <h2>Repo owner is {{ $page.gitapi.repos.name }}</h2>
         <div class="repo-list" v-for="node in $page.gitapi.repos.repositories.nodes" v-if="node.object">
           <p>Repo name is {{ node.name }}</p>
-          <VueMarkdown :source="node.object.text"
-                       :anchorAttributes="anchorParts"
-                       :prerender="cleanFormatMarkdown"/>
+          <VueMarkdown :source="node.object.text" :prerender="cleanFormatMarkdown"/>
         </div>
       </div>
       <div v-else>
@@ -34,26 +32,7 @@ export default {
   },
   data: function () {
     return {
-      anchorParts: {
-        target: '_blank',
-        rel: 'noreferrer noopener'
-      },
       numberRepos: 99
-    }
-  },
-  mounted () {
-    // this.tabTargetLinks ();
-  },
-  methods: {
-    cleanFormatMarkdown (lines) {
-      // in case we have other operations to do, like properly
-      // *todo* formatting included [name](url) links if VueMarkdown doesn't???
-      // *todo* but a more complete markdown converter may be appearing on the horizon.
-      return this.stripFrontMatter(lines)
-    },
-    stripFrontMatter: function (lines) {
-      // *todo* later some way that VueMarkdown handles this itself?
-      return lines.replace(/---\n.+---\n/gs, '')
     }
   },
   components: { VueMarkdown }
