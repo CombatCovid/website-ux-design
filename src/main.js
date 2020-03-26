@@ -4,7 +4,33 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import DefaultLayout from '~/layouts/Default.vue'
 
-
+const appMixins = {
+  methods: {
+    cleanFormatMarkdown (lines) {
+      // in case we have other operations to do, like properly
+      // *todo* formatting included [name](url) links if VueMarkdown doesn't???
+      // *todo* but a more complete markdown converter may be appearing on the horizon.
+      return this.fixMarkdownLinks(this.stripFrontMatter(lines))
+    },
+    stripFrontMatter: function (lines) {
+      // *todo* later some way that VueMarkdown handles this itself? Not apparently...
+      return lines.replace(/---\n.+---\n/gs, '')
+    },
+    fixMarkdownLinks (lines) {
+      return lines.replace(/[\[](.*)[\]]\s[[\(](.*)[\)]/,
+        '<a href="$2" target="_blank" rel="noreferrer noopener">$1</a>')
+    },
+    spaceDashes: function (str) {
+      return str.replace(/[-]/g, ' ')
+    },
+    titleCase: function (str) {
+      // thanks for saving time: https://www.freecodecamp.org/news/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27/
+      return str.toLowerCase().split(' ').map(function (word) {
+        return word.replace(word[0], word[0].toUpperCase());
+      }).join(' ');
+    }
+  }
+}
 
 export default function (Vue, { router, head, isClient, appOptions }) {
   // Set default layout as a global component
@@ -21,7 +47,7 @@ export default function (Vue, { router, head, isClient, appOptions }) {
     },
   };
 
-
+  Vue.mixin(appMixins)
   Vue.use(Vuetify)
 
   appOptions.vuetify = new Vuetify(opts);
