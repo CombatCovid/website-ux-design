@@ -45,8 +45,14 @@ export default {
 </script>
 
 <style scoped>
-  .nav-title {
-    color: darkgoldenrod;
-    margin-right: 20px;
-  }
+a{
+  color:white;
+  text-decoration: none;
+}
+a:visited{
+  color:white;
+}
+/* a:active{
+  background:red;
+} */
 </style>
