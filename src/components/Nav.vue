@@ -6,13 +6,14 @@
       </span>
       <v-toolbar-title >
         <router-link to="/" tag="span" style="cursor: pointer">
-          {{ $static.metaData.siteName }}
+          {{ $static.metadata.siteName }}
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
         <v-btn flat to="/demo-connect">List of designs</v-btn>
         <v-btn flat to="/repo-docs">Doc demo</v-btn>
+        <v-btn flat to="/master-docs">Designs</v-btn>
         <v-btn flat>
           <g-link to="/Documentation">Documentation</g-link>
         </v-btn>
@@ -24,7 +25,7 @@
 </template>
 <static-query>
 query{
-  metaData{
+  metadata{
     siteName
   }
 }
