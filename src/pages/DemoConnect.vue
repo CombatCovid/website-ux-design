@@ -7,7 +7,7 @@
     <div class="query-content">
       <div v-if="$page">
         <h2>Repo owner = {{ $page.gitapi.repos.name }}</h2>
-        <div class="repo-list" v-for="node in $page.gitapi.repos.repositories.nodes">
+        <div class="repo-list" v-for="node in $page.gitapi.repos.repositories.nodes" :key="node.name">
           <p>Repo name is {{ node.name }}</p>
         </div>
       </div>
