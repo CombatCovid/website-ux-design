@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar app dark>
+    <v-toolbar dark>
       <span class="hidden-sm-and-up">
         <v-toolbar-side-icon @click="sidebar = !sidebar">
         </v-toolbar-side-icon>
@@ -39,8 +39,14 @@ export default {
 </script>
 
 <style scoped>
-  .nav-title {
-    color: darkgoldenrod;
-    margin-right: 20px;
-  }
+a{
+  color:white;
+  text-decoration: none;
+}
+a:visited{
+  color:white;
+}
+/* a:active{
+  background:red;
+} */
 </style>
