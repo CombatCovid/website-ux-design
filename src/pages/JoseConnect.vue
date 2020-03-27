@@ -1,21 +1,17 @@
 <template>
   <Layout>
-    <h1>Demo Connect</h1>
-    <p>Demonstrate a single connection to GitHub API -- the
-      actual app will need to dynamically manage multiple connections,
-      one at a time, for each participating Github account.</p>
-    <div class="query-content">
-      <div v-if="$page">
-        <h2>Repo owner = {{ $page.gitapi.repos.name }}</h2>
-        <div class="repo-list" v-for="node in $page.gitapi.repos.repositories.nodes" :key="node.name">
-          <p>Repo name is {{ node.name }}</p>
-        </div>
-      </div>
-      <div v-else>
-        <h2>No data yet...</h2>
-      </div>
-    </div>
+  <v-container grid-list-md>
+    <v-layout row wrap>
+      <v-flex xs6 sm3 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
+        <v-card  hover>
+          <!-- <v-img p-5 class="white--text align-end" height="200px" :src="repo.nodes.names.entries[0]"></v-img> -->
+          <v-card-title v-text="repo.name"></v-card-title>
+          <!-- <v-card-subtitle v-text="product.description"></v-card-subtitle> -->
 
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
   </Layout>
 </template>
 
@@ -38,34 +34,24 @@ export default {
 <page-query>
   query Jurra1 {
   gitapi{
-    repos: organization(login:"CombatCovid"){
+    organization(login: "CombatCovid"){
       repositories(first:50){
         nodes{
           name
-          nameWithOwner
-#           docs: object(expression: "master:docs") {
-# #             ... on GitApi_Blob {
-#             ... on Blob {
-#               commitUrl
-#               text
-#             }
-#           }
-#           images: object(expression: "master:docs/img") {
-# #             ... on GitApi_Tree {
-#             ... on Tree {
-#               entries {
-#                 name
-#               }
-#             }
-#           }
-#           srcs: object(expression: "master:src") {
-# #             ... on GitApi_Tree {
-#             ... on Tree {
-#               entries {
-#                 name
-#               }
-#             }
-#           }
+          images: object(expression: "master:docs/img") {
+            ... on GitApi_Tree {
+              entries {
+                name
+              }
+            }
+          }
+          srcs: object(expression: "master:src") {
+            ... on GitApi_Tree {
+              entries {
+                name
+              }
+            }
+          }
         }
       }
     }
