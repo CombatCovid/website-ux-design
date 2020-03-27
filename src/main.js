@@ -30,7 +30,7 @@ const appMixins = {
       }).join(' ');
     },
     htmlSanitize: function (str) {
-      // be careful to include the g -- or miss bad htmls following an allowed one
+      // be careful to include the g -- or miss further bad htmls following an disallowed one
       const cleared = str.replace(/<(?!a|\/a|img\s*\/?)[^>]+>/g, "")
       // when testing
       // console.log('cleared: ' + cleared)
@@ -58,7 +58,5 @@ export default function (Vue, { router, head, isClient, appOptions }) {
   Vue.use(Vuetify)
 
   appOptions.vuetify = new Vuetify(opts);
-  // this next is very odd, but necessary at least for now; maybe always with Gridsome?
-  // document.body.setAttribute('data-app', true)
   Vue.component('Layout', DefaultLayout)
 }
