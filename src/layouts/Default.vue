@@ -1,25 +1,18 @@
 <template>
-  <div>
-    <Nav/>
-    <!-- <v-container grid-list-xs> -->
-       <v-row
-      align="center"
-      class="mb-6"
-      justify="center"
-      >
-      
-      <v-layout column>
-          <slot/>
-      </v-layout>
-      </v-row>
-    <!-- </v-container> -->
-  </div>
+  <v-app>
+      <Nav/>
+    <v-content>
+      <v-container grid-list-sm>
+        <slot/>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <static-query>
   query {
     metadata {
-      siteName
+              siteName
     }
   }
 </static-query>
@@ -36,6 +29,7 @@
 
 <style>
   @import 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.8.95/css/materialdesignicons.css';
+
   body {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
@@ -51,31 +45,39 @@
     padding-left: 20px;
     padding-right: 20px;
   }
+
   /* these next because Buefy clears all expected formats -- probably need to define more, as needed */
   h1, h2, h3, h4 {
     color: darkblue;
     font-weight: bold;
     margin-bottom: 1em;
   }
+
   h1 {
     font-size: x-large;
   }
+
   h2 {
     font-size: large;
   }
+
   h3 {
     font-size: medium;
   }
+
   h4 {
     font-size: smaller;
   }
+
   ul {
     list-style: disc;
     margin-left: 2em;
   }
+
   li {
     margin-bottom: 1em;
   }
+
   p {
     margin-bottom: 1em;
   }
