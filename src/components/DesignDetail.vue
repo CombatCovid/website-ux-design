@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>{{ summaryTitle }}</h2>
-    <img :src="summaryImage" width="100px"/>
+    <h3>Your Choice:  {{ summaryTitle }}</h3>
+    <img :src="summaryImage" width="240px"/>
     <div v-html="summaryText"></div>
   </div>
 </template>
@@ -22,13 +22,21 @@
           '<li>Otra pregunta que debemos tener en cuenta es la porosidad de las piezas impresas y las preocupaciones de seguridad que surgen de eso. El usuario tendrá la máscara en la cara, un lugar húmedo y cálido, un caldo de cultivo perfecto para los gérmenes. No podremos esterilizar estas máscaras de manera efectiva, por lo que podríamos estar causando aún más problemas. Y el virus supuestamente sobrevive más de 48 horas en los plásticos (o incluso 90 horas, según algunos otros estudios). Todos queremos ayudar a nuestros amigos y familiares, lo que significa que debemos ser más precavidos para evitar lastimarlos. Si insiste absolutamente en imprimir una máscara ahora, trátela como si fuera una máscara quirúrgica básica y no como un verdadero respirador con todas las protecciones que proporcionan. Una falsa sensación de seguridad puede ser muy peligrosa. Entiendo que estás tratando de ayudar, pero POR FAVOR, difunde esta información en tus grupos de impresión 3D.</li>\n' +
           '</ul>\n' +
           '</div>',
-        summaryImage: '/resources/image/example-summary-image.jpg'
+        rawImage: '/resources/image/Example.jpg'
       }
     },
     computed: {
+      // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
       summaryTitle: function () {
-
-        return this.titleCase(this.spaceDashes(this.rawTitle))
+        return this.titleCase(this.spaceDashes(this.htmlSanitize(this.rawTitle)))
+      },
+      // we only don't htmlSanitize here because it's static test html...
+      // but when it's Markdown, we must, until that's done in Vuex component
+      // summaryText: function () {
+      //   return this.htmlSanitize(this.rawText)
+      // },
+      summaryImage: function () {
+        return this.htmlSanitize(this.rawImage)
       }
     }
   }

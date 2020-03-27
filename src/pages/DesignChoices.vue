@@ -2,14 +2,15 @@
   <Layout>
     <h1>Design Choices</h1>
     <p>Initial mock, showing master-detail for Designs, inactive until real data.</p>
-    <p>This very preliminary display, with only horizontal layout, is not impossible
-      even with a small phone when put on its side, but we will do better.</p>
+    <p>This very preliminary display, only horizontal layout, which is not impossible
+      even with a small phone, when put on its side, but we will do better,
+      and of course in all formatted looks.</p>
     <p>Intent is to have normal list select -> summary pane for larger screens,
       but then for phones, vertical-down-opening summaries; or alternatively a
       menu-icon for select, then full-screen for summary.</p>
     <div class="master-detail">
       <v-container class="grey lighten-5">
-        <HorizontalMD/>
+          <HorizontalMD/>
       </v-container>
     </div>
 
