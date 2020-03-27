@@ -4,14 +4,14 @@
       <DesignList/>
     </v-col>
     <v-col>
-        <DesignDetail/>
-      </v-col>
+      <DesignDetail/>
+    </v-col>
   </v-row>
 </template>
 
 <script>
-  import DesignList from '@/components/DesignList'
-  import DesignDetail from '@/components/DesignDetail'
+  import DesignList from '~/components/DesignList'
+  import DesignDetail from '~/components/DesignDetail'
 
   export default {
     name: "HorizontalMD",
