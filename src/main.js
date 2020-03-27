@@ -28,6 +28,13 @@ const appMixins = {
       return str.toLowerCase().split(' ').map(function (word) {
         return word.replace(word[0], word[0].toUpperCase());
       }).join(' ');
+    },
+    htmlSanitize: function (str) {
+      // be careful to include the g -- or miss further bad htmls following an disallowed one
+      const cleared = str.replace(/<(?!a|\/a|img\s*\/?)[^>]+>/g, "")
+      // when testing
+      // console.log('cleared: ' + cleared)
+      return cleared
     }
   }
 }
@@ -51,6 +58,5 @@ export default function (Vue, { router, head, isClient, appOptions }) {
   Vue.use(Vuetify)
 
   appOptions.vuetify = new Vuetify(opts);
-
   Vue.component('Layout', DefaultLayout)
 }

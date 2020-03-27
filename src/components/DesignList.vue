@@ -1,13 +1,15 @@
 <template>
-  <v-list>
-    <v-list-item v-for="(design, i) in designs" :key="i">
-      <section :class="`hero is-large is-${design.color}`">
-        <div class="hero-body has-title-centered">
-          <h2 class="title">{{design.title}}</h2>
-        </div>
-      </section>
-    </v-list-item>
-  </v-list>
+  <div>
+    <h3>Available Designs</h3>
+    <v-list>
+      <v-list-item v-for="(design, i) in designs" :key="i">
+        <h2 class="choice-title" style="cursor: pointer" @click="select(i)">{{design.title}}</h2>
+      </v-list-item>
+    </v-list>
+    <v-snackbar v-model="snackbar" :timeout="snackTimeout" :top="true" color="blue">
+    {{ snackMessage }}
+    </v-snackbar>
+  </div>
 </template>
 
 <script>
@@ -20,12 +22,27 @@
           {title: 'Design 3', color: 'success', summary: 'Design 3 summary'},
           {title: 'Design 4', color: 'warning', summary: 'Design 4 summary'},
           {title: 'Design 5', color: 'danger', summary: 'Design 5 summary'}
-        ]
+        ],
+        snackbar: false,
+        snackMessage: 'You chose a Design...',
+        snackTimeout: 2500
+      }
+    },
+    methods: {
+      select: function (index) {
+        // if we do select by props, won't need this
+        // alert('will soon select: ' + index)
+        this.snackbar = true
       }
     }
   }
 </script>
 
-<style lang="sass" scoped>
+<style scoped>
+
+  .choice-title {
+    font-size: smaller;
+    padding: 0 1em;
+  }
 
 </style>

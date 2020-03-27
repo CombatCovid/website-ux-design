@@ -7,12 +7,15 @@
       A master-detail layout to view one listed doc at a time may or not be needed for performance
       and feel. The actual app will need to dynamically manage multiple connections, one at a time,
       for each participating Github account.</p>
+    <p>N.b. at the moment, there's a proving test at the bottom of the summary - will go away.</p>
     <div class="query-content">
       <div v-if="$page">
-        <h2>Repo owner is {{ $page.gitapi.repos.name }}</h2>
+        <h2>Repo owner is {{ htmlSanitize($page.gitapi.repos.name) }}</h2>
         <div class="repo-list" v-for="node in $page.gitapi.repos.repositories.nodes" v-if="node.object">
-          <p>Repo name is {{ node.name }}</p>
-          <VueMarkdown :source="node.object.text" :prerender="cleanFormatMarkdown"/>
+          <p>Repo name is {{ htmlSanitize(node.name) }}</p>
+          <!-- _Always_ sanitize what could contain html, as Markdown can -->
+          <!-- normal: <VueMarkdown :source="htmlSanitize(node.object.text)" :prerender="cleanFormatMarkdown"/>-->
+          <VueMarkdown :source="testSummaryText(node.object.text)" :prerender="cleanFormatMarkdown"/>
         </div>
       </div>
       <div v-else>
@@ -24,24 +27,35 @@
 </template>
 
 <script>
-import VueMarkdown from 'vue-markdown'
+  import VueMarkdown from 'vue-markdown'
 
-export default {
-  metaInfo: {
-    title: 'Demo Connect'
-  },
-  data: function () {
-    return {
-      numberRepos: 99
-    }
-  },
-  components: { VueMarkdown }
-}
+  export default {
+    metaInfo: {
+      title: 'Demo Connect'
+    },
+    data: function () {
+      return {
+        numberRepos: 99
+      }
+    },
+    methods: {
+      // this will go out -- it's a test method for assuring img can pass through
+      // our htmlSanitize (summary proves links can), but not any other html
+      testSummaryText: function (mdText) {
+        return this.htmlSanitize(mdText +
+          'What follows is a test: <img src="/resources/image/Example.jpg"> ' +
+          'abc <badhtml xyz></badhtml>' +
+          'abd <otherbadhtml/>' +
+          'abe <thirdbadhtml>')
+      }
+    },
+    components: {VueMarkdown}
+  }
 </script>
 
 // this is hardwired, as api graphql requires a first: or last: value,
 // but I believe this isn't settable in Gridsome unless creating page
-// programatically, via createPage().
+// programatically, thus having a context, via createPage().
 <page-query>
 query RepoDocs {
   gitapi {
@@ -79,6 +93,7 @@ query RepoDocs {
     color: darkslategray;
     background-color: beige;
   }
+
   .repo-list {
     padding: 2px 10px;
   }
