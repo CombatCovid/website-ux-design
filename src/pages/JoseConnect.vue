@@ -4,9 +4,11 @@
     <v-layout row wrap>
       <v-flex xs6 sm3 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
         <v-card  hover>
-          <!-- <v-img p-5 class="white--text align-end" height="200px" :src="repo.nodes.names.entries[0]"></v-img> -->
+          <v-img p-5 class="white--text align-end" height="200px" src="https://raw.githubusercontent.com/CombatCovid/medical-shields-for-3d-printing/master/docs/img/Capture-design.JPG"></v-img>
           <v-card-title v-text="repo.name"></v-card-title>
-          <!-- <v-card-subtitle v-text="product.description"></v-card-subtitle> -->
+          <v-card-subtitle v-text="repo.nameWithOwner"></v-card-subtitle>
+          <!-- <v-card-subtitle v-text="repo.images.entries[0].n"></v-card-subtitle> -->
+
 
         </v-card>
       </v-flex>
@@ -22,7 +24,7 @@ export default {
   },
   data: function () {
     return {
-      numberRepos: 3
+      numberRepos: 3,
     }
   }
 }
@@ -34,24 +36,37 @@ export default {
 <page-query>
   query Jurra1 {
   gitapi{
-    organization(login: "CombatCovid"){
+    organization(login:"CombatCovid"){
       repositories(first:50){
         nodes{
           name
-          images: object(expression: "master:docs/img") {
+          nameWithOwner
+          docs: object(expression: "master:docs") {
             ... on GitApi_Tree {
               entries {
                 name
               }
             }
-          }
-          srcs: object(expression: "master:src") {
-            ... on GitApi_Tree {
-              entries {
-                name
-              }
+            ... on GitApi_Blob {
+              text
             }
-          }
+           }
+           images: object(expression: "master:docs/img") {
+             ... on GitApi_Tree {
+#             ... on Tree {
+               entries {
+                 name
+               }
+             }
+           }
+           srcs: object(expression: "master:src") {
+             ... on GitApi_Tree {
+#             ... on Tree {
+               entries {
+                 name
+               }
+             }
+           }
         }
       }
     }
