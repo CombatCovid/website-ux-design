@@ -2,11 +2,16 @@
   <Layout>
   <v-container grid-list-md>
     <v-layout row wrap>
-      <v-flex xs6 sm5 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
-        <v-card  hover>
-          <v-img 
+      <v-flex xs5 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
+        <v-card  hover min-height="350px" max-height="350px">
+          <v-img v-if="repo.images !== null"
             p-5 class="white--text align-end" height="200px" 
             :src="getImgUrl(repo.nameWithOwner, repo.images.entries[0].name)"
+          >  
+          </v-img>
+          <v-img v-else
+            p-5 class="white--text align-end" height="200px" 
+            src="https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png"
           >  
           </v-img>
           <v-card-title v-text="repo.name"></v-card-title>
@@ -31,7 +36,12 @@ export default {
   },
   methods: {
     getImgUrl: function(repoName, fileName){
+      if(fileName!== null){
         return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
+      }
+      else{
+        return "https://heavenly-holland.com/wp-content/uploads/2017/05/Vermeer03.jpg"
+      }
     }
   }
 }
@@ -44,7 +54,7 @@ export default {
   query Jurra1 {
   gitapi{
     organization(login:"CombatCovid"){
-      repositories(last:1){
+      repositories(first:50){
         nodes{
           name
           nameWithOwner
