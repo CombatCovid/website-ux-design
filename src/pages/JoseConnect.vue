@@ -10,7 +10,7 @@
           >  
           </v-img>
           <v-card-title v-text="repo.name"></v-card-title>
-          <v-card-subtitle v-text="getImgUrl(repo.nameWithOwner, repo.images.entries[1].name)"></v-card-subtitle>
+          <v-card-subtitle v-text="repo.description"></v-card-subtitle>
         </v-card>
       </v-flex>
     </v-layout>
@@ -48,6 +48,7 @@ export default {
         nodes{
           name
           nameWithOwner
+          description
           docs: object(expression: "master:docs") {
             ... on GitApi_Tree {
               entries {
