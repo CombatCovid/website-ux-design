@@ -2,14 +2,15 @@
   <Layout>
   <v-container grid-list-md>
     <v-layout row wrap>
-      <v-flex xs6 sm3 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
+      <v-flex xs6 sm5 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
         <v-card  hover>
-          <v-img p-5 class="white--text align-end" height="200px" src="https://raw.githubusercontent.com/CombatCovid/medical-shields-for-3d-printing/master/docs/img/Capture-design.JPG"></v-img>
+          <v-img 
+            p-5 class="white--text align-end" height="200px" 
+            :src="getImgUrl(repo.nameWithOwner, repo.images.entries[0].name)"
+          >  
+          </v-img>
           <v-card-title v-text="repo.name"></v-card-title>
-          <v-card-subtitle v-text="repo.nameWithOwner"></v-card-subtitle>
-          <!-- <v-card-subtitle v-text="repo.images.entries[0].n"></v-card-subtitle> -->
-
-
+          <v-card-subtitle v-text="getImgUrl(repo.nameWithOwner, repo.images.entries[1].name)"></v-card-subtitle>
         </v-card>
       </v-flex>
     </v-layout>
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+
 export default {
   metaInfo: {
     title: 'Demo Connect'
@@ -25,6 +27,11 @@ export default {
   data: function () {
     return {
       numberRepos: 3,
+    }
+  },
+  methods: {
+    getImgUrl: function(repoName, fileName){
+        return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
     }
   }
 }
@@ -37,7 +44,7 @@ export default {
   query Jurra1 {
   gitapi{
     organization(login:"CombatCovid"){
-      repositories(first:50){
+      repositories(last:1){
         nodes{
           name
           nameWithOwner
