@@ -1,8 +1,10 @@
 <template>
-  <Layout>
+  <Layout style="padding-top:70px;">
   <v-container grid-list-lg fluid>
-    <v-layout>
-      <v-flex xs5 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
+    <!-- <h1 align="center">#HardwareCombats.covid</h1> -->
+
+    <v-layout row wrap>
+      <v-flex xs12 md3 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
         <v-card  hover min-height="350px" max-height="350px">
           <v-img v-if="repo.images !== null"
             p-5 class="white--text align-end" height="200px" 
@@ -31,7 +33,12 @@ export default {
   },
   data: function () {
     return {
-      numberRepos: 3,
+      numberRepos: 3
+    }
+  },
+  mounted:function(){
+    return{
+      repos: this.$page.gitapi.organization.repositories.nodes
     }
   },
   methods: {
@@ -92,27 +99,6 @@ export default {
 }
 
 </page-query>
-<!--  query DemoConnect  {-->
-<!--    gitapi {-->
-<!--      repos: viewer {-->
-<!--        name-->
-<!--        repositories(last: 99) {-->
-<!--          nodes {-->
-<!--            name-->
-<!--          }-->
-<!--        }-->
-<!--      }-->
-<!--    }-->
-<!--  }-->
 
 <style scoped>
-  .query-content {
-    margin: 20px;
-    padding: 15px;
-    color: darkslategray;
-    background-color: beige;
-  }
-  .repo-list {
-    padding: 2px 10px;
-  }
 </style>
