@@ -2,9 +2,9 @@
   <v-app>
       <Nav/>
     <v-content>
-      <v-container grid-list-sm>
+      <v-row grid-list-sm align="center">
         <slot/>
-      </v-container>
+      </v-row>
     </v-content>
   </v-app>
 </template>

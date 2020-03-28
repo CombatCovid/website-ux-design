@@ -1,7 +1,7 @@
 <template>
   <Layout>
-  <v-container grid-list-md>
-    <v-layout row wrap>
+  <v-container grid-list-lg fluid>
+    <v-layout>
       <v-flex xs5 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
         <v-card  hover min-height="350px" max-height="350px">
           <v-img v-if="repo.images !== null"
