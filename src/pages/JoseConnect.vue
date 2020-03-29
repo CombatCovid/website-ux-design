@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <h1 align="center">#HardwareCombats.covid</h1>
+    <h1 class="horiz-center">#HardwareCombats.covid</h1>
     <v-container grid-list-lg fluid>
       <v-layout row wrap>
         <v-flex xs12 md3 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
@@ -57,27 +57,23 @@ export default {
 // but I believe this isn't settable in Gridsome unless creating page
 // programatically, via createPage()
 <page-query>
-  query Jurra1 {
+  query Jurra3 {
   gitapi{
-    organization(login:"CombatCovid"){
+    repos: organization(login:"CombatCovid"){
       repositories(first:50){
-        nodes{
+        nodes {
           name
           nameWithOwner
-          description
           docs: object(expression: "master:docs") {
             ... on GitApi_Tree {
-              entries {
-                name
+              folders: entries {
+                lang: name
+                ... FolderInfo
               }
-            }
-            ... on GitApi_Blob {
-              text
             }
            }
            images: object(expression: "master:docs/img") {
              ... on GitApi_Tree {
-#             ... on Tree {
                entries {
                  name
                }
@@ -85,7 +81,6 @@ export default {
            }
            srcs: object(expression: "master:src") {
              ... on GitApi_Tree {
-#             ... on Tree {
                entries {
                  name
                }
@@ -97,7 +92,25 @@ export default {
   }
 }
 
+fragment FolderInfo on GitApi_TreeEntry {
+    contents: object {
+      ... on GitApi_Tree {
+        files: entries {
+          name
+          object {
+            ...on GitApi_Blob {
+              isBinary
+              text
+            }
+          }
+        }
+      }
+    }
+  }
 </page-query>
 
 <style scoped>
+  .horiz-center {
+    margin: 0 auto;
+  }
 </style>
