@@ -1,10 +1,13 @@
 <template>
   <Layout>
+    <h1 class="horiz-center">#HardwareCombats.covid</h1>
     <v-container grid-list-lg fluid>
-      <h1 class="horiz-center">#HardwareCombats.covid</h1>
       <v-layout row wrap>
         <v-flex xs12 md3 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
-          <v-card hover min-height="350px" max-height="350px">
+          <v-card  
+            v-on:click="showContent(repo.name)" 
+            hover min-height="350px" max-height="350px"
+          >
             <v-img v-if="repo.images !== null"
                    p-5 class="white--text align-end" height="200px"
                    :src="getImgUrl(repo.nameWithOwner, repo.images.entries[0].name)"
@@ -42,17 +45,8 @@
         repos: this.$page.gitapi.organization.repositories.nodes
       }
     },
-    methods: {
-      getImgUrl: function (repoName, fileName) {
-        if (fileName !== null) {
-          return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
-        } else {
-          return "https://heavenly-holland.com/wp-content/uploads/2017/05/Vermeer03.jpg"
-        }
-      }
-    },
-    algoSearch: function () {
-
+    showContent(repoName){
+       return this.$router.push({ path: `/doc/${repoName}` })
     }
   }
 </script>
@@ -61,8 +55,8 @@
 // but I believe this isn't settable in Gridsome unless creating page
 // programatically, via createPage()
 <page-query>
-  query Algo1 {
-  gitapi{
+  query Jurra3 {
+  gitapi {
     organization(login:"CombatCovid"){
       repositories(first:50){
         nodes {
