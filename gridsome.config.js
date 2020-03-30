@@ -23,7 +23,7 @@ module.exports = {
         fieldName: 'gitapi',
         typeName: 'GitApi',
         headers: {
-          Authorization: 'Bearer ' + process.env.CC_SINGLE_AUTH
+          Authorization: 'Bearer ' + process.env.CC_SINGLE_AUTH // 'b1bb380b4bfdd7ed3d49d3389746d8cea9936f36' //
         }
       },
     }

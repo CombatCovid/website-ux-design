@@ -7,9 +7,12 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
+    "@algolia/client-search": "^4.1.0",
     "@gridsome/source-graphql": "^0.1.0",
     "@gridsome/vue-remark": "^0.1.10",
+    "algoliasearch": "^4.1.0",
     "babel-runtime": "^6.26.0",
+    "core-js": "^3.6.4",
     "gridsome": "^0.7.0",
     "vue-markdown": "^2.2.4",
     "vuetify": "^2.2.19"
