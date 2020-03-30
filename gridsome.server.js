@@ -29,7 +29,8 @@ module.exports = function (api) {
         path: `/doc/${doc.name}`,
         component: './src/templates/Doc.vue',
         context: {
-          id: doc.id
+          id: doc.id,
+          name: doc.name
         }
       })
     }
