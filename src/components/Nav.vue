@@ -11,17 +11,17 @@
           <span class="bar-title">{{ $static.metadata.siteName }}</span>
         </router-link>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
+<!--      <v-spacer></v-spacer>-->
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn text to="/jose-connect">Jurra Connect</v-btn>
         <v-btn text to="/finder">Finder</v-btn>
 <!--        <v-btn text to="/demo-connect">List of designs</v-btn>-->
 <!--        <v-btn text to="/repo-docs">Doc Demo</v-btn>-->
         <v-btn text to="/design-choices">Viewer</v-btn>
-        <v-btn text to="/algo-build">Build</v-btn>
         <v-btn text>
           <g-link to="/Documentation">Documentation</g-link>
         </v-btn>
+        <v-spacer></v-spacer>
         <v-btn text>
           <g-link to="/About">About</g-link>
         </v-btn>
