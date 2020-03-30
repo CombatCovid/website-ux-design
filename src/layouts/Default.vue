@@ -1,9 +1,11 @@
 <template>
   <v-app>
-      <Nav/>
-    
+    <Nav/>
+    <v-content>
+      <v-container>
         <slot/>
- 
+      </v-container>
+    </v-content>
   </v-app>
 </template>
 
