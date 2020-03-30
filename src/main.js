@@ -2,6 +2,8 @@
 // The Client API can be used here. Learn more: gridsome.org/docs/client-api
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import InstantSearch from 'vue-instantsearch'
+
 import DefaultLayout from '~/layouts/Default.vue'
 
 const appMixins = {
@@ -56,6 +58,7 @@ export default function (Vue, { router, head, isClient, appOptions }) {
 
   Vue.mixin(appMixins)
   Vue.use(Vuetify)
+  Vue.use(InstantSearch)
 
   appOptions.vuetify = new Vuetify(opts);
   Vue.component('Layout', DefaultLayout)

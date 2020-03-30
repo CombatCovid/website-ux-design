@@ -14,10 +14,11 @@
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn text to="/jose-connect">Jurra Connect</v-btn>
-        <v-btn text to="/algo-build">Algo Build</v-btn>
-        <v-btn text to="/demo-connect">List of designs</v-btn>
-        <v-btn text to="/repo-docs">Doc demo</v-btn>
-        <v-btn text to="/design-choices">Design Choices</v-btn>
+        <v-btn text to="/finder">Finder</v-btn>
+<!--        <v-btn text to="/demo-connect">List of designs</v-btn>-->
+<!--        <v-btn text to="/repo-docs">Doc Demo</v-btn>-->
+        <v-btn text to="/design-choices">Viewer</v-btn>
+        <v-btn text to="/algo-build">Build</v-btn>
         <v-btn text>
           <g-link to="/Documentation">Documentation</g-link>
         </v-btn>

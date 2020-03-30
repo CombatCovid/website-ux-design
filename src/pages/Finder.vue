@@ -1,13 +1,12 @@
 <template>
   <Layout>
-    <h1 class="horiz-center">Index Builder</h1>
-    <div class="horiz-center">
-      <v-btn @click="algoIndex">Build</v-btn>
-      <v-btn @click="algoSearch">Search</v-btn>
-    </div>
+    <h1 class="horiz-center">Finder <span class="low-attention">(it's not really yet)</span></h1>
+
+    <!--  Not even a Vuetify format yet...  -->
     <div class="horiz-center searchbox">
       <ais-instant-search :index-name="indexName" :search-client="searchClient">
-        <ais-search-box />
+        <ais-search-box  reset-titled="Reset" :refresh="true" />
+        <ais-configure :hitsPerPage="8" />
         <ais-hits>
           <div slot="item" slot-scope="{ item }">
             <h2>{{ item.name }}</h2>
@@ -72,77 +71,6 @@
           return "https://heavenly-holland.com/wp-content/uploads/2017/05/Vermeer03.jpg"
         }
       },
-      algoIndex: function () {
-
-        const appId = process.env.GRIDSOME_ALGO_APPLICATION_ID
-        const adminKey = process.env.GRIDSOME_ALGO_ADMIN_KEY
-        const indexName = process.env.GRIDSOME_ALGO_SEARCH_INDEX
-        // console.log('algoIndex appId: ' + appId + ', type: ' + typeof appId)
-        // console.log('algoIndex adminKey: ' + adminKey + ', type: ' + typeof adminKey)
-        console.log('algoIndex index: ' + process.env.GRIDSOME_ALGO_SEARCH_INDEX)
-        const client = algoliasearch(appId, adminKey);
-        const index = client.initIndex(indexName);
-
-        const objects = [
-          {
-            objectID: 1,
-            name: "Foo"
-          },
-          {
-            objectID: 2,
-            name: "Combat with Hardware"
-          },
-          {
-            objectID: 3,
-            name: "combat with hardware"
-          }
-        ]
-
-        index
-          .saveObjects(objects)
-          .then(({objectIDs}) => {
-            console.log(objectIDs)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-
-        index
-          .search("Fo")
-          .then(({ hits }) => {
-            console.log(hits);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      },
-      algoSearch: function () {
-
-        const appId = process.env.GRIDSOME_ALGO_APPLICATION_ID
-        const adminKey = process.env.GRIDSOME_ALGO_ADMIN_KEY
-        const indexName = process.env.GRIDSOME_ALGO_SEARCH_INDEX
-
-        const client = algoliasearch(appId, adminKey);
-        const index = client.initIndex(indexName);
-
-        index
-          .search("Fo")
-          .then(({ hits }) => {
-            console.log(hits)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-
-        index
-          .search("Hardw")
-          .then(({ hits }) => {
-            console.log('rdw hits: ' + JSON.stringify(hits))
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      }
     }
   }
 </script>
@@ -209,6 +137,9 @@ fragment FolderInfo on GitApi_TreeEntry {
     text-align: center;
   }
   .searchbox {
-    margin: 10px;
+    margin: 15px;
+  }
+  .low-attention {
+    font-size: x-small;
   }
 </style>
