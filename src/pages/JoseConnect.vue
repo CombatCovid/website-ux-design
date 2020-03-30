@@ -38,18 +38,11 @@ export default {
       numberRepos: 3
     }
   },
-  mounted:function(){
-    return{
-      repos: this.$page.gitapi.organization.repositories.nodes
-    }
-  },
+
   methods: {
     getImgUrl: function(repoName, fileName){
       if(fileName!== null){
         return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
-      }
-      else{
-        return "https://heavenly-holland.com/wp-content/uploads/2017/05/Vermeer03.jpg"
       }
     },
     showContent(repoName){
