@@ -5,12 +5,34 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-module.exports = function (api) {
-  api.loadSource(({ addCollection }) => {
-    // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
-  })
 
-  api.createPages(({ createPage }) => {
-    // Use the Pages API here: https://gridsome.org/docs/pages-api/
+
+module.exports = function (api) {
+  api.createPages(async ({ graphql, createPage }) => {
+    const { data } = await graphql(`{
+      gitapi {
+        organization(login: "CombatCovid") {
+          repositories(first:50) {
+            nodes {
+              id
+              name
+            }
+          }
+        }
+      }
+    }`)
+
+    console.log( data.gitapi.organization.repositories.nodes )
+
+    for ( const doc of data.gitapi.organization.repositories.nodes ) {
+      createPage({
+        path: `/doc/${doc.name}`,
+        component: './src/templates/Doc.vue',
+        context: {
+          id: doc.id,
+          name: doc.name
+        }
+      })
+    }
   })
 }
