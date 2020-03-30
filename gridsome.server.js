@@ -5,8 +5,6 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-
-
 module.exports = function (api) {
   api.createPages(async ({ graphql, createPage }) => {
     const { data } = await graphql(`{
@@ -22,14 +20,15 @@ module.exports = function (api) {
       }
     }`)
 
-    console.log( data.gitapi.organization.repositories.nodes )
+    // console.log( data.gitapi.organization.repositories.nodes )
 
     for ( const doc of data.gitapi.organization.repositories.nodes ) {
       createPage({
         path: `/doc/${doc.name}`,
         component: './src/templates/Doc.vue',
         context: {
-          id: doc.id
+          id: doc.id,
+          name: doc.name
         }
       })
     }

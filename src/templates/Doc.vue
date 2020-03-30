@@ -1,6 +1,6 @@
 <template>
-    <Layout>
-        <h1>Hello world</h1>
+    <Layout style="padding-top:200px;">
+        <h1>{{$context.name}}</h1>
     </Layout>
 
 </template>
