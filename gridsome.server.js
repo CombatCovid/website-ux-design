@@ -8,33 +8,30 @@
 
 
 module.exports = function (api) {
-  api.loadSource(actions => {
-    actions.getCollection('GitApi')
-  })
-
   api.createPages(async ({ graphql, createPage }) => {
     const { data } = await graphql(`{
-      gitapi{
-        organization(login: "CombatCovid"){
-          repositories(first:50){
-            nodes{
+      gitapi {
+        organization(login: "CombatCovid") {
+          repositories(first:50) {
+            nodes {
               id
               name
+            }
           }
         }
       }
     }`)
 
-    console.log(`data is: ${data.gitapi.organization.repositories.nodes.name}`);
+    console.log( data.gitapi.organization.repositories.nodes )
 
-    data.gitapi.organization.repositories.forEach(({ nodes }) => {
+    for ( const doc of data.gitapi.organization.repositories.nodes ) {
       createPage({
-        path: `/docs/${nodes}`,
-        component: './src/templates/Docs.vue',
+        path: `/doc/${doc.name}`,
+        component: './src/templates/Doc.vue',
         context: {
-          id: nodes.id
+          id: doc.id
         }
       })
-    })
+    }
   })
 }
