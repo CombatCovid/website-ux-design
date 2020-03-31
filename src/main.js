@@ -19,6 +19,8 @@ const appMixins = {
       return lines.replace(/---\n.+---\n/gs, '')
     },
     fixMarkdownLinks (lines) {
+      // *todo* add to this alternate fix for in-folder local images,
+      // which also don't get parsed
       return lines.replace(/[\[](.*)[\]]\s[[\(](.*)[\)]/,
         '<a href="$2" target="_blank" rel="noreferrer noopener">$1</a>')
     },

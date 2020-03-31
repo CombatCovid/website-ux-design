@@ -1,11 +1,18 @@
 <template>
   <Layout>
-    <h1 class="horiz-center">Finder <span class="low-attention">(it's not really yet)</span></h1>
+    <h1 class="horiz-center">Finder <span class="low-attention">(it's not fully yet)</span></h1>
 
     <!--  Not even a Vuetify format yet...  -->
     <div class="horiz-center searchbox">
       <ais-instant-search :index-name="indexName" :search-client="searchClient">
-        <ais-search-box  reset-titled="Reset" :refresh="true" />
+        <ais-configure
+                :hitsPerPage="3"
+        />
+<!--        :distinct="true"-->
+<!--        :analytics="false"-->
+<!--        :enable-personalization.camel="true"-->
+        <ais-powered-by/> <!-- *todo* this is required until on a paid plan -->
+        <ais-search-box  reset-titled="Reset" :refresh="false" />
         <ais-configure :hitsPerPage="8" />
         <ais-hits>
           <div slot="item" slot-scope="{ item }">

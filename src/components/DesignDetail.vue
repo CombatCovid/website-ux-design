@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Design is {{ design }}</h2>
+    <h2>Design is {{ summaryTitle }}</h2>
     <img :src="summaryImage" width="240px"/>
     <VueMarkdown :source="summaryText" :prerender="cleanFormatMarkdown"/>
   </div>
@@ -22,8 +22,11 @@
     },
     computed: {
       // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
-      summaryTitle: function () {
-        return this.titleCase(this.spaceDashes(this.htmlSanitize(this.rawTitle)))
+      repoName: function () {
+        return this.designRepo.name
+      },
+      summaryTitle:  function () {
+        return this.titleCase(this.spaceDashes(this.htmlSanitize(this.repoName)))
       },
       repos: function () {
         return this.$static.gitapi.organization.repositories.nodes
@@ -33,7 +36,7 @@
       },
       imagePath: function () {
         return 'https://raw.githubusercontent.com/CombatCovid/' +
-          this.design +
+          this.repoName +
           '/master/docs/img' +'/'
       },
       summaryImage: function () {
@@ -41,8 +44,8 @@
       },
       designRepo: function () {
         let dRepo = this.repos[3]
-
-        if (this.design === "") {
+console.log('design: ' + this.design)
+        if (typeof this.design === "undefined") {
           dRepo = this.repos[4]
         }
         else {
