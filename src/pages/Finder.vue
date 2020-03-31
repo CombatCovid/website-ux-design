@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <h1 class="horiz-center">Finder</h1>
-    <p class="horiz-center low-attention">(preview)</p>
+    <p class="horiz-center low-attention">(search preview)</p>
 
     <!--  Not even a Vuetify format yet...  -->
     <div class="horiz-center searchbox">
@@ -62,9 +62,6 @@
       }
     },
     mounted: function () {
-      console.log('algo application id: ' + '|' +process.env.GRIDSOME_ALGO_APPLICATION_ID + '|')
-      console.log('algo search index: ' + '|' + process.env.GRIDSOME_ALGO_SEARCH_INDEX + '|')
-      console.log('algo search key: ' + '|' + process.env.GRIDSOME_ALGO_SEARCH_KEY + '|')
       return {
         repos: this.$page.gitapi.organization.repositories.nodes
       }
