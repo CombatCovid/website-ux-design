@@ -62,6 +62,9 @@
       }
     },
     mounted: function () {
+      console.log('algo application id: ' + '|' +process.env.GRIDSOME_ALGO_APPLICATION_ID + '|')
+      console.log('algo search index: ' + '|' + process.env.GRIDSOME_ALGO_SEARCH_INDEX + '|')
+      console.log('algo search key: ' + '|' + process.env.GRIDSOME_ALGO_SEARCH_KEY + '|')
       return {
         repos: this.$page.gitapi.organization.repositories.nodes
       }
