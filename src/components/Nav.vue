@@ -11,37 +11,21 @@
           <span class="bar-title">{{ $static.metadata.siteName }}</span>
         </router-link>
       </v-toolbar-title>
-<!--      <v-spacer></v-spacer>-->
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn text to="/jose-connect">Jurra Connect</v-btn>
-        <v-btn text to="/finder">Finder</v-btn>
-<!--        <v-btn text to="/demo-connect">List of designs</v-btn>-->
-<!--        <v-btn text to="/repo-docs">Doc Demo</v-btn>-->
-        <v-btn text to="/design-choices">Viewer</v-btn>
-        <v-btn text>
-          <g-link to="/Documentation">Documentation</g-link>
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn text>
-          <g-link to="/About">About</g-link>
-        </v-btn>
+      <v-toolbar-items class="hidden-sm-and-down"
+                       v-for="(item, key) in items"
+                       :key="item.label">
+        <v-btn text exact :to="item.name">{{item.label}}</v-btn>
       </v-toolbar-items>
+
     </v-app-bar>
     <v-navigation-drawer appf v-model="sidebar" temporary absolute width="200" id="drawer">
       <v-list dense nav>
-<!-- this is borrowed, so items not provided yet if we do it that way, in which case bar as well  -->
-<!--        <div-->
-<!--                v-for="item in items"-->
-<!--                :key="item.name"-->
-<!--                @click=""-->
-<!--        >-->
-<!--          <v-btn flat exact :to="item.name">{{item.label}}</v-btn>-->
-<!--        </div>-->
-        <v-btn text exact to="/demo-connect">List of designs</v-btn>
-        <v-btn text to="/repo-docs">Doc demo</v-btn>
-        <v-btn text to="/design-choices">Design Choices</v-btn>
-        <v-btn text to="/Documentation">Documentation</v-btn>
-        <v-btn text to="/About">About</v-btn>
+        <div
+                v-for="item in items"
+                :key="item.name"
+        >
+          <v-btn text exact :to="item.name">{{item.label}}</v-btn>
+        </div>
       </v-list>
     </v-navigation-drawer>
   </div>
@@ -57,13 +41,19 @@
 
 <script>
 
-
   export default {
     name: "Nav",
     data: function () {
       return {
         sidebar: false,
-        navIcon: '/resources/images/combatcovid.png'
+        navIcon: '/resources/images/combatcovid.png',
+        items: [
+          {name: '/', label: 'Home'},
+          {name: '/finder', label: 'Finder'},
+          {name: '/viewer', label: 'Viewer'},
+          {name: '/documentation', label: 'Documentation'},
+          {name: '/about', label: 'About'}
+        ]
       }
     }
   };

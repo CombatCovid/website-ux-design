@@ -18,7 +18,10 @@
     <v-container grid-list-lg fluid>
       <v-layout row wrap>
         <v-flex xs12 md3 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
-          <v-card hover min-height="350px" max-height="350px">
+          <v-card
+            v-on:click="showContent(repo.name)"
+            hover min-height="350px" max-height="350px"
+          >
             <v-img v-if="repo.images !== null"
                    p-5 class="white--text align-end" height="200px"
                    :src="getImgUrl(repo.nameWithOwner, repo.images.entries[0].name)"
@@ -57,7 +60,6 @@
         )
       }
     },
-    components: { },
     mounted: function () {
       return {
         repos: this.$page.gitapi.organization.repositories.nodes
@@ -71,6 +73,9 @@
           return "https://heavenly-holland.com/wp-content/uploads/2017/05/Vermeer03.jpg"
         }
       },
+      showContent(repoName){
+        return this.$router.push({ path: `/viewer/${repoName}`, design: '${repoName}' })
+      }
     }
   }
 </script>

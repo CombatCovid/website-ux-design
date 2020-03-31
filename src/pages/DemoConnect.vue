@@ -6,8 +6,8 @@
       one at a time, for each participating Github account.</p>
     <div class="query-content">
       <div v-if="$page">
-        <h2>Repo owner = {{ $page.gitapi.repos.name }}</h2>
-        <div class="repo-list" v-for="node in $page.gitapi.repos.repositories.nodes" :key="node.name">
+        <h2>Repo owner = {{ $page.gitapi.organization.name }}</h2>
+        <div class="repo-list" v-for="node in $page.gitapi.organization.repositories.nodes" :key="node.name">
           <p>Repo name is {{ node.name }}</p>
         </div>
       </div>
@@ -37,12 +37,50 @@ export default {
 // programatically, via createPage()
 <page-query>
   query DemoConnect  {
-    gitapi {
-      repos: viewer {
-        name
-        repositories(last: 99) {
+    gitapi{
+      organization(login:"CombatCovid"){
+        repositories(first:50){
           nodes {
             name
+            nameWithOwner
+            docs: object(expression: "master:docs") {
+              ... on GitApi_Tree {
+                folders: entries {
+                  lang: name
+                  ... FolderInfo
+                }
+              }
+             }
+             images: object(expression: "master:docs/img") {
+               ... on GitApi_Tree {
+                 entries {
+                   name
+                 }
+               }
+             }
+             srcs: object(expression: "master:src") {
+               ... on GitApi_Tree {
+                 entries {
+                   name
+                 }
+               }
+             }
+          }
+        }
+      }
+    }
+  }
+
+fragment FolderInfo on GitApi_TreeEntry {
+    contents: object {
+      ... on GitApi_Tree {
+        files: entries {
+          name
+          object {
+            ...on GitApi_Blob {
+              isBinary
+              text
+            }
           }
         }
       }

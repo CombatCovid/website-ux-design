@@ -1,16 +1,17 @@
 <template>
   <Layout>
-    <h1>Design Choices</h1>
-    <p>Initial mock, showing master-detail for Designs, inactive until real data.</p>
-    <p>This very preliminary display, only horizontal layout, which is not impossible
-      even with a small phone, when put on its side, but we will do better,
-      and of course in all formatted looks.</p>
-    <p>Intent is to have normal list select -> summary pane for larger screens,
-      but then for phones, vertical-down-opening summaries; or alternatively a
-      menu-icon for select, then full-screen for summary.</p>
+    <h1>Viewer</h1>
+    <p>A much more real beginning, showing Designs out of a list chosen from Finder results.</p>
+    <p>This very preliminary display, so kindly pay no attention to look or formatting</p>
+<!--    <p only horizontal layout, which is not impossible-->
+<!--      even with a small phone, when put on its side, but we will do better,-->
+<!--      and of course in all formatted looks.</p>-->
+<!--    <p>Intent is to have normal list select -> summary pane for larger screens,-->
+<!--      but then for phones, vertical-down-opening summaries; or alternatively a-->
+<!--      menu-icon for select, then full-screen for summary.</p>-->
     <div class="master-detail">
       <v-container class="grey lighten-5">
-          <HorizontalMD/>
+          <HorizontalMD :design="design"/>
       </v-container>
     </div>
 
@@ -27,6 +28,7 @@
     },
     data: function () {
       return {
+        design: this.$route.params.design,
         anchorParts: {
           target: '_blank',
           rel: 'noreferrer noopener'
@@ -36,7 +38,7 @@
     },
     components: {VerticalMD, HorizontalMD},
     async mounted () {
-      console.log ('route params: ' + JSON.stringify(this.$route.params))
+      console.log ('route params: ' + JSON.stringify(this.$route.params.design))
     }
   }
 </script>

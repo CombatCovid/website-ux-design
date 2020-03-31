@@ -1,21 +1,24 @@
 <template>
   <v-row>
     <v-col cols="3">
-      <DesignList/>
+      <DesignChoices/>
     </v-col>
     <v-col>
-      <DesignDetail/>
+      <DesignDetail :design="design"/>
     </v-col>
   </v-row>
 </template>
 
 <script>
-  import DesignList from '~/components/DesignList'
+  import DesignChoices from '~/components/DesignChoices'
   import DesignDetail from '~/components/DesignDetail'
 
   export default {
+    props: {
+      design: String
+    },
     name: "HorizontalMD",
-    components: { DesignList, DesignDetail }
+    components: { DesignChoices, DesignDetail }
   }
 </script>
 

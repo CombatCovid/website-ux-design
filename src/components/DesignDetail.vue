@@ -1,28 +1,23 @@
 <template>
   <div>
-    <h3>Your Choice:  {{ summaryTitle }}</h3>
+    <h2>Design is {{ design }}</h2>
     <img :src="summaryImage" width="240px"/>
-    <div v-html="summaryText"></div>
+    <VueMarkdown :source="summaryText" :prerender="cleanFormatMarkdown"/>
   </div>
 </template>
 
 <script>
+
+  import VueMarkdown from 'vue-markdown'
+
   export default {
     name: "DesignDetail",
+    props: {
+      design: String
+    },
     data: function () {
       return {
-        rawTitle: 'medical-shields-for-3d-printing',
-        summaryText: '<div data-v-112252f1=""><h1>Título: Del diseño a la impresión masiva en 3D de Medical Shields en tres días</h1>\n' +
-          '<h3>Referencia:</h3>\n' +
-          '<p>Toda la información compilada aquí se puede encontrar <a href="https://blog.prusaprinters.org/from-design-to-mass-3d-printing-of-medical-shields-in-three-days/" target="_blank" rel="noreferrer noopener">en este enlace</a></p>\n' +
-          '<h3>Consideraciones generales antes de comenzar</h3>\n' +
-          '<h4>Preocupaciones sobre respiradores impresos</h4>\n' +
-          '<ul>\n' +
-          '<li>Ninguno de los diseños disponibles en este momento se ha probado para garantizar que brinden las protecciones necesarias, al menos ninguno de los que conozco. Para ayudar con esto, hemos recopilado tantos diseños como pudimos encontrar, y estamos trabajando con expertos para ver si podemos verificar cuáles funcionan realmente. ¿Cuáles son los puntos clave de enfoque? Primero, es el sellado, luego el filtro en sí, el filtro de la máscara y cómo la máscara se adhiere a la cara, todo debe ser perfecto. La mayoría de nosotros imprimimos materiales rígidos que son difíciles de hacer compatibles con los sellos. (por Prusa)</li>\n' +
-          '<li>Otra pregunta que debemos tener en cuenta es la porosidad de las piezas impresas y las preocupaciones de seguridad que surgen de eso. El usuario tendrá la máscara en la cara, un lugar húmedo y cálido, un caldo de cultivo perfecto para los gérmenes. No podremos esterilizar estas máscaras de manera efectiva, por lo que podríamos estar causando aún más problemas. Y el virus supuestamente sobrevive más de 48 horas en los plásticos (o incluso 90 horas, según algunos otros estudios). Todos queremos ayudar a nuestros amigos y familiares, lo que significa que debemos ser más precavidos para evitar lastimarlos. Si insiste absolutamente en imprimir una máscara ahora, trátela como si fuera una máscara quirúrgica básica y no como un verdadero respirador con todas las protecciones que proporcionan. Una falsa sensación de seguridad puede ser muy peligrosa. Entiendo que estás tratando de ayudar, pero POR FAVOR, difunde esta información en tus grupos de impresión 3D.</li>\n' +
-          '</ul>\n' +
-          '</div>',
-        rawImage: '/resources/image/Example.jpg'
+        demoImage: '/resources/image/Example.jpg' // *todo* we'll want our own default...
       }
     },
     computed: {
@@ -30,17 +25,92 @@
       summaryTitle: function () {
         return this.titleCase(this.spaceDashes(this.htmlSanitize(this.rawTitle)))
       },
-      // we only don't htmlSanitize here because it's static test html...
-      // but when it's Markdown, we must, until that's done in Vuex component
-      // summaryText: function () {
-      //   return this.htmlSanitize(this.rawText)
-      // },
+      repos: function () {
+        return this.$static.gitapi.organization.repositories.nodes
+      },
+      summaryText: function () {
+        return this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
+      },
+      imagePath: function () {
+        return 'https://raw.githubusercontent.com/CombatCovid/' +
+          this.design +
+          '/master/docs/img' +'/'
+      },
       summaryImage: function () {
-        return this.htmlSanitize(this.rawImage)
+        return this.imagePath + this.htmlSanitize(this.designRepo.images.entries[0].name)
+      },
+      designRepo: function () {
+        let dRepo = this.repos[3]
+
+        if (this.design === "") {
+          dRepo = this.repos[4]
+        }
+        else {
+          const filtered = this.repos.filter (repo => repo.name === this.design)
+          dRepo = filtered[0]
+        }
+        return dRepo
+      }
+    },
+    components: { VueMarkdown }
+  }
+</script>
+
+// this is hardwired, as api graphql requires a first: or last: value,
+// but I believe this isn't settable in Gridsome unless creating page
+// programatically, via createPage() - which is still hardwired...
+<static-query>
+  query DesignDetail  {
+    gitapi {
+      organization(login:"CombatCovid"){
+        repositories(first:50){
+          nodes {
+            name
+            nameWithOwner
+            docs: object(expression: "master:docs") {
+              ... on GitApi_Tree {
+                folders: entries {
+                  lang: name
+                  ... FolderInfo
+                }
+              }
+             }
+             images: object(expression: "master:docs/img") {
+               ... on GitApi_Tree {
+                 entries {
+                   name
+                 }
+               }
+             }
+             srcs: object(expression: "master:src") {
+               ... on GitApi_Tree {
+                 entries {
+                   name
+                 }
+               }
+             }
+          }
+        }
       }
     }
   }
-</script>
+
+fragment FolderInfo on GitApi_TreeEntry {
+    contents: object {
+      ... on GitApi_Tree {
+        files: entries {
+          name
+          object {
+            ...on GitApi_Blob {
+              isBinary
+              text
+            }
+          }
+        }
+      }
+    }
+  }
+</static-query>
 
 <style scoped>
 </style>
