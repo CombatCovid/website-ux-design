@@ -57,7 +57,7 @@
         indexName: process.env.GRIDSOME_ALGO_SEARCH_INDEX,
         searchClient: algoliasearch(
           process.env.GRIDSOME_ALGO_APPLICATION_ID,
-          process.env.GRIDSOME_ALGO_ADMIN_KEY
+          process.env.GRIDSOME_ALGO_SEARCH_KEY
         )
       }
     },
