@@ -29,20 +29,20 @@
 
 <script>
 
-  import { createSearchClient } from '@algolia/client-search'
+export default {
+  metaInfo: {
+    title: 'Demo Connect'
+  },
+  data: function () {
+      numberRepos: 3
+    }
+  },
 
-  export default {
-    metaInfo: {
-      title: 'Demo Connect'
-    },
-    data: function () {
-      return {
-        numberRepos: 3
-      }
-    },
-    mounted: function () {
-      return {
-        repos: this.$page.gitapi.organization.repositories.nodes
+  methods: {
+    getImgUrl: function(repoName, fileName){
+      if(fileName!== null){
+        return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
+    return {
       }
     },
     methods: {
