@@ -44,8 +44,11 @@
       },
       designRepo: function () {
         let dRepo = this.repos[3]
-console.log('design: ' + this.design)
+
         if (typeof this.design === "undefined") {
+          // this case if page called directly, as from menu
+          // then we'd set view to 'first' repo
+          // *todo* at early moment first valid is fifth - metadata will rescue
           dRepo = this.repos[4]
         }
         else {
