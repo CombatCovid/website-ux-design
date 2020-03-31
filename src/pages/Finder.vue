@@ -1,20 +1,14 @@
 <template>
   <Layout>
-    <h1 class="horiz-center">Finder <span class="low-attention">(it's not fully yet)</span></h1>
+    <h1 class="horiz-center">Finder</h1>
+    <p class="horiz-center low-attention">(preview)</p>
 
     <!--  Not even a Vuetify format yet...  -->
     <div class="horiz-center searchbox">
       <ais-instant-search :index-name="indexName" :search-client="searchClient">
-        <ais-configure
-                :hitsPerPage="3"
-        />
-<!--        :distinct="true"-->
-<!--        :analytics="false"-->
-<!--        :enable-personalization.camel="true"-->
-        <ais-powered-by/> <!-- *todo* this is required until on a paid plan -->
-        <ais-search-box  reset-titled="Reset" :refresh="false" />
-        <ais-configure :hitsPerPage="8" />
-        <ais-hits>
+        <ais-powered-by/>
+        <ais-search-box  reset-titled="Reset" :refresh="true" />
+        <ais-hits class="clear-above">
           <div slot="item" slot-scope="{ item }">
             <h2>{{ item.name }}</h2>
           </div>
@@ -153,5 +147,8 @@ fragment FolderInfo on GitApi_TreeEntry {
   }
   .low-attention {
     font-size: x-small;
+  }
+  .clear-above {
+    margin-top: 10px;
   }
 </style>
