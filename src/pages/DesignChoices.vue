@@ -19,7 +19,7 @@
 
 <script>
   import RepoContent from '@/components/RepoContent'
-  import RepoContentMarkdown from '@/components/RepoContentMarkdown'
+  import RepoLayoutDocs from '@/templates/RepoLayoutDocs'
 
   export default {
     metaInfo: {
@@ -34,7 +34,7 @@
         numberRepos: 99
       }
     },
-    components: {RepoContentMarkdown, RepoContent},
+    components: {RepoLayoutDocs, RepoContent},
     async mounted () {
       console.log ('route params: ' + JSON.stringify(this.$route.params))
     }

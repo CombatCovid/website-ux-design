@@ -4,18 +4,18 @@
       <RepoSidebar/>
     </v-flex>
     <v-flex>
-      <RepoContentDocs/>
+      <RepoDocs/>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
   import RepoSidebar from '@/components/RepoSidebar'
-  import RepoContentDocs from '@/components/RepoContentDocs'
+  import RepoDocs from '@/components/RepoDocs'
 
   export default {
-    name: "RepoContentMarkdown",
-    components: { RepoSidebar, RepoContentDocs },
+    name: "RepoLayoutDocs",
+    components: { RepoSidebar, RepoDocs },
     data: function () {
       return {
         summaryText: '<p>SummaryText goes here</p>',
@@ -23,7 +23,7 @@
       }
     },
     mounted () {
-      console.log('RepoContentMarkdown mounted: ' + this.summaryText)
+      console.log('RepoLayoutDocs mounted: ' + this.summaryText)
     }
   }
 </script>

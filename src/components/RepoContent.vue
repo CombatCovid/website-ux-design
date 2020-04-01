@@ -4,20 +4,20 @@
       <!-- <RepoContent/> -->
     </v-col>
     <v-col>
-      <RepoContentDocs :design="design"/>
+      <RepoDocs :design="design"/>
     </v-col>
   </v-row>
 </template>
 
 <script>
-  import RepoContentDocs from '~/components/RepoContentDocs'
+  import RepoDocs from '~/components/RepoDocs'
 
   export default {
     props: {
       design: String
     },
     name: "RepoContent",
-    components: { RepoContentDocs }
+    components: { RepoDocs }
   }
 </script>
 
