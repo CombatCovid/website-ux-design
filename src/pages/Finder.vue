@@ -5,15 +5,17 @@
 
     <!--  Not even a Vuetify format yet...  -->
     <div class="horiz-center searchbox">
-      <ais-instant-search :index-name="indexName" :search-client="searchClient">
-        <ais-powered-by/>
-        <ais-search-box  reset-titled="Reset" :refresh="true" />
-        <ais-hits class="clear-above">
-          <div slot="item" slot-scope="{ item }">
-            <h2>{{ item.name }}</h2>
-          </div>
-        </ais-hits>
-      </ais-instant-search>
+      <client-only>
+        <ais-instant-search :index-name="indexName" :search-client="searchClient">
+          <ais-powered-by/>
+          <ais-search-box  reset-titled="Reset" :refresh="true" />
+          <ais-hits class="clear-above">
+            <div slot="item" slot-scope="{ item }">
+              <h2>{{ item.name }}</h2>
+            </div>
+          </ais-hits>
+        </ais-instant-search>
+      </client-only>
     </div>
 
     <v-container grid-list-lg fluid>
