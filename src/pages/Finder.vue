@@ -4,17 +4,22 @@
     <p class="horiz-center low-attention">(search preview)</p>
 
     <!--  Not even a Vuetify format yet...  -->
-    <div class="horiz-center searchbox">
-      <ais-instant-search :index-name="indexName" :search-client="searchClient">
+<!--    <div>-->
+      <ais-instant-search :index-name="indexName"
+                          :search-client="searchClient" class="horiz-center searchbox">
         <ais-powered-by/>
         <ais-search-box  reset-titled="Reset" :refresh="true" />
         <ais-hits class="clear-above">
           <div slot="item" slot-scope="{ item }">
             <h2>{{ item.name }}</h2>
+            <p>{{ JSON.stringify(item)}}</p>
+            <JoseCard :repo="{ name: item.name, nameWithOwner: 'n-w-o', description:'described by', image: null }"  />
           </div>
         </ais-hits>
+        <CurrentQuery attribute="hits" />
+        <ais-configure :hitsPerPage="3" :page="2"/>
       </ais-instant-search>
-    </div>
+<!--    </div>-->
 
     <v-container grid-list-lg fluid>
       <v-layout row wrap>
@@ -46,6 +51,8 @@
 
   import { createSearchClient } from '@algolia/client-search'
   import algoliasearch from 'algoliasearch'
+  import CurrentQuery from '../components/CurrentQuery';
+  import JoseCard from '../components/JoseCard';
 
   export default {
     metaInfo: {
@@ -61,6 +68,7 @@
         )
       }
     },
+    components: { JoseCard, CurrentQuery },
     mounted: function () {
       return {
         repos: this.$page.gitapi.organization.repositories.nodes
