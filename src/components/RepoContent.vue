@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="3">
-      <!-- <RepoContentSidebar/> -->
+      <!-- <RepoContent/> -->
     </v-col>
     <v-col>
       <RepoContentDocs :design="design"/>
@@ -16,7 +16,7 @@
     props: {
       design: String
     },
-    name: "RepoContentSidebar",
+    name: "RepoContent",
     components: { RepoContentDocs }
   }
 </script>

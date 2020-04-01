@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-flex xs11>
-      <DesignList/>
+      <RepoSidebar/>
     </v-flex>
     <v-flex>
       <RepoContentDocs/>
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-  import DesignList from '@/components/DesignList'
+  import RepoSidebar from '@/components/RepoSidebar'
   import RepoContentDocs from '@/components/RepoContentDocs'
 
   export default {
     name: "RepoContentMarkdown",
-    components: { DesignList, RepoContentDocs },
+    components: { RepoSidebar, RepoContentDocs },
     data: function () {
       return {
         summaryText: '<p>SummaryText goes here</p>',

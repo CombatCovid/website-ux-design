@@ -10,7 +10,7 @@
       menu-icon for select, then full-screen for summary.</p>
     <div class="master-detail">
       <v-container class="grey lighten-5">
-          <RepoContentSidebar/>
+          <RepoContent/>
       </v-container>
     </div>
 
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import RepoContentSidebar from '@/components/RepoContentSidebar'
+  import RepoContent from '@/components/RepoContent'
   import RepoContentMarkdown from '@/components/RepoContentMarkdown'
 
   export default {
@@ -34,7 +34,7 @@
         numberRepos: 99
       }
     },
-    components: {RepoContentMarkdown, RepoContentSidebar},
+    components: {RepoContentMarkdown, RepoContent},
     async mounted () {
       console.log ('route params: ' + JSON.stringify(this.$route.params))
     }
