@@ -19,7 +19,7 @@
 
 <script>
   import RepoContent from '@/components/RepoContent'
-  import RepoLayoutDocs from '@/templates/RepoLayoutDocs'
+  import RepoLayoutDocs from '@/templates/RepoDocs'
 
   export default {
     metaInfo: {
