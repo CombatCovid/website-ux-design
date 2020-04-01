@@ -11,7 +11,7 @@
 <!--      menu-icon for select, then full-screen for summary.</p>-->
     <div class="master-detail">
       <v-container class="grey lighten-5">
-          <HorizontalMD :design="design"/>
+          <RepoContentSidebar :design="design"/>
       </v-container>
     </div>
 
@@ -19,8 +19,8 @@
 </template>
 
 <script>
-  import HorizontalMD from '@/components/HorizontalMD'
-  import VerticalMD from '@/components/VerticalMD'
+  import RepoContentSidebar from '@/components/RepoContentSidebar'
+  import RepoContentMarkdown from '@/components/RepoContentMarkdown'
 
   export default {
     metaInfo: {
@@ -36,7 +36,7 @@
         numberRepos: 99
       }
     },
-    components: {VerticalMD, HorizontalMD},
+    components: {RepoContentMarkdown, RepoContentSidebar},
     async mounted () {
       console.log ('route params: ' + JSON.stringify(this.$route.params.design))
     }

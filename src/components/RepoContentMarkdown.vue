@@ -4,18 +4,18 @@
       <DesignList/>
     </v-flex>
     <v-flex>
-      <DesignDetail/>
+      <RepoContentDocs/>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
   import DesignList from '@/components/DesignList'
-  import DesignDetail from '@/components/DesignDetail'
+  import RepoContentDocs from '@/components/RepoContentDocs'
 
   export default {
-    name: "VerticalMD",
-    components: { DesignList, DesignDetail },
+    name: "RepoContentMarkdown",
+    components: { DesignList, RepoContentDocs },
     data: function () {
       return {
         summaryText: '<p>SummaryText goes here</p>',
@@ -23,7 +23,7 @@
       }
     },
     mounted () {
-      console.log('VerticalMD mounted: ' + this.summaryText)
+      console.log('RepoContentMarkdown mounted: ' + this.summaryText)
     }
   }
 </script>

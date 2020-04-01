@@ -75,7 +75,7 @@
         }
       },
       showContent(repoName){
-        return this.$router.push({ path: `/viewer/${repoName}`, design: '${repoName}' })
+        return this.$router.push({ path: `/viewer/${repoName}`, design: `${repoName}` })
       }
     }
   }

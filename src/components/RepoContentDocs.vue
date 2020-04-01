@@ -11,7 +11,7 @@
   import VueMarkdown from 'vue-markdown'
 
   export default {
-    name: "DesignDetail",
+    name: "RepoContentDocs",
     props: {
       design: String
     },
@@ -66,7 +66,7 @@
 // but I believe this isn't settable in Gridsome unless creating page
 // programatically, via createPage() - which is still hardwired...
 <static-query>
-  query DesignDetail  {
+  query RepoContentDocs  {
     gitapi {
       organization(login:"CombatCovid"){
         repositories(first:50){
