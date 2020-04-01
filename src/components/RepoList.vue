@@ -1,67 +1,64 @@
 <template>
-    <v-container grid-list-lg fluid>
-      <v-layout row wrap>
-        <v-flex xs12 md3 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
-          <RepoCard
-            v-on:click="showContent(repo.name)"
-            :repoImg="getImgUrl(repo.nameWithOwner, repo.images.entries[0].name)"
-            :repoName="repo.name"
-            :repoSum="repo.description"
-          >
-          </RepoCard>
-        </v-flex>
-      </v-layout>
-    </v-container>
+  <v-container grid-list-lg fluid>
+    <v-layout row wrap>
+      <v-flex
+        xs12
+        md3
+        v-for="repo in $page.gitapi.organization.repositories.nodes"
+        :key="repo.name"
+      >
+        <RepoCard
+          v-on:click="showContent(repo.name)"
+          v-if="repo.images !== null"
+          :repoImg="getImgUrl(repo.nameWithOwner, repo.images.entries[0].name)"
+          :repoName="repo.name"
+          :repoSum="repo.description"
+        ></RepoCard>
+        <RepoCard
+          v-on:click="showContent(repo.name)"
+          v-else
+          repoImg="https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png"
+          :repoName="repo.name"
+          :repoSum="repo.description"
+        ></RepoCard>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
-import RepoCard from '~/components/RepoCard.vue'
+import RepoCard from "~/components/RepoCard.vue";
+
 export default {
-    name: "ReposList",
-    props:[],
-    components:{
-      RepoCard
-    },
-    computed:{
-      computed: {
-      // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
-      repoName: function () {
-        return this.designRepo.name
-      },
-      summaryTitle:  function () {
-        return this.titleCase(this.spaceDashes(this.htmlSanitize(this.repoName)))
-      },
-      repos: function () {
-        return this.$static.gitapi.organization.repositories.nodes
-      },
-      summaryText: function () {
-        return this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
-      },
-      imagePath: function () {
-        return 'https://raw.githubusercontent.com/CombatCovid/' +
-          this.repoName +
-          '/master/docs/img' +'/'
-      },
+  name: "ReposList",
+  props: [],
+  components: {
+    RepoCard
+  },
+  methods: {
+    getImgUrl: function (repoName, fileName) {
+      if (fileName !== null) {
+        return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
+      } 
+    }
+  },
 
-      // Get design repo
-      designRepo: function () {
-        let dRepo = this.repos[3]
+    // Get design repo
+    designRepo: function() {
+      let dRepo = this.repos[3];
 
-        if (typeof this.design === "undefined") {
-          // this case if page called directly, as from menu
-          // then we'd set view to 'first' repo
-          // *todo* at early moment first valid is fifth - metadata will rescue
-          dRepo = this.repos[4]
-        }
-        else {
-          const filtered = this.repos.filter (repo => repo.name === this.design)
-          dRepo = filtered[0]
-        }
-        return dRepo
+      if (typeof this.design === "undefined") {
+        // this case if page called directly, as from menu
+        // then we'd set view to 'first' repo
+        // *todo* at early moment first valid is fifth - metadata will rescue
+        dRepo = this.repos[4];
+      } else {
+        const filtered = this.repos.filter(repo => repo.name === this.design);
+        dRepo = filtered[0];
       }
+      return dRepo;
     }
-    }
-}
+  };
 </script>
 
 // this is hardwired, as api graphql requires a first: or last: value,
