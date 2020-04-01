@@ -5,9 +5,10 @@
 
     <!--  Not even a Vuetify format yet...  -->
 <!--    <div>-->
+    <client-only>
       <ais-instant-search :index-name="indexName"
                           :search-client="searchClient" class="horiz-center searchbox">
-        <ais-powered-by/>
+        <!--        <ais-powered-by/>-->
         <ais-search-box  reset-titled="Reset" :refresh="true" />
         <ais-hits class="clear-above">
           <div slot="item" slot-scope="{ item }">
@@ -19,6 +20,7 @@
         <CurrentQuery attribute="hits" />
         <ais-configure :hitsPerPage="3" :page="2"/>
       </ais-instant-search>
+    </client-only>
 <!--    </div>-->
 
     <v-container grid-list-lg fluid>
