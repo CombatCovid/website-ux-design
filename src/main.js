@@ -46,6 +46,9 @@ const appMixins = {
 export default function (Vue, { router, head, isClient, appOptions }) {
   // Set default layout as a global component
   const opts = {
+    icons: {
+      iconfont: 'mdiSvg',
+    },
     theme: {
       options: { customProperties: true },
       themes: {
