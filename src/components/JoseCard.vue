@@ -4,7 +4,7 @@
           hover min-height="350px" max-height="350px"
   >
     <v-img v-if="repo.cardImage !== null && typeof repo.cardImage !== 'undefined'"
-           p-5 class="white--text align-end" height="200px"
+           p-5 class="white--text align-end" height="200px"  min-width="200px" max-width="200px"
            :src="getImgUrl(repo.nameWithOwner, repo.cardImage)"
     >
     </v-img>
@@ -13,8 +13,8 @@
            src="/resources/image/image-placeholder.png"
     >
     </v-img>
-    <v-card-title v-text="repo.name"></v-card-title>
-    <v-card-subtitle v-text="repo.description"></v-card-subtitle>
+    <v-card-title v-text="repo.title" class="wrapping-text"></v-card-title>
+    <v-card-subtitle v-text="repo.description" class="wrapping-text"></v-card-subtitle>
   </v-card>
 
 </template>
@@ -38,19 +38,25 @@
     methods: {
       getImgUrl: function (nameWithOwner, fileName) {
         if (fileName !== null) {
-          console.log('fileName: ' + fileName)
-          console.log('cardImage path: ' + `https://raw.githubusercontent.com/${nameWithOwner}/master${fileName}`)
+          // console.log('fileName: ' + fileName)
+          // console.log('cardImage path: ' + `https://raw.githubusercontent.com/${nameWithOwner}/master${fileName}`)
           return `https://raw.githubusercontent.com/${nameWithOwner}/master${fileName}`
         } else {
           return "/resources/image/image-placeholder.png"
         }
       },
       showContent(repoName){
-        return this.$router.push({ path: `/viewer/${repoName}`, design: '${repoName}' })      }
+        if (repoName) {
+          return this.$router.push({ path: `/viewer/${repoName}`, design: `${repoName}` })      }
+        }
     }
   }
 </script>
 
 <style scoped>
+
+  .wrapping-text {
+    word-break: normal;
+  }
 
 </style>
