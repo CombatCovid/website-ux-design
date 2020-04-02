@@ -3,9 +3,9 @@
           v-on:click="showContent(repo.name)"
           hover min-height="350px" max-height="350px"
   >
-    <v-img v-if="repo.repoImage !== null && typeof repo.repoImage !== 'undefined'"
+    <v-img v-if="repo.cardImage !== null && typeof repo.cardImage !== 'undefined'"
            p-5 class="white--text align-end" height="200px"
-           :src="getImgUrl(repo.nameWithOwner, repo.repoImage)"
+           :src="getImgUrl(repo.nameWithOwner, repo.cardImage)"
     >
     </v-img>
     <v-img v-else
@@ -27,7 +27,7 @@
         type: Object,
         default: {
           title: 'A Repo',
-          repoName: 'a-repo',
+          name: 'a-repo',
           nameWithOwner: 'a-repo-repo-owner',
           description: 'this is a repo',
           cardImage: 'cardimage.jpg',
@@ -36,9 +36,11 @@
       }
     },
     methods: {
-      getImgUrl: function (repoName, fileName) {
+      getImgUrl: function (nameWithOwner, fileName) {
         if (fileName !== null) {
-          return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
+          console.log('fileName: ' + fileName)
+          console.log('cardImage path: ' + `https://raw.githubusercontent.com/${nameWithOwner}/master${fileName}`)
+          return `https://raw.githubusercontent.com/${nameWithOwner}/master${fileName}`
         } else {
           return "/resources/image/image-placeholder.png"
         }

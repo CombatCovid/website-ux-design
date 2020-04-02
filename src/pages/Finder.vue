@@ -10,13 +10,14 @@
 
         <ais-hits class="clear-above">
           <div slot-scope="{ items }">
+            <p>{{ JSON.stringify(items)}}</p>
             <v-container grid-list-lg fluid>
               <v-layout d-flex flex-wrap>
                 <v-row>
                   <v-col cols="12" md="3" v-for="(item, index) in items" :key="index">
-                    <JoseCard :repo="{ title: item.name, name:
-                  item.name, nameWithOwner: 'name-with-owner',
-                  description:'described by', cardImage: null }"/>
+                    <JoseCard :repo="{ title: item.title, name:
+                  item.name, nameWithOwner: item.nameWithOwner,
+                  description: item.description, cardImage: item.cardImage }"/>
                   </v-col>
                 </v-row>
               </v-layout>
