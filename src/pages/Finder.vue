@@ -35,7 +35,6 @@
 
 <script>
 
-  import { createSearchClient } from '@algolia/client-search'
   import algoliasearch from 'algoliasearch'
   import JoseLayout from '../components/JoseLayout';
   import JoseCard from '../components/JoseCard';
