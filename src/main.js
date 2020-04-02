@@ -8,11 +8,11 @@ import DefaultLayout from '~/layouts/Default.vue'
 
 const appMixins = {
   methods: {
-    cleanFormatMarkdown (lines) {
+    cleanFormatMarkdown (lines, site = 'https://github.com/') {
       // in case we have other operations to do, like properly
       // *todo* formatting included [name](url) links if VueMarkdown doesn't???
       // *todo* but a more complete markdown converter may be appearing on the horizon.
-      return this.fixMarkdownLinks(this.stripFrontMatter(lines))
+      return this.fixMarkdownImages(this.fixMarkdownLinks(this.stripFrontMatter(lines)), site)
     },
     stripFrontMatter: function (lines) {
       // *todo* later some way that VueMarkdown handles this itself? Not apparently...
@@ -23,6 +23,12 @@ const appMixins = {
       // which also don't get parsed
       return lines.replace(/[\[](.*)[\]]\s[[\(](.*)[\)]/,
         '<a href="$2" target="_blank" rel="noreferrer noopener">$1</a>')
+    },
+    fixMarkdownImages (lines, site = 'https://github.com/') {
+      // *todo* this fix for in-folder local images,
+      // which also don't get parsed
+      return lines.replace(/![\[](.*)[\]]\s[[\(](.*)[\)]/,
+        `<a href="${site}$2" target="_blank" rel="noreferrer noopener">$1</a>`)
     },
     spaceDashes: function (str) {
       return str.replace(/[-]/g, ' ')
