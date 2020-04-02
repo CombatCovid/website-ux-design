@@ -1,16 +1,16 @@
 <template>
-  <v-card
+  <v-card class=""
           v-on:click="showContent(repo.name)"
           hover min-height="350px" max-height="350px"
   >
-    <v-img v-if="repo.images !== null"
+    <v-img v-if="repo.repoImage !== null && typeof repo.repoImage !== 'undefined'"
            p-5 class="white--text align-end" height="200px"
-           :src="getImgUrl(repo.nameWithOwner, repo.image)"
+           :src="getImgUrl(repo.nameWithOwner, repo.repoImage)"
     >
     </v-img>
     <v-img v-else
            p-5 class="white--text align-end" height="200px"
-           src="https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png"
+           src="/resources/image/image-placeholder.png"
     >
     </v-img>
     <v-card-title v-text="repo.name"></v-card-title>
@@ -26,10 +26,12 @@
       repo: {
         type: Object,
         default: {
-          name: 'A Repo',
+          title: 'A Repo',
+          repoName: 'a-repo',
           nameWithOwner: 'a-repo-repo-owner',
           description: 'this is a repo',
-          image: 'repoimage.jpg'
+          cardImage: 'cardimage.jpg',
+          thumbImage: 'thumbimage.jpg'
         }
       }
     },
@@ -38,12 +40,11 @@
         if (fileName !== null) {
           return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
         } else {
-          return "https://heavenly-holland.com/wp-content/uploads/2017/05/Vermeer03.jpg"
+          return "/resources/image/image-placeholder.png"
         }
       },
       showContent(repoName){
-        return this.$router.push({ path: `/doc/${repoName}` })
-      }
+        return this.$router.push({ path: `/viewer/${repoName}`, design: '${repoName}' })      }
     }
   }
 </script>

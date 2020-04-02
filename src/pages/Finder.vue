@@ -1,27 +1,32 @@
 <template>
   <Layout>
     <h1 class="horiz-center">Finder</h1>
-    <p class="horiz-center low-attention">(search preview)</p>
 
-    <!--  Not even a Vuetify format yet...  -->
-<!--    <div>-->
     <client-only>
       <ais-instant-search :index-name="indexName"
                           :search-client="searchClient" class="horiz-center searchbox">
-        <!--        <ais-powered-by/>-->
-        <ais-search-box  reset-titled="Reset" :refresh="true" />
+        <ais-powered-by/>
+        <ais-search-box reset-titled="Reset" :refresh="true"/>
+
         <ais-hits class="clear-above">
-          <div slot="item" slot-scope="{ item }">
-            <h2>{{ item.name }}</h2>
-            <p>{{ JSON.stringify(item)}}</p>
-            <JoseCard :repo="{ name: item.name, nameWithOwner: 'n-w-o', description:'described by', image: null }"  />
+          <div slot-scope="{ items }">
+            <v-container grid-list-lg fluid>
+              <v-layout d-flex flex-wrap>
+                <v-row>
+                  <v-col cols="12" md="3" v-for="(item, index) in items" :key="index">
+                    <JoseCard :repo="{ title: item.name, name:
+                  item.name, nameWithOwner: 'name-with-owner',
+                  description:'described by', cardImage: null }"/>
+                  </v-col>
+                </v-row>
+              </v-layout>
+            </v-container>
           </div>
         </ais-hits>
-        <CurrentQuery attribute="hits" />
-        <ais-configure :hitsPerPage="3" :page="2"/>
+
+        <ais-configure :hitsPerPage="5" :page="1"/>
       </ais-instant-search>
     </client-only>
-<!--    </div>-->
 
     <v-container grid-list-lg fluid>
       <v-layout row wrap>
@@ -53,12 +58,12 @@
 
   import { createSearchClient } from '@algolia/client-search'
   import algoliasearch from 'algoliasearch'
-  import CurrentQuery from '../components/CurrentQuery';
+  import JoseLayout from '../components/JoseLayout';
   import JoseCard from '../components/JoseCard';
 
   export default {
     metaInfo: {
-      title: 'Demo Connect'
+      title: 'Finder'
     },
     data: function () {
       return {
@@ -70,7 +75,7 @@
         )
       }
     },
-    components: { JoseCard, CurrentQuery },
+    components: { JoseCard, JoseLayout },
     mounted: function () {
       return {
         repos: this.$page.gitapi.organization.repositories.nodes
