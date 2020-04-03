@@ -5,17 +5,17 @@
 
 
     <div class="card-image-holder">
-      <v-img v-if="repo.cardImage" width="350px"
+      <img v-if="repo.cardImage"
              p-5 class="white--text align-end card-image"
              :src="getImgUrl(repo.nameWithOwner, repo.cardImage)"
       >
-      </v-img>
-      <v-img v-else
-             width="300px"
+      </img>
+      <img v-else
+
              p-5 class="white--text align-end card-image"
              src="/resources/image/image-placeholder.png"
       >
-      </v-img>
+      </img>
     </div>
       <div class="bottom-block">
         <h2 v-text="repo.title" class="card-title wrapping-text horiz-center"></h2>
@@ -84,7 +84,7 @@
     .card-image-holder {
       min-height: 67%;
       max-height: 67%;
-      width: 90%;
+      width: 100%;
       margin: 20px auto;
     }
   }
