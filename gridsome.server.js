@@ -10,7 +10,7 @@ module.exports = function (api) {
 
   api.createPages(({createPage}) => {
     createPage({
-      path: '/viewer/:design([\\w-]+)',
+      path: '/viewer/:design([\\w-]+)?',
       component: './src/pages/Viewer.vue'
     })
   })

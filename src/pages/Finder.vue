@@ -1,41 +1,46 @@
 <template>
   <Layout>
     <h1 class="horiz-center">Finder</h1>
-    <p class="horiz-center low-attention">(search preview)</p>
 
-    <!--  Not even a Vuetify format yet...  -->
-    <div class="horiz-center searchbox">
-      <ais-instant-search :index-name="indexName" :search-client="searchClient">
+    <client-only>
+      <ais-instant-search :index-name="indexName"
+                          :search-client="searchClient" class="horiz-center searchbox">
+
+        <ais-configure :hits-per-page.camel="8"/>
+
         <ais-powered-by/>
-        <ais-search-box  reset-titled="Reset" :refresh="true" />
+        <ais-search-box/>
+
         <ais-hits class="clear-above">
-          <div slot="item" slot-scope="{ item }">
-            <h2>{{ item.name }}</h2>
+          <div slot-scope="{ items }">
+            <v-layout d-flex flex-wrap>
+              <v-row d-flex cols="1">
+                <v-col cols="12" md="3"
+                       class="d-flex child-flex"
+                       v-for="(item, index) in items" :key="index">
+                  <JoseCard :repo="{ title: item.title, name:
+                  item.name, nameWithOwner: item.nameWithOwner,
+                  description: item.description, cardImage: item.cardImage }"/>
+                </v-col>
+              </v-row>
+            </v-layout>
           </div>
         </ais-hits>
-      </ais-instant-search>
-    </div>
 
-    <v-container grid-list-lg fluid>
-      <v-layout row wrap>
-        <RepoList></RepoList>
-      </v-layout>
-    </v-container>
+      </ais-instant-search>
+    </client-only>
   </Layout>
 </template>
 
 <script>
 
-  import { createSearchClient } from '@algolia/client-search'
   import algoliasearch from 'algoliasearch'
-  import RepoList from '~/components/RepoList.vue'
+  import JoseLayout from '../components/JoseLayout';
+  import JoseCard from '../components/JoseCard';
 
   export default {
-    components:{
-      RepoList
-    },
     metaInfo: {
-      title: 'Demo Connect'
+      title: 'Finder'
     },
     data: function () {
       return {
@@ -47,81 +52,14 @@
         )
       }
     },
-    mounted: function () {
-      return {
-        repos: this.$page.gitapi.organization.repositories.nodes
-      }
-    },
+    components: { JoseCard, JoseLayout },
     methods: {
-      getImgUrl: function (repoName, fileName) {
-        if (fileName !== null) {
-          return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
-        } else {
-          return "https://heavenly-holland.com/wp-content/uploads/2017/05/Vermeer03.jpg"
-        }
-      },
       showContent(repoName){
-        return this.$router.push({ path: `/viewer/${repoName}`, design: `${repoName}` })
+        return this.$router.push({ path: `/viewer/${repoName}`, design: '${repoName}' })
       }
     }
   }
 </script>
-
-// this is hardwired, as api graphql requires a first: or last: value,
-// but I believe this isn't settable in Gridsome unless creating page
-// programatically, via createPage()
-<page-query>
-  query Algo1 {
-  gitapi{
-    organization(login:"CombatCovid"){
-      repositories(first:50){
-        nodes {
-          name
-          nameWithOwner
-          docs: object(expression: "master:docs") {
-            ... on GitApi_Tree {
-              folders: entries {
-                lang: name
-                ... FolderInfo
-              }
-            }
-           }
-           images: object(expression: "master:docs/img") {
-             ... on GitApi_Tree {
-               entries {
-                 name
-               }
-             }
-           }
-           srcs: object(expression: "master:src") {
-             ... on GitApi_Tree {
-               entries {
-                 name
-               }
-             }
-           }
-        }
-      }
-    }
-  }
-}
-
-fragment FolderInfo on GitApi_TreeEntry {
-    contents: object {
-      ... on GitApi_Tree {
-        files: entries {
-          name
-          object {
-            ...on GitApi_Blob {
-              isBinary
-              text
-            }
-          }
-        }
-      }
-    }
-  }
-</page-query>
 
 <style scoped>
   .horiz-center {

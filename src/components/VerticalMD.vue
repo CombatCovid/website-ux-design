@@ -1,21 +1,21 @@
 <template>
   <v-layout>
     <v-flex xs11>
-      <RepoSidebar/>
+      <DesignList/>
     </v-flex>
     <v-flex>
-      <RepoDocs/>
+      <DesignDetail/>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-  import RepoSidebar from '@/components/RepoSidebar'
-  import RepoDocs from '@/components/RepoDocs'
+  import DesignList from '@/components/DesignList'
+  import DesignDetail from '@/components/DesignDetail'
 
   export default {
-    name: "RepoLayoutDocs",
-    components: { RepoSidebar, RepoDocs },
+    name: "VerticalMD",
+    components: { DesignList, DesignDetail },
     data: function () {
       return {
         summaryText: '<p>SummaryText goes here</p>',
@@ -23,7 +23,7 @@
       }
     },
     mounted () {
-      console.log('RepoLayoutDocs mounted: ' + this.summaryText)
+      console.log('VerticalMD mounted: ' + this.summaryText)
     }
   }
 </script>
