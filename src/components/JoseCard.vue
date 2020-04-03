@@ -4,19 +4,19 @@
 <!--      <v-flex>-->
 
 
-<!--    <div class="card-image-holder">-->
-      <v-img v-if="repo.cardImage" width="400px"
+    <div class="card-image-holder">
+      <v-img v-if="repo.cardImage" width="350px"
              p-5 class="white--text align-end card-image"
              :src="getImgUrl(repo.nameWithOwner, repo.cardImage)"
       >
       </v-img>
       <v-img v-else
-             width="400px"
+             width="300px"
              p-5 class="white--text align-end card-image"
              src="/resources/image/image-placeholder.png"
       >
       </v-img>
-<!--    </div>-->
+    </div>
       <div class="bottom-block">
         <h2 v-text="repo.title" class="card-title wrapping-text horiz-center"></h2>
         <p class="card-subtitle wrapping-text horiz-center">{{ repo.description }}</p>
@@ -74,16 +74,16 @@
   }
   @media only screen and (max-width: 959px) {
     .card-image-holder {
-      min-height: 47%;
-      max-height: 47%;
+      min-height: 67%;
+      max-height: 67%;
       width: 90%;
       margin: 20px auto;
     }
   }
   @media only screen and (max-width: 1260px) {
     .card-image-holder {
-      min-height: 47%;
-      max-height: 47%;
+      min-height: 67%;
+      max-height: 67%;
       width: 90%;
       margin: 20px auto;
     }
