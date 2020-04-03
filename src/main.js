@@ -9,26 +9,39 @@ import DefaultLayout from '~/layouts/Default.vue'
 const appMixins = {
   methods: {
     cleanFormatMarkdown (lines, site = 'https://github.com/') {
-      // in case we have other operations to do, like properly
-      // *todo* formatting included [name](url) links if VueMarkdown doesn't???
-      // *todo* but a more complete markdown converter may be appearing on the horizon.
-      return this.fixMarkdownImages(this.fixMarkdownLinks(this.stripFrontMatter(lines)), site)
+      // these are all for Markdown formats that don't get parsed by VueMarkDown
+      // which is otherwise the best available
+      // we do images first, as their match is more specific than similar-looking links
+      lines = this.fixAllMarkdownImages(this.stripFrontMatter(lines), site)
+      return this.fixUrlMarkdownLinks(lines)
     },
     stripFrontMatter: function (lines) {
       // *todo* later some way that VueMarkdown handles this itself? Not apparently...
       return lines.replace(/---\n.+---\n/gs, '')
     },
-    fixMarkdownLinks (lines) {
+    fixUrlMarkdownLinks (lines) {
       // *todo* add to this alternate fix for in-folder local images,
       // which also don't get parsed
-      return lines.replace(/[\[](.*)[\]]\s[[\(](.*)[\)]/,
+      return lines.replace(/[^\!]\[(.*)\]\s?\((.*)\)/gmi,
         '<a href="$2" target="_blank" rel="noreferrer noopener">$1</a>')
     },
-    fixMarkdownImages (lines, site = 'https://github.com/') {
-      // *todo* this fix for in-folder local images,
-      // which also don't get parsed
-      return lines.replace(/![\[](.*)[\]]\s[[\(](.*)[\)]/,
-        `<a href="${site}$2" target="_blank" rel="noreferrer noopener">$1</a>`)
+    fixAllMarkdownImages (lines, site = 'https://github.com/') {
+      // this preserves necessary order dependence
+      // we allow fixUrlPathedMarkdownImages() to match any link, http/s or not
+      // this is so a link without a protocol will also be matched
+      // thus the more specific fixLocalPathedMarkdownImages() must run first
+      lines = this.fixLocalPathedMarkdownImages(lines, site)
+      return this.fixUrlPathedMarkdownImages(lines, site)
+    },
+    fixLocalPathedMarkdownImages (lines, site = 'https://github.com/') {
+      lines = lines.replace(/\!\[(.*)\]\s?\([\.\/]+(.*)\)/gmi,
+        `<img src="${site}/$2" target="_blank" class='md-image-fit'><p class="md-caption-fit">$1</p>`)
+      return lines
+    },
+    fixUrlPathedMarkdownImages (lines, site = 'https://github.com/') {
+      lines = lines.replace(/\!\[(.*)\]\s?\((.*)\)/gmi,
+        `<img src="${site}/$2" target="_blank" class='md-image-fit'>`)
+      return lines
     },
     spaceDashes: function (str) {
       return str.replace(/[-]/g, ' ')

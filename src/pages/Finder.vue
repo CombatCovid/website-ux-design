@@ -6,25 +6,24 @@
       <ais-instant-search :index-name="indexName"
                           :search-client="searchClient" class="horiz-center searchbox">
 
-        <ais-configure :hits-per-page.camel="8" />
+        <ais-configure :hits-per-page.camel="8"/>
 
         <ais-powered-by/>
         <ais-search-box/>
 
         <ais-hits class="clear-above">
           <div slot-scope="{ items }">
-<!--            <p>{{ JSON.stringify(items)}}</p>-->
-            <v-container grid-list-lg fluid>
-              <v-layout d-flex flex-wrap>
-                <v-row>
-                  <v-col cols="12" md="3" v-for="(item, index) in items" :key="index">
-                    <JoseCard :repo="{ title: item.title, name:
+            <v-layout d-flex flex-wrap>
+              <v-row d-flex cols="1">
+                <v-col cols="12" md="3"
+                       class="d-flex child-flex"
+                       v-for="(item, index) in items" :key="index">
+                  <JoseCard :repo="{ title: item.title, name:
                   item.name, nameWithOwner: item.nameWithOwner,
                   description: item.description, cardImage: item.cardImage }"/>
-                  </v-col>
-                </v-row>
-              </v-layout>
-            </v-container>
+                </v-col>
+              </v-row>
+            </v-layout>
           </div>
         </ais-hits>
 
