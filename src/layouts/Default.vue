@@ -1,7 +1,8 @@
 <template>
   <v-app>
-    <Nav/>
     <v-content>
+      <Nav/>
+
       <v-container>
         <slot/>
       </v-container>

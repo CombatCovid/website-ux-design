@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h2>Design is {{ summaryTitle }}</h2>
-    <img :src="summaryImage" width="240px"/>
-    <VueMarkdown :source="summaryText" :prerender="cleanFormatMarkdown"/>
+    <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
+    <div class="design-image-hold">
+      <img :src="summaryImage" class="design-image"/>
+    </div>
+    <VueMarkdown :source="summaryText"/>
   </div>
 </template>
 
@@ -11,7 +13,7 @@
   import VueMarkdown from 'vue-markdown'
 
   export default {
-    name: "RepoDocs",
+    name: "DesignDetail",
     props: {
       design: String
     },
@@ -32,12 +34,16 @@
         return this.$static.gitapi.organization.repositories.nodes
       },
       summaryText: function () {
-        return this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
+        const sanitary = this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
+        return this.cleanFormatMarkdown(sanitary, this.imageFolder)
       },
-      imagePath: function () {
+      imageFolder: function () {
         return 'https://raw.githubusercontent.com/CombatCovid/' +
           this.repoName +
-          '/master/docs/img' +'/'
+          '/master/docs/'
+      },
+      imagePath: function () {
+        return this.imageFolder + 'img/'
       },
       summaryImage: function () {
         return this.imagePath + this.htmlSanitize(this.designRepo.images.entries[0].name)
@@ -66,7 +72,7 @@
 // but I believe this isn't settable in Gridsome unless creating page
 // programatically, via createPage() - which is still hardwired...
 <static-query>
-  query RepoDocs  {
+  query DesignDetail  {
     gitapi {
       organization(login:"CombatCovid"){
         repositories(first:50){
@@ -118,5 +124,42 @@ fragment FolderInfo on GitApi_TreeEntry {
   }
 </static-query>
 
+<style>
+  .md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
+    width: 90%;
+    margin: 2% 5% 0 5%
+  }
+  .md-caption-fit {
+    text-align: center;
+    margin: 0 auto;
+  }
+  h1, h2, h3,h4 {
+    font-size: medium;
+  }
+  @media only screen and (max-width: 959px) {
+    h1, h2, h3,h4 {
+      font-size: small;
+    }
+  }
+</style>
+
 <style scoped>
+  .normal-h-size {
+    font-size: larger;
+  }
+  @media only screen and (max-width: 959px) {
+    .normal-h-size {
+      font-size: small;
+    }
+  }
+  .horiz-center {
+    margin: 0 auto;
+    text-align: center;
+  }
+  .design-image {
+    width: 100%;
+  }
+  .design-image-hold {
+    margin: 3% auto;
+  }
 </style>

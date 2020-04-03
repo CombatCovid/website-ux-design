@@ -1,17 +1,17 @@
 <template>
   <Layout>
-    <h1>Viewer</h1>
-    <p>A much more real beginning, showing Designs out of a list chosen from Finder results.</p>
-    <p>This very preliminary display, so kindly pay no attention to look or formatting</p>
-<!--    <p only horizontal layout, which is not impossible-->
-<!--      even with a small phone, when put on its side, but we will do better,-->
-<!--      and of course in all formatted looks.</p>-->
-<!--    <p>Intent is to have normal list select -> summary pane for larger screens,-->
-<!--      but then for phones, vertical-down-opening summaries; or alternatively a-->
-<!--      menu-icon for select, then full-screen for summary.</p>-->
+    <h1 class="horiz-center">Viewer</h1>
     <div class="master-detail">
+      <p>
+        This display is to the point of what we want, showing Designs out of a list chosen from
+        Finder results. What follows when we have the Vuex foundation in,
+        is the ability to Mark chosen designs,
+        and refer to them from the Chosen Designs list, shown in mock at present.
+      </p>
+    </div>
+    <div class="master-detailx">
       <v-container class="grey lighten-5">
-          <RepoContent :design="design"/>
+          <HorizontalMD :design="design"/>
       </v-container>
     </div>
 
@@ -19,8 +19,8 @@
 </template>
 
 <script>
-  import RepoContent from '@/components/RepoContent'
-  import RepoLayoutDocs from '@/templates/RepoDocs'
+  import HorizontalMD from '@/components/HorizontalMD'
+  import VerticalMD from '@/components/VerticalMD'
 
   export default {
     metaInfo: {
@@ -36,7 +36,7 @@
         numberRepos: 99
       }
     },
-    components: {RepoLayoutDocs, RepoContent},
+    components: {VerticalMD, HorizontalMD},
     async mounted () {
       console.log ('route params: ' + JSON.stringify(this.$route.params.design))
     }
@@ -56,7 +56,16 @@
     color: darkslategray;
     background-color: beige;
   }
-
+  @media only screen and (max-width: 959px) {
+    .master-detail {
+      margin: 10px;
+      padding: 5px;
+    }
+  }
+  .horiz-center {
+    margin: 0 auto;
+    text-align: center;
+  }
   .repo-list {
     padding: 2px 10px;
   }

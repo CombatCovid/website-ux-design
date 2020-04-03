@@ -1,7 +1,5 @@
 # Combat Covid 
-## Well documented, validated and easy to find hardware designs to combat covid19 around the world
-**Status:** development
-![demoOfApp](demo.gif)
+## Easy to find hardware designs to replicate and combat covid19 around the world
 - 👉 Check the [contributing guidelines](https://github.com/CombatCovid/SPA-website/blob/develop/CONTRIB.md)
 - 👉 [Join the chat](https://discord.gg/HaXuRQ5)
 - Take a look at the [project board](https://github.com/CombatCovid/SPA-website/projects/2?fullscreen=true)

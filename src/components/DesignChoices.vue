@@ -7,7 +7,7 @@
       </v-list-item>
     </v-list>
     <v-snackbar v-model="snackbar" :timeout="snackTimeout" :top="true" color="blue">
-    {{ snackMessage }}
+      {{ snackMessage }}
     </v-snackbar>
   </div>
 </template>
