@@ -61,6 +61,7 @@
           const filtered = this.repos.filter (repo => repo.name === this.design)
           dRepo = filtered[0]
         }
+        console.log ('dRepo: ' + JSON.stringify(dRepo))
         return dRepo
       }
     },
