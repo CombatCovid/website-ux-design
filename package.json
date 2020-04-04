@@ -15,6 +15,7 @@
     "algoliasearch": "^4.1.0",
     "babel-runtime": "^6.26.0",
     "core-js": "^3.6.4",
+    "gh-pages": "^2.2.0",
     "gridsome": "^0.7.0",
     "vue-instantsearch": "^2.7.0",
     "vue-markdown": "^2.2.4",
