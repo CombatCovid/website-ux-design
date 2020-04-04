@@ -5,7 +5,9 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = {
-  siteName: 'Discover Designs...',
+  siteName: 'Hardware for Covid',
+  siteUrl: 'https://CombatCovid.github.io',
+  pathPrefix: '/SPA-website',
   plugins: [
     {
       use: '@gridsome/vue-remark',
