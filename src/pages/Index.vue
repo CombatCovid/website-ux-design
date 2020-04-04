@@ -25,13 +25,9 @@
 </template>
 
 <script>
-// import Carousel from "~/components/Carousel.vue";
 export default {
   metaInfo: {
     title: "Home"
-  },
-  components: {
-    // Carousel: Carousel
   }
 };
 </script>
@@ -45,7 +41,10 @@ export default {
     margin-left: 24px;
   }
   .formal-look {
-    color: #1c5f8d;
+    color: #1d5c87;
     font-family: Roboto, sans-serif;
+    font-size: small;
+    padding: 20px;
+    max-width: 640px;
   }
 </style>

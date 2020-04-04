@@ -18,8 +18,8 @@
 
   export default {
     props: {
-      design: { type: String, default: 'no design' },
-      summaryDoc: { type: String, default: '/Readme.md' },
+      design: { type: String, default: "" },
+      summaryDoc: { type: String, default: null },
       summaryImage: { type: String, default: '/summary.jpg' }
     },
     name: "HorizontalMD",
