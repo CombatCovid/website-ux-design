@@ -1,9 +1,9 @@
 <template>
   <Layout>
     <h1 class="horiz-center">Viewer</h1>
-    <div class="master-detail">
+    <div class="master-detail formal-look">
       <p>
-        This display is to the point of what we want, showing Designs out of a list chosen from
+        Alpha notes:  This display is to the point of what we want, showing Designs out of a list chosen from
         Finder results. What follows when we have the Vuex foundation in,
         is the ability to Mark chosen designs,
         and refer to them from the Chosen Designs list, shown in mock at present.
@@ -11,7 +11,7 @@
     </div>
     <div class="master-detailx">
       <v-container class="grey lighten-5">
-          <HorizontalMD :design="design"/>
+          <HorizontalMD :design="design" summaryDoc="Readme.md" summaryImage="summary.jpg"/>
       </v-container>
     </div>
 
@@ -68,5 +68,9 @@
   }
   .repo-list {
     padding: 2px 10px;
+  }
+  .formal-look {
+    color: #1c5f8d;
+    font-family: Roboto, sans-serif;
   }
 </style>

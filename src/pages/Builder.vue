@@ -1,41 +1,43 @@
 <template>
   <Layout>
-    <h1 class="horiz-center">Manual Index Builder</h1>
-    <div class="horiz-center">
-      <v-btn @click="algoIndex">Build</v-btn>
-      <v-btn @click="algoSearch">Search</v-btn>
-    </div>
-    <div class="horiz-center searchbox">
-      <ais-instant-search :index-name="indexName" :search-client="searchClient">
-        <ais-search-box />
-        <ais-hits>
-          <div slot="item" slot-scope="{ item }">
-            <h2>{{ item.name }}</h2>
-          </div>
-        </ais-hits>
-      </ais-instant-search>
-    </div>
+    <client-only>
+      <h1 class="horiz-center">Manual Index Builder</h1>
+      <div class="horiz-center">
+        <v-btn @click="algoIndex">Build</v-btn>
+        <v-btn @click="algoSearch">Search</v-btn>
+      </div>
+      <div class="horiz-center searchbox">
+        <ais-instant-search :index-name="indexName" :search-client="searchClient">
+          <ais-search-box />
+          <ais-hits>
+            <div slot="item" slot-scope="{ item }">
+              <h2>{{ item.name }}</h2>
+            </div>
+          </ais-hits>
+        </ais-instant-search>
+      </div>
 
-    <v-container grid-list-lg fluid>
-      <v-layout row wrap>
-        <v-flex xs12 md3 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
-          <v-card hover min-height="350px" max-height="350px">
-            <v-img v-if="repo.images !== null"
-                   p-5 class="white--text align-end" height="200px"
-                   :src="getImgUrl(repo.nameWithOwner, repo.images.entries[0].name)"
-            >
-            </v-img>
-            <v-img v-else
-                   p-5 class="white--text align-end" height="200px"
-                   src="https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png"
-            >
-            </v-img>
-            <v-card-title v-text="repo.name"></v-card-title>
-            <v-card-subtitle v-text="repo.description"></v-card-subtitle>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
+      <v-container grid-list-lg fluid>
+        <v-layout row wrap>
+          <v-flex xs12 md3 v-for="repo in $page.gitapi.organization.repositories.nodes" :key="repo.name">
+            <v-card hover min-height="350px" max-height="350px">
+              <v-img v-if="repo.images !== null"
+                     p-5 class="white--text align-end" height="200px"
+                     :src="getImgUrl(repo.nameWithOwner, repo.images.entries[0].name)"
+              >
+              </v-img>
+              <v-img v-else
+                     p-5 class="white--text align-end" height="200px"
+                     src="https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png"
+              >
+              </v-img>
+              <v-card-title v-text="repo.name"></v-card-title>
+              <v-card-subtitle v-text="repo.description"></v-card-subtitle>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </client-only>
   </Layout>
 </template>
 
@@ -143,8 +145,8 @@
             title: "TU Delft Scuba Mask for Covid19",
             name: "TU-Delft-Scuba-Mask-covid-19",
             nameWithOwner: "CombatCovid/TU-Delft-Scuba-Mask-covid-19",
-            description: "A reusable full face mask, for medical staff in operating rooms and intensive care",
-            cardSummary: "/Readme.md",
+            description: "A reusable full face mask, for application by medical staff in operating rooms and intensive care",
+            cardSummary: "/docs/01-Geeting Started.md",
             cardImage: "/cpap_600.jpg",
             thumbImage: null,
             keywords: "patient recovery critical intensive care equipment emergency helper treatment hospital operating room"

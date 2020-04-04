@@ -2,9 +2,9 @@
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
     <div class="design-image-hold">
-      <img :src="summaryImage" class="design-image"/>
+      <img :src="summaryImg" class="design-image"/>
     </div>
-    <VueMarkdown :source="summaryText"/>
+    <VueMarkdown :source="summaryTxt"/>
   </div>
 </template>
 
@@ -15,39 +15,22 @@
   export default {
     name: "DesignDetail",
     props: {
-      design: String
+      design: { type: String, default: 'No Design passed' },
+      summaryDoc: { type: String, default: '/Readme.md' },
+      summaryImage: { type: String, default: '/summary.jpg' }
     },
     data: function () {
       return {
         demoImage: '/resources/image/Example.jpg' // *todo* we'll want our own default...
       }
     },
+    mounted () {
+      // console.log('mounted - repos: ' + JSON.stringify(this.repos) )
+      console.log ('mounted: summaryDoc: ' + this.summaryDoc)
+      console.log ('mounted: summaryImage: ' + this.summaryImage)
+    },
     computed: {
       // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
-      repoName: function () {
-        return this.designRepo.name
-      },
-      summaryTitle:  function () {
-        return this.titleCase(this.spaceDashes(this.htmlSanitize(this.repoName)))
-      },
-      repos: function () {
-        return this.$static.gitapi.organization.repositories.nodes
-      },
-      summaryText: function () {
-        const sanitary = this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
-        return this.cleanFormatMarkdown(sanitary, this.imageFolder)
-      },
-      imageFolder: function () {
-        return 'https://raw.githubusercontent.com/CombatCovid/' +
-          this.repoName +
-          '/master/docs/'
-      },
-      imagePath: function () {
-        return this.imageFolder + 'img/'
-      },
-      summaryImage: function () {
-        return this.imagePath + this.htmlSanitize(this.designRepo.images.entries[0].name)
-      },
       designRepo: function () {
         let dRepo = this.repos[3]
 
@@ -61,7 +44,33 @@
           const filtered = this.repos.filter (repo => repo.name === this.design)
           dRepo = filtered[0]
         }
+        console.log('repoName - designRepo: ' + JSON.stringify(dRepo) )
+
         return dRepo
+      },
+      repoName: function () {
+        return this.designRepo.name
+      },
+      summaryTitle:  function () {
+        return this.titleCase(this.spaceDashes(this.htmlSanitize(this.repoName)))
+      },
+      repos: function () {
+        return this.$static.gitapi.organization.repositories.nodes
+      },
+      summaryTxt: function () {
+        const sanitary = this.htmlSanitize(this.repoName + '/' + this.summaryText)
+        return this.cleanFormatMarkdown(sanitary, this.imageFolder)
+      },
+      imageFolder: function () {
+        return 'https://raw.githubusercontent.com/CombatCovid/' +
+          this.repoName +
+          '/master/docs/'
+      },
+      imagePath: function () {
+        return this.imageFolder + 'img/'
+      },
+      summaryImg: function () {
+        return this.imagePath + this.htmlSanitize(this.repoName + '/' + this.summaryImage)
       }
     },
     components: { VueMarkdown }

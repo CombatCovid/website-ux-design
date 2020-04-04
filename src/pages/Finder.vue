@@ -20,7 +20,8 @@
                        v-for="(item, index) in items" :key="index">
                   <JoseCard :repo="{ title: item.title, name:
                   item.name, nameWithOwner: item.nameWithOwner,
-                  description: item.description, cardImage: item.cardImage }"/>
+                  description: item.description, cardImage: item.cardImage,
+                  summaryDoc: item.cardSummary, summaryImage: item.cardImage }"/>
                 </v-col>
               </v-row>
             </v-layout>
@@ -53,11 +54,6 @@
       }
     },
     components: { JoseCard, JoseLayout },
-    methods: {
-      showContent(repoName){
-        return this.$router.push({ path: `/viewer/${repoName}`, design: '${repoName}' })
-      }
-    }
   }
 </script>
 

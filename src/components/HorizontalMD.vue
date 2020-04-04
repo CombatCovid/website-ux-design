@@ -4,7 +4,7 @@
       <DesignChoices/>
     </v-col>
     <v-col cols="12" class="hidden-md-and-up">
-      <DesignDetail :design="design"/>
+      <DesignDetail :design="design" :summaryDoc="summaryDoc" :summaryImage="summaryImage"/>
     </v-col>
     <v-col class="hidden-sm-and-down">
       <DesignDetail :design="design"/>
@@ -18,7 +18,9 @@
 
   export default {
     props: {
-      design: String
+      design: { type: String, default: 'no design' },
+      summaryDoc: { type: String, default: '/Readme.md' },
+      summaryImage: { type: String, default: '/summary.jpg' }
     },
     name: "HorizontalMD",
     components: { DesignChoices, DesignDetail }
