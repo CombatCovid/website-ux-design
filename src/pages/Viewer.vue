@@ -43,25 +43,12 @@
   }
 </script>
 
-<style>
+<style scoped>
   .li {
     margin-bottom: 1em !important;
   }
-</style>
+  
 
-<style scoped>
-  .master-detail {
-    margin: 20px;
-    padding: 15px;
-    color: darkslategray;
-    background-color: beige;
-  }
-  @media only screen and (max-width: 959px) {
-    .master-detail {
-      margin: 10px;
-      padding: 5px;
-    }
-  }
   .horiz-center {
     margin: 0 auto;
     text-align: center;
@@ -69,4 +56,20 @@
   .repo-list {
     padding: 2px 10px;
   }
+  
+  .master-detail {
+      margin: 10px;
+      padding: 5px;
+  }
+
+  @media only screen and (min-width: 1029px) {
+    
+    .master-detail {
+    margin: 20px;
+    padding: 15px;
+    color: darkslategray;
+    background-color: beige;
+  }
+  }
+  
 </style>
