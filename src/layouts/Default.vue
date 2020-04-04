@@ -3,9 +3,9 @@
     <v-content>
       <Nav/>
 
-      <v-container>
+      <!-- <v-container> -->
         <slot/>
-      </v-container>
+      <!-- </v-container> -->
     </v-content>
   </v-app>
 </template>
