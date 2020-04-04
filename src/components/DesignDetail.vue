@@ -4,6 +4,9 @@
     <div class="design-image-hold">
       <img :src="summaryImage" class="design-image"/>
     </div>
+    <div class="horiz-center doc-title">
+      <h1>Summary</h1>
+    </div>
     <VueMarkdown :source="summaryText"/>
   </div>
 </template>
@@ -61,7 +64,6 @@
           const filtered = this.repos.filter (repo => repo.name === this.design)
           dRepo = filtered[0]
         }
-        console.log ('dRepo: ' + JSON.stringify(dRepo))
         return dRepo
       }
     },
@@ -156,6 +158,9 @@ fragment FolderInfo on GitApi_TreeEntry {
   .horiz-center {
     margin: 0 auto;
     text-align: center;
+  }
+  .doc-title {
+    padding: 0 20px 20px 20px;
   }
   .design-image {
     width: 100%;
