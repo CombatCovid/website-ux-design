@@ -5,7 +5,8 @@
         Alpha notes:  You're viewing a site out of our own latest design revision,
         where the Viewer page now opens as always with a summary, but then can
         proceed very easily to let you view all Design Documents and visual materials.
-
+      </p>
+      <p>
         You discover the designs from the Finder, aided by a quite intelligent and
         very rapid text and keywords search agent, behind the scenes. Speed and
         ease are the things we are after
