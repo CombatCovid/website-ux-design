@@ -11,7 +11,7 @@
         ease are the things we are after,
       </p>
       <p>
-        What follows, as we develop on a Vuex data foundation,
+        What follows, as we develop a local memoryy feature for that,
         will be the ability to Bookmark the designs you want to
         be able to immediately return to. We're looking forward to that.
       </p>
