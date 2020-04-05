@@ -1,20 +1,18 @@
 <template>
   <div>
     <Layout>
-      <!-- Learn how to use images here: https://gridsome.org/docs/images -->
-      <!-- <Carousel></Carousel> -->
-      <v-parallax dark class="parallax">
+      <div dark class="parallax">
         <v-layout py-12 row wrap justify-center>
-          <v-flex class="header--text" xs12 sm12 md4>
-            <div class="">
+          <v-flex class="" xs12 sm12 md4 lg4>
+            <div class="header--text">
               <h1 class="font-weight-bold">Combat covid with hardware</h1>
-              <h2 class="font-weight-light">Search for well documented designs </br>and document new solutions</h2>
+              <h2 class="font-weight-light">Search for well documented <span>designs</span> 🔍 </br> and <span>document</span> new solutions</h2>
             </div>  
           </v-flex>
-          <v-flex py-5 xs12 sm12 md2>
-            <div class="iframe__wrapper">
-              <div class="iframe">
-                <iframe width="560" height="315" 
+          <v-flex py-5 xs12 sm12 md4>
+            <div class="">
+              <div class="iframe-container">
+                <iframe class="iframe" width="" height="" 
                   src="https://www.youtube.com/embed/lIPwHRS_imY" 
                   frameborder="0" 
                   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
@@ -24,10 +22,10 @@
           </div>
           </v-flex>
         </v-layout>
-      </v-parallax>
+      </div>
 
       <v-layout py-10 class="section-2" row wrap justify-center>
-        <v-flex class="" xs12 sm4 md3 max-12>
+        <v-flex class="" xs12 sm4 md4 max-12>
            <v-list>
             <v-subheader class="font-weight-bold">HOW THE APP WORKS</v-subheader>
             <v-list-item v-for="(item, i) in appFeatures" :key="i">
@@ -40,7 +38,7 @@
 
 
         </v-flex>
-        <v-flex class="" xs12 sm4 md3 max-12>
+        <v-flex class="" xs12 sm4 md4 max-12>
           <v-list>
             <v-subheader class="font-weight-bold">HOW TO DOCUMENT A SOLUTION</v-subheader>
             <v-list-item v-for="(item, i) in documentation" :key="i">
@@ -64,7 +62,7 @@
         </v-flex>
       </v-layout>
     </Layout>
-  </div>
+  
 </template>
 
 <script>
@@ -98,23 +96,63 @@ export default {
         { title: "Translate", subtitle: "Translate to new languages"},
         { title: "Identify new solutions", subtitle: "Help us adding more solutions to the list"},
         { title: "Contact authors", subtitle: "Help us reach the authors of solutions to update the content"},
-
-      ]
+      ],
+      icons: [
+        'fab fa-facebook',
+        'fab fa-twitter',
+        'fab fa-google-plus',
+        'fab fa-linkedin',
+        'fab fa-instagram',
+      ],
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 .parallax{
   background: #348F50;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #56B4D3, #348F50);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #56B4D3, #348F50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: -webkit-linear-gradient(to right, #56B4D3, #348F50);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #56B4D3, #348F50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 
+span{
+  font-weight:750;
+}
+
+.iframe-container {
+  overflow: hidden;
+  padding-top: 56.25%;
+  position: relative;
+}
+ 
+.iframe-container .iframe {
+   padding:1em;
+   margin:0 auto; 
+   border: 0;
+   height: 100%;
+   left: 0;
+   position: absolute;
+   top: 0;
+   width: 100%;
+}
+
+.iframe{
+  -moz-box-shadow: 4px 4px 14px #000;
+  -webkit-box-shadow: 4px 4px 14px #000;
+  box-shadow: 4px 4px 14px #000;
+}
+
+.iframe--shadow{
+  -webkit-box-shadow: 6px 11px 53px 0px rgba(0,0,0,0.59);
+  -moz-box-shadow: 6px 11px 53px 0px rgba(0,0,0,0.59);
+  box-shadow: 6px 11px 53px 0px rgba(0,0,0,0.59);
 }
 
 .header--text{
   padding-top:100px;
+  color:white;
+  text-align:center;
 }
 
 .debug{
@@ -128,19 +166,19 @@ background: linear-gradient(to right, #56B4D3, #348F50); /* W3C, IE 10+/ Edge, F
   margin-right: 1rem;
 }
 
-.iframe{
-}
-
-
 
 @media only screen and (min-width:1120px){
-  .home__container{
+  /* .home__container{
     width:50%;
-  }
+  } */
   .section-2{
     margin: 0 10% 0 10%;
   }
 
+  .header--text{
+    padding-top:100px;
+    color:white;
+    text-align:left;
+  }
 }
-
 </style>
