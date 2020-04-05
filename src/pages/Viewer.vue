@@ -1,19 +1,6 @@
 <template>
   <Layout>
     <h1 class="horiz-center">Viewer</h1>
-    <div class="master-detail formal-look horiz-center">
-      <p>
-        Alpha notes:  This display is to the point of what we want, showing
-        Designs chosen out of a visual list resulting from your rapid keywords
-        and title search in the Finder.
-      </p>
-      <p>
-        What follows when we have the Vuex data foundation in,
-        will be the ability to Mark chosen designs,
-        and refer to them from the Chosen Designs list,
-        which is sketched in mock at present.
-      </p>
-    </div>
     <div class="master-detailx">
       <v-container class="grey lighten-5">
           <HorizontalMD :design="design" :summaryDoc="summaryDoc" :summaryImage="summaryImage"/>

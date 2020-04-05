@@ -1,28 +1,86 @@
 <template>
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-    <div class="design-image-hold">
-      <img :src="summaryImg" class="design-image"/>
+    <div v-if="imagesShow" class="images-slide">
+      <div class="horiz-center doc-title" @click="popImages">
+        <v-btn class="slider-title">Images ({{ nrImages }})</v-btn>
+      </div>
+      <VueGlide :perView="1" :gap="30" type="carousel">
+        <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
+          <!--     @click="popImages"    Slide {{ i }}-->
+          <div class="horiz-center">
+            <img :src="imagesImg" xheight="600" width="600">
+            <template slot="control">
+              <button data-glide-dir="<">prev</button>
+              <button data-glide-dir=">">next</button>
+            </template>
+          </div>
+        </VueGlideSlide>
+    </VueGlide>
     </div>
-    <div class="horiz-center doc-title">
-      <h1>Summary</h1>
+      <div v-else class="design-image-hold">
+        <div class="horiz-center doc-title" @click="popImages">
+          <v-btn>Introductory Image</v-btn>
+        </div>
+        <img :src="summaryImg" class="design-image"/>
+      </div>
+    <div v-if="docsShow" class="xdocs-slide">
+      <div class="horiz-center doc-title" @click="popDocs">
+        <v-btn>Documents ({{ nrTexts }})</v-btn>
+      </div>
+      <VueGlide :perView="1" x:gap="20">
+        <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
+          <!--        Slide {{ i }}-->
+          <div class="xdocs-slide">
+            <VueMarkdown :source="docText"/>
+          </div>
+        </VueGlideSlide>
+      </VueGlide>
     </div>
-    <VueMarkdown :source="summaryTxt"/>
+    <div v-else>
+      <div class="horiz-center doc-title">
+        <v-btn @click="popDocs">Summary</v-btn>
+      </div>
+      <VueMarkdown :source="summaryText"/>
+    </div>
   </div>
 </template>
 <script>
 
   import VueMarkdown from 'vue-markdown'
+  import { Glide, GlideSlide } from 'vue-glide-js'
+  import 'vue-glide-js/dist/vue-glide.css'
+  import axios from 'axios'
 
   export default {
     name: "DesignDetail",
     props: {
       design: { type: String, default: "" }
     },
+    components: { VueMarkdown, [Glide.name]: Glide,
+      [GlideSlide.name]: GlideSlide },
     data: function () {
       return {
+        summaryText: 'retrieving...',
+        nrTexts: 1,
+        nrImages: 1,
+        imagesShow: false,
+        docsShow: false,
         demoImage: '/resources/image/Example.jpg' // *todo* we'll want our own default...
       }
+    },
+    mounted () {
+      axios.get('https://raw.githubusercontent.com/CombatCovid/' +
+        this.htmlSanitize(this.repoName) +
+        '/master/README.md')
+        .then(response => {
+            console.log('summaryTxt: ' + JSON.stringify(response))
+            this.summaryText = this.cleanFormatMarkdown(response.data, this.summaryImageFolder)
+          },
+          error => {
+            console.log('summaryTxt: ' + JSON.stringify(error))
+            this.summaryText = 'summaryTxt retrieval error: ' + JSON.stringify(error)
+          })
     },
     computed: {
       // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
@@ -52,23 +110,62 @@
       },
       summaryTxt: function () {
         // const sanitary = this.htmlSanitize(this.repoName + '/' + this.summaryText)
-        const sanitary = this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
-        return this.cleanFormatMarkdown(sanitary, this.imageFolder)
+        // const sanitary = this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
+        // return this.cleanFormatMarkdown(sanitary, this.imageFolder)
+      },
+      docsTexts () {
+        let texts = new Array()
+        this.designRepo.docs.folders[0].contents.files.forEach(file => {
+          // console.log('file: ' + JSON.stringify(file))
+          if (file.name.search(/\.md/) > 0) {
+            texts.push(this.cleanFormatMarkdown(
+              this.htmlSanitize(file.object.text), this.imageFolder))
+          }
+        })
+        // console.log ('texts: ' + JSON.stringify(texts))
+        this.nrTexts = texts.length
+        return texts
       },
       imageFolder: function () {
         return 'https://raw.githubusercontent.com/CombatCovid/' +
           this.repoName +
           '/master/docs/'
       },
+      summaryImageFolder: function () {
+        return 'https://raw.githubusercontent.com/CombatCovid/' +
+          this.repoName +
+          '/master/'
+      },
       imagePath: function () {
         return this.imageFolder + 'img/'
       },
       summaryImg: function () {
-        // return this.imagePath + this.htmlSanitize(this.repoName + '/' + this.summaryImage)
-        return this.imagePath + this.htmlSanitize(this.designRepo.images.entries[0].name)
+        return 'https://raw.githubusercontent.com/CombatCovid/' +
+          this.htmlSanitize(this.repoName) +
+          '/master/summary.jpg'
+      },
+      imagesImgs () {
+        let images = new Array()
+        this.designRepo.images.entries.forEach(entry => {
+          if (entry.name.search(/jpg|png|jpeg|gif/) > 0) {
+            images.push(this.imagePath + this.htmlSanitize(entry.name))
+          }
+        })
+        // console.log ('images: ' + JSON.stringify(images))
+        this.nrImages = images.length
+        return images
       }
     },
-    components: { VueMarkdown }
+    methods: {
+      popImages: function () {
+        console.log('popImages')
+        this.imagesShow = !this.imagesShow;
+      },
+      popDocs: function () {
+        console.log('popDocs')
+        this.docsShow = !this.docsShow;
+      }
+    }
   }
 </script>
 
@@ -129,6 +226,26 @@ fragment FolderInfo on GitApi_TreeEntry {
 </static-query>
 
 <style>
+
+  .slider-title {
+    margin-top: 20px;
+  }
+  .images-slide {
+    width: 600px;
+    max-height: 600px;
+  }
+  .slide-image {
+    width: 600px;
+    max-height: 600px;
+  }
+  .docs-slide {
+    width: 600px;
+    max-height: 600px;
+  }
+  .slide-docs {
+    width: 600px;
+    max-height: 600px;
+  }
   .md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
     width: 90%;
     margin: 2% 5% 0 5%

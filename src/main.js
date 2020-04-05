@@ -3,6 +3,8 @@
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import InstantSearch from 'vue-instantsearch'
+// import VueGlide, { Controls, Breakpoints } from 'vue-glide-js'
+// import 'vue-glide-js/dist/vue-glide.css'
 
 import DefaultLayout from '~/layouts/Default.vue'
 
@@ -12,12 +14,13 @@ const appMixins = {
       // these are all for Markdown formats that don't get parsed by VueMarkDown
       // which is otherwise the best available
       // we do images first, as their match is more specific than similar-looking links
+      // *todo* need also to fix docs.md so they are not links...!
       lines = this.fixAllMarkdownImages(this.stripFrontMatter(lines), site)
       return this.fixUrlMarkdownLinks(lines)
     },
     stripFrontMatter: function (lines) {
       // *todo* later some way that VueMarkdown handles this itself? Not apparently...
-      return lines.replace(/---\n.+---\n/gs, '')
+      return lines.replace(/---[-]*\n.+---\n/gs, '')
     },
     fixUrlMarkdownLinks (lines) {
       // *todo* add to this alternate fix for in-folder local images,
@@ -83,6 +86,9 @@ export default function (Vue, { router, head, isClient, appOptions }) {
   Vue.mixin(appMixins)
   Vue.use(Vuetify)
   Vue.use(InstantSearch)
+  // Vue.use(VueGlide)
+  // Vue.use(Controls)
+  // Vue.use(Breakpoints)
 
   appOptions.vuetify = new Vuetify(opts);
   Vue.component('Layout', DefaultLayout)

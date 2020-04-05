@@ -109,7 +109,6 @@
           // {name: '/jose-connect', label: 'Jurra Connect'},
           {name: '/finder', label: 'Finder'},
           {name: '/viewer', label: 'Viewer'},
-          {name: '/builder', label: 'Builder'},
           {name: '/documentation', label: 'Documentation'},
           {name: '/about', label: 'About'}
         ]

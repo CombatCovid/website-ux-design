@@ -1,8 +1,8 @@
 <template>
   <v-row>
-    <v-col cols="3" class="hidden-sm-and-down">
-      <DesignChoices/>
-    </v-col>
+<!--    <v-col cols="3" class="hidden-sm-and-down">-->
+<!--      <DesignChoices/>-->
+<!--    </v-col>-->
     <v-col cols="12" class="hidden-md-and-up">
       <DesignDetail :design="design" :summaryDoc="summaryDoc" :summaryImage="summaryImage"/>
     </v-col>
