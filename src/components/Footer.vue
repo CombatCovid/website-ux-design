@@ -14,8 +14,10 @@
           :key="icon"
           class="mx-4 white--text"
           icon
+          target="_blank"
+          :href="icon.link"
         >
-          <v-icon size="24px">{{ icon }}</v-icon>
+          <v-icon size="24px">{{ icon.name }}</v-icon>
         </v-btn>
       </v-card-text>
       <div class="footer-text">
@@ -49,10 +51,10 @@
   export default {
     name:"footer",
     data: () => ({
-      icons: {
-        mdiDiscord,
-        mdiGithub
-      }
+      icons: [
+        { name: mdiDiscord, link: "https://discord.gg/rYHCBt" },
+        { name: mdiGithub, link: "https://github.com/CombatCovid/SPA-website" }
+      ]
     }),
   }
 </script>
