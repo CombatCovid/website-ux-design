@@ -10,19 +10,22 @@
           <span>Click to return to the summary.</span>
         </v-tooltip>
       </div>
-      <VueGlide :perView="1" :gap="30" type="carousel">
-        <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
-          <div class="horiz-center">
-            <img :src="imagesImg" width="100%"><!-- that width 100% is critical -->
-            <template slot="control">
-              <button data-glide-dir="<">prev</button>
-              <button data-glide-dir=">">next</button>
-            </template>
-          </div>
-        </VueGlideSlide>
-    </VueGlide>
+      <div class="image-display-mask">
+        <VueGlide :perView="1" :gap="30" type="carousel">
+          <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
+            <div class="horiz-center">
+              <img :src="imagesImg" class="ximage-lim" width="100%"><!-- that width 100% is critical -->
+              <template slot="control">
+                <button data-glide-dir="<">prev</button>
+                <button data-glide-dir=">">next</button>
+              </template>
+            </div>
+          </VueGlideSlide>
+        </VueGlide>
+      </div>
     </div>
-      <div v-else class="design-image-hold">
+    <div v-else class="design-image-hold">
+      <div class="image-display-mask">
         <div class="horiz-center doc-title" @click="popImages">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
@@ -35,6 +38,7 @@
           <img :src="summaryImg" class="design-image"/>
         </div>
       </div>
+    </div>
     <div v-if="docsShow" class="xdocs-slide">
       <div class="horiz-center doc-title" @click="popDocs">
         <v-tooltip bottom>
@@ -249,6 +253,12 @@ fragment FolderInfo on GitApi_TreeEntry {
 
   .slider-title {
     margin-top: 20px;
+  }
+  .image-display-mask {
+    overflow: hidden;
+  }
+  .image-lim {
+    max-height: 600px;
   }
   .images-slide {
     width: 80%;

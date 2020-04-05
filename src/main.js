@@ -26,7 +26,7 @@ const appMixins = {
       // *todo* add to this alternate fix for in-folder local images,
       // which also don't get parsed
       return lines.replace(/[^\!]\[(.*)\]\s?\((.*)\)/gmi,
-        '<a href="$2" target="_blank" rel="noreferrer noopener">$1</a>')
+        '<a href="$2" target="_blank" rel="noreferrer noopener"> $1</a>')
     },
     fixAllMarkdownImages (lines, site = 'https://github.com/') {
       // this preserves necessary order dependence
@@ -38,12 +38,12 @@ const appMixins = {
     },
     fixLocalPathedMarkdownImages (lines, site = 'https://github.com/') {
       lines = lines.replace(/\!\[(.*)\]\s?\([\.\/]+(.*)\)/gmi,
-        `<img src="${site}/$2" target="_blank" class='md-image-fit'><p class="md-caption-fit">$1</p>`)
+        ` <img src="${site}/$2" target="_blank" class='md-image-fit'><p class="md-caption-fit"> $1</p>`)
       return lines
     },
     fixUrlPathedMarkdownImages (lines, site = 'https://github.com/') {
       lines = lines.replace(/\!\[(.*)\]\s?\((.*)\)/gmi,
-        `<img src="${site}/$2" target="_blank" class='md-image-fit'>`)
+        ` <img src="${site}/$2" target="_blank" class='md-image-fit'>`)
       return lines
     },
     spaceDashes: function (str) {
