@@ -2,15 +2,15 @@
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
     <div v-if="imagesShow" class="images-slide">
-      <div class="horiz-center doc-title" @click="popImages">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn class="slider-title" v-on="on">Design Images ({{ nrImages }})</v-btn>
-          </template>
-          <span>Click to return to the summary.</span>
-        </v-tooltip>
-      </div>
       <div class="image-display-mask">
+        <div class="horiz-center doc-title" @click="popImages">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn class="slider-title" v-on="on">Design Images ({{ nrImages }})</v-btn>
+            </template>
+            <span>Click to return to the summary.</span>
+          </v-tooltip>
+        </div>
         <VueGlide :perView="1" :gap="30" type="carousel">
           <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
             <div class="horiz-center">
@@ -255,7 +255,7 @@ fragment FolderInfo on GitApi_TreeEntry {
     margin-top: 20px;
   }
   .image-display-mask {
-    overflow: hidden;
+    overflow: hidden !important;
   }
   .image-lim {
     max-height: 600px;
