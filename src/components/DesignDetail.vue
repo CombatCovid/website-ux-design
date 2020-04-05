@@ -1,32 +1,126 @@
 <template>
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-    <div class="design-image-hold">
-      <img :src="summaryImage" class="design-image"/>
+    <div v-if="imagesShow" class="images-slide">
+      <div class="horiz-center doc-title" @click="popImages">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn class="slider-title" v-on="on">Design Images ({{ nrImages }})</v-btn>
+          </template>
+          <span>Click to return to the summary.</span>
+        </v-tooltip>
+      </div>
+      <VueGlide :perView="1" :gap="30" type="carousel">
+        <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
+          <div class="horiz-center">
+            <img :src="imagesImg" width="100%"><!-- that width 100% is critical -->
+            <template slot="control">
+              <button data-glide-dir="<">prev</button>
+              <button data-glide-dir=">">next</button>
+            </template>
+          </div>
+        </VueGlideSlide>
+    </VueGlide>
     </div>
-    <div class="horiz-center doc-title">
-      <h1>Summary</h1>
+      <div v-else class="design-image-hold">
+        <div class="horiz-center doc-title" @click="popImages">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on">Introductory Image</v-btn>
+            </template>
+            <span>Click to see view all the design images. Click again to return to the summary.</span>
+          </v-tooltip>
+        </div>
+        <div class="images-slide">
+          <img :src="summaryImg" class="design-image"/>
+        </div>
+      </div>
+    <div v-if="docsShow" class="xdocs-slide">
+      <div class="horiz-center doc-title" @click="popDocs">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on">Design Documents ({{ nrTexts }})</v-btn>
+          </template>
+          <span>Click to return to the summary.</span>
+        </v-tooltip>
+      </div>
+      <VueGlide :perView="1" :xgap="20">
+        <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
+          <!--        Slide {{ i }}-->
+          <div class="docs-slide">
+            <VueMarkdown :source="docText"/>
+          </div>
+        </VueGlideSlide>
+      </VueGlide>
     </div>
-    <VueMarkdown :source="summaryText"/>
+    <div v-else>
+      <div class="horiz-center doc-title">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn @click="popDocs" v-on="on">Design Summary</v-btn>
+          </template>
+          <span>Click to see view all the design documentse. Click again to return to the summary.</span>
+        </v-tooltip>
+      </div>
+      <div class="docs-slide">
+        <VueMarkdown :source="summaryText"/>
+      </div>
+    </div>
   </div>
 </template>
-
 <script>
 
   import VueMarkdown from 'vue-markdown'
+  import { Glide, GlideSlide } from 'vue-glide-js'
+  import 'vue-glide-js/dist/vue-glide.css'
+  import axios from 'axios'
 
   export default {
     name: "DesignDetail",
     props: {
-      design: String
+      design: { type: String, default: "" }
     },
+    components: { VueMarkdown, [Glide.name]: Glide,
+      [GlideSlide.name]: GlideSlide },
     data: function () {
       return {
+        summaryText: 'retrieving...',
+        nrTexts: 1,
+        nrImages: 1,
+        imagesShow: false,
+        docsShow: false,
         demoImage: '/resources/image/Example.jpg' // *todo* we'll want our own default...
       }
     },
+    mounted () {
+      axios.get('https://raw.githubusercontent.com/CombatCovid/' +
+        this.htmlSanitize(this.repoName) +
+        '/master/README.md')
+        .then(response => {
+            this.summaryText = this.cleanFormatMarkdown(response.data, this.summaryImageFolder)
+          },
+          error => {
+            console.log('summaryTxt retrieval error: ' + JSON.stringify(error))
+            this.summaryText = 'summaryTxt retrieval error: ' + JSON.stringify(error)
+          })
+    },
     computed: {
       // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
+      designRepo: function () {
+
+        // this is used when Viewer is called directly
+        // we'll do something with validity and/or Vuex memory to do better here
+        // *todo* at this moment first valid is fifth - metadata will rescue
+        let dRepo = this.repos[4]
+
+        if (this.design) {
+          const filtered = this.repos.filter (repo => repo.name === this.design)
+          dRepo = filtered[0]
+        }
+        // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo.name) )
+
+        return dRepo
+      },
       repoName: function () {
         return this.designRepo.name
       },
@@ -36,38 +130,62 @@
       repos: function () {
         return this.$static.gitapi.organization.repositories.nodes
       },
-      summaryText: function () {
-        const sanitary = this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
-        return this.cleanFormatMarkdown(sanitary, this.imageFolder)
+      summaryTxt: function () {
+        // const sanitary = this.htmlSanitize(this.repoName + '/' + this.summaryText)
+        // const sanitary = this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
+        // return this.cleanFormatMarkdown(sanitary, this.imageFolder)
+      },
+      docsTexts () {
+        let texts = new Array()
+        this.designRepo.docs.folders[0].contents.files.forEach(file => {
+          // console.log('file: ' + JSON.stringify(file))
+          if (file.name.search(/\.md/) > 0) {
+            texts.push(this.cleanFormatMarkdown(
+              this.htmlSanitize(file.object.text), this.imageFolder))
+          }
+        })
+        // console.log ('texts: ' + JSON.stringify(texts))
+        this.nrTexts = texts.length
+        return texts
       },
       imageFolder: function () {
         return 'https://raw.githubusercontent.com/CombatCovid/' +
           this.repoName +
           '/master/docs/'
       },
+      summaryImageFolder: function () {
+        return 'https://raw.githubusercontent.com/CombatCovid/' +
+          this.repoName +
+          '/master/'
+      },
       imagePath: function () {
         return this.imageFolder + 'img/'
       },
-      summaryImage: function () {
-        return this.imagePath + this.htmlSanitize(this.designRepo.images.entries[0].name)
+      summaryImg: function () {
+        return 'https://raw.githubusercontent.com/CombatCovid/' +
+          this.htmlSanitize(this.repoName) +
+          '/master/summary.jpg'
       },
-      designRepo: function () {
-        let dRepo = this.repos[3]
-
-        if (typeof this.design === "undefined") {
-          // this case if page called directly, as from menu
-          // then we'd set view to 'first' repo
-          // *todo* at early moment first valid is fifth - metadata will rescue
-          dRepo = this.repos[4]
-        }
-        else {
-          const filtered = this.repos.filter (repo => repo.name === this.design)
-          dRepo = filtered[0]
-        }
-        return dRepo
+      imagesImgs () {
+        let images = new Array()
+        this.designRepo.images.entries.forEach(entry => {
+          if (entry.name.search(/jpg|png|jpeg|gif/) > 0) {
+            images.push(this.imagePath + this.htmlSanitize(entry.name))
+          }
+        })
+        // console.log ('images: ' + JSON.stringify(images))
+        this.nrImages = images.length
+        return images
       }
     },
-    components: { VueMarkdown }
+    methods: {
+      popImages: function () {
+        this.imagesShow = !this.imagesShow;
+      },
+      popDocs: function () {
+        this.docsShow = !this.docsShow;
+      }
+    }
   }
 </script>
 
@@ -128,6 +246,42 @@ fragment FolderInfo on GitApi_TreeEntry {
 </static-query>
 
 <style>
+
+  .slider-title {
+    margin-top: 20px;
+  }
+  .images-slide {
+    width: 80%;
+    max-height: 600px;
+    margin: 0 10%;
+  }
+  @media only screen and (max-width: 959px) {
+    .images-slide {
+      width: 94%;
+      max-height: 600px;
+      margin: 0 2%;
+    }
+  }
+  .slide-image {
+    width: 600px;
+    max-height: 600px;
+  }
+  .docs-slide {
+    width: 80%;
+    margin: 0 10%;
+  }
+  @media only screen and (max-width: 959px) {
+    .docs-slide {
+      width: 94%;
+      max-height: 600px;
+      margin: 0 2%;
+    }
+  }
+
+      .slide-docs {
+    width: 600px;
+    max-height: 600px;
+  }
   .md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
     width: 90%;
     margin: 2% 5% 0 5%
@@ -167,5 +321,15 @@ fragment FolderInfo on GitApi_TreeEntry {
   }
   .design-image-hold {
     margin: 3% auto;
+  }
+  .doc-title {
+    padding: 0 20px 20px 20px;
+  }
+  .formal-look {
+    color: #1d5c87;
+    font-family: Roboto, sans-serif;
+    font-size: small;
+    padding: 20px;
+    max-width: 640px;
   }
 </style>

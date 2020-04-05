@@ -1,10 +1,10 @@
 <template>
   <v-row>
-    <v-col cols="3" class="hidden-sm-and-down">
-      <DesignChoices/>
-    </v-col>
+<!--    <v-col cols="3" class="hidden-sm-and-down">-->
+<!--      <DesignChoices/>-->
+<!--    </v-col>-->
     <v-col cols="12" class="hidden-md-and-up">
-      <DesignDetail :design="design"/>
+      <DesignDetail :design="design" :summaryDoc="summaryDoc" :summaryImage="summaryImage"/>
     </v-col>
     <v-col class="hidden-sm-and-down">
       <DesignDetail :design="design"/>
@@ -18,7 +18,9 @@
 
   export default {
     props: {
-      design: String
+      design: { type: String, default: "" },
+      summaryDoc: { type: String, default: null },
+      summaryImage: { type: String, default: '/summary.jpg' }
     },
     name: "HorizontalMD",
     components: { DesignChoices, DesignDetail }

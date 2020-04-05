@@ -106,7 +106,6 @@
         designIcon: mdiDotsHorizontal,
         items: [
           {name: '/', label: 'Home'},
-          // {name: '/jose-connect', label: 'Jurra Connect'},
           {name: '/finder', label: 'Finder'},
           {name: '/viewer', label: 'Viewer'},
           {name: '/documentation', label: 'Documentation'},
