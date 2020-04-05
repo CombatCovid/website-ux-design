@@ -5,7 +5,7 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = {
-  siteName: 'Hardware for Covid',
+  siteName: 'CombatCovid',
   siteUrl: 'https://CombatCovid.github.io',
   pathPrefix: '/SPA-website',
   plugins: [
