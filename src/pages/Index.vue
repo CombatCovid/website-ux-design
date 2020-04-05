@@ -1,19 +1,22 @@
 <template>
   <div>
     <Layout>
-      <!-- Learn how to use images here: https://gridsome.org/docs/images -->
-      <!-- <Carousel></Carousel> -->
       <div class="formal-look">
         <h2>Greetings</h2>
         <br>
 
-        <p>You're meeting the demonstration app of the Combat Covid with Hardware project.</p>
+        <p>
+          You're meeting the demonstration app of the Combat Covid with Hardware project.
+        </p>
         <p>This is a fast-moving Alpha production, so be reassured if you find that
           items may move, appear, disappear, and at moments perhaps not function entirely
-          as you expected.</p>
+          as you expected.
+        </p>
         <p>We're moving rapidly and constantly to add what's needed for early real use, and anything
           unexpected will soon be repaired.</p><p>Thank you for your patience, and especially for your interest.</p>
-        <p class="sig-indent">The Combat Covid with Hardware Team</p>
+        <p class="sig-indent">
+          The Combat Covid with Hardware Team
+        </p>
 
         <p class="home-links">
           <!--        <a href="https://gridsome.org/docs/" target="_blank" rel="noopener">Gridsome Docs</a>-->
