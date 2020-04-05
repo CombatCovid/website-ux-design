@@ -7,6 +7,7 @@
         <slot/>
       <!-- </v-container> -->
     </v-content>
+    <Footer></Footer>
   </v-app>
 </template>
 
@@ -20,10 +21,12 @@
 
 <script>
   import Nav from '~/components/Nav.vue'
+  import Footer from '~/components/Footer.vue'
 
   export default {
     components: {
-      "Nav": Nav
+      "Nav": Nav,
+      "Footer": Footer
     }
   }
 </script>

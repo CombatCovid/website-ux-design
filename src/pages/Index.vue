@@ -62,7 +62,8 @@
         </v-flex>
       </v-layout>
     </Layout>
-  
+    
+  </div>
 </template>
 
 <script>
@@ -168,9 +169,7 @@ span{
 
 
 @media only screen and (min-width:1120px){
-  /* .home__container{
-    width:50%;
-  } */
+ 
   .section-2{
     margin: 0 10% 0 10%;
   }
