@@ -3,13 +3,17 @@
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
     <div v-if="imagesShow" class="images-slide">
       <div class="horiz-center doc-title" @click="popImages">
-        <v-btn class="slider-title">Images ({{ nrImages }})</v-btn>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn class="slider-title" v-on="on">Design Images ({{ nrImages }})</v-btn>
+          </template>
+          <span>Click to return to the summary.</span>
+        </v-tooltip>
       </div>
       <VueGlide :perView="1" :gap="30" type="carousel">
         <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
-          <!--     @click="popImages"    Slide {{ i }}-->
           <div class="horiz-center">
-            <img :src="imagesImg" xheight="600" width="600">
+            <img :src="imagesImg" width="100%"><!-- that width 100% is critical -->
             <template slot="control">
               <button data-glide-dir="<">prev</button>
               <button data-glide-dir=">">next</button>
@@ -20,18 +24,30 @@
     </div>
       <div v-else class="design-image-hold">
         <div class="horiz-center doc-title" @click="popImages">
-          <v-btn>Introductory Image</v-btn>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on">Introductory Image</v-btn>
+            </template>
+            <span>Click to see view all the design images. Click again to return to the summary.</span>
+          </v-tooltip>
         </div>
-        <img :src="summaryImg" class="design-image"/>
+        <div class="images-slide">
+          <img :src="summaryImg" class="design-image"/>
+        </div>
       </div>
     <div v-if="docsShow" class="xdocs-slide">
       <div class="horiz-center doc-title" @click="popDocs">
-        <v-btn>Documents ({{ nrTexts }})</v-btn>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on">Design Documents ({{ nrTexts }})</v-btn>
+          </template>
+          <span>Click to return to the summary.</span>
+        </v-tooltip>
       </div>
-      <VueGlide :perView="1" x:gap="20">
+      <VueGlide :perView="1" :xgap="20">
         <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
           <!--        Slide {{ i }}-->
-          <div class="xdocs-slide">
+          <div class="docs-slide">
             <VueMarkdown :source="docText"/>
           </div>
         </VueGlideSlide>
@@ -39,9 +55,16 @@
     </div>
     <div v-else>
       <div class="horiz-center doc-title">
-        <v-btn @click="popDocs">Summary</v-btn>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn @click="popDocs" v-on="on">Design Summary</v-btn>
+          </template>
+          <span>Click to see view all the design documentse. Click again to return to the summary.</span>
+        </v-tooltip>
       </div>
-      <VueMarkdown :source="summaryText"/>
+      <div class="docs-slide">
+        <VueMarkdown :source="summaryText"/>
+      </div>
     </div>
   </div>
 </template>
@@ -74,11 +97,10 @@
         this.htmlSanitize(this.repoName) +
         '/master/README.md')
         .then(response => {
-            console.log('summaryTxt: ' + JSON.stringify(response))
             this.summaryText = this.cleanFormatMarkdown(response.data, this.summaryImageFolder)
           },
           error => {
-            console.log('summaryTxt: ' + JSON.stringify(error))
+            console.log('summaryTxt retrieval error: ' + JSON.stringify(error))
             this.summaryText = 'summaryTxt retrieval error: ' + JSON.stringify(error)
           })
     },
@@ -158,11 +180,9 @@
     },
     methods: {
       popImages: function () {
-        console.log('popImages')
         this.imagesShow = !this.imagesShow;
       },
       popDocs: function () {
-        console.log('popDocs')
         this.docsShow = !this.docsShow;
       }
     }
@@ -231,18 +251,34 @@ fragment FolderInfo on GitApi_TreeEntry {
     margin-top: 20px;
   }
   .images-slide {
-    width: 600px;
+    width: 80%;
     max-height: 600px;
+    margin: 0 10%;
+  }
+  @media only screen and (max-width: 959px) {
+    .images-slide {
+      width: 94%;
+      max-height: 600px;
+      margin: 0 2%;
+    }
   }
   .slide-image {
     width: 600px;
     max-height: 600px;
   }
   .docs-slide {
-    width: 600px;
-    max-height: 600px;
+    width: 80%;
+    margin: 0 10%;
   }
-  .slide-docs {
+  @media only screen and (max-width: 959px) {
+    .docs-slide {
+      width: 94%;
+      max-height: 600px;
+      margin: 0 2%;
+    }
+  }
+
+      .slide-docs {
     width: 600px;
     max-height: 600px;
   }
