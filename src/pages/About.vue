@@ -7,8 +7,8 @@
         proceed very easily to let you view all Design Documents and visual materials.
 
         You discover the designs from the Finder, aided by a quite intelligent and
-        very rapid text and keywords search agent behind the scenes. Speed and
-        ease are the things we are after,
+        very rapid text and keywords search agent, behind the scenes. Speed and
+        ease are the things we are after
       </p>
       <p>
         What follows, as we develop a local memoryy feature for that,
