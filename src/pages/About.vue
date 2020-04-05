@@ -2,15 +2,18 @@
   <Layout>
     <div class="master-detail formal-look horiz-center">
       <p>
-        Alpha notes:  This display is to the point of what we want, showing
-        Designs chosen out of a visual list resulting from your rapid keywords
-        and title search in the Finder.
+        Alpha notes:  You're viewing a site out of our own latest design revision,
+        where the Viewer page now opens as always with a summary, but then can
+        proceed very easily to let you view all Design Documents and visual materials.
+
+        You discover the designs from the Finder, aided by a quite intelligent and
+        very rapid text and keywords search agent behind the scenes. Speed and
+        ease are the things we are after,
       </p>
       <p>
-        What follows when we have the Vuex data foundation in,
-        will be the ability to Mark chosen designs,
-        and refer to them from the Chosen Designs list,
-        which is sketched in mock at present.
+        What follows, as we develop on a Vuex data foundation,
+        will be the ability to Bookmark the designs you want to
+        be able to immediately return to. We're looking forward to that.
       </p>
     </div>
   </Layout>
