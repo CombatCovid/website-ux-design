@@ -125,7 +125,11 @@ fragment FolderInfo on GitApi_TreeEntry {
 </static-query>
 
 <style>
-  .md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
+
+</style>
+
+<style scoped>
+    .md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
     width: 90%;
     margin: 2% 5% 0 5%
   }
@@ -141,9 +145,6 @@ fragment FolderInfo on GitApi_TreeEntry {
       font-size: small;
     }
   }
-</style>
-
-<style scoped>
   .normal-h-size {
     font-size: larger;
   }
