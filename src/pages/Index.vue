@@ -9,10 +9,10 @@
               <h2 class="font-weight-light">Search for well documented <span>designs</span> 🔍 </br> and <span>document</span> new solutions</h2>
             </div>  
           </v-flex>
-          <v-flex py-5 xs12 sm12 md4>
-            <div class="">
+          <v-flex py-5 xs12 sm12 md4 style="margin:1.5em;">
+            <div class="iframe--shadow">
               <div class="iframe-container">
-                <iframe class="iframe" width="" height="" 
+                <iframe class="iframe"
                   src="https://www.youtube.com/embed/lIPwHRS_imY" 
                   frameborder="0" 
                   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
@@ -128,7 +128,7 @@ span{
 }
  
 .iframe-container .iframe {
-   padding:1em;
+   /* padding:1em; */
    margin:0 auto; 
    border: 0;
    height: 100%;
@@ -138,7 +138,7 @@ span{
    width: 100%;
 }
 
-.iframe{
+.iframe--shadow{
   -moz-box-shadow: 4px 4px 14px #000;
   -webkit-box-shadow: 4px 4px 14px #000;
   box-shadow: 4px 4px 14px #000;

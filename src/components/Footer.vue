@@ -35,7 +35,7 @@
       <v-divider></v-divider>
 
       <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — <strong>The CombatCovid with Hardware Team
+        {{ new Date().getFullYear() }} — <strong>The CombatCovid with Hardware Team License: GPL 2.0
       </strong>
       </v-card-text>
     </v-card>
