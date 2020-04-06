@@ -1,8 +1,7 @@
 <template>
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-    <div v-if="imagesShow" class="images-slide">
-      <div class="image-display-mask">
+    <div v-if="imagesShow" class="images-slide image-display-mask">
         <div class="horiz-center doc-title" @click="popImages">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
@@ -22,7 +21,6 @@
             </div>
           </VueGlideSlide>
         </VueGlide>
-      </div>
     </div>
     <div v-else class="design-image-hold">
       <div class="image-display-mask">
@@ -39,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div v-if="docsShow" class="xdocs-slide">
+    <div v-if="docsShow" class="docs-show-pane">
       <div class="horiz-center doc-title" @click="popDocs">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
@@ -275,6 +273,9 @@ fragment FolderInfo on GitApi_TreeEntry {
   .slide-image {
     width: 600px;
     max-height: 600px;
+  }
+  .docs-show-pane {
+    margin-top: 2rem;
   }
   .docs-slide {
     width: 80%;
