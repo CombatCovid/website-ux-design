@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-    <div v-if="imagesShow" class="images-slide image-display-mask">
+    <div v-if="imagesShow" class="images-slide image-display-mask docs-show-pane">
         <div class="horiz-center doc-title" @click="popImages">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
@@ -99,7 +99,7 @@
         this.htmlSanitize(this.repoName) +
         '/master/README.md')
         .then(response => {
-            this.summaryText = this.cleanFormatMarkdown(response.data, this.summaryImageFolder)
+            this.summaryText = this.cleanFormatMarkdown(response.data, this.summaryImageFolder, this.repoTreeFolder)
           },
           error => {
             console.log('summaryTxt retrieval error: ' + JSON.stringify(error))
@@ -135,7 +135,7 @@
       summaryTxt: function () {
         // const sanitary = this.htmlSanitize(this.repoName + '/' + this.summaryText)
         // const sanitary = this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
-        // return this.cleanFormatMarkdown(sanitary, this.imageFolder)
+        // return this.cleanFormatMarkdown(sanitary, this.repoBlobsFolder)
       },
       docsTexts () {
         let texts = new Array()
@@ -143,7 +143,7 @@
           // console.log('file: ' + JSON.stringify(file))
           if (file.name.search(/\.md/) > 0) {
             texts.push(this.cleanFormatMarkdown(
-              this.htmlSanitize(file.object.text), this.imageFolder))
+              this.htmlSanitize(file.object.text), this.imageFolder, this.repoTreeFolder))
           }
         })
         // console.log ('texts: ' + JSON.stringify(texts))
@@ -159,6 +159,11 @@
         return 'https://raw.githubusercontent.com/CombatCovid/' +
           this.repoName +
           '/master/'
+      },
+      repoTreeFolder: function () {
+        return 'https://github.com/CombatCovid/' +
+          this.repoName +
+          '/tree/master/'
       },
       imagePath: function () {
         return this.imageFolder + 'img/'
@@ -249,50 +254,6 @@ fragment FolderInfo on GitApi_TreeEntry {
 
 <style>
 
-  .slider-title {
-    margin-top: 20px;
-  }
-  .image-display-mask {
-    overflow: hidden !important;
-  }
-  .image-lim {
-    max-height: 600px;
-  }
-  .images-slide {
-    width: 80%;
-    max-height: 600px;
-    margin: 0 10%;
-  }
-  @media only screen and (max-width: 959px) {
-    .images-slide {
-      width: 94%;
-      max-height: 600px;
-      margin: 0 2%;
-    }
-  }
-  .slide-image {
-    width: 600px;
-    max-height: 600px;
-  }
-  .docs-show-pane {
-    margin-top: 2rem;
-  }
-  .docs-slide {
-    width: 80%;
-    margin: 0 10%;
-  }
-  @media only screen and (max-width: 959px) {
-    .docs-slide {
-      width: 94%;
-      max-height: 600px;
-      margin: 0 2%;
-    }
-  }
-
-      .slide-docs {
-    width: 600px;
-    max-height: 600px;
-  }
   .md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
     width: 90%;
     margin: 2% 5% 0 5%
@@ -312,30 +273,90 @@ fragment FolderInfo on GitApi_TreeEntry {
 </style>
 
 <style scoped>
+  .slider-title {
+    margin-top: 20px;
+  }
+
+  .image-display-mask {
+    overflow: hidden !important;
+  }
+
+  .image-lim {
+    max-height: 600px;
+  }
+
+  .images-slide {
+    width: 80%;
+    max-height: 600px;
+    margin: 0 10%;
+  }
+
+  @media only screen and (max-width: 959px) {
+    .images-slide {
+      width: 94%;
+      max-height: 600px;
+      margin: 0 2%;
+    }
+  }
+
+  .slide-image {
+    width: 600px;
+    max-height: 600px;
+  }
+
+  .docs-show-pane {
+    margin-top: 2rem;
+  }
+
+  .docs-slide {
+    width: 80%;
+    margin: 0 10%;
+  }
+
+  @media only screen and (max-width: 959px) {
+    .docs-slide {
+      width: 94%;
+      max-height: 600px;
+      margin: 0 2%;
+    }
+  }
+
+  .slide-docs {
+    width: 600px;
+    max-height: 600px;
+  }
+
   .normal-h-size {
     font-size: larger;
   }
+
   @media only screen and (max-width: 959px) {
     .normal-h-size {
       font-size: small;
     }
   }
+
   .horiz-center {
     margin: 0 auto;
     text-align: center;
   }
+
   .doc-title {
     padding: 0 20px 20px 20px;
   }
+
   .design-image {
     width: 100%;
   }
+
   .design-image-hold {
     margin: 3% auto;
   }
+
   .doc-title {
     padding: 0 20px 20px 20px;
   }
+
   .formal-look {
     color: #1d5c87;
     font-family: Roboto, sans-serif;
