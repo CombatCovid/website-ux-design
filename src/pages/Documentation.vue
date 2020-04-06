@@ -5,7 +5,7 @@
         <h1>Documentation</h1>
         <p>This is a very early stage of this page, and you will certainly see it grow.</p>
         <p>For the moment, just one important area begins....</p>
-        <h2 id="prepare">Getting your Design Documents up on the App</h2>
+        <h2 id="prepare">Getting your Design Documents published, up on this App</h2>
         <p>Basically, you'll be in touch with us to do this. We're friendly
           communicators, and it won't be hard.</p>
         <p>... the rest is an early and brief outline, for now! ...</p>
