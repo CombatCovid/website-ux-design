@@ -1,18 +1,13 @@
 <template>
-  <v-app>
-    <v-content>
-      <Nav/>
-<!--      <v-container>-->
-        <slot/>
-<!--      </v-container>-->
-    </v-content>
-  </v-app>
+  <div>
+    <slot/>
+  </div>
 </template>
 
 <static-query>
   query {
     metadata {
-              siteName
+    siteName
     }
   }
 </static-query>

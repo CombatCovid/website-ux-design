@@ -1,70 +1,174 @@
 <template>
   <div>
-    <Layout class="">
-      <v-parallax dark src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
-        <v-row align="center" justify="center">
-          <v-col class="text-center" cols="12">
-            <h1 class="display-5 font-weight-bold mb-1">Combat Covid with Hardware</h1>
-            <h2 class="subheading font-weight-light">Find solutions and help us document more</h2>
-            <v-layout row wrap class="pt-6" justify-center>
-              <v-flex xs12 md3>
-                <v-btn to="/finder" class="spaced-btn"
-                       dark color="blue">Search for designs
-                </v-btn>
-              </v-flex>
-              <v-flex xs12 md3>
-                <v-btn to="/documentation#prepare" class="spaced-btn"
-                       dark color="orange">Upload designs
-                </v-btn>
-              </v-flex>
-            </v-layout>
-          </v-col>
-        </v-row>
-      </v-parallax>
-
-      <v-container grid-list-xs class="home-container">
-        <v-layout row wrap>
-          <v-row xs-6 class="formal-look">
-            <h2 class="formal-intro">Greetings</h2>
-            <div class="formal-body">
-              <br>
-              <p>You're meeting the demonstration app of the Combat Covid with Hardware project.</p>
-              <p>This is a fast-moving Alpha production, so be reassured if you find that
-                items may move, appear, disappear, and at moments perhaps not function entirely
-                as you expected.</p>
-              <p>We're moving rapidly and constantly to add what's needed for early real use,
-                and anything unexpected will soon be repaired.</p>
-              <p>Thank you for your patience, and especially for your interest.</p>
-              <p class="sig-indent">The Combat Covid with Hardware Team</p>
+    <Layout>
+      <div dark class="parallax">
+        <v-layout py-12 row wrap justify-center>
+          <v-flex class="ma-2" xs12 sm12 md4 lg4>
+            <div class="header--text">
+              <h1 class="horiz-center font-weight-bold">Combat covid with hardware</h1>
+              <h2 class="horiz-center font-weight-light">Search for well documented <span class="title-emphasis">designs</span> 🔍 </br> and
+                <span>document</span> new solutions</h2>
             </div>
-          </v-row>
+            <v-layout xs12 md4 row wrap class="pt-2 ma-3" justify-center>
+              <v-btn to="/finder" class="ma-1 centered"
+                     dark color="blue">Search for designs
+              </v-btn>
+              <v-btn to="/documentation#prepare" class="ma-1 centered"
+                     dark color="orange">Upload designs
+              </v-btn>
+            </v-layout>
+
+          </v-flex>
+          <v-flex py-5 xs12 sm12 md4 style="margin:1.5em;">
+            <div class="iframe--shadow">
+              <div class="iframe-container">
+                <iframe class="iframe"
+                        src="https://www.youtube.com/embed/lIPwHRS_imY"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                </iframe>
+              </div>
+            </div>
+          </v-flex>
         </v-layout>
-      </v-container>
+      </div>
+      <v-layout py-10 class="section-2" row wrap justify-center>
+        <v-flex class="" xs12 sm4 md4 max-12>
+          <v-list>
+            <v-subheader class="font-weight-bold">HOW THE APP WORKS</v-subheader>
+            <v-list-item v-for="(item, i) in appFeatures" :key="i">
+              <v-list-item-content>
+                <v-list-item-title class="font-weight-bold" v-html="item.title"></v-list-item-title>
+                <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-flex>
+        <v-flex class="" xs12 sm4 md4 max-12>
+          <v-list>
+            <v-subheader class="font-weight-bold">HOW TO DOCUMENT A SOLUTION</v-subheader>
+            <v-list-item v-for="(item, i) in documentation" :key="i">
+              <v-list-item-content>
+                <v-list-item-title class="font-weight-bold" v-html="item.title"></v-list-item-title>
+                <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-flex>
+        <v-flex class="" xs12 sm3 md3 max-12>
+          <v-list>
+            <v-subheader class="font-weight-bold">CONTRIBUTE TO CODE AND MORE</v-subheader>
+            <v-list-item v-for="(item, i) in contribute" :key="i">
+              <v-list-item-content>
+                <v-list-item-title class="font-weight-bold" v-html="item.title"></v-list-item-title>
+                <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-flex>
+      </v-layout>
+      <Footer/>
     </Layout>
   </div>
 </template>
 
 <script>
+
+  import Footer from '~/components/Footer'
+
   export default {
     metaInfo: {
-      title: "Home"
+      title: "Home",
+    },
+    components: {
+      Footer
+    },
+    data(){
+      return {
+        appFeatures:[
+          { title:"Instant search", subtitle:"Go to FINDER and search for keywords like mask" },
+          { title: "Download", subtitle: "Download instantly the design you have chosen"},
+          { title: "Complete documentation", subtitle: "Find guides, bill of materials, and images"},
+          { title: "Github based content delivery", subtitle: "We use github powerful apis to build documents"}
+
+        ],
+        documentation:[
+          { title: "Find validated solutions", subtitle: "Make sure we are uploading a solution that is effective"},
+          { title: "Community guidance", subtitle: "We have a team of contributors that can help you"},
+          { title:"Standard", subtitle:"Follow conventions for simple documentation" },
+
+        ],
+        contribute:[
+          { title:"Code", subtitle:"Help us work on new features" },
+          { title: "Clinical feedback", subtitle: "Help us get feedback from experts on solutions"},
+          { title: "Translate", subtitle: "Translate to new languages"},
+          { title: "Identify new solutions", subtitle: "Help us adding more solutions to the list"},
+          { title: "Contact authors", subtitle: "Help us reach the authors of solutions to update the content"},
+        ],
+        icons: [
+          'fab fa-facebook',
+          'fab fa-twitter',
+          'fab fa-google-plus',
+          'fab fa-linkedin',
+          'fab fa-instagram',
+        ],
+      }
     }
   }
 </script>
 
 <style scoped>
 
-  @media only screen and (min-width: 959px) {
-    .home-container {
-      max-width: 960px;
-
-    }
+  .parallax {
+    background: #348F50; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #56B4D3, #348F50); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #56B4D3, #348F50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
 
-  @media only screen and (max-width: 959px) {
-    .spaced-btn {
-      margin: 0.3rem 0;
-    }
+ .title-emphasis{
+    font-weight: 750;
+  }
+
+  .iframe-container {
+    overflow: hidden;
+    padding-top: 56.25%;
+    position: relative;
+  }
+
+  .iframe-container .iframe {
+    /* padding:1em; */
+    margin: 0 auto;
+    border: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  .iframe--shadow {
+    -moz-box-shadow: 4px 4px 14px #000;
+    -webkit-box-shadow: 4px 4px 14px #000;
+    box-shadow: 4px 4px 14px #000;
+  }
+
+  .iframe--shadow {
+    -webkit-box-shadow: 6px 11px 53px 0px rgba(0, 0, 0, 0.59);
+    -moz-box-shadow: 6px 11px 53px 0px rgba(0, 0, 0, 0.59);
+    box-shadow: 6px 11px 53px 0px rgba(0, 0, 0, 0.59);
+  }
+
+  .header--text {
+    padding-top: 100px;
+    color: white;
+    text-align: center;
+  }
+
+  .debug {
+    background-color: red;
+    height: 200px;
+    margin: 1px;
   }
 
   .home-links a {
@@ -72,39 +176,23 @@
     margin-right: 1rem;
   }
 
-  .sig-indent {
-    margin-left: 24px;
-  }
 
-  .formal-look {
-    color: #1d5c87;
-    font-family: Roboto, sans-serif;
-    font-size: small;
-    max-width: 640px; /* This is narrow for glance-readability...esp. eyeglass wearers */
-    margin-top: 1.5rem;
-    padding-left: 30px;
-  }
+  @media only screen and (min-width: 1120px) {
 
-  .formal-intro, .formal-title {
-    padding: 0 10px;
-  }
-
-  .formal-body {
-    padding: 0 30px;
-  }
-
-  @media only screen and (max-width: 640px) {
-    .formal-look {
-      padding-left: 10px;
+    .section-2 {
+      margin: 0 10% 0 10%;
     }
 
-    .formal-intro, .formal-title {
-      padding: 0 5px;
+    .header--text {
+      padding-top: 100px;
+      color: white;
+      text-align: left;
     }
+  }
 
-    .formal-body {
-      padding: 0 15px;
-    }
+  .horiz-center {
+    margin: 0 auto;
+    text-align: center;
   }
 
 </style>
