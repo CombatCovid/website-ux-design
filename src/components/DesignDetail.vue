@@ -276,16 +276,6 @@ fragment FolderInfo on GitApi_TreeEntry {
     margin: 0 auto;
   }
 
-  h1, h2, h3, h4 {
-    font-size: medium;
-  }
-
-  @media only screen and (max-width: 959px) {
-    h1, h2, h3, h4 {
-      font-size: small;
-    }
-  }
-
   .v-application ul {
     padding-left: 16px /* *todo* defeat v, maybe tag instead later */
   }
@@ -300,6 +290,17 @@ fragment FolderInfo on GitApi_TreeEntry {
 </style>
 
 <style scoped>
+
+  /*h1, h2, h3, h4 {*/
+  /*  font-size: medium;*/
+  /*}*/
+
+  /*@media only screen and (max-width: 959px) {*/
+  /*  h1, h2, h3, h4 {*/
+  /*    font-size: small;*/
+  /*  }*/
+  /*}*/
+
   .slider-title {
     margin-top: 20px;
   }

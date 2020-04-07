@@ -4,10 +4,14 @@
       <div dark class="parallax">
         <v-layout py-12 row wrap justify-center>
           <v-flex class="ma-2" xs12 sm12 md4 lg4>
-            <div class="header--text">
-              <h1 class="horiz-center font-weight-bold">Combat covid with hardware</h1>
-              <h2 class="horiz-center font-weight-light">Search for well documented <span class="title-emphasis">designs</span> 🔍 </br> and
-                <span>document</span> new solutions</h2>
+            <div class="header--text hero-statements">
+              <h1 class="horiz-center font-weight-bold">
+                Combat covid&nbsp;with hardware
+              </h1>
+              <h2 class="horiz-center font-weight-light">
+                Search for well documented&nbsp;<span class="title-emphasis">designs</span>&nbsp;🔍
+                <br/>and <span class="title-emphasis">document</span> new solutions
+              </h2>
             </div>
             <v-layout xs12 md4 row wrap class="pt-2 ma-3" justify-center>
               <v-btn to="/finder" class="ma-1 centered"
@@ -127,7 +131,7 @@
   }
 
  .title-emphasis{
-    font-weight: 750;
+    font-weight: 700;
   }
 
   .iframe-container {
@@ -194,5 +198,18 @@
     margin: 0 auto;
     text-align: center;
   }
+
+  .hero-statements {
+    padding-top: 10%;
+    /*font-size: small;*/
+  }
+
+  @media only screen and (max-width: 959px) {
+    .hero-statements {
+      padding-top: 14%;
+      /*font-size: small;*/
+    }
+  }
+
 
 </style>
