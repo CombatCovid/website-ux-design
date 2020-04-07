@@ -1,15 +1,23 @@
 <template>
   <Layout>
-    <h1 class="horiz-center">Finder</h1>
 
     <client-only>
       <ais-instant-search :index-name="indexName"
                           :search-client="searchClient" class="horiz-center searchbox">
 
         <ais-configure :hits-per-page.camel="8"/>
-
-        <ais-powered-by/>
-        <ais-search-box/>
+        <v-layout row wrap justify-center align-center column>
+          <h1 class="horiz-center">Finder</h1>
+          <!-- <ais-powered-by/> -->
+          <ais-search-box 
+            :class-names="{
+              'ais-SearchBox': 'MySearchBox',
+              'ais-SearchBox-form': 'MySearchBoxForm',
+              'ais-SearchBox-input':'searchInput'
+            }"
+            style="border-style:solid;padding:0.3em 0.5em 0.3em 0.5em;"/>
+        </v-layout>
+        
 
         <ais-hits class="clear-above">
           <div slot-scope="{ items }">
@@ -74,5 +82,10 @@
   }
   .clear-above {
     margin-top: 10px;
+  } 
+
+  .searchInput{
+    color:red;
   }
+  
 </style>
