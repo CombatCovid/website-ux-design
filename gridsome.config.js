@@ -7,7 +7,7 @@
 module.exports = {
   siteName: 'CombatCovid',
   siteUrl: 'https://CombatCovid.github.io',
-  pathPrefix: '/SPA-website',
+  // pathPrefix: '/SPA-website',
   plugins: [
     {
       use: '@gridsome/vue-remark',
