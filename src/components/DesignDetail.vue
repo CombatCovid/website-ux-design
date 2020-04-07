@@ -2,22 +2,22 @@
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
     <div v-if="imagesShow" class="images-slide image-display-mask docs-show-pane">
-        <div class="horiz-center doc-title" @click="popImages">
+        <div class="d-flex flex-nowrap justify-center doc-title">
+          <v-btn @click="slideImages('<')"><</v-btn>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-btn class="slider-title" v-on="on">Design Images ({{ nrImages }})</v-btn>
+              <v-btn class="xslider-title" v-on="on" @click="popImages">
+                Design Images ({{ nrImages }})
+              </v-btn>
             </template>
             <span>Click to return to the summary.</span>
           </v-tooltip>
+          <v-btn @click="slideImages('>')">></v-btn>
         </div>
-        <VueGlide :perView="1" :gap="30" type="carousel">
+        <VueGlide :perView="1" :gap="30" :rewind="false" ref="imagesSlider">
           <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
             <div class="horiz-center">
               <img :src="imagesImg" class="ximage-lim" width="100%"><!-- that width 100% is critical -->
-              <template slot="control">
-                <button data-glide-dir="<">prev</button>
-                <button data-glide-dir=">">next</button>
-              </template>
             </div>
           </VueGlideSlide>
         </VueGlide>
@@ -38,15 +38,19 @@
       </div>
     </div>
     <div v-if="docsShow" class="docs-show-pane">
-      <div class="horiz-center doc-title" @click="popDocs">
+      <div class="d-flex flex-nowrap justify-center doc-title">
+        <v-btn @click="slideDocs('<')"><</v-btn>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on">Design Documents ({{ nrTexts }})</v-btn>
+            <v-btn v-on="on" @click="popDocs">
+              Design Documents ({{ nrTexts }})
+            </v-btn>
           </template>
           <span>Click to return to the summary.</span>
         </v-tooltip>
+        <v-btn @click="slideDocs('>')">></v-btn>
       </div>
-      <VueGlide :perView="1" :xgap="20">
+      <VueGlide :perView="1" :gap="10" :rewind="false" ref="docsSlider">
         <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
           <!--        Slide {{ i }}-->
           <div class="docs-slide">
@@ -82,8 +86,11 @@
     props: {
       design: { type: String, default: "" }
     },
-    components: { VueMarkdown, [Glide.name]: Glide,
-      [GlideSlide.name]: GlideSlide },
+    components: {
+      VueMarkdown,
+      [Glide.name]: Glide,
+      [GlideSlide.name]: GlideSlide
+    },
     data: function () {
       return {
         summaryText: 'retrieving...',
@@ -96,8 +103,7 @@
     },
     mounted () {
       axios.get('https://raw.githubusercontent.com/CombatCovid/' +
-        this.htmlSanitize(this.repoName) +
-        '/master/README.md')
+        this.htmlSanitize(this.repoName) + '/master/README.md')
         .then(response => {
             this.summaryText = this.cleanFormatMarkdown(response.data, this.summaryImageFolder, this.repoTreeFolder)
           },
@@ -189,8 +195,14 @@
       popImages: function () {
         this.imagesShow = !this.imagesShow;
       },
+      slideImages: function (direction) {
+        this.$refs.imagesSlider.go(direction)
+      },
       popDocs: function () {
         this.docsShow = !this.docsShow;
+      },
+      slideDocs: function (direction) {
+        this.$refs.docsSlider.go(direction)
       }
     }
   }
@@ -258,18 +270,33 @@ fragment FolderInfo on GitApi_TreeEntry {
     width: 90%;
     margin: 2% 5% 0 5%
   }
+
   .md-caption-fit {
     text-align: center;
     margin: 0 auto;
   }
-  h1, h2, h3,h4 {
+
+  h1, h2, h3, h4 {
     font-size: medium;
   }
+
   @media only screen and (max-width: 959px) {
-    h1, h2, h3,h4 {
+    h1, h2, h3, h4 {
       font-size: small;
     }
   }
+
+  .v-application ul {
+    padding-left: 16px /* *todo* defeat v, maybe tag instead later */
+  }
+
+  @media only screen and (max-width: 959px) {
+    .v-application ul {
+      padding-left: 10px; /* *todo* defeat v, maybe tag instead later */
+    }
+  }
+
+
 </style>
 
 <style scoped>

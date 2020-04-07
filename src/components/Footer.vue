@@ -10,8 +10,8 @@
     >
       <v-card-text>
         <v-btn
-                v-for="icon in icons"
-                :key="icon"
+                v-for="(icon, i) in icons"
+                :key="i"
                 class="mx-4 white--text"
                 icon
                 target="_blank"
@@ -49,7 +49,7 @@
   } from '@mdi/js'
 
   export default {
-    name:"footer",
+    name: 'the-footer',  // don't use a name that is part of the html spec
     data: () => ({
       icons: [
         { name: mdiDiscord, link: "https://discord.gg/rYHCBt" },

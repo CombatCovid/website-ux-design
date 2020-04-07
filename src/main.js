@@ -3,8 +3,6 @@
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import InstantSearch from 'vue-instantsearch'
-// import VueGlide, { Controls, Breakpoints } from 'vue-glide-js'
-// import 'vue-glide-js/dist/vue-glide.css'
 
 import DefaultLayout from '~/layouts/Default.vue'
 
@@ -45,7 +43,7 @@ const appMixins = {
       // which also don't get parsed
       lines = lines.replace(/([^\!]|^)\[\s*(\w.*)\]\s*\(\s*(\w.*)\s*\)/gmi,
         '<a href="$3" target="_blank" rel="noreferrer noopener"> $2</a>')
-      console.log('fixUrlMarkdownLinks: |' + lines + '|')
+      // console.log('fixUrlMarkdownLinks: |' + lines + '|')
       return lines
     },
     fixDirectInlineWebLinks (lines) {
@@ -111,9 +109,6 @@ export default function (Vue, { router, head, isClient, appOptions }) {
   Vue.mixin(appMixins)
   Vue.use(Vuetify)
   Vue.use(InstantSearch)
-  // Vue.use(VueGlide)
-  // Vue.use(Controls)
-  // Vue.use(Breakpoints)
 
   appOptions.vuetify = new Vuetify(opts);
   Vue.component('Layout', DefaultLayout)
