@@ -7,9 +7,20 @@
             <div class="header--text">
               <h1 class="font-weight-bold">Combat covid with hardware</h1>
               <h2 class="font-weight-light">Search for well documented <span>designs</span> 🔍 </br> and <span>document</span> new solutions</h2>
-            </div>  
+            </div> 
+            <v-layout xs12 sm12 md4 row wrap class="pt-6">
+ 
+              <div class="hero__btns">
+              <v-btn to="/finder" class="ma-1 centered"
+                     dark color="blue">Search for designs
+              </v-btn>
+              <v-btn to="/documentation#prepare" class="ma-1 centered"
+                     dark color="pink">Upload designs
+              </v-btn>
+              </div>
+            </v-layout> 
           </v-flex>
-          <v-flex py-5 xs12 sm12 md4 style="margin:1.5em;">
+          <v-flex py-5 xs12 sm8 md4 style="margin:1.5em;">
             <div class="iframe--shadow">
               <div class="iframe-container">
                 <iframe class="iframe"
@@ -167,9 +178,21 @@ span{
   margin-right: 1rem;
 }
 
+.hero__btns{
+
+}
+
+
+@media only screen and (max-width:1300px){
+  .hero__btns{
+    margin: 0 auto;
+    padding:2em;
+    display:flex;
+    flex-direction:column;
+  }
+}
 
 @media only screen and (min-width:1120px){
- 
   .section-2{
     margin: 0 10% 0 10%;
   }
