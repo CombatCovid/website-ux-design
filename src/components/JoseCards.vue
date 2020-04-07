@@ -17,7 +17,7 @@
             p-5
             class="white--text align-end"
             height="200px"
-            src="https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png"
+            src="/assets/image-placehoder.png"
           ></v-img>
           <v-card-title v-text="repo.name"></v-card-title>
           <v-card-subtitle v-text="repo.description"></v-card-subtitle>
