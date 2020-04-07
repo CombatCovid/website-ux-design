@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <h1 class="horiz-center">Viewer</h1>
-    <div class="master-detail">
+    <div class="master-detail" style="max-width:800px; margin:0 auto;">
       <p>
         This display is to the point of what we want, showing Designs out of a list chosen from
         Finder results. What follows when we have the Vuex foundation in,
@@ -10,7 +10,7 @@
       </p>
     </div>
     <div class="master-detailx">
-      <v-container class="grey lighten-5">
+      <v-container class="">
           <HorizontalMD :design="design"/>
       </v-container>
     </div>
@@ -59,17 +59,17 @@
   
   .master-detail {
       margin: 10px;
-      padding: 5px;
+      padding: 10px;
   }
 
   @media only screen and (min-width: 1029px) {
     
-    .master-detail {
+  .master-detail {
     margin: 20px;
     padding: 15px;
     color: darkslategray;
     background-color: beige;
-  }
+    }
   }
   
 </style>

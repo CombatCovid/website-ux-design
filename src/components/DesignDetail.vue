@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-    <div class="design-image-hold">
+  <v-layout row wrap>
+    <v-flex xs12>
+      <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
+    <div class="">
       <img :src="summaryImage" class="design-image"/>
     </div>
     <VueMarkdown :source="summaryText"/>
-  </div>
+    </v-flex>
+  </v-layout>    
 </template>
 
 <script>
@@ -125,32 +127,40 @@ fragment FolderInfo on GitApi_TreeEntry {
 </static-query>
 
 <style>
+.md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
+      width:100%!important;
+
+    /* width: 50%; */
+    /* margin: 2% 5% 0 5% */
+  }
 
 </style>
 
 <style scoped>
-    .md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
-    width: 90%;
-    margin: 2% 5% 0 5%
-  }
   .md-caption-fit {
     text-align: center;
     margin: 0 auto;
   }
-  h1, h2, h3,h4 {
-    font-size: medium;
+  h1, h2, h3,h4,p {
+    font-size: larger;
+  }
+
+  img{
+    width:100% !important;
   }
   @media only screen and (max-width: 959px) {
-    h1, h2, h3,h4 {
+    h1, h2, h3,h4,p {
       font-size: small;
     }
   }
+  
+  
   .normal-h-size {
-    font-size: larger;
+    /* font-size: larger; */
   }
   @media only screen and (max-width: 959px) {
     .normal-h-size {
-      font-size: small;
+      /* font-size: small; */
     }
   }
   .horiz-center {
@@ -158,9 +168,9 @@ fragment FolderInfo on GitApi_TreeEntry {
     text-align: center;
   }
   .design-image {
-    width: 100%;
+    /* width: 100%; */
   }
   .design-image-hold {
-    margin: 3% auto;
+    /* margin: 3% auto; */
   }
 </style>
