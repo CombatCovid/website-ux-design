@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-    <div v-if="imagesShow" class="images-slide image-display-mask docs-show-pane">
+    <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold sdocs-show-pane">
         <div class="d-flex flex-nowrap justify-center doc-title">
           <v-btn @click="slideImages('<')"><</v-btn>
           <v-tooltip bottom>
@@ -14,7 +14,7 @@
           </v-tooltip>
           <v-btn @click="slideImages('>')">></v-btn>
         </div>
-        <VueGlide :perView="1" :gap="30" :rewind="false" ref="imagesSlider">
+        <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
           <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
             <div class="horiz-center">
               <img :src="imagesImg" class="ximage-lim" width="100%"><!-- that width 100% is critical -->
@@ -50,7 +50,7 @@
         </v-tooltip>
         <v-btn @click="slideDocs('>')">></v-btn>
       </div>
-      <VueGlide :perView="1" :gap="10" :rewind="false" ref="docsSlider">
+      <VueGlide :perView="1" :gap="10" :rewind="false" type="carousel" ref="docsSlider">
         <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
           <!--        Slide {{ i }}-->
           <div class="docs-slide">
@@ -291,6 +291,8 @@ fragment FolderInfo on GitApi_TreeEntry {
 
 <style scoped>
 
+  /* *todo* later we'll have our own md-h1 etc. for, used via filter on md as it
+       becomes html, so then to be in control of its formatting on screens */
   /*h1, h2, h3, h4 {*/
   /*  font-size: medium;*/
   /*}*/
