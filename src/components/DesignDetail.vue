@@ -133,7 +133,17 @@
         return this.designRepo.name
       },
       summaryTitle:  function () {
-        return this.titleCase(this.spaceDashes(this.htmlSanitize(this.repoName)))
+        let sani = this.htmlSanitize(this.repoName)
+
+        sani = sani.replace(/\-+/ig, ' ')
+        sani = this.titleCase(this.spaceDashes(sani))
+
+        if (sani.match(/mit/i)) {
+          // *todo* def special casing for demos until we get Vuex on line to pass real title
+          return sani.replace(/mit/i, 'MIT')
+        } else {
+          return sani
+        }
       },
       repos: function () {
         return this.$static.gitapi.organization.repositories.nodes
