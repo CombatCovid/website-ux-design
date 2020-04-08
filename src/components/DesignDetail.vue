@@ -426,6 +426,11 @@ fragment FolderInfo on GitApi_TreeEntry {
     width: 80%;
     margin: 0 10%;
   }
+  @media only screen and (min-width: 1601px) {
+    .docs-slide {
+      max-width: 1600px; /* 1600px;*/
+    }
+  }
 
   @media only screen and (max-width: 959px) {
     .docs-slide {
@@ -461,6 +466,11 @@ fragment FolderInfo on GitApi_TreeEntry {
 
   .design-image {
     width: 100%;
+  }
+  @media only screen and (min-width: 1601px) {
+    .container {
+      max-width: 1600px;
+    }
   }
 
   .design-image-hold {
