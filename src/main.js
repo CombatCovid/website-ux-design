@@ -84,6 +84,13 @@ const appMixins = {
       // when testing
       // console.log('cleared: ' + cleared)
       return cleared
+    },
+    unscopeBasisMarkup (text) {
+      return text
+        .replace(/<h([\d])/ig, '<h$1 class="h$1-unscoped"')
+        .replace(/<li/ig, '<li class="li-unscoped"')
+        .replace(/<p/ig, '<p class="p-unscoped"')
+        // *todo* add to similarly as needed -- carefully
     }
   }
 }

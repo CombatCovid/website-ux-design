@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-    <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold sdocs-show-pane">
-        <div class="d-flex flex-nowrap justify-center doc-title">
+    <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
+        <div class="d-flex flex-nowrap justify-center doc-title temp-shift-small-screen"">
           <v-btn @click="slideImages('<')"><</v-btn>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
@@ -14,17 +14,18 @@
           </v-tooltip>
           <v-btn @click="slideImages('>')">></v-btn>
         </div>
-        <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
-          <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
-            <div class="horiz-center">
-              <img :src="imagesImg" class="ximage-lim" width="100%"><!-- that width 100% is critical -->
-            </div>
-          </VueGlideSlide>
-        </VueGlide>
+      <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
+        <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
+          <div class="horiz-center">
+            <img :src="imagesImg" class="ximage-lim"
+                 alt="imagesImg" width="100%"> <!-- that width 100% is critical -->
+          </div>
+        </VueGlideSlide>
+      </VueGlide>
     </div>
     <div v-else class="design-image-hold">
       <div class="image-display-mask">
-        <div class="horiz-center doc-title" @click="popImages">
+        <div class="horiz-center doc-title temp-shift-small-screen" @click="popImages">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn v-on="on">Summary Image - click for all</v-btn>
@@ -33,44 +34,47 @@
           </v-tooltip>
         </div>
         <div class="images-slide">
-          <img :src="summaryImg" class="design-image"/>
+          <img :src="summaryImg" alt="summaryImg" class="design-image"/>
         </div>
       </div>
     </div>
+    <hr color="#e3ebef" size="2px" class="rule-appearance">
     <div v-if="docsShow" class="docs-show-pane">
-      <div class="d-flex flex-nowrap justify-center doc-title">
+      <div class="d-flex flex-nowrap justify-center doc-title temp-shift-small-screen">
         <v-btn @click="slideDocs('<')"><</v-btn>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn v-on="on" @click="popDocs">
-              Design Documents ({{ nrTexts }})
-            </v-btn>
-          </template>
-          <span>Click to return to the summary.</span>
-        </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" @click="popDocs">
+                Design Documents ({{ nrTexts }})
+              </v-btn>
+            </template>
+            <span>Click to return to the summary.</span>
+          </v-tooltip>
         <v-btn @click="slideDocs('>')">></v-btn>
       </div>
-      <VueGlide :perView="1" :gap="10" :rewind="false" type="carousel" ref="docsSlider">
-        <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
-          <!--        Slide {{ i }}-->
-          <div class="docs-slide">
-            <VueMarkdown :source="docText"/>
-          </div>
-        </VueGlideSlide>
-      </VueGlide>
+      <div class="docs-slides-pane">
+        <VueGlide :perView="1" :gap="10" :rewind="false" type="carousel" ref="docsSlider">
+          <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
+            <!--        Slide {{ i }}-->
+            <div class="docs-slide">
+              <VueMarkdown :source="unscopeBasisMarkup(docText)" :postrender="unscopeBasisMarkup" />
+            </div>
+          </VueGlideSlide>
+        </VueGlide>
+      </div>
     </div>
     <div v-else>
-      <div class="horiz-center doc-title">
+      <div class="horiz-center doc-title temp-shift-small-screen">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn @click="popDocs" v-on="on">Design Summary - click to see all</v-btn>
+            <v-btn @click="popDocs" v-on="on">Design Summary - click for all</v-btn>
           </template>
           <span>Click to see view all the design documentse. Click again to return to the summary.</span>
         </v-tooltip>
       </div>
-      <div class="docs-slide">
-        <VueMarkdown :source="summaryText"/>
-      </div>
+        <div class="docs-slide docs-slides-pane">
+          <VueMarkdown :source="unscopeBasisMarkup(summaryText)" :postrender="unscopeBasisMarkup"/>
+        </div>
     </div>
   </div>
 </template>
@@ -135,7 +139,7 @@
       summaryTitle:  function () {
         let sani = this.htmlSanitize(this.repoName)
 
-        sani = sani.replace(/\-+/ig, ' ')
+        sani = sani.replace(/-+/ig, ' ')
         sani = this.titleCase(this.spaceDashes(sani))
 
         if (sani.match(/mit/i)) {
@@ -276,6 +280,75 @@ fragment FolderInfo on GitApi_TreeEntry {
 
 <style>
 
+  /*
+    here are the filter-translated equivalents for the converted Markdown:
+    h1 -> .h1-unscoped, etc.. These have to be in <style> non-scoped,
+    as Markdown conversions can't be scoped. Translation by unscopeBasisMarkup()
+    gets us these tags.
+}  */
+  .h1-unscoped {
+    /*font-size: 0.9em;*/
+    margin-bottom: 1em;
+  }
+
+  .h2-unscoped {
+    /*font-size: 0.85em;*/
+    margin-bottom: 1em;
+  }
+
+  .h3-unscoped {
+    /*font-size: 0.8em;*/
+    margin-bottom: 1em;
+  }
+
+  .h4-unscoped {
+    /*font-size: 0.7em;*/
+    margin-bottom: 1em;
+  }
+
+  .li-unscoped {
+    /*font-size: 0.9em;*/
+    margin-bottom: 1em;
+  }
+
+  .p-unscoped {
+    /*font-size: 0.9em;*/
+    margin-bottom: 1em;
+  }
+
+  @media only screen and (max-width: 640px) {
+    .h1-unscoped {
+      font-size: 0.9em;
+      margin-bottom: 1em;
+    }
+
+    .h2-unscoped {
+      font-size: 0.85em;
+      margin-bottom: 1em;
+    }
+
+    .h3-unscoped {
+      font-size: 0.8em;
+      margin-bottom: 0.8em;
+    }
+
+    .h4-unscoped {
+      font-size: 0.7em;
+      margin-bottom: 0.8em;
+    }
+
+    .li-unscoped {
+      font-size: 0.9em !important;
+      margin-bottom: 0.9em;
+    }
+
+    .p-unscoped {
+      font-size: 0.9em !important;
+      margin-bottom: 0.9em;
+    }
+  }
+  /** end unscoped markup conversion tags, so far: h5 and h6 available */
+
   .md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
     width: 90%;
     margin: 2% 5% 0 5%
@@ -295,7 +368,6 @@ fragment FolderInfo on GitApi_TreeEntry {
       padding-left: 10px; /* *todo* defeat v, maybe tag instead later */
     }
   }
-
 
 </style>
 
@@ -346,6 +418,8 @@ fragment FolderInfo on GitApi_TreeEntry {
 
   .docs-show-pane {
     margin-top: 2rem;
+    /*background-color: teal;*/
+    /* *todo* later work out: background-color: #348F50 !important;*/
   }
 
   .docs-slide {
@@ -404,4 +478,35 @@ fragment FolderInfo on GitApi_TreeEntry {
     padding: 20px;
     max-width: 640px;
   }
+
+  .rule-appearance {
+    color: #e3ebef;
+    margin-bottom: 40px;
+  }
+
+  @media only screen and (max-width: 639px) {
+    .temp-shift-small-screen {
+      margin-left: -10px;
+    }
+  }
+
+  .docs-slides-pane { /* see below */
+    /*background-color: #56B4D3;*/
+    padding: 0 10px;
+  }
+
+  /* *todo* that docs-slides-pane _overrides_ padding set where?? in glide? later../ */
+  /*@media only screen and (max-width: 1024px) {*/
+  /*  .docs-slides-pane {*/
+  /*    !*background-color: #56B4D3;*!*/
+  /*    padding: 0 50px;*/
+  /*  }*/
+  /*}*/
+  /*@media only screen and (max-width: 639px) {*/
+  /*  .docs-slides-pane {*/
+  /*    !*background-color: #56B4D3;*!*/
+  /*    padding: 0;*/
+  /*  }*/
+  /*}*/
+
 </style>
