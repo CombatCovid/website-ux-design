@@ -27,7 +27,7 @@
         <div class="horiz-center doc-title" @click="popImages">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-btn v-on="on">Introductory Image</v-btn>
+              <v-btn v-on="on">Summary Image - click for all</v-btn>
             </template>
             <span>Click to see view all the design images. Click again to return to the summary.</span>
           </v-tooltip>
@@ -63,7 +63,7 @@
       <div class="horiz-center doc-title">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn @click="popDocs" v-on="on">Design Summary</v-btn>
+            <v-btn @click="popDocs" v-on="on">Design Summary - click to see all</v-btn>
           </template>
           <span>Click to see view all the design documentse. Click again to return to the summary.</span>
         </v-tooltip>
