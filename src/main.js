@@ -8,39 +8,65 @@ import DefaultLayout from '~/layouts/Default.vue'
 
 const appMixins = {
   methods: {
-    cleanFormatMarkdown (lines, site = 'https://github.com/') {
+    cleanFormatMarkdown (lines,
+                         site = 'https://github.com/',
+                         gitUrlRepoFolder = 'need repoFolder') {
       // these are all for Markdown formats that don't get parsed by VueMarkDown
       // which is otherwise the best available
       // we do images first, as their match is more specific than similar-looking links
-      lines = this.fixAllMarkdownImages(this.stripFrontMatter(lines), site)
-      return this.fixUrlMarkdownLinks(lines)
+      // *todo* need also to fix docs.md so they are not links...!
+      lines = this.fixAllMarkdownImages(this.stripFrontMatter(lines), site, gitUrlRepoFolder)
+      return this.fixAllWebLinks(lines, site, gitUrlRepoFolder)
     },
     stripFrontMatter: function (lines) {
       // *todo* later some way that VueMarkdown handles this itself? Not apparently...
-      return lines.replace(/---\n.+---\n/gs, '')
+      return lines.replace(/---[-]*\n.+---\n/gs, '')
+    },
+    fixAllWebLinks (lines, site, gitUrlRepoFolder) {
+      // this preserves necessary order dependence
+      lines = this.fixDirectInlineWebLinks(lines, site, gitUrlRepoFolder)
+      lines = this.fixUrlMarkdownLinks(lines, site, gitUrlRepoFolder)
+      lines = this.fixLocalPathedMarkdownLinks(lines, site, gitUrlRepoFolder)
+      return lines
+    },
+    fixLocalPathedMarkdownLinks (lines, site, gitUrlRepoFolder) {
+      // *todo* as we discover how
+      // lines = lines.replace(/([^\!]|^)\[\s*([\w-_\s]+[^\[])*\s*\]\s*\([\.\/]+([^\)]*)\s*\)/gmi,
+      //   ' <a href="' + `${gitUrlRepoFolder}` + '$3" target="_blank" rel="noreferrer noopener">$2</a>')
+      lines = lines.replace(/([^\!]|^)\[\s*([\w-_\s]+[^\[])*\s*\]\s*\([\.\/]+([^\)]*)\s*\)/gmi,
+        ' <a href="' + `${gitUrlRepoFolder}` + '$3" target="_blank" rel="noreferrer noopener">$2</a>')
+      // console.log('fixlocalpathedlinks:gitRepoUrLFolder: ' + gitUrlRepoFolder)
+      // console.log('fixlocalpathedlinks: ' + lines)
+      return lines
     },
     fixUrlMarkdownLinks (lines) {
-      // *todo* add to this alternate fix for in-folder local images,
       // which also don't get parsed
-      return lines.replace(/[^\!]\[(.*)\]\s?\((.*)\)/gmi,
-        '<a href="$2" target="_blank" rel="noreferrer noopener">$1</a>')
+      lines = lines.replace(/([^\!]|^)\[\s*(\w.*)\]\s*\(\s*(\w.*)\s*\)/gmi,
+        '<a href="$3" target="_blank" rel="noreferrer noopener"> $2</a>')
+      // console.log('fixUrlMarkdownLinks: |' + lines + '|')
+      return lines
     },
-    fixAllMarkdownImages (lines, site = 'https://github.com/') {
+    fixDirectInlineWebLinks (lines) {
+      // which also don't get parsed
+      return lines.replace(/href\s?\=\s?['"](.*)['"]/gmi,
+        '<a href="$1" target="_blank" rel="noreferrer noopener"> $1</a>')
+    },
+    fixAllMarkdownImages (lines, site, gitUrlRepoFolder) {
       // this preserves necessary order dependence
       // we allow fixUrlPathedMarkdownImages() to match any link, http/s or not
       // this is so a link without a protocol will also be matched
       // thus the more specific fixLocalPathedMarkdownImages() must run first
-      lines = this.fixLocalPathedMarkdownImages(lines, site)
-      return this.fixUrlPathedMarkdownImages(lines, site)
+      lines = this.fixLocalPathedMarkdownImages(lines, site, gitUrlRepoFolder)
+      return this.fixUrlMarkdownImages(lines, site, gitUrlRepoFolder)
     },
-    fixLocalPathedMarkdownImages (lines, site = 'https://github.com/') {
+    fixLocalPathedMarkdownImages (lines, site, gitUrlRepoFolder) {
       lines = lines.replace(/\!\[(.*)\]\s?\([\.\/]+(.*)\)/gmi,
-        `<img src="${site}/$2" target="_blank" class='md-image-fit'><p class="md-caption-fit">$1</p>`)
+        ` <img src="${site}/$2" target="_blank" class='md-image-fit'><p class="md-caption-fit"> $1</p>`)
       return lines
     },
-    fixUrlPathedMarkdownImages (lines, site = 'https://github.com/') {
-      lines = lines.replace(/\!\[(.*)\]\s?\((.*)\)/gmi,
-        `<img src="${site}/$2" target="_blank" class='md-image-fit'>`)
+    fixUrlMarkdownImages (lines, site = 'https://github.com/') {
+      lines = lines.replace(/\!\[(.*)\]\s?\((\w.*)\)/gmi,
+        ` <img src="${site}/$2" target="_blank" class='md-image-fit'>`)
       return lines
     },
     spaceDashes: function (str) {
@@ -58,6 +84,13 @@ const appMixins = {
       // when testing
       // console.log('cleared: ' + cleared)
       return cleared
+    },
+    unscopeBasisMarkup (text) {
+      return text
+        .replace(/<h([\d])/ig, '<h$1 class="h$1-unscoped"')
+        .replace(/<li/ig, '<li class="li-unscoped"')
+        .replace(/<p/ig, '<p class="p-unscoped"')
+        // *todo* add to similarly as needed -- carefully
     }
   }
 }

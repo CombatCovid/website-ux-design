@@ -7,7 +7,7 @@
 module.exports = {
   siteName: 'CombatCovid',
   siteUrl: 'https://CombatCovid.github.io',
-  // pathPrefix: '/SPA-website',
+  // pathPrefix: '/SPA-website', // NO NO NO NO NO! At least for general use. Completely explodes the build manifest
   plugins: [
     {
       use: '@gridsome/vue-remark',
