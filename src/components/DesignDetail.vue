@@ -2,7 +2,7 @@
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
     <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
-        <div class="d-flex flex-nowrap justify-center doc-title temp-shift-small-screen"">
+        <div class="d-flex flex-nowrap justify-center doc-title temp-shift-small-screen">
           <v-btn @click="slideImages('<')"><</v-btn>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
