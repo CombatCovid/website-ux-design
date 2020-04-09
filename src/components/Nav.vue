@@ -1,7 +1,7 @@
 <template>
   <div>
 <!-- leaving hide-on-scroll for the moment at least, because it disturbs link targeting to take out...   -->
-    <v-app-bar app dark color="dark-blue" hide-on-scroll>
+    <v-app-bar app dark color="dark-blue" :hide-on-scroll="hideWhen">
 <!--      <v-toolbar-items max-width>-->
 
       <span class="hidden-md-and-up">
@@ -114,6 +114,14 @@
           {name: '/documentation', label: 'Documentation'},
           {name: '/about', label: 'About'}
         ]
+      }
+    },
+    computed: {
+      hideWhen: function () {
+        const w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+
+        console.log ('width: ' + w);
+        return w <= 640
       }
     }
   };
