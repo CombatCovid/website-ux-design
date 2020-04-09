@@ -1,5 +1,6 @@
 <template>
   <div>
+<!-- leaving hide-on-scroll for the moment at least, because it disturbs link targeting to take out...   -->
     <v-app-bar app dark color="dark-blue" hide-on-scroll>
 <!--      <v-toolbar-items max-width>-->
 

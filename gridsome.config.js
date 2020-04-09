@@ -5,7 +5,9 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = {
-  siteName: 'Discover Designs...',
+  siteName: 'CombatCovid',
+  siteUrl: 'https://CombatCovid.github.io',
+  // pathPrefix: '/SPA-website', // NO NO NO NO NO! At least for general use. Completely explodes the build manifest
   plugins: [
     {
       use: '@gridsome/vue-remark',
