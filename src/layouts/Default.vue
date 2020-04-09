@@ -2,7 +2,6 @@
   <v-app>
     <v-content>
       <Nav/>
-
       <v-container>
         <slot/>
       </v-container>
