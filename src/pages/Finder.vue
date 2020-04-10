@@ -1,42 +1,37 @@
 <template>
   <Layout>
+    <v-container>
+        <h1 class="horiz-center">Finder</h1>
 
-    <client-only>
-      <ais-instant-search :index-name="indexName"
-                          :search-client="searchClient" class="horiz-center searchbox">
+        <client-only>
+          <ais-instant-search :index-name="indexName"
+                              :search-client="searchClient" class="horiz-center searchbox">
 
-        <ais-configure :hits-per-page.camel="8"/>
-        <v-layout row wrap justify-center align-center column>
-          <h1 class="horiz-center">Finder</h1>
-          <!-- <ais-powered-by/> -->
-          <ais-search-box 
-            :class-names="{
-              'ais-SearchBox': 'MySearchBox',
-              'ais-SearchBox-form': 'MySearchBoxForm',
-              'ais-SearchBox-input':'searchInput'
-            }"
-            style="border-style:solid;padding:0.3em 0.5em 0.3em 0.5em;"/>
-        </v-layout>
-        
+            <ais-configure :hits-per-page.camel="8"/>
 
-        <ais-hits class="clear-above">
-          <div slot-scope="{ items }">
-            <v-layout d-flex flex-wrap>
-              <v-row d-flex cols="1">
-                <v-col cols="12" md="3"
-                       class="d-flex child-flex"
-                       v-for="(item, index) in items" :key="index">
-                  <JoseCard :repo="{ title: item.title, name:
+            <ais-powered-by/>
+            <ais-search-box/>
+
+            <ais-hits class="clear-above">
+              <div slot-scope="{ items }">
+                <v-layout d-flex flex-wrap>
+                  <v-row d-flex cols="1">
+                    <v-col cols="12" md="3"
+                           class="d-flex child-flex"
+                           v-for="(item, index) in items" :key="index">
+                      <JoseCard :repo="{ title: item.title, name:
                   item.name, nameWithOwner: item.nameWithOwner,
-                  description: item.description, cardImage: item.cardImage }"/>
-                </v-col>
-              </v-row>
-            </v-layout>
-          </div>
-        </ais-hits>
+                  description: item.description, cardImage: item.cardImage,
+                  summaryDoc: item.cardSummary, summaryImage: item.cardImage }"/>
+                    </v-col>
+                  </v-row>
+                </v-layout>
+              </div>
+            </ais-hits>
 
-      </ais-instant-search>
-    </client-only>
+          </ais-instant-search>
+        </client-only>
+    </v-container>
   </Layout>
 </template>
 
@@ -61,11 +56,6 @@
       }
     },
     components: { JoseCard, JoseLayout },
-    methods: {
-      showContent(repoName){
-        return this.$router.push({ path: `/viewer/${repoName}`, design: '${repoName}' })
-      }
-    }
   }
 </script>
 
@@ -82,10 +72,5 @@
   }
   .clear-above {
     margin-top: 10px;
-  } 
-
-  .searchInput{
-    color:red;
   }
-  
 </style>

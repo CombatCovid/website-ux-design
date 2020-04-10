@@ -1,5 +1,5 @@
 <template>
-  <v-card d-flex hover v-on:click="showContent(repo.name)">
+  <v-card d-flex hover v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
     <v-col class="col">
 <!--      <v-flex>-->
 
@@ -38,8 +38,9 @@
           name: 'a-repo',
           nameWithOwner: 'a-repo-repo-owner',
           description: 'this is a repo',
-          cardImage: 'cardimage.jpg',
-          thumbImage: 'thumbimage.jpg'
+          cardImage: '/cardimage.jpg',
+          cardSummary: '/Readme.md',
+          thumbImage: 'thumbimage.jpg',
         }
       }
     },
@@ -53,10 +54,21 @@
           return "/resources/image/image-placeholder.png"
         }
       },
-      showContent(repoName){
+      showContent(repoName, summaryDoc, summaryImage){
+        console.log('JoseCard: showContent: '+
+          'repoName: ' + `${repoName}`,
+          'summaryDoc: ' + `${summaryDoc}`,
+          'summaryImage: ' + `${summaryImage}`,
+        )
         if (repoName) {
-          return this.$router.push({ path: `/viewer/${repoName}`, design: `${repoName}` })      }
+          return this.$router.push(
+            {
+              path: `/viewer/${repoName}`,
+              summaryDoc: `${summaryDoc}`,
+              summaryImage: `${summaryImage}`,
+            })
         }
+      }
     }
   }
 </script>
