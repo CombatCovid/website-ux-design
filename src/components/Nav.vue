@@ -109,8 +109,6 @@
           {name: '/', label: 'Home'},
           {name: '/finder', label: 'Finder'},
           {name: '/viewer', label: 'Viewer'},
-          {name: '/builder', label: 'Builder'},
-          {name: '/build-reader', label: 'Reader Builder'},
           {name: '/documentation', label: 'Documentation'},
           {name: '/about', label: 'About'}
         ]
