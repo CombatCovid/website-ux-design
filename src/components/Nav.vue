@@ -119,8 +119,6 @@
     computed: {
       hideWhen: function () {
         const w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
-
-        console.log ('width: ' + w);
         return w <= 640
       }
     }
