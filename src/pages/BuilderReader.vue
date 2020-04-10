@@ -45,6 +45,7 @@
 
   import { createSearchClient } from '@algolia/client-search'
   import algoliasearch from 'algoliasearch'
+  import Yaml from 'yaml'
   import store from '~/store'
 
   export default {
@@ -81,10 +82,10 @@
                 name: repo.name,
                 nameWithOwner: repo.nameWithOwner,
                 description: this.descriptionFromRepo (repo),
+                keywords: this.keywordsFromRepo(repo),
                 cardSummary: "/README.md",
-                cardImage: '/summary.jpg', // this.summaryImageFromRepo(repo, "/summary.jpg"),
-                thumbImage: null,
-                keywords: "medical personnel doctor nurse protection hospital ambulance emt uniform safety"
+                cardImage: this.summaryJpgExists(repo) ? '/summary.jpg' : null, // this.summaryImageFromRepo(repo, "/summary.jpg"),
+                thumbImage: null
               }
             })
 
@@ -92,17 +93,45 @@
       },
     },
     methods: {  // *todo* overall: get some .env-conditioned debug into this, soon, commented console.logs
-      summaryImageFromRepo: function (repo, fileName) {
-        const repoFile = `repo.${repo.nameWithOwner}/master${fileName}`
-        console.log('summaryImageFromRepo: filename; ' + JSON.stringify(repoFile))
-        if (fileName !== null
-          && repoFile
-          && this.safeImageFileType(fileName)) {
-          return repoFile
-        } else {
-          return "/resources/image/image-placeholder.png"
-        }
+      summaryJpgExists: function (repo) {
+        return repo.summaryJpg !== null // a little redundant, yes, but clear; true meaning of null in data also
       },
+      metaDataObject: function (repo) {
+        return repo.metaData
+          ? Yaml.parse (repo.metaData.text)
+          : null
+        //
+        // const theData = repo.metaData
+        // return theData
+        //   // ? theData.text
+        //   // : '---\nthis: that'
+      },
+      keywordsFromRepo: function (repo) {
+        const meta = this.metaDataObject(repo)
+        return meta
+          ? meta.languages.EN.keywords
+          : "none"
+        // "medical personnel doctor nurse protection hospital ambulance emt uniform safety"
+      },
+      descriptionFromRepo: function (repo) {
+        const meta = this.metaDataObject(repo)
+        // *todo* a little temporary fun touch prepared, waits until we put the langs in the data!
+        const lang = 'EN' // (repo.name === 'mit.emergency.ventilator') ? 'ES' : 'EN'
+        return meta
+          ? meta.languages[lang].description
+          : 'the description from metadata.yaml will go here'
+      },
+      // summaryImageFromRepo: function (repo, fileName) {
+      //   const repoFile = `repo.${repo.nameWithOwner}/master${fileName}`
+      //   console.log('summaryImageFromRepo: filename; ' + JSON.stringify(repoFile))
+      //   if (fileName !== null
+      //     && repoFile
+      //     && this.safeImageFileType(fileName)) {
+      //     return repoFile
+      //   } else {
+      //     return "/resources/image/image-placeholder.png"
+      //   }
+      // },
       getImgUrl: function (repoName, fileName) {
         // console.log('getImgUrl: filename; ' + JSON.stringify(fileName))
         if (fileName !== null && this.safeImageFileType(fileName)) {
@@ -116,8 +145,11 @@
         // *todo* next, return from metadata.yaml if there
         return this.summaryTitleFromName(repo.name)
       },
-      descriptionFromRepo: function (repo) {
+      xdescriptionFromRepo: function (repo) {
         // *todo* next, return from metadata.yaml if there
+        // console.log('metadata: ' + JSON.stringify(this.metaData(repo)))
+        // console.log('real description: ' + JSON.stringify(this.description(repo)))
+
         return 'description from metadata.yaml will go here...'
       },
       summaryTitleFromName:  function (repoName) {
@@ -203,6 +235,17 @@
         nodes {
           name
           nameWithOwner
+          metaData: object(expression: "master:metadata.yaml") {
+            ...on GitApi_Blob {
+              text
+            }
+          }
+          summaryJpg: object(expression: "master:summary.jpg") {
+            ...on GitApi_Blob {
+              isBinary
+              text
+            }
+          }
           docs: object(expression: "master:docs") {
             ... on GitApi_Tree {
               folders: entries {
