@@ -3,7 +3,7 @@
     <client-only>
       <h1 class="horiz-center">One-Button Index Builder</h1>
       <div class="horiz-center">
-        <v-btn @click="algoIndex">Build</v-btn>
+        <v-btn @click="algoBuildFreshIndex">Build</v-btn>
         <v-btn @click="algoSearch">Search</v-btn>
       </div>
       <div class="horiz-center searchbox">
@@ -45,6 +45,7 @@
 
   import { createSearchClient } from '@algolia/client-search'
   import algoliasearch from 'algoliasearch'
+  import store from '~/store'
 
   export default {
     metaInfo: {
@@ -66,118 +67,107 @@
         repos: this.$page.gitapi.organization.repositories.nodes
       }
     },
-    methods: {
-      getImgUrl: function (repoName, fileName) {
-        if (fileName !== null) {
-          return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
+    computed: {
+      indexableRepoInfo: function () {
+
+        let buildObjectID = 0 // initiate at beginning
+
+        const info = this.$page.gitapi.organization.repositories.nodes
+          .filter (repo => this.validRepo(repo))
+          .map (repo => {
+            return {
+                objectID: buildObjectID++,
+                title: this.summaryTitleFromRepo(repo),
+                name: repo.name,
+                nameWithOwner: repo.nameWithOwner,
+                description: this.descriptionFromRepo (repo),
+                cardSummary: "/README.md",
+                cardImage: '/summary.jpg', // this.summaryImageFromRepo(repo, "/summary.jpg"),
+                thumbImage: null,
+                keywords: "medical personnel doctor nurse protection hospital ambulance emt uniform safety"
+              }
+            })
+
+        return info
+      },
+    },
+    methods: {  // *todo* overall: get some .env-conditioned debug into this, soon, commented console.logs
+      summaryImageFromRepo: function (repo, fileName) {
+        const repoFile = `repo.${repo.nameWithOwner}/master${fileName}`
+        console.log('summaryImageFromRepo: filename; ' + JSON.stringify(repoFile))
+        if (fileName !== null
+          && repoFile
+          && this.safeImageFileType(fileName)) {
+          return repoFile
         } else {
-          return "https://heavenly-holland.com/wp-content/uploads/2017/05/Vermeer03.jpg"
+          return "/resources/image/image-placeholder.png"
         }
       },
-      algoIndex: function () {
+      getImgUrl: function (repoName, fileName) {
+        // console.log('getImgUrl: filename; ' + JSON.stringify(fileName))
+        if (fileName !== null && this.safeImageFileType(fileName)) {
+          return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
+        } else {
+          return "/resources/image/image-placeholder.png"
+        }
+      },
+      validRepo: (repo) => repo.docs !== null && !repo.name.includes('template'),
+      summaryTitleFromRepo: function (repo) {
+        // *todo* next, return from metadata.yaml if there
+        return this.summaryTitleFromName(repo.name)
+      },
+      descriptionFromRepo: function (repo) {
+        // *todo* next, return from metadata.yaml if there
+        return 'description from metadata.yaml will go here...'
+      },
+      summaryTitleFromName:  function (repoName) {
+        let sani = this.htmlSanitize(repoName)
 
-        const appId = process.env.GRIDSOME_ALGO_APPLICATION_ID
-        const adminKey = process.env.GRIDSOME_ALGO_ADMIN_KEY
-        const indexName = process.env.GRIDSOME_ALGO_SEARCH_INDEX
+        sani = sani.replace(/-+/ig, ' ')
+        sani = this.titleCase(this.spaceDashes(sani))
 
-        // console.log('algoIndex appId: ' + appId + ', type: ' + typeof appId)
-        // console.log('algoIndex adminKey: ' + adminKey + ', type: ' + typeof adminKey)
-        // console.log('algoIndex index: ' + process.env.GRIDSOME_ALGO_SEARCH_INDEX)
+        // *todo* def special casing for demos until we get Vuex & metadata on line to pass real title
+        return sani.match(/mit/i)
+          ? sani.replace(/mit/i, 'MIT')
+          : sani
+      },
+      algoBuildFreshIndex: async function () {
+
+        const appId = store.getters.algoAppId
+        const adminKey = store.getters.algoAdminKey
+        const indexName = store.getters.algoIndexName
 
         const client = algoliasearch(appId, adminKey);
         const index = client.initIndex(indexName);
 
-        const objects = [
-          {
-            objectID: 1,
-            title: "SPA Website",
-            path: "",
-            keywords: ""
-          },
-          {
-            objectID: 2,
-            title: "simple-covid-repos-search",
-            path: "",
-            keywords: ""
-          },
-          {
-            objectID: 3,
-            title: "backend-hardware-designs-registry",
-            path: "",
-            keywords: ""
-          },
-          {
-            objectID: 3,
-            title: "backend-hardware-designs-registry",
-            path: "",
-            keywords: ""
-          },
-          {
-            objectID: 4,
-            title: "doc-template",
-            path: "",
-            keywords: ""
-          },
-          {
-            objectID: 5,
-            title: "Medical Shields for 3d Printing",
-            name: "medical-shields-for-3d-printing",
-            nameWithOwner: "CombatCovid/medical-shields-for-3d-printing",
-            description: "The materials required to manufacture one unit are less than $1",
-            cardSummary: "/docs/01-Getting Started.md",
-            cardImage: "/docs/img/Capture-design.JPG",
-            thumbImage: null,
-            keywords: "medical personnel doctor nurse protection hospital ambulance emt uniform safety"
-          },
-          {
-            objectID: 6,
-            title: "MIT Emergency Ventilator",
-            name: "mit-emergency-ventilator",
-            nameWithOwner: "CombatCovid/mit-emergency-ventilator",
-            description: "A low-cost ventilator, based on the collective wisdom of many clinicians",
-            cardSummary: "/docs/01-Getting Started.md",
-            cardImage: "/docs/img/Electrical-System-Architecture-2.jpg",
-            thumbImage: null,
-            keywords: "patient recovery critical intensive care equipment emergency helper treatment hospital operating room"
-          },
-          {
-            objectID: 7,
-            title: "TU Delft Scuba Mask for Covid19",
-            name: "TU-Delft-Scuba-Mask-covid-19",
-            nameWithOwner: "CombatCovid/TU-Delft-Scuba-Mask-covid-19",
-            description: "A reusable full face mask, for application by medical staff in operating rooms and intensive care",
-            cardSummary: "/docs/01-Geeting Started.md",
-            cardImage: "/cpap_600.jpg",
-            thumbImage: null,
-            keywords: "patient recovery critical intensive care equipment emergency helper treatment hospital operating room"
-          }
-        ]
+        // *IMPORTANT* we're going to build fresh: everything out first
+        // and it's a Promise, must then be written this way:
+        // wait for Algolia actually completing this command -- and _properly_ handle any UX activity
+        await index.clearObjects()
+          .then(() => {
+            // done
+            console.log('index: ' + indexName + ' now cleared.')
+        });
+
+        const objects = this.indexableRepoInfo // now we go...
 
         index
           .saveObjects(objects)
           .then(({objectIDs}) => {
-            console.log(objectIDs)
+            console.log('algoBuildFreshIndex: added ' + objectIDs.length + ' records.')
+            console.log('algoBuildFreshIndex: record objects: ' + JSON.stringify(objects))
           })
           .catch(err => {
-            console.log(err)
+            console.log('algoBuildFreshIndex: Error: ' + err)
           })
-
-        index
-          .search("Fo")
-          .then(({ hits }) => {
-            console.log(hits);
-          })
-          .catch(err => {
-            console.log(err);
-          });
       },
       algoSearch: function () {
 
-        const appId = process.env.GRIDSOME_ALGO_APPLICATION_ID
-        const adminKey = process.env.GRIDSOME_ALGO_ADMIN_KEY
-        const indexName = process.env.GRIDSOME_ALGO_SEARCH_INDEX
+        const appId = store.getters.algoAppId
+        const searchKey = store.getters.algoSearchKey
+        const indexName = store.getters.algoBuildFreshIndex
 
-        const client = algoliasearch(appId, adminKey);
+        const client = algoliasearch(appId, searchKey);
         const index = client.initIndex(indexName);
 
         index

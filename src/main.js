@@ -69,8 +69,11 @@ const appMixins = {
         ` <img src="${site}/$2" target="_blank" class='md-image-fit'>`)
       return lines
     },
+    safeImageFileType (fileName) {
+      return fileName.search(/jpg|png|jpeg|gif/) > 0
+    },
     spaceDashes: function (str) {
-      return str.replace(/[-]/g, ' ')
+      return str.replace(/[-_]/g, ' ') // consider _ to be dash, to be friendly, low friction
     },
     titleCase: function (str) {
       // thanks for saving time: https://www.freecodecamp.org/news/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27/
