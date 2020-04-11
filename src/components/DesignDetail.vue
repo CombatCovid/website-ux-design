@@ -28,7 +28,7 @@
         <div class="horiz-center doc-title temp-shift-small-screen" @click="popImages">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-btn v-on="on">Summary Image - click for all</v-btn>
+              <v-btn v-on="on">Summary Image - click<span class="hide-small">for all</span></v-btn>
             </template>
             <span>Click to see view all the design images. Click again to return to the summary.</span>
           </v-tooltip>
@@ -67,7 +67,7 @@
       <div class="horiz-center doc-title temp-shift-small-screen">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn @click="popDocs" v-on="on">Design Summary - click for all</v-btn>
+            <v-btn @click="popDocs" v-on="on">Design Summary - click<span class="hide-small"> for all</span></v-btn>
           </template>
           <span>Click to see view all the design documentse. Click again to return to the summary.</span>
         </v-tooltip>
@@ -195,12 +195,16 @@
       },
       imagesImgs () {
         let images = new Array()
-        this.designRepo.images.entries.forEach(entry => {
-          if (entry.name.search(/jpg|png|jpeg|gif/) > 0) {
-            images.push(this.imagePath + this.htmlSanitize(entry.name))
-          }
-        })
-        // console.log ('images: ' + JSON.stringify(images))
+        if (this.designRepo.images) {
+          this.designRepo.images.entries.forEach(entry => {
+            if (entry.name.search(/jpg|png|jpeg|gif/) > 0) {
+              images.push(this.imagePath + this.htmlSanitize(entry.name))
+            }
+          })
+        } else {
+          this.nrImages = 0
+          return null
+        }
         this.nrImages = images.length
         return images
       }
@@ -509,6 +513,12 @@ fragment FolderInfo on GitApi_TreeEntry {
   .docs-slides-pane { /* see below */
     /*background-color: #56B4D3;*/
     padding: 0 10px;
+  }
+
+  @media only screen and (max-width: 420px) {
+    .hide-small {
+      display: none;
+    }
   }
 
   /* *todo* that docs-slides-pane _overrides_ padding set where?? in glide? later../ */

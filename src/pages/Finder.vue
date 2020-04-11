@@ -38,8 +38,9 @@
 <script>
 
   import algoliasearch from 'algoliasearch'
-  import JoseLayout from '../components/JoseLayout';
-  import JoseCard from '../components/JoseCard';
+  import store from '~/store'
+  import JoseLayout from '../components/JoseLayout'
+  import JoseCard from '../components/JoseCard'
 
   export default {
     metaInfo: {
@@ -48,10 +49,10 @@
     data: function () {
       return {
         numberRepos: 3,
-        indexName: process.env.GRIDSOME_ALGO_SEARCH_INDEX,
+        indexName: store.getters.algoIndexName,
         searchClient: algoliasearch(
-          process.env.GRIDSOME_ALGO_APPLICATION_ID,
-          process.env.GRIDSOME_ALGO_SEARCH_KEY
+          store.getters.algoAppId,
+          store.getters.algoSearchKey
         )
       }
     },
