@@ -195,12 +195,16 @@
       },
       imagesImgs () {
         let images = new Array()
-        this.designRepo.images.entries.forEach(entry => {
-          if (entry.name.search(/jpg|png|jpeg|gif/) > 0) {
-            images.push(this.imagePath + this.htmlSanitize(entry.name))
-          }
-        })
-        // console.log ('images: ' + JSON.stringify(images))
+        if (this.designRepo.images) {
+          this.designRepo.images.entries.forEach(entry => {
+            if (entry.name.search(/jpg|png|jpeg|gif/) > 0) {
+              images.push(this.imagePath + this.htmlSanitize(entry.name))
+            }
+          })
+        } else {
+          this.nrImages = 0
+          return null
+        }
         this.nrImages = images.length
         return images
       }

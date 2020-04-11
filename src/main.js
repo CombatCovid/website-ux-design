@@ -60,17 +60,20 @@ const appMixins = {
       return this.fixUrlMarkdownImages(lines, site, gitUrlRepoFolder)
     },
     fixLocalPathedMarkdownImages (lines, site, gitUrlRepoFolder) {
-      lines = lines.replace(/\!\[(.*)\]\s?\([\.\/]+(.*)\)/gmi,
-        ` <img src="${site}/$2" target="_blank" class='md-image-fit'><p class="md-caption-fit"> $1</p>`)
+      lines = lines.replace(/\!\[(.*)\]\s?\(\/?([a-z0-9-\/\.]+)\)/gmi,
+        ` <img src="${site}/$2" alt="$1" target="_blank" class='md-image-fit'><p class="md-caption-fit"> $1</p>`)
       return lines
     },
     fixUrlMarkdownImages (lines, site = 'https://github.com/') {
-      lines = lines.replace(/\!\[(.*)\]\s?\((\w.*)\)/gmi,
-        ` <img src="${site}/$2" target="_blank" class='md-image-fit'>`)
+      lines = lines.replace(/\!\[(.*)\]\s?\((https?:\/\/)(\w.*)\)/gmi,
+        ` <img src="$2$3" alt="$1" target="_blank" class='md-image-fit'>`)
       return lines
     },
+    safeImageFileType (fileName) {
+      return fileName.search(/jpg|png|jpeg|gif/) > 0
+    },
     spaceDashes: function (str) {
-      return str.replace(/[-]/g, ' ')
+      return str.replace(/[-_]/g, ' ') // consider _ to be dash, to be friendly, low friction
     },
     titleCase: function (str) {
       // thanks for saving time: https://www.freecodecamp.org/news/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27/

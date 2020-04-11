@@ -43,7 +43,7 @@ export default {
       if (fileName !== null) {
         return `https://raw.githubusercontent.com/${repoName}/master/docs/img/${fileName}`
       } else {
-        return "https://heavenly-holland.com/wp-content/uploads/2017/05/Vermeer03.jpg"
+        return "/resources/image/image-placeholder.png"
       }
     },
     showContent(repoName){
