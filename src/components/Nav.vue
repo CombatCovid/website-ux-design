@@ -19,11 +19,11 @@
       <v-list class="hidden-sm-and-down"
                        v-for="(item, key) in items"
                        :key="item.label">
-<!--        <v-list-item>-->
-          <v-btn text exact :to="item.name">{{item.label}}</v-btn>
+          <v-btn text :color="item.color" :class="item.class" exact :to="item.name">{{item.label}}</v-btn>
 <!--        </v-list-item>-->
       </v-list>
       <v-spacer></v-spacer>
+<!--        <v-list-item>-->
 
 <!--      <v-btn class="hidden-md-and-up"-->
 <!--              icon-->
@@ -106,22 +106,26 @@
         extrasIcon: mdiDotsVertical,
         designIcon: mdiDotsHorizontal,
         items: [
-          {name: '/', label: 'Home'},
-          {name: '/finder', label: 'Finder'},
-          {name: '/viewer', label: 'Viewer'},
+          {name: '/', label: 'Home', color: 'teal', class: 'spaced-btn'},
+          {name: '/finder', label: 'Finder', color: 'blue', class: 'soft-antwerp-light'},
+          {name: '/viewer', label: 'Viewer', color: 'blue', class: 'soft-antwerp-light' },
           {name: '/builder-reader', label: 'Builder Reader'},
-          {name: '/documentation', label: 'Documentation'},
-          {name: '/about', label: 'About'}
+          {name: '/documentation', label: 'Documentation', color: 'teal', class: 'spaced-btn'},
+          {name: '/about', label: 'About', color: 'teal', class: 'spaced-btn'}
         ]
       }
     },
     computed: {
       hideWhen: function () {
-        const w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
-        return w <= 640
+        if (typeof window !== 'undefined') {
+          const w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+          return w <= 640
+        } else {
+          return false
+        }
       }
     }
-  };
+  }
 </script>
 
 <style scoped>
@@ -163,5 +167,12 @@
   .momento-text {
     text-align: center;
     vertical-align: center;
+  }
+  .spaced-btn {
+    margin: 0 2px;
+  }
+  .soft-antwerp-light {
+    color: #2b8cb4 !important;
+    margin: 2px;
   }
 </style>

@@ -6,7 +6,7 @@
       <v-btn @click="algoClearReplaceBuild">Fast Build (preferred)</v-btn>
       <v-btn @click="algoAtomicStepBuild">Hoare Build</v-btn>
       <v-btn @click="algoReadbackAll">Read Back All</v-btn>
-      <v-btn @click="clearAll">Clear</v-btn>
+      <v-btn @click="clearAll">Clear the Screen</v-btn>
     </div>
     <div>
       <br>

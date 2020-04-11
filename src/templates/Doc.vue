@@ -16,14 +16,12 @@
                 </v-img>
                 <v-img v-else
                    p-5 class="white--text align-end" height="200px"
-                   src="https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png"
+                   src="/resources/image/image-placeholder.png"
                 >
                 </v-img>
                 </div>
             </div>
-
         </v-flex>
-        </div>
     </Layout>
 </template>
 <script>
