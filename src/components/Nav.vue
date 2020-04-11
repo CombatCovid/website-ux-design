@@ -20,7 +20,7 @@
                        v-for="(item, key) in items"
                        :key="item.label">
 <!--        <v-list-item>-->
-          <v-btn text exact :to="item.name">{{item.label}}</v-btn>
+          <v-btn text :color="item.color" :class="item.class" exact :to="item.name">{{item.label}}</v-btn>
 <!--        </v-list-item>-->
       </v-list>
       <v-spacer></v-spacer>
@@ -106,11 +106,11 @@
         extrasIcon: mdiDotsVertical,
         designIcon: mdiDotsHorizontal,
         items: [
-          {name: '/', label: 'Home'},
-          {name: '/finder', label: 'Finder'},
-          {name: '/viewer', label: 'Viewer'},
-          {name: '/documentation', label: 'Documentation'},
-          {name: '/about', label: 'About'}
+          {name: '/', label: 'Home', color: 'teal', class: 'spaced-btn'},
+          {name: '/finder', label: 'Finder', color: 'blue', class: 'soft-antwerp-light'},
+          {name: '/viewer', label: 'Viewer', color: 'blue', class: 'soft-antwerp-light' },
+          {name: '/documentation', label: 'Documentation', color: 'teal', class: 'spaced-btn'},
+          {name: '/about', label: 'About', color: 'teal', class: 'spaced-btn'}
         ]
       }
     },
@@ -166,5 +166,12 @@
   .momento-text {
     text-align: center;
     vertical-align: center;
+  }
+  .spaced-btn {
+    margin: 0 2px;
+  }
+  .soft-antwerp-light {
+    color: #2b8cb4 !important;
+    margin: 2px;
   }
 </style>
