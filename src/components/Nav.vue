@@ -116,11 +116,15 @@
     },
     computed: {
       hideWhen: function () {
-        const w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
-        return w <= 640
+        if (typeof window !== 'undefined') {
+          const w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+          return w <= 640
+        } else {
+          return false
+        }
       }
     }
-  };
+  }
 </script>
 
 <style scoped>
