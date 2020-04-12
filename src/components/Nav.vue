@@ -44,7 +44,7 @@
         </template>
 
         <div class="below-bar">
-          <DesignChoices/>
+          <BookmarksMenu/>
         </div>
 <!--        <v-list>-->
 <!--          <v-list-item-->
@@ -93,11 +93,11 @@
 <script>
 
   import { mdiDotsVertical, mdiDotsHorizontal } from '@mdi/js'
-  import DesignChoices from './DesignChoices';
+  import BookmarksMenu from './BookmarksMenu';
 
   export default {
     name: "Nav",
-    components: {DesignChoices},
+    components: { BookmarksMenu },
     data: function () {
       return {
         sidebar: false,
