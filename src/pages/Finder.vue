@@ -39,7 +39,6 @@
 
   import algoliasearch from 'algoliasearch'
   import store from '~/store'
-  import JoseLayout from '../components/JoseLayout'
   import JoseCard from '../components/JoseCard'
 
   export default {
@@ -56,7 +55,7 @@
         )
       }
     },
-    components: { JoseCard, JoseLayout },
+    components: { JoseCard },
   }
 </script>
 

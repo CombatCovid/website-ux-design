@@ -1,21 +1,34 @@
 <template>
   <Layout>
-    <div class="master-detail formal-look horiz-center">
-      <p>
-        Alpha notes:  You're viewing a site out of our own latest design revision,
-        where the Viewer page now opens as always with a summary, but then can
-        proceed very easily to let you view all Design Documents and visual materials.
-      </p>
-      <p>
-        You discover the designs from the Finder, aided by a quite intelligent and
-        very rapid text and keywords search agent, behind the scenes. Speed and
-        ease are the things we are after
-      </p>
-      <p>
-        What follows, as we develop a local memoryy feature for that,
-        will be the ability to Bookmark the designs you want to
-        be able to immediately return to. We're looking forward to that.
-      </p>
+    <div class="formal-look">
+      <h1 class="horiz-center">Alpha notes:</h1>
+      <div class="page-width horiz-center">
+        <div class="page-content">
+          <p>
+            Be sure to know that you're viewing a site fresh out of our own latest design revision,
+            progress, and rapid implementation, beginning with the Viewer now able to proceed very easily
+            from its Summary to an easy reading view of all Design Documents. </p>
+          <p>
+            This is paired with similarly swipable and clickable visuals just above,
+            so that you can rapidly appreciate what the built result is actually
+            going to be like, in this help to important judgements.
+          </p>
+          <p>
+            You'll discover the candidate designs from the Finder, aided by a quite intelligent
+            and very rapid keywords search agent behind the scenes, then just click to have
+            all these details in the Viewer.</p>
+          <p>
+            Speed and ease, across culture, situations, and needs, are the things we are after.
+          </p>
+          <p>
+            What follows, for example, as we integrate a local memory feature for it,
+            will be the ability to Bookmark the designs you want to
+            be able to immediately return to.</p>
+          <p>We're looking forward to this -- and just a few further things...</p>
+          <p>Thank you for visiting, on our early days.</p>
+          <p style="margin-left: 20px;"> -- the Combat Covid with Hardware team.</p>
+        </div>
+      </div>
     </div>
   </Layout>
 </template>
@@ -29,15 +42,17 @@ export default {
 </script>
 
 <style scoped>
-  .master-detail {
-    margin: 20px;
-    padding: 15px;
-    color: darkslategray;
-    background-color: beige;
-  }
   .horiz-center {
     margin: 0 auto;
     text-align: center;
+  }
+  .page-width {
+    max-width: 920px;
+    margin: 10px;
+  }
+  .page-content {
+    margin: 10px auto;
+    text-align: left;
   }
   .design-image {
     width: 100%;
@@ -54,6 +69,10 @@ export default {
     font-size: small;
     padding: 20px;
     max-width: 640px;
+    box-sizing: content-box;
+    margin: 20px auto;
+    color: darkslategray;
+    background-color: beige;
   }
 
 </style>
