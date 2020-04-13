@@ -22,6 +22,7 @@ export default new Vuex.Store({
     currentAlgoAppId: process.env.GRIDSOME_ALGO_APPLICATION_ID,
     currentAlgoSearchKey: process.env.GRIDSOME_ALGO_SEARCH_KEY,
     currentAlgoAdminKey: process.env.GRIDSOME_ALGO_ADMIN_KEY,
+    currentAlgoIndexesList: process.env.GRIDSOME_ALGO_INDEXES_LIST,
   },
   created () {
     if (this.state.currentAlgoAdminKey) {
@@ -46,5 +47,16 @@ export default new Vuex.Store({
     algoAppId: state => state.currentAlgoAppId,
     algoSearchKey: state => state.currentAlgoSearchKey,
     algoAdminKey: state => state.currentAlgoAdminKey, // null if not any, normal & correct
+    algoIndexesList: state => {
+      let list = []
+      console.log('initial: ' + state.currentAlgoIndexesList)
+      try {
+        list = JSON.parse(state.currentAlgoIndexesList)
+      }
+      catch (err) {
+        console.log('store.algoIndexesList error: ' + err)
+      }
+      return list
+    },
   }
 })

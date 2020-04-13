@@ -2,7 +2,7 @@
   <div>
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
     <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
-        <div class="d-flex flex-nowrap justify-center doc-title temp-shift-small-screen">
+        <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
           <v-btn @click="slideImages('<')"></v-btn>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
@@ -17,18 +17,17 @@
       <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
         <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
           <div class="horiz-center">
-            <img :src="imagesImg" class="ximage-lim"
-                 alt="imagesImg" width="100%"> <!-- that width 100% is critical -->
+            <img :src="imagesImg" alt="imagesImg" width="100%"> <!-- that width 100% is critical -->
           </div>
         </VueGlideSlide>
       </VueGlide>
     </div>
     <div v-else class="design-image-hold">
       <div class="image-display-mask">
-        <div class="horiz-center doc-title temp-shift-small-screen" @click="popImages">
+        <div class="horiz-center doc-title fix-box temp-shift-small-screen" @click="popImages">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-btn v-on="on">Summary Image - click<span class="hide-small">for all</span></v-btn>
+              <v-btn v-on="on">Summary Image - click<span class="hide-small"> for all</span></v-btn>
             </template>
             <span>Click to see view all the design images. Click again to return to the summary.</span>
           </v-tooltip>
@@ -40,7 +39,7 @@
     </div>
     <hr color="#e3ebef" size="2px" class="rule-appearance">
     <div v-if="docsShow" class="docs-show-pane">
-      <div class="d-flex flex-nowrap justify-center doc-title temp-shift-small-screen">
+      <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
         <v-btn @click="slideDocs('<')"><</v-btn>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
@@ -64,7 +63,7 @@
       </div>
     </div>
     <div v-else>
-      <div class="horiz-center doc-title temp-shift-small-screen">
+      <div class="horiz-center doc-title fix-box temp-shift-small-screen">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-btn @click="popDocs" v-on="on">Design Summary - click<span class="hide-small"> for all</span></v-btn>
@@ -295,7 +294,12 @@ fragment FolderInfo on GitApi_TreeEntry {
     h1 -> .h1-unscoped, etc.. These have to be in <style> non-scoped,
     as Markdown conversions can't be scoped. Translation by unscopeBasisMarkup()
     gets us these tags.
+
+    Don't be fooled if your IDE suggests they aren't being used.
+    They are, and I can assure they are essentiaal, unscoped as here.
+    cns/narration-sd 11Apr2020
 }  */
+
   .h1-unscoped {
     /*font-size: 0.9em;*/
     margin-bottom: 1em;
@@ -359,7 +363,7 @@ fragment FolderInfo on GitApi_TreeEntry {
   }
   /** end unscoped markup conversion tags, so far: h5 and h6 available */
 
-  .md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
+  .md-image-fit { /* must be unscoped, as these apply to unscoped rendered Markdown */
     width: 90%;
     margin: 2% 5% 0 5%
   }
@@ -403,22 +407,12 @@ fragment FolderInfo on GitApi_TreeEntry {
     overflow: hidden !important;
   }
 
-  .image-lim {
-    max-height: 600px;
-  }
-
   .images-slide {
-    width: 80%;
-    max-height: 600px;
-    margin: 0 10%;
-  }
-
-  @media only screen and (max-width: 959px) {
-    .images-slide {
-      width: 94%;
-      max-height: 600px;
-      margin: 0 2%;
-    }
+    /* these along with box-fix is absolutely essential: centering and
+      fixing the aspect ratio, and at all media sizes, is half the key */
+    width: 72%;
+    /*max-height: 600px;*/
+    margin: 0 auto;
   }
 
   .slide-image {
@@ -502,6 +496,12 @@ fragment FolderInfo on GitApi_TreeEntry {
   .rule-appearance {
     color: #e3ebef;
     margin-bottom: 40px;
+  }
+
+  .fix-box {
+    /* this is absolutely crucial, and a bigger half of solving
+       the out-of control image problem, with images-slide */
+    box-sizing: content-box;
   }
 
   @media only screen and (max-width: 639px) {
