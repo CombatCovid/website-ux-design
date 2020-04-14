@@ -31,15 +31,15 @@
 <!--      >-->
 <!--        <v-icon>{{ extrasIcon }}</v-icon>-->
 <!--      </v-btn>-->
-      <v-menu
+      <!-- <v-menu
               left
               bottom
-      >
-        <template v-slot:activator="{ on }">
+      > -->
+        <!-- <template v-slot:activator="{ on }">
           <v-btn icon v-on="on" color="yellow">
             <v-icon>{{ extrasIcon }}</v-icon>
           </v-btn>
-        </template>
+        </template> -->
 
         <div class="below-bar">
           <BookmarksMenu/>
@@ -53,7 +53,7 @@
 <!--            <v-list-item-title>Option {{ n }}</v-list-item-title>-->
 <!--          </v-list-item>-->
 <!--        </v-list>-->
-      </v-menu>
+      <!-- </v-menu> -->
 <!--            </v-toolbar-items>-->
 
     </v-app-bar>
