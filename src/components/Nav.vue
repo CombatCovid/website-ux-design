@@ -41,9 +41,9 @@
           </v-btn>
         </template> -->
 
-        <div class="below-bar">
+        <!-- <div class="below-bar">
           <BookmarksMenu/>
-        </div>
+        </div> -->
 <!--        <v-list>-->
 <!--          <v-list-item-->
 <!--                  v-for="n in 5"-->
