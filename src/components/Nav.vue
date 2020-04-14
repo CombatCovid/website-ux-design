@@ -20,10 +20,8 @@
                        v-for="(item, key) in items"
                        :key="item.label">
           <v-btn text :color="item.color" :class="item.class" exact :to="item.name">{{item.label}}</v-btn>
-<!--        </v-list-item>-->
       </v-list>
       <v-spacer></v-spacer>
-<!--        <v-list-item>-->
 
 <!--      <v-btn class="hidden-md-and-up"-->
 <!--              icon-->
@@ -69,16 +67,7 @@
         </div>
       </v-list>
     </v-navigation-drawer>
-<!--    <v-navigation-drawer appf v-model="choicesBar" temporary right absolute width="200" id="rdrawer">-->
-<!--      <v-list dense nav>-->
-<!--        <div-->
-<!--                v-for="item in items"-->
-<!--                :key="item.name"-->
-<!--        >-->
-<!--          <v-btn text exact :to="item.name">{{item.label}}</v-btn>-->
-<!--        </div>-->
-<!--      </v-list>-->
-<!--    </v-navigation-drawer>-->
+
   </div>
 </template>
 
@@ -107,8 +96,8 @@
         designIcon: mdiDotsHorizontal,
         items: [
           {name: '/', label: 'Home', color: 'teal', class: 'spaced-btn'},
-          {name: '/finder', label: 'Finder', color: 'blue', class: 'soft-antwerp-light'},
-          {name: '/viewer', label: 'Viewer', color: 'blue', class: 'soft-antwerp-light' },
+          // {name: '/finder', label: 'Finder', color: 'blue', class: 'soft-antwerp-light'},
+          // {name: '/viewer', label: 'Viewer', color: 'blue', class: 'soft-antwerp-light' },
           {name: '/documentation', label: 'Documentation', color: 'teal', class: 'spaced-btn'},
           {name: '/about', label: 'About', color: 'teal', class: 'spaced-btn'}
         ]
