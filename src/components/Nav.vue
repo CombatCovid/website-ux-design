@@ -57,7 +57,7 @@
 <!--            </v-toolbar-items>-->
 
     </v-app-bar>
-    <v-navigation-drawer appf v-model="sidebar" temporary absolute width="200" id="drawer">
+    <!-- <v-navigation-drawer appf v-model="sidebar" temporary absolute width="200" id="drawer">
       <v-list dense nav>
         <div
                 v-for="item in items"
@@ -66,7 +66,7 @@
           <v-btn text exact :to="item.name">{{item.label}}</v-btn>
         </div>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
 
   </div>
 </template>
