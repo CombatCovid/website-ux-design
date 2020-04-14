@@ -110,13 +110,13 @@
           { title: "Identify new solutions", subtitle: "Help us adding more solutions to the list"},
           { title: "Contact authors", subtitle: "Help us reach the authors of solutions to update the content"},
         ],
-        icons: [
-          'fab fa-facebook',
-          'fab fa-twitter',
-          'fab fa-google-plus',
-          'fab fa-linkedin',
-          'fab fa-instagram',
-        ],
+        // icons: [
+        //   'fab fa-facebook',
+        //   'fab fa-twitter',
+        //   'fab fa-google-plus',
+        //   'fab fa-linkedin',
+        //   'fab fa-instagram',
+        // ],
       }
     }
   }
