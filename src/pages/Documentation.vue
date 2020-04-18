@@ -3,12 +3,46 @@
     <div class="container doc-look">
       <div class="content">
         <h1>Documentation</h1>
-        <p>This is a very early stage of this page, and you will certainly see it grow.</p>
-        <p>For the moment, just one important area begins....</p>
+        <p>This is a very early stage of this page area, and you will certainly see it
+          grow, and soon come in much nicer presentation.</p>
+        <p>There's a most important statement we would like you to consider with care,
+          so you'll find that next, always at the front.</p>
+        <h2 id="cautionary">Cautionary Statement -- essential to read first, thank you.</h2>
+        <p>
+          Please be careful to note, that while building with 3D Printing can be fun
+          and interesting certainly, medical equipment is a serious undertaking.</p>
+
+        <p>We encourage you to take all care and caution to heart, and to work directly
+          with the medical staff who will use what you make.</p>
+
+        <p>A medical ventilator, for example, can be priceless when it is needed, but
+          it is also potentially <i>very dangerous to the patient</i> if not mechanically precise,
+          or if it is not set up and consistently monitored for them, with the care that
+          only persons who have full skills and training in its use can give.</p>
+
+        <p>The documents of the MIT Emergency Ventilator that you find here describe
+          very well these concerns for its own case, and will also give you a very usable idea of
+          what similar cautions and considerations you should look for, should actively seek out,
+          for any of the designs.</p>
+
+        <p>You'll see why you'll want and will need to get best and constant advice
+        of those medical persons who will actually use your results, and
+          according to conditions in the situation where you may wish to build them.</p>
+
+        <p>It's our intention to become as useful as possible on capabilities
+          and concerns, while you can see that the responsibility must remain
+          with you who use the designs. You must do so properly and with informed due care, so that
+          the best can come of your efforts, providing for others through making medical equipment.</p>
+
+        <p>Thank you.</p>
+
         <h2 id="prepare">Getting your Design Documents published, up on this App</h2>
+
         <p>Basically, you'll be in touch with us to do this. We're friendly
           communicators, and it won't be hard.</p>
+
         <p>... the rest is an early and brief outline, for now! ...</p>
+
         <h3>What Design Documents are, and where they go</h3>
         <p>There's a specification for a simple folder layout, where you will place your set
           of documents and illustrations, with simple summary items at top. .</p>
@@ -81,6 +115,37 @@
     margin-bottom: 0.5rem;
   }
 
+/*
+  This is the fix for universal offset problems with fixed menu bars
+  and links to anchors, compliments of
+  https://css-tricks.com/hash-tag-links-padding/#article-header-id-1
+
+  It needs to be used on every page that can be called through anchors,
+  within the scoped style block wherever one is used.
+*/
+
+  h1:before, h2:before, h3:before, h4:before {
+    display: block;
+    content: " ";
+    /*margin-top: -20px;*/
+    height: 20px;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @media only screen and (min-width: 961px) {
+    h1:before, h2:before, h3:before, h4:before {
+      display: block;
+      content: " ";
+      margin-top: -82px;
+      height: 82px;
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+
+  /*end linked anchor fix*/
+
   p {
     margin-left: 1rem;
   }
@@ -88,6 +153,7 @@
   .content {
     background-color: #fdfde3;
     padding: 20px;
+    margin-top: 0px; /* essential to miss the now-fixed menu */
   }
 
   .doc-look {

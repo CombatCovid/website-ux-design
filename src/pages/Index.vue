@@ -21,7 +21,11 @@
                      dark color="orange">Upload designs
               </v-btn>
             </v-layout>
-
+            <v-layout xs12 md4 row wrap class="pt-2 close-up-top" justify-center>
+              <v-btn to="/documentation#cautionary" class="ma-1 centered"
+                     dark color="teal">Consider for designs...
+              </v-btn>
+            </v-layout>
           </v-flex>
           <v-flex py-5 xs12 sm12 md4 style="margin:1.5em;">
             <div class="iframe--shadow">
@@ -211,5 +215,8 @@
     }
   }
 
+  .close-up-top {
+    margin-top: 5px;
+  }
 
 </style>
