@@ -23,41 +23,19 @@
       </v-list>
       <v-spacer></v-spacer>
 
-<!--      <v-btn class="hidden-md-and-up"-->
-<!--              icon-->
-<!--              color="yellow"-->
-<!--              v-on="sidebar"-->
-<!--              @click="choicesBar = !choicesBar"-->
-<!--      >-->
-<!--        <v-icon>{{ extrasIcon }}</v-icon>-->
-<!--      </v-btn>-->
-      <!-- <v-menu
+      <v-menu
               left
               bottom
-      > -->
-        <!-- <template v-slot:activator="{ on }">
+      >
+        <template v-slot:activator="{ on }">
           <v-btn icon v-on="on" color="yellow">
             <v-icon>{{ extrasIcon }}</v-icon>
           </v-btn>
-        </template> -->
-
-        <!-- <div class="below-bar">
-          <BookmarksMenu/>
-        </div> -->
-<!--        <v-list>-->
-<!--          <v-list-item-->
-<!--                  v-for="n in 5"-->
-<!--                  :key="n"-->
-<!--                  @click="() => {}"-->
-<!--          >-->
-<!--            <v-list-item-title>Option {{ n }}</v-list-item-title>-->
-<!--          </v-list-item>-->
-<!--        </v-list>-->
-      <!-- </v-menu> -->
-<!--            </v-toolbar-items>-->
+        </template>
+      </v-menu>
 
     </v-app-bar>
-    <!-- <v-navigation-drawer appf v-model="sidebar" temporary absolute width="200" id="drawer">
+    <v-navigation-drawer appf v-model="sidebar" temporary absolute width="200" id="drawer">
       <v-list dense nav>
         <div
                 v-for="item in items"
@@ -66,7 +44,7 @@
           <v-btn text exact :to="item.name">{{item.label}}</v-btn>
         </div>
       </v-list>
-    </v-navigation-drawer> -->
+    </v-navigation-drawer>
 
   </div>
 </template>

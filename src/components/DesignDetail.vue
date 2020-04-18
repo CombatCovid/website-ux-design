@@ -3,7 +3,7 @@
     <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
     <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
         <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
-          <v-btn @click="slideImages('<')"></v-btn>
+          <v-btn @click="slideImages('<')"><</v-btn>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn class="xslider-title" v-on="on" @click="popImages">
@@ -12,7 +12,7 @@
             </template>
             <span>Click to return to the summary.</span>
           </v-tooltip>
-          <v-btn @click="slideImages('>')"></v-btn>
+          <v-btn @click="slideImages('>')">></v-btn>
         </div>
       <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
         <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
@@ -282,12 +282,6 @@ fragment FolderInfo on GitApi_TreeEntry {
 </static-query>
 
 <style>
-.md-image-fit { /* must be unscoped, as these apply to unscopedrendered Markdown */
-      width:100%!important;
-
-    /* width: 50%; */
-    /* margin: 2% 5% 0 5% */
-  }
 
   /*
     here are the filter-translated equivalents for the converted Markdown:
@@ -450,12 +444,12 @@ fragment FolderInfo on GitApi_TreeEntry {
   }
 
   .normal-h-size {
-    /* font-size: larger; */
+    font-size: larger;
   }
 
   @media only screen and (max-width: 959px) {
     .normal-h-size {
-      /* font-size: small; */
+      font-size: small;
     }
   }
 
@@ -469,7 +463,7 @@ fragment FolderInfo on GitApi_TreeEntry {
   }
 
   .design-image {
-    /* width: 100%; */
+    width: 100%;
   }
   @media only screen and (min-width: 1601px) {
     .container {
@@ -478,7 +472,7 @@ fragment FolderInfo on GitApi_TreeEntry {
   }
 
   .design-image-hold {
-    /* margin: 3% auto; */
+    margin: 3% auto;
   }
 
   .doc-title {

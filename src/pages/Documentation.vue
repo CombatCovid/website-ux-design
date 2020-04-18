@@ -3,8 +3,37 @@
     <div class="container doc-look">
       <div class="content">
         <h1>Documentation</h1>
-        <p>This is a very early stage of this page, and you will certainly see it grow.</p>
-        <p>For the moment, just one important area begins....</p>
+        <p>This is a very early stage of this page area, and you will certainly see it
+          grow, and soon in much nicer presentation.</p>
+        <p>There's a most important statement we would like you to consider with care,
+          so what comes next you'll find always at the front.</p>
+        <h2 id="cautionary">Cautionary Statement -- essential to read first, thank you.</h2>
+        <p>
+          Please be careful to note, that while building with 3D Printing can be fun
+          and interesting certainly, medical equipment is a serious undertaking.</p>
+
+        <p>We encourage you to take all care and caution to heart, and to work directly
+          with the medical staff who will use what you make.</p>
+
+        <p>A medical ventilator, for example, can be priceless when it is needed, but
+          it is also potentially <i>very dangerous to the patient</i> if not mechanically precise,
+          or if it is not set up and consistently monitored for them very carefully, by persons
+          who have full skills and training in its use.</p>
+
+        <p>The documents of the MIT Emergency Ventilator that you find here describe
+          very well these concerns in own its case, and will give a very usable idea of
+          what similar cautions and considerations you should look for, actively seek out,
+          for any of the designs.</p>
+
+        <p>You'll see why you'll want and need to get best and constant advice
+        of those medical persons who will actually use your results, and
+          according to conditions in the situation where you may wish to build them.</p>
+
+        <p>It's our intention to become as useful as possible on capabilities
+          and concerns, while you can see that the responsibility must remain
+          with you who use the designs, to do so properly and with informed due care, so that
+          the best can come of your efforts, providing for others through medical equipment.</p>
+        <p>Thank you.'</p>
         <h2 id="prepare">Getting your Design Documents published, up on this App</h2>
         <p>Basically, you'll be in touch with us to do this. We're friendly
           communicators, and it won't be hard.</p>
@@ -88,6 +117,7 @@
   .content {
     background-color: #fdfde3;
     padding: 20px;
+    margin-top: 0px; /* essential to miss the now-fixed menu */
   }
 
   .doc-look {
