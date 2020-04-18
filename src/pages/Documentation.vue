@@ -4,7 +4,7 @@
       <div class="content">
         <h1>Documentation</h1>
         <p>This is a very early stage of this page area, and you will certainly see it
-          grow, and soon come in much nicer presentation.</p>
+          grow, soon to come also in much nicer presentation.</p>
         <p>There's a most important statement we would like you to consider with care,
           so you'll find that next, always at the front.</p>
         <h2 id="cautionary">Cautionary Statement -- essential to read first, thank you.</h2>
@@ -56,10 +56,10 @@
         <p>This is very important in our picture, as this is where you open your rich
           further resources, and intentions, framings, and so forth as you wish,
           for the Designs searcher to reference and understand.</p>
-        <p>We provide that you can use normal internet _ web links_ for this, simply
+        <p>We provide that you can use normal internet <u>web links</u> for this, simply
           done anywhere in the design texts, and these will always open a fresh page
           on the app user's browser, so they won't lose their place in discovering
-          your Design there when they click them.</p>
+          your Design there, when they click them.</p>
         <h3>Uploading, once your initial package is ready</h3>
         <p>This is very simple. You will make a normal Github 'pull request', (PR), to
           the CombatCovid project repository, and after we've verified the contents,
@@ -74,10 +74,10 @@
         <p>Metadata is the key to making it very easy for persons to discover your Design, and
           discover it <em>appropriately to their needs</em>, through the app.</p>
         <p>For the moment, it's good to be aware that you can specify your own apropos
-          search <em>keywords</em>by yourself -- and the Finder will intelligently use
+          search <em>keywords</em> by yourself -- and the Finder will then intelligently use
           them -- so you can have control.</p>
-        <p>You'll put these and other important Metadata in your Summary document,
-          in the usual Markdown (frontmatter) way, and that's one of the things
+        <p>You'll put these and other important Metadata in specific locations of your project,
+          mainly in the per-language and root folders appropriately, and that's one of the things
           we'll give you a good explanation how to do.</p>
         <h2>Approvals</h2>
         <p>The quality of the Discovery Experience, for persons wanting to build
