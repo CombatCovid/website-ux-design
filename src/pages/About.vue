@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <div class="formal-look">
-      <h1 class="horiz-center">Alpha notes:</h1>
+      <h1 class="horiz-center">Early Release notes:</h1>
       <div class="page-width horiz-center">
         <div class="page-content">
           <p>
