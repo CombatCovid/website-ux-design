@@ -19,7 +19,7 @@
     </div>
       <div class="bottom-block">
         <h2 v-text="repo.title" class="card-title wrapping-text horiz-center"></h2>
-        <p class="card-subtitle wrapping-text horiz-center">{{ repo.description }}</p>
+        <p class="card-subtitle wrapping-text horiz-center">{{ niceTruncate(repo.description) }}</p>
       </div>
 <!--      </v-flex>-->
     </v-col>

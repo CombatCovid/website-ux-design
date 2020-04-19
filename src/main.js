@@ -94,6 +94,11 @@ const appMixins = {
         .replace(/<li/ig, '<li class="li-unscoped"')
         .replace(/<p/ig, '<p class="p-unscoped"')
         // *todo* add to similarly as needed -- carefully
+    },
+    niceTruncate (string, limit = 105, ending = '...') {
+      return (string.length <= limit)
+        ? string
+        : string.substring(0, limit - ending.length) + ending
     }
   }
 }
