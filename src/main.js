@@ -21,7 +21,7 @@ const appMixins = {
       } catch (e) {
         console.log ('fixAllWebLinks error: ' + e)
       }
-      console.log('cleanFormatMarkdown out: ' + lines)
+      // console.log('cleanFormatMarkdown out: ' + lines)
       return lines
     },
     stripFrontMatter: function (lines) {

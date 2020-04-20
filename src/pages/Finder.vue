@@ -22,7 +22,8 @@
                       <JoseCard :repo="{ title: item.title, name:
                   item.name, nameWithOwner: item.nameWithOwner,
                   description: item.description, cardImage: item.cardImage,
-                  summaryDoc: item.cardSummary, summaryImage: item.cardImage }"/>
+                  summaryDoc: item.cardSummary, summaryImage: item.cardImage,
+                   repoBranch: repoBranch }"/>
                     </v-col>
                   </v-row>
                 </v-layout>
@@ -52,7 +53,8 @@
         searchClient: algoliasearch(
           store.getters.algoAppId,
           store.getters.algoSearchKey
-        )
+        ),
+        repoBranch: store.getters.repoBranch
       }
     },
     components: { JoseCard },

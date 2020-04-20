@@ -28,6 +28,7 @@
 </template>
 
 <script>
+
   export default {
     name: "JoseCard",
     props: {
@@ -41,15 +42,14 @@
           cardImage: '/cardimage.jpg',
           cardSummary: '/Readme.md',
           thumbImage: 'thumbimage.jpg',
+          repoBranch: 'master',
         }
       }
     },
     methods: {
       getImgUrl: function (nameWithOwner, fileName) {
         if (fileName !== null) {
-          // console.log('fileName: ' + fileName)
-          // console.log('cardImage path: ' + `https://raw.githubusercontent.com/${nameWithOwner}/master${fileName}`)
-          return `https://raw.githubusercontent.com/${nameWithOwner}/master${fileName}`
+          return `https://raw.githubusercontent.com/${nameWithOwner}/${this.repo.repoBranch}${fileName}`
         } else {
           return "/resources/image/image-placeholder.png"
         }
