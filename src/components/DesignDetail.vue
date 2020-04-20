@@ -102,7 +102,7 @@
         nrImages: 1,
         imagesShow: false,
         docsShow: false,
-        branch: store.getters.repoBranch // essential so we choose it
+        repoBranch: store.getters.repoBranch // essential so we choose it
       }
     },
     mounted () {
@@ -122,7 +122,7 @@
       }, store.getters.axiosWireTimeout)
 
       const summaryDocUrl = 'https://raw.githubusercontent.com/CombatCovid/' +
-        this.htmlSanitize(this.repoName) + '/' + this.branch + '/README.md'
+        this.htmlSanitize(this.repoName) + '/' + this.repoBranch + '/README.md'
 
       const config = {
         timeout: store.getters.axiosWireTimeout + 1000,
@@ -198,17 +198,18 @@
       imageFolder: function () {
         return 'https://raw.githubusercontent.com/CombatCovid/' +
           this.repoName +
-          '/'  + this.branch + '/docs/'
+          '/'  + this.repoBranch + '/docs/'
       },
       summaryImageFolder: function () {
+        // console.log('summaryImageFolder: repoBranch: ' + this.repoBranch)
         return 'https://raw.githubusercontent.com/CombatCovid/' +
           this.repoName +
-          '/'  + this.branch + '/'
+          '/'  + this.repoBranch + '/'
       },
       repoTreeFolder: function () {
         return 'https://github.com/CombatCovid/' +
           this.repoName +
-          '/tree/'  + this.branch + '/'
+          '/tree/'  + this.repoBranch + '/'
       },
       imagePath: function () {
         return this.imageFolder + 'img/'
@@ -216,7 +217,7 @@
       summaryImg: function () {
         return 'https://raw.githubusercontent.com/CombatCovid/' +
           this.htmlSanitize(this.repoName) +
-          '/'  + this.branch + '/summary.jpg'
+          '/'  + this.repoBranch + '/summary.jpg'
       },
       imagesImgs () {
         let images = new Array()
