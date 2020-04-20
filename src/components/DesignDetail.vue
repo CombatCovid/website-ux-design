@@ -251,60 +251,14 @@
   }
 </script>
 
-// this is hardwired, as api graphql requires a first: or last: value,
-// but I believe this isn't settable in Gridsome unless creating page
-// programatically, via createPage() - which is still hardwired...
-<static-query>
-  query DesignDetail  {
-    gitapi {
-      organization(login:"CombatCovid"){
-        repositories(first:50){
-          nodes {
-            name
-            nameWithOwner
-            docs: object(expression: "develop:docs") {
-              ... on GitApi_Tree {
-                folders: entries {
-                  lang: name
-                  ... FolderInfo
-                }
-              }
-             }
-             images: object(expression: "develop:docs/img") {
-               ... on GitApi_Tree {
-                 entries {
-                   name
-                 }
-               }
-             }
-             srcs: object(expression: "develop:src") {
-               ... on GitApi_Tree {
-                 entries {
-                   name
-                 }
-               }
-             }
-          }
-        }
-      }
-    }
-  }
-
-fragment FolderInfo on GitApi_TreeEntry {
-    contents: object {
-      ... on GitApi_Tree {
-        files: entries {
-          name
-          object {
-            ...on GitApi_Blob {
-              isBinary
-              text
-            }
-          }
-        }
-      }
-    }
-  }
+// this is a temporary solution, as Gridsome supports just id and path
+// as query variables at this time. Probably the answer is axios in the
+// component build -- next to try, but need this out today. As long as
+// this is the way, then, it's a two-points-of truth solution.
+// To change the branch the app views,
+// - alter the tail of this query script name to either develop or master
+// - set the environmental GRIDSOME_REPO_BRANCH to match.
+<static-query src="~/queries/design-detail-develop.gql">
 </static-query>
 
 <style>

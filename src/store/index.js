@@ -28,7 +28,7 @@ export default new Vuex.Store({
     // config of repos
     currentRepoAccount: process.env.GRIDSOME_REPO_ACCOUNT,
     currentRepoKey: process.env.GRIDSOME_REPO_KEY,
-    currentRepoBranch: safeEnv(process.env.GRIDSOME_REPO_BRANCH, 'master'),
+    currentRepoBranch: safeEnv(process.env.GRIDSOME_REPO_BRANCH, 'develop'),
 
     // Algolia presets
     currentAlgoIndex: process.env.GRIDSOME_ALGO_SEARCH_INDEX,
