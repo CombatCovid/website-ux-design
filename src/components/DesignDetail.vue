@@ -151,6 +151,9 @@
         // console.log ('summaryMarkdown: ' + store.getters.summaryMarkdown)
         return this.cleanFormatMarkdown(
           store.getters.summaryMarkdown, this.summaryImageFolder, this.repoTreeFolder)
+        // *todo* isn't this alternate call actually correct at this point?? -- fix
+        // return this.htmlSanitize(
+        //   store.getters.summaryMarkdown)
       },
       repos: function () {
         console.log ('init:this.$static: ' + this.$static)
@@ -167,7 +170,8 @@
       },
       docsTexts () {
         let texts = new Array()
-        this.designRepo.docs.folders[0].contents.files.forEach(file => {
+        // this.designRepo.docs.folders[0].contents.files.forEach(file => {
+        this.designRepo.docs.entries[0].object.entries.forEach(file => {
           // console.log('file: ' + JSON.stringify(file))
           if (file.name.search(/\.md/) > 0) {
             texts.push(this.cleanFormatMarkdown(
@@ -203,10 +207,20 @@
           '/'  + this.repoBranch + '/summary.jpg'
       },
       imagesImgs () {
+
+        // *todo* push this back into texts, if order of need allows? this is cheap and safe...
+
         let images = new Array()
-        if (this.designRepo.images) {
-          this.designRepo.images.entries.forEach(entry => {
-            if (entry.name.search(/jpg|png|jpeg|gif/) > 0) {
+        let repoImages = null
+        this.designRepo.docs.entries.forEach(file => {
+          if (file.lang === 'img') {
+            repoImages = file.object.entries
+          }
+        })
+
+        if (repoImages) {
+          repoImages.forEach(entry => {
+            if (entry.name.search(/jpg|png|jpeg|gif/i) > 0) {
               images.push(this.imagePath + this.htmlSanitize(entry.name))
             }
           })
@@ -214,6 +228,7 @@
           this.nrImages = 0
           return null
         }
+
         this.nrImages = images.length
         return images
       }
