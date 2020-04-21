@@ -54,13 +54,22 @@ export default new Vuex.Store({
   },
   mutations:{
     // Change the state of language, for example
-    loadRepo (context, design = null) {
+    loadRepo (context, namedDesign = null) {
+    // console.log ('loadRepo: namedDesign is ' + JSON.stringify(namedDesign))
+    // console.log ('loadRepo: context is ' + JSON.stringify(context))
+
+    // *todo* this will get interesting as we start multiple memory, really using it to advantage
+      this.state.currentRepos.push(namedDesign.repo)
+    }
+  },
+  actions:{
+    // initiate asynchronous repo/s load, for example
+    loadDesign ({ commit, state }, design) {
+
       if (!design || design.length <= 0) {
-        console.log ('loadRepo: no design given to load')
+        console.log ('loadDesign: no design given to load')
         return;
       }
-      console.log ('loadRepo: design is ' + JSON.stringify(design))
-      console.log ('loadRepo: context is ' + JSON.stringify(context))
 
       // all right, let's query the design with all parts we need off Github
       // *todo* first thing we'll get is the Summary, but soon all in one query, take off that in client
@@ -114,7 +123,7 @@ export default new Vuex.Store({
       // const repoQuery = `query { hello }`
       // const repoQuery = `query { repository(name: "${repoName}", owner: "CombatCovid") { name }}`
       const repoQuery =
-`query repoQuery { 
+        `query repoQuery { 
   repository(name: "${repoName}", owner: "CombatCovid") {
     name
     readMe: object(expression: "${branch}:README.md") {
@@ -182,23 +191,25 @@ export default new Vuex.Store({
 
       axios(config)
         .then(response => {
-            // *todo* this will get interesting as we start multiple memory, really using it to advantage
-            this.state.currentRepos.push(response.data.data)
+            commit('loadRepo', {
+              design: design,
+              repo: response.data.data,
+              error: null
+            })
           },
           error => {
-            console.log('repo[' + design+ '] retrieval error: ' + JSON.stringify(error))
-            this.state.currentRepos[design] = 'repo[' + design+ '] retrieval error: ' + JSON.stringify(error)
+            const nsg = 'repo[' + design+ '] retrieval error: ' + JSON.stringify(error)
+            console.log(msg)
+            commit('loadRepo', {
+              design: design,
+              repo: null,
+              error: msg
+            })
           })
         .finally(function () {
           clearTimeout(timeoutID)
         })
-    }
-  },
-  actions:{
-    // initiate asynchronous repo/s load, for example
-    loadDesign ({ commit, state }, design) {
-      console.log ('loadDesign: currentRepos: ' + JSON.stringify(state.currentRepos))
-      commit('loadRepo', design)
+      // console.log ('loadDesign: currentRepos: ' + JSON.stringify(state.currentRepos))
     }
   },
   getters:{ // Dispatch current state values

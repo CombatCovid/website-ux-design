@@ -118,7 +118,9 @@
         if (this.repos && this.repos.length > 0 && this.design) {
           const filtered = this.repos.filter (repo => repo.repository.name === this.design)
           // console.log('DesignDetail:filtered: ' + JSON.stringify(filtered) )
-          dRepo = filtered[0].repository
+          dRepo = filtered.length > 0
+            ? filtered[0].repository
+            : null
         }
         if (dRepo) {
           // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo) )
