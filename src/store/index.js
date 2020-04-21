@@ -18,50 +18,6 @@ const safeEnv = (value, preset) => { // don't use words like default...
   return value
 }
 
-const repoQuery = `
-  query RepoByName {
-  repository(name: "${repoName}", owner: "CombatCovid") {
-    readMe: object(expression: "${branch}:README.md") {
-    ... on Blob {
-        text
-      }
-    }
-    summaryImg: object(expression: "${branch}:summary.jpg") {
-      __typename
-      commitResourcePath
-      commitUrl
-    ... on Blob {
-        isBinary
-        byteSize
-        commitUrl
-      }
-    }
-    docs: object(expression: "${branch}:docs") {
-    ... on Tree {
-        id
-        entries {
-          lang: name
-          object {
-          ... on Tree {
-              entries {
-                name
-                #                 mode
-                type
-                object {
-                ... on Blob {
-                    text
-                    isBinary
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}`
-
 export default new Vuex.Store({
   state:{
     loading:false,
@@ -72,6 +28,9 @@ export default new Vuex.Store({
     // selectedRepo:null,
     // repoDocs:[],
     // repoImages:[],
+
+    // GitHub API config
+    currentGithubPersonalAuthKey: process.env.GRIDSOME_CC_SINGLE_AUTH,
 
     // config of repos
     currentRepoAccount: process.env.GRIDSOME_REPO_ACCOUNT,
@@ -116,16 +75,17 @@ export default new Vuex.Store({
         console.log ('Cancelling as no connection occurred: ' + c)
       })
 
-      setTimeout(() => {
+      let timeoutID = setTimeout(() => {
         source.cancel()
       }, this.getters.axiosWireTimeout)
 
       const summaryDocUrl = 'https://raw.githubusercontent.com/CombatCovid/' +
         design + '/' + this.getters.repoBranch + '/README.md'
       // *todo* see about modules for this sort of thing, but also better to do it earlier in chain
+      // we do it for now back where the repoBranch is asked for
       // Vue.htmlSanitize(design) + '/' + this.getters.repoBranch + '/README.md'
 
-      const config = {
+      let config = {
         timeout: this.getters.axiosWireTimeout + 1000,
         cancelToken: source.token
       }
@@ -135,13 +95,103 @@ export default new Vuex.Store({
 
       axios.get(summaryDocUrl, config)
         .then(response => {
-            console.log('retrieved summaryMarkdown: ' + response.data)
+            // console.log('retrieved summaryMarkdown: ' + response.data)
             this.state.currentSummaryMarkdown = response.data
           },
           error => {
             console.log('summaryMarkdown retrieval error: ' + JSON.stringify(error))
             this.currentSummaryMarkdown = 'summaryMarkdown retrieval error: ' + JSON.stringify(error)
           })
+        .finally(function () {
+          clearTimeout(timeoutID)
+        })
+
+      // and now let's do that for the full repo query
+
+      const repoName = design
+      const branch = 'develop' // *todo* don't forget to parameteretize as menu comes in
+
+      // const repoQuery = `query { hello }`
+      // const repoQuery = `query { repository(name: "${repoName}", owner: "CombatCovid") { name }}`
+      const repoQuery =
+`query repoQuery { 
+  repository(name: "${repoName}", owner: "CombatCovid") {
+    name
+    readMe: object(expression: "${branch}:README.md") {
+    ... on Blob {
+        text
+      }
+    }
+    summaryImg: object(expression: "${branch}:summary.jpg") {
+      __typename
+      commitResourcePath
+      commitUrl
+    ... on Blob {
+        isBinary
+        byteSize
+        commitUrl
+      }
+    }
+    docs: object(expression: "${branch}:docs") {
+    ... on Tree {
+        id
+        entries {
+          lang: name
+          object {
+          ... on Tree {
+              entries {
+                name
+                #                 mode
+                type
+                object {
+                ... on Blob {
+                    text
+                    isBinary
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}`
+
+      const gitApiQueryUrl = 'https://api.github.com/graphql'
+      const token = this.state.currentGithubPersonalAuthKey
+      const headers = {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      }
+
+      console.log('headers: ' + JSON.stringify(headers))
+      config = {
+        method: 'post',
+        url: gitApiQueryUrl,
+        data: { query: repoQuery },
+        headers: headers,
+        timeout: this.getters.axiosWireTimeout + 1000,
+        cancelToken: source.token
+      }
+      // console.log('config: ' + JSON.stringify(config))
+
+      timeoutID = setTimeout(() => {
+        source.cancel()
+      }, this.getters.axiosWireTimeout)
+
+      axios(config)
+        .then(response => {
+            // *todo* this will get interesting as we start multiple memory, really using it to advantage
+            this.state.currentRepos.push(response.data.data)
+          },
+          error => {
+            console.log('repo[' + design+ '] retrieval error: ' + JSON.stringify(error))
+            this.state.currentRepos[design] = 'repo[' + design+ '] retrieval error: ' + JSON.stringify(error)
+          })
+        .finally(function () {
+          clearTimeout(timeoutID)
+        })
     }
   },
   actions:{
@@ -153,7 +203,8 @@ export default new Vuex.Store({
   },
   getters:{ // Dispatch current state values
     // data for the Viewer
-    repos: state => state.currentRepos,
+    githubPersonalAuthKey: state => state.currentGithubPersonalAuthKey,
+    designRepos: state => state.currentRepos,
     summaryMarkdown: state => state.currentSummaryMarkdown,
 
     // central project repo information

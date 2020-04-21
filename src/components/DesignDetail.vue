@@ -111,15 +111,19 @@
       designRepo: function () {
 
         // this is used when Viewer is called directly
-        // we'll do something with validity and/or Vuex memory to do better here
+        // *todo* we'll do something with validity via Vuex persistence to do better here
         // *todo* at this moment first valid is fifth - metadata will rescue
-        let dRepo = null // = this.repos[4]
+        let dRepo = null // this.repos[4]
 
-        if (this.repos && this.design) {
-          const filtered = this.repos.filter (repo => repo.name === this.design)
-          dRepo = filtered[0]
+        if (this.repos && this.repos.length > 0 && this.design) {
+          const filtered = this.repos.filter (repo => repo.repository.name === this.design)
+          // console.log('DesignDetail:filtered: ' + JSON.stringify(filtered) )
+          dRepo = filtered[0].repository
         }
-        // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo.name) )
+        if (dRepo) {
+          // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo) )
+          console.log('DesignDetail:designRepo:: name ' + dRepo.name)
+        }
 
         return dRepo
       },
@@ -142,15 +146,17 @@
         }
       },
       summaryText: function () {
-        console.log ('summaryText: ' + store.getters.summaryMarkdown)
+        // console.log ('summaryMarkdown: ' + store.getters.summaryMarkdown)
         return this.cleanFormatMarkdown(
           store.getters.summaryMarkdown, this.summaryImageFolder, this.repoTreeFolder)
       },
       repos: function () {
         console.log ('init:this.$static: ' + this.$static)
+        // console.log ('repos:designRepos[design].name: ' + store.getters.designRepos[this.design].name)
+        // console.log ('repos:designRepos: ' + JSON.stringify(store.getters.designRepos))
         return typeof this.$static !== 'undefined'
           ? this.$static.gitapi.organization.repositories.nodes
-          : store.getters.repos
+          : store.getters.designRepos
       },
       summaryTxt: function () {
         // const sanitary = this.htmlSanitize(this.repoName + '/' + this.summaryText)
@@ -227,13 +233,15 @@
   }
 </script>
 
-// this is a temporary solution, as Gridsome supports just id and path
+// this was a temporary solution, as Gridsome supports just id and path
 // as query variables at this time. Probably the answer is axios in the
 // component build -- next to try, but need this out today. As long as
 // this is the way, then, it's a two-points-of truth solution.
 // To change the branch the app views,
 // - alter the tail of this query script name to either develop or master
 // - set the environmental GRIDSOME_REPO_BRANCH to match.
+
+//  *todo* but now this is legacy, as we have active wire and Vuex to remember
 <static-query>
 </static-query>
 
