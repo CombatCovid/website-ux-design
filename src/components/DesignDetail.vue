@@ -148,9 +148,9 @@
         // this is used when Viewer is called directly
         // we'll do something with validity and/or Vuex memory to do better here
         // *todo* at this moment first valid is fifth - metadata will rescue
-        let dRepo = this.repos[4]
+        let dRepo = null // = this.repos[4]
 
-        if (this.design) {
+        if (this.repos && this.design) {
           const filtered = this.repos.filter (repo => repo.name === this.design)
           dRepo = filtered[0]
         }
@@ -159,7 +159,9 @@
         return dRepo
       },
       repoName: function () {
-        return this.designRepo.name
+        return this.designRepo
+          ? this.designRepo.name
+          : 'empty'
       },
       summaryTitle:  function () {
         let sani = this.htmlSanitize(this.repoName)
@@ -175,7 +177,10 @@
         }
       },
       repos: function () {
-        return this.$static.gitapi.organization.repositories.nodes
+        console.log ('init:this.$static: ' + this.$static)
+        return typeof this.$static !== 'undefined'
+          ? this.$static.gitapi.organization.repositories.nodes
+          : null
       },
       summaryTxt: function () {
         // const sanitary = this.htmlSanitize(this.repoName + '/' + this.summaryText)
@@ -259,7 +264,7 @@
 // To change the branch the app views,
 // - alter the tail of this query script name to either develop or master
 // - set the environmental GRIDSOME_REPO_BRANCH to match.
-<static-query src="~/queries/design-detail-develop.gql">
+<static-query>
 </static-query>
 
 <style>
