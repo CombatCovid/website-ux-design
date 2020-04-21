@@ -82,7 +82,6 @@
   import VueMarkdown from 'vue-markdown'
   import { Glide, GlideSlide } from 'vue-glide-js'
   import 'vue-glide-js/dist/vue-glide.css'
-  import axios from 'axios'
   import store from '~/store'
 
   export default {
@@ -97,7 +96,6 @@
     },
     data: function () {
       return {
-        summaryText: 'retrieving...',
         nrTexts: 1,
         nrImages: 1,
         imagesShow: false,
@@ -106,40 +104,7 @@
       }
     },
     mounted () {
-
-      // n.b. this is _essential_ logic to cause an actual timeout from
-      // axios's hung promise if instead of a server answering, there is no
-      // response at all. Without it, the app -- andd the web browser --
-      // until the alert comes up to shut down the window or tab.
-      // Promise cancellation is done this way, at least by Axios now
-      const CancelToken = axios.CancelToken
-      const source = CancelToken.source(function (c) {
-            console.log ('Cancelling as no connection occurred: ' + c)
-          })
-
-      setTimeout(() => {
-        source.cancel()
-      }, store.getters.axiosWireTimeout)
-
-      const summaryDocUrl = 'https://raw.githubusercontent.com/CombatCovid/' +
-        this.htmlSanitize(this.repoName) + '/' + this.repoBranch + '/README.md'
-
-      const config = {
-        timeout: store.getters.axiosWireTimeout + 1000,
-        cancelToken: source.token
-      }
-
-      // console.log ('fetching summary doc from: ' + summaryDocUrl
-      // + ', with timeout: ' + store.getters.axiosWireTimeout + 'ms.'
-
-      axios.get(summaryDocUrl, config)
-        .then(response => {
-            this.summaryText = this.cleanFormatMarkdown(response.data, this.summaryImageFolder, this.repoTreeFolder)
-          },
-          error => {
-            console.log('summaryTxt retrieval error: ' + JSON.stringify(error))
-            this.summaryText = 'summaryTxt retrieval error: ' + JSON.stringify(error)
-          })
+      store.dispatch('loadDesign', this.design) // a good beginning
     },
     computed: {
       // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
@@ -176,11 +141,16 @@
           return sani
         }
       },
+      summaryText: function () {
+        console.log ('summaryText: ' + store.getters.summaryMarkdown)
+        return this.cleanFormatMarkdown(
+          store.getters.summaryMarkdown, this.summaryImageFolder, this.repoTreeFolder)
+      },
       repos: function () {
         console.log ('init:this.$static: ' + this.$static)
         return typeof this.$static !== 'undefined'
           ? this.$static.gitapi.organization.repositories.nodes
-          : null
+          : store.getters.repos
       },
       summaryTxt: function () {
         // const sanitary = this.htmlSanitize(this.repoName + '/' + this.summaryText)
