@@ -60,6 +60,7 @@ export default new Vuex.Store({
 
     // *todo* this will get interesting as we start multiple memory, really using it to advantage
       this.state.currentRepos.push(namedDesign.repo)
+      this.state.currentSummaryMarkdown = namedDesign.repo.repository.readMe.text
     }
   },
   actions:{
@@ -84,44 +85,13 @@ export default new Vuex.Store({
         console.log ('Cancelling as no connection occurred: ' + c)
       })
 
-      let timeoutID = setTimeout(() => {
+      const timeoutID = setTimeout(() => {
         source.cancel()
       }, this.getters.axiosWireTimeout)
-
-      const summaryDocUrl = 'https://raw.githubusercontent.com/CombatCovid/' +
-        design + '/' + this.getters.repoBranch + '/README.md'
-      // *todo* see about modules for this sort of thing, but also better to do it earlier in chain
-      // we do it for now back where the repoBranch is asked for
-      // Vue.htmlSanitize(design) + '/' + this.getters.repoBranch + '/README.md'
-
-      let config = {
-        timeout: this.getters.axiosWireTimeout + 1000,
-        cancelToken: source.token
-      }
-
-      // console.log ('fetching summary doc from: ' + summaryDocUrl
-      // + ', with timeout: ' + store.getters.axiosWireTimeout + 'ms.'
-
-      axios.get(summaryDocUrl, config)
-        .then(response => {
-            // console.log('retrieved summaryMarkdown: ' + response.data)
-            this.state.currentSummaryMarkdown = response.data
-          },
-          error => {
-            console.log('summaryMarkdown retrieval error: ' + JSON.stringify(error))
-            this.currentSummaryMarkdown = 'summaryMarkdown retrieval error: ' + JSON.stringify(error)
-          })
-        .finally(function () {
-          clearTimeout(timeoutID)
-        })
-
-      // and now let's do that for the full repo query
 
       const repoName = design
       const branch = 'develop' // *todo* don't forget to parameteretize as menu comes in
 
-      // const repoQuery = `query { hello }`
-      // const repoQuery = `query { repository(name: "${repoName}", owner: "CombatCovid") { name }}`
       const repoQuery =
         `query repoQuery { 
   repository(name: "${repoName}", owner: "CombatCovid") {
@@ -174,8 +144,8 @@ export default new Vuex.Store({
         'Content-Type': 'application/json'
       }
 
-      console.log('headers: ' + JSON.stringify(headers))
-      config = {
+      // console.log('headers: ' + JSON.stringify(headers))
+      const config = {
         method: 'post',
         url: gitApiQueryUrl,
         data: { query: repoQuery },
@@ -183,11 +153,6 @@ export default new Vuex.Store({
         timeout: this.getters.axiosWireTimeout + 1000,
         cancelToken: source.token
       }
-      // console.log('config: ' + JSON.stringify(config))
-
-      timeoutID = setTimeout(() => {
-        source.cancel()
-      }, this.getters.axiosWireTimeout)
 
       axios(config)
         .then(response => {
