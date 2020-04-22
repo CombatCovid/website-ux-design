@@ -461,6 +461,7 @@
 
   .design-image-hold {
     margin: 3% auto;
+    max-height: 60vw; /* *todo* careful - improves, but mind aspect ratio again - improve where/how later */
   }
 
   .doc-title {
