@@ -23,11 +23,8 @@ export default new Vuex.Store({
     loading:false,
     language:"EN",
     currentRepos:[],
+    currentLastRepoName: null,
     currentSummaryMarkdown: 'retrieving...',
-    // may not need or separate these; initial ideas
-    // selectedRepo:null,
-    // repoDocs:[],
-    // repoImages:[],
 
     // GitHub API config
     currentGithubPersonalAuthKey: process.env.GRIDSOME_CC_SINGLE_AUTH,
@@ -61,16 +58,29 @@ export default new Vuex.Store({
     // *todo* this will get interesting as we start multiple memory, really using it to advantage
       this.state.currentRepos.push(namedDesign.repo)
       this.state.currentSummaryMarkdown = namedDesign.repo.repository.readMe.text
+      this.state.currentLastRepoName = namedDesign.design
+    },
+    setLastRepoName (context, design) {
+      this.state.currentLastRepoName = design
     }
   },
   actions:{
     // initiate asynchronous repo/s load, for example
     loadDesign ({ commit, state }, design) {
-
+console.log('intended loadDesign:design: ' + design)
       if (!design || design.length <= 0) {
         console.log ('loadDesign: no design given to load')
-        return;
+        // *todo* this will mostly work; fully when we browser-persist aspects of Vuex state
+        const lastDesign = this.getters.lastRepoName
+        if (lastDesign) {
+          console.log('will try loading last repo seen: ' + lastDesign)
+          design = lastDesign // that is, design to be used here
+        } else {
+          // *todo* remember to improve no-soap presentation on DesignDetail itself...
+          return;
+        }
       }
+      console.log('actual loadDesign:design: ' + design)
 
       // all right, let's query the design with all parts we need off Github
       // *todo* first thing we'll get is the Summary, but soon all in one query, take off that in client
@@ -161,6 +171,7 @@ export default new Vuex.Store({
               repo: response.data.data,
               error: null
             })
+            commit('setLastRepoName', design)
           },
           error => {
             const nsg = 'repo[' + design+ '] retrieval error: ' + JSON.stringify(error)
@@ -174,7 +185,6 @@ export default new Vuex.Store({
         .finally(function () {
           clearTimeout(timeoutID)
         })
-      // console.log ('loadDesign: currentRepos: ' + JSON.stringify(state.currentRepos))
     }
   },
   getters:{ // Dispatch current state values
@@ -190,6 +200,9 @@ export default new Vuex.Store({
 
     // tuning
     axiosWireTimeout: state => state.currentAxiosWireTimeout,
+
+    // recovery
+    lastRepoName: state => state.currentLastRepoName,
 
     // Algolia access information
     algoIndexName: state => state.currentAlgoIndex,

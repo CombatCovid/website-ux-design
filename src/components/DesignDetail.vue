@@ -96,6 +96,7 @@
     },
     data: function () {
       return {
+        theDesign: this.design, // this because we may mutate from the prop...
         nrTexts: 1,
         nrImages: 1,
         imagesShow: false,
@@ -104,7 +105,10 @@
       }
     },
     mounted () {
-      store.dispatch('loadDesign', this.design) // a good beginning
+      store.dispatch('loadDesign', this.theDesign) // a good beginning
+      if (!this.theDesign || this.theDesign.length <= 0) {
+        this.theDesign = store.getters.lastRepoName // so use it if had any
+      }
     },
     computed: {
       // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
@@ -115,8 +119,8 @@
         // *todo* at this moment first valid is fifth - metadata will rescue
         let dRepo = null // this.repos[4]
 
-        if (this.repos && this.repos.length > 0 && this.design) {
-          const filtered = this.repos.filter (repo => repo.repository.name === this.design)
+        if (this.repos && this.repos.length > 0 && this.theDesign) {
+          const filtered = this.repos.filter (repo => repo.repository.name === this.theDesign)
           // console.log('DesignDetail:filtered: ' + JSON.stringify(filtered) )
           dRepo = filtered.length > 0
             ? filtered[0].repository
@@ -130,9 +134,12 @@
         return dRepo
       },
       repoName: function () {
+        // return this.designRepo
+        //   ? this.designRepo.name
+        //   : 'empty (until we remember what you had, please begin from the Finder)'
         return this.designRepo
           ? this.designRepo.name
-          : 'empty'
+          : 'empty (until we remember what you had, please begin from the Finder)'
       },
       summaryTitle:  function () {
         let sani = this.htmlSanitize(this.repoName)
@@ -156,8 +163,8 @@
         //   store.getters.summaryMarkdown)
       },
       repos: function () {
-        console.log ('init:this.$static: ' + this.$static)
-        // console.log ('repos:designRepos[design].name: ' + store.getters.designRepos[this.design].name)
+        // console.log ('init:this.$static: ' + this.$static)
+        // console.log ('repos:designRepos[theDesign].name: ' + store.getters.designRepos[this.theDesign].name)
         // console.log ('repos:designRepos: ' + JSON.stringify(store.getters.designRepos))
         return typeof this.$static !== 'undefined'
           ? this.$static.gitapi.organization.repositories.nodes
