@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import store from '~/store'
+import axios from 'axios'
+
 
 // Import client to vuex to pass data to actions
 // import { defaultClient as apolloClient } from '../main'
@@ -20,10 +22,12 @@ export default new Vuex.Store({
   state:{
     loading:false,
     language:"EN",
-    repoList:[],
-    selectedRepo:null,
-    repoDocs:[],
-    repoImages:[],
+    currentRepos:[],
+    currentLastRepoName: null,
+    currentSummaryMarkdown: 'retrieving...',
+
+    // GitHub API config
+    currentGithubPersonalAuthKey: process.env.GRIDSOME_CC_SINGLE_AUTH,
 
     // config of repos
     currentRepoAccount: process.env.GRIDSOME_REPO_ACCOUNT,
@@ -42,17 +46,152 @@ export default new Vuex.Store({
   },
   created () {
     if (this.state.currentAlgoAdminKey) {
-      console.log('ready for admin')
+      console.log('enabled for admin')
     }
   },
   mutations:{
-    // Change the state of language
+    // Change the state of language, for example
+    loadRepo (context, namedDesign = null) {
+    // console.log ('loadRepo: namedDesign is ' + JSON.stringify(namedDesign))
+    // console.log ('loadRepo: context is ' + JSON.stringify(context))
+
+    // *todo* this will get interesting as we start multiple memory, really using it to advantage
+      this.state.currentRepos.push(namedDesign.repo)
+      this.state.currentSummaryMarkdown = namedDesign.repo.repository.readMe.text
+      this.state.currentLastRepoName = namedDesign.design
+    },
+    setLastRepoName (context, design) {
+      this.state.currentLastRepoName = design
+    }
   },
   actions:{
-    // Change the
+    // initiate asynchronous repo/s load, for example
+    loadDesign ({ commit, state }, design) {
+console.log('intended loadDesign:design: ' + design)
+      if (!design || design.length <= 0) {
+        console.log ('loadDesign: no design given to load')
+        // *todo* this will mostly work; fully when we browser-persist aspects of Vuex state
+        const lastDesign = this.getters.lastRepoName
+        if (lastDesign) {
+          console.log('will try loading last repo seen: ' + lastDesign)
+          design = lastDesign // that is, design to be used here
+        } else {
+          // *todo* remember to improve no-soap presentation on DesignDetail itself...
+          return;
+        }
+      }
+      console.log('actual loadDesign:design: ' + design)
 
+      // all right, let's query the design with all parts we need off Github
+      // *todo* first thing we'll get is the Summary, but soon all in one query, take off that in client
+
+      // n.b. this is _essential_ logic to cause an actual timeout from
+      // axios's hung promise if instead of a server answering, there is no
+      // response at all. Without it, the app -- and the web browser --
+      // until the alert comes up to shut down the window or tab.
+      // Promise cancellation is done this way, at least by Axios now
+      const CancelToken = axios.CancelToken
+      const source = CancelToken.source(function (c) {
+        console.log ('Cancelling as no connection occurred: ' + c)
+      })
+
+      const timeoutID = setTimeout(() => {
+        source.cancel()
+      }, this.getters.axiosWireTimeout)
+
+      const repoName = design
+      const branch = 'develop' // *todo* don't forget to parameteretize as menu comes in
+
+      const repoQuery =
+        `query repoQuery { 
+  repository(name: "${repoName}", owner: "CombatCovid") {
+    name
+    readMe: object(expression: "${branch}:README.md") {
+    ... on Blob {
+        text
+      }
+    }
+    summaryImg: object(expression: "${branch}:summary.jpg") {
+      __typename
+      commitResourcePath
+      commitUrl
+    ... on Blob {
+        isBinary
+        byteSize
+        commitUrl
+      }
+    }
+    docs: object(expression: "${branch}:docs") {
+    ... on Tree {
+        id
+        entries {
+          lang: name
+          object {
+          ... on Tree {
+              entries {
+                name
+                #                 mode
+                type
+                object {
+                ... on Blob {
+                    text
+                    isBinary
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}`
+
+      const gitApiQueryUrl = 'https://api.github.com/graphql'
+      const token = this.state.currentGithubPersonalAuthKey
+      const headers = {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      }
+
+      // console.log('headers: ' + JSON.stringify(headers))
+      const config = {
+        method: 'post',
+        url: gitApiQueryUrl,
+        data: { query: repoQuery },
+        headers: headers,
+        timeout: this.getters.axiosWireTimeout + 1000,
+        cancelToken: source.token
+      }
+
+      axios(config)
+        .then(response => {
+            commit('loadRepo', {
+              design: design,
+              repo: response.data.data,
+              error: null
+            })
+            commit('setLastRepoName', design)
+          },
+          error => {
+            const nsg = 'repo[' + design+ '] retrieval error: ' + JSON.stringify(error)
+            console.log(msg)
+            commit('loadRepo', {
+              design: design,
+              repo: null,
+              error: msg
+            })
+          })
+        .finally(function () {
+          clearTimeout(timeoutID)
+        })
+    }
   },
   getters:{ // Dispatch current state values
+    // data for the Viewer
+    githubPersonalAuthKey: state => state.currentGithubPersonalAuthKey,
+    designRepos: state => state.currentRepos,
+    summaryMarkdown: state => state.currentSummaryMarkdown,
 
     // central project repo information
     repoAccount: state => state.currentRepoAccount,
@@ -61,6 +200,9 @@ export default new Vuex.Store({
 
     // tuning
     axiosWireTimeout: state => state.currentAxiosWireTimeout,
+
+    // recovery
+    lastRepoName: state => state.currentLastRepoName,
 
     // Algolia access information
     algoIndexName: state => state.currentAlgoIndex,

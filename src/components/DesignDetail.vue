@@ -82,7 +82,6 @@
   import VueMarkdown from 'vue-markdown'
   import { Glide, GlideSlide } from 'vue-glide-js'
   import 'vue-glide-js/dist/vue-glide.css'
-  import axios from 'axios'
   import store from '~/store'
 
   export default {
@@ -97,7 +96,7 @@
     },
     data: function () {
       return {
-        summaryText: 'retrieving...',
+        theDesign: this.design, // this because we may mutate from the prop...
         nrTexts: 1,
         nrImages: 1,
         imagesShow: false,
@@ -106,60 +105,41 @@
       }
     },
     mounted () {
-
-      // n.b. this is _essential_ logic to cause an actual timeout from
-      // axios's hung promise if instead of a server answering, there is no
-      // response at all. Without it, the app -- andd the web browser --
-      // until the alert comes up to shut down the window or tab.
-      // Promise cancellation is done this way, at least by Axios now
-      const CancelToken = axios.CancelToken
-      const source = CancelToken.source(function (c) {
-            console.log ('Cancelling as no connection occurred: ' + c)
-          })
-
-      setTimeout(() => {
-        source.cancel()
-      }, store.getters.axiosWireTimeout)
-
-      const summaryDocUrl = 'https://raw.githubusercontent.com/CombatCovid/' +
-        this.htmlSanitize(this.repoName) + '/' + this.repoBranch + '/README.md'
-
-      const config = {
-        timeout: store.getters.axiosWireTimeout + 1000,
-        cancelToken: source.token
+      store.dispatch('loadDesign', this.theDesign) // a good beginning
+      if (!this.theDesign || this.theDesign.length <= 0) {
+        this.theDesign = store.getters.lastRepoName // so use it if had any
       }
-
-      // console.log ('fetching summary doc from: ' + summaryDocUrl
-      // + ', with timeout: ' + store.getters.axiosWireTimeout + 'ms.'
-
-      axios.get(summaryDocUrl, config)
-        .then(response => {
-            this.summaryText = this.cleanFormatMarkdown(response.data, this.summaryImageFolder, this.repoTreeFolder)
-          },
-          error => {
-            console.log('summaryTxt retrieval error: ' + JSON.stringify(error))
-            this.summaryText = 'summaryTxt retrieval error: ' + JSON.stringify(error)
-          })
     },
     computed: {
       // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
       designRepo: function () {
 
         // this is used when Viewer is called directly
-        // we'll do something with validity and/or Vuex memory to do better here
+        // *todo* we'll do something with validity via Vuex persistence to do better here
         // *todo* at this moment first valid is fifth - metadata will rescue
-        let dRepo = this.repos[4]
+        let dRepo = null // this.repos[4]
 
-        if (this.design) {
-          const filtered = this.repos.filter (repo => repo.name === this.design)
-          dRepo = filtered[0]
+        if (this.repos && this.repos.length > 0 && this.theDesign) {
+          const filtered = this.repos.filter (repo => repo.repository.name === this.theDesign)
+          // console.log('DesignDetail:filtered: ' + JSON.stringify(filtered) )
+          dRepo = filtered.length > 0
+            ? filtered[0].repository
+            : null
         }
-        // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo.name) )
+        if (dRepo) {
+          // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo) )
+          console.log('DesignDetail:designRepo:: name ' + dRepo.name)
+        }
 
         return dRepo
       },
       repoName: function () {
-        return this.designRepo.name
+        // return this.designRepo
+        //   ? this.designRepo.name
+        //   : 'empty (until we remember what you had, please begin from the Finder)'
+        return this.designRepo
+          ? this.designRepo.name
+          : 'empty (until we remember what you had, please begin from the Finder)'
       },
       summaryTitle:  function () {
         let sani = this.htmlSanitize(this.repoName)
@@ -174,8 +154,18 @@
           return sani
         }
       },
+      summaryText: function () {
+        // console.log ('summaryMarkdown: ' + store.getters.summaryMarkdown)
+        return this.cleanFormatMarkdown(
+          store.getters.summaryMarkdown, this.summaryImageFolder, this.repoTreeFolder)
+        // *todo* isn't this alternate call actually correct at this point?? -- fix
+        // return this.htmlSanitize(
+        //   store.getters.summaryMarkdown)
+      },
       repos: function () {
-        return this.$static.gitapi.organization.repositories.nodes
+        return typeof this.$static !== 'undefined'
+          ? this.$static.gitapi.organization.repositories.nodes
+          : store.getters.designRepos
       },
       summaryTxt: function () {
         // const sanitary = this.htmlSanitize(this.repoName + '/' + this.summaryText)
@@ -184,7 +174,7 @@
       },
       docsTexts () {
         let texts = new Array()
-        this.designRepo.docs.folders[0].contents.files.forEach(file => {
+        this.designRepo.docs.entries[0].object.entries.forEach(file => {
           // console.log('file: ' + JSON.stringify(file))
           if (file.name.search(/\.md/) > 0) {
             texts.push(this.cleanFormatMarkdown(
@@ -221,9 +211,16 @@
       },
       imagesImgs () {
         let images = new Array()
-        if (this.designRepo.images) {
-          this.designRepo.images.entries.forEach(entry => {
-            if (entry.name.search(/jpg|png|jpeg|gif/) > 0) {
+        let repoImages = null
+        this.designRepo.docs.entries.forEach(file => {
+          if (file.lang === 'img') {
+            repoImages = file.object.entries
+          }
+        })
+
+        if (repoImages) {
+          repoImages.forEach(entry => {
+            if (entry.name.search(/jpg|png|jpeg|gif/i) > 0) {
               images.push(this.imagePath + this.htmlSanitize(entry.name))
             }
           })
@@ -231,6 +228,7 @@
           this.nrImages = 0
           return null
         }
+
         this.nrImages = images.length
         return images
       }
@@ -252,14 +250,16 @@
   }
 </script>
 
-// this is a temporary solution, as Gridsome supports just id and path
+// this was a temporary solution, as Gridsome supports just id and path
 // as query variables at this time. Probably the answer is axios in the
 // component build -- next to try, but need this out today. As long as
 // this is the way, then, it's a two-points-of truth solution.
 // To change the branch the app views,
 // - alter the tail of this query script name to either develop or master
 // - set the environmental GRIDSOME_REPO_BRANCH to match.
-<static-query src="~/queries/design-detail-develop.gql">
+
+//  *todo* but now this is legacy, as we have active wire and Vuex to remember
+<static-query>
 </static-query>
 
 <style>
