@@ -80,10 +80,12 @@
       </div>
     </div>
     <div v-else class="announcement-look">
-      <h2>Greetings...</h2>
-      <div class="announcement-message">
-        <p>{{ announceMessage1 }}</p>
-        <p>{{ announceMessage2 }}</p>
+      <div class="announcement-frame">
+        <h2>Greetings...</h2>
+        <div class="announcement-message">
+          <p>{{ announceMessage1 }}</p>
+          <p>{{ announceMessage2 }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -531,16 +533,34 @@
     }
   }
 
+
   .announcement-look {
     background: linear-gradient(to right, rgb(86, 180, 211), rgb(52, 143, 80));
     color: lightgoldenrodyellow;
-    padding: 20px;
+    padding: 40px;
     margin: -20px;
     min-height: 80vh;
   }
 
+  .announcement-frame {
+    max-width: 700px;
+    margin: 40px auto;
+  }
+
   .announcement-message {
-    margin: 20px;
+    margin: 40px;
+  }
+
+  @media only screen and (max-width: 640px) {
+    .announcement-look {
+      padding: 20px;
+      margin: -20px;
+      min-height: 80vh;
+    }
+
+    .announcement-message {
+      margin: 20px;
+    }
   }
 
   /* *todo* that docs-slides-pane _overrides_ padding set where?? in glide? later../ */
