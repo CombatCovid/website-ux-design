@@ -1,19 +1,25 @@
 <template>
-  <Layout class="content">
-    <aside>
+  <Layout class="content" style="margin:0 auto;width:1300px">
+    <v-row>
+    <v-col cols="3">
+    <!-- <aside>
       <div class>
         <Sidebar @navigate="sidebarOpen = true" />
       </div>
-    </aside>
+    </aside> -->
 
-    <div>
+    <!-- <div>
       <slot />
-    </div>
+    </div> -->
+    </v-col>
+    <div>
     <section class="docs-container">
       <h1>{{ $page.documentation.title }}</h1>
       <p class="intro">{{ $page.documentation.excerpt }}</p>
       <VueRemarkContent />
     </section>
+    </div>
+    </v-row>
   </Layout>
 </template>
 

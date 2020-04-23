@@ -1,7 +1,35 @@
 <template>
-  <div style="margin:0 auto; max-width:800px">
-    <li v-for="page in pages" :id="page" :key="page">{{page.title}}</li>
-  </div>
+  <v-navigation-drawer permanent>
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title class="title">Application</v-list-item-title>
+        <v-list-item-subtitle>subtext</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-divider></v-divider>
+
+    <v-list dense nav>
+      <v-list-item v-for="page in pages" :id="page" :key="page">
+        <!-- <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-icon>-->
+
+        <v-list-item-content>
+          <router-link :to="`${page.path}`">
+            <v-list-item-title>{{ page.title }}</v-list-item-title>
+          </router-link>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
+  <!-- <div style="margin:0 auto; max-width:800px; padding-top:20px;">
+    <li v-for="page in pages" :id="page" :key="page">
+      <router-link :to="`${page.path}`">
+      {{page.title}}
+      </router-link>
+      </li>
+  </div>-->
 </template>
 
 <static-query>
@@ -24,7 +52,18 @@ query Sidebar {
 export default {
   data() {
     return {
-      expanded: []
+      drawer: true,
+      items: [
+        { title: "Dashboard", icon: "mdi-view-dashboard" },
+        { title: "Photos", icon: "mdi-image" },
+        { title: "About", icon: "mdi-help-box" }
+      ],
+      color: "primary",
+      colors: ["primary", "blue", "success", "red", "teal"],
+      right: true,
+      miniVariant: false,
+      expandOnHover: false,
+      background: false
     };
   },
   computed: {
