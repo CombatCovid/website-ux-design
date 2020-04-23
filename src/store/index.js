@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import VuexPersistence from 'vuex-persist'
+import VuexPersistence, { MockStorage } from 'vuex-persist'
 import axios from 'axios'
 
 import store from '~/store'
@@ -16,13 +16,18 @@ const safeEnv = (value, preset) => { // don't use words like default...
   return value
 }
 
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
-  // *todo* by their lights, this isn't correct, blocks. When upgrade, also remove dupli-saves from troubleshooting, no time now
-  // reducer: (state) => state.currentLastRepoName, // just this, at first. later, much
-})
+// as ever, non-browser must be catered for during build
+const vuexLocal = (typeof window === 'undefined')
+  ? new VuexPersistence({
+      storage: new MockStorage() // their catering cart, completely hidden from documentation...
+    })
+  : new VuexPersistence({
+      storage: window.localStorage,
+      // *todo* by their lights, this isn't correct, blocks. When upgrade, also remove dupli-saves from troubleshooting, no time now
+      // reducer: (state) => state.currentLastRepoName, // just this, at first. later, much
+    })
 
-// begin the store definition
+// here the store state composition. We'll soon put more complex objects in it
 
 export default new Vuex.Store({
   state:{
