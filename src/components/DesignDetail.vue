@@ -1,79 +1,92 @@
 <template>
   <div>
-    <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-    <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
-        <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
-          <v-btn @click="slideImages('<')"><</v-btn>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn class="xslider-title" v-on="on" @click="popImages">
-                Design Images ({{ nrImages }})
-              </v-btn>
-            </template>
-            <span>Click to return to the summary.</span>
-          </v-tooltip>
-          <v-btn @click="slideImages('>')">></v-btn>
-        </div>
-      <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
-        <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
-          <div class="horiz-center">
-            <img :src="imagesImg" alt="imagesImg" width="100%"> <!-- that width 100% is critical -->
+    <div v-if="!announcementNeeded">
+      <div v-if="theDesign">
+        <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
+        <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
+          <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
+            <v-btn @click="slideImages('<')"><</v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn class="xslider-title" v-on="on" @click="popImages">
+                  Design Images ({{ nrImages }})
+                </v-btn>
+              </template>
+              <span>Click to return to the summary.</span>
+            </v-tooltip>
+            <v-btn @click="slideImages('>')">></v-btn>
           </div>
-        </VueGlideSlide>
-      </VueGlide>
-    </div>
-    <div v-else class="design-image-hold">
-      <div class="image-display-mask">
-        <div class="horiz-center doc-title fix-box temp-shift-small-screen" @click="popImages">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn v-on="on">Summary Image - click<span class="hide-small">&nbsp;for&nbsp;all</span></v-btn>
-            </template>
-            <span>Click to see view all the design images. Click again to return to the summary.</span>
-          </v-tooltip>
+          <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
+            <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
+              <div class="horiz-center">
+                <img :src="imagesImg" alt="imagesImg" width="100%"> <!-- that width 100% is critical -->
+              </div>
+            </VueGlideSlide>
+          </VueGlide>
         </div>
-        <div class="images-slide">
-          <img :src="summaryImg" alt="summaryImg" class="design-image"/>
-        </div>
-      </div>
-    </div>
-    <hr color="#e3ebef" size="2px" class="rule-appearance">
-    <div v-if="docsShow" class="docs-show-pane">
-      <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
-        <v-btn @click="slideDocs('<')"><</v-btn>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn v-on="on" @click="popDocs">
-                Design Documents ({{ nrTexts }})
-              </v-btn>
-            </template>
-            <span>Click to return to the summary.</span>
-          </v-tooltip>
-        <v-btn @click="slideDocs('>')">></v-btn>
-      </div>
-      <div class="docs-slides-pane">
-        <VueGlide :perView="1" :gap="10" :rewind="false" type="carousel" ref="docsSlider">
-          <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
-            <!--        Slide {{ i }}-->
-            <div class="docs-slide">
-              <VueMarkdown :source="unscopeBasisMarkup(docText)" :postrender="unscopeBasisMarkup" />
+        <div v-else class="design-image-hold">
+          <div class="image-display-mask">
+            <div class="horiz-center doc-title fix-box temp-shift-small-screen" @click="popImages">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn v-on="on">Summary Image - click<span class="hide-small">&nbsp;for&nbsp;all</span></v-btn>
+                </template>
+                <span>Click to see view all the design images. Click again to return to the summary.</span>
+              </v-tooltip>
             </div>
-          </VueGlideSlide>
-        </VueGlide>
+            <div class="images-slide">
+              <img :src="summaryImg" alt="summaryImg" class="design-image"/>
+            </div>
+          </div>
+        </div>
+        <hr color="#e3ebef" size="2px" class="rule-appearance">
+        <div v-if="docsShow" class="docs-show-pane">
+          <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
+            <v-btn @click="slideDocs('<')"><</v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" @click="popDocs">
+                  Design Documents ({{ nrTexts }})
+                </v-btn>
+              </template>
+              <span>Click to return to the summary.</span>
+            </v-tooltip>
+            <v-btn @click="slideDocs('>')">></v-btn>
+          </div>
+          <div class="docs-slides-pane">
+            <VueGlide :perView="1" :gap="10" :rewind="false" type="carousel" ref="docsSlider">
+              <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
+                <!--        Slide {{ i }}-->
+                <div class="docs-slide">
+                  <VueMarkdown :source="unscopeBasisMarkup(docText)" :postrender="unscopeBasisMarkup" />
+                </div>
+              </VueGlideSlide>
+            </VueGlide>
+          </div>
+        </div>
+        <div v-else>
+          <div class="horiz-center doc-title fix-box temp-shift-small-screen">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn @click="popDocs" v-on="on">Design Summary - click<span class="hide-small">&nbsp;for&nbsp;all</span></v-btn>
+              </template>
+              <span>Click to see view all the design documentse. Click again to return to the summary.</span>
+            </v-tooltip>
+          </div>
+          <div class="docs-slide docs-slides-pane">
+            <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup"/>
+          </div>
+        </div>
       </div>
     </div>
-    <div v-else>
-      <div class="horiz-center doc-title fix-box temp-shift-small-screen">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn @click="popDocs" v-on="on">Design Summary - click<span class="hide-small">&nbsp;for&nbsp;all</span></v-btn>
-          </template>
-          <span>Click to see view all the design documentse. Click again to return to the summary.</span>
-        </v-tooltip>
-      </div>
-        <div class="docs-slide docs-slides-pane">
-          <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup"/>
+    <div v-else class="announcement-look">
+      <div class="announcement-frame">
+        <h2>Greetings...</h2>
+        <div class="announcement-message">
+          <p>{{ announceMessage1 }}</p>
+          <p>{{ announceMessage2 }}</p>
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -96,6 +109,9 @@
     },
     data: function () {
       return {
+        announcementNeeded: false,
+        announceMessage1: 'announce1',
+        announceMessage2: 'announce2',
         theDesign: this.design, // this because we may mutate from the prop...
         nrTexts: 1,
         nrImages: 1,
@@ -105,9 +121,20 @@
       }
     },
     mounted () {
-      store.dispatch('loadDesign', this.theDesign) // a good beginning
       if (!this.theDesign || this.theDesign.length <= 0) {
         this.theDesign = store.getters.lastRepoName // so use it if had any
+        if (!this.theDesign) { // still, then we'll need a Find first
+          this.announcementNeeded = true
+          this.announceMessage1 = 'It looks like it\'s the first time you\'ve used this app on your browser, or after you\'ve cleared its cache, so we don\'t yet know what you\'d like the Viewer to show.'
+          this.announceMessage2 = 'Just use the Finder now, to choose your first Design. We\'ll show it -- and afterwards, we\'ll remember it, and any other Design which was the last one you viewed.'
+        } else {
+          this.announcementNeeded = false
+          store.dispatch('loadDesign', this.theDesign) // a good beginning, recovered via persistenc4e
+        }
+      } else {
+        this.announcementNeeded = false
+        store.commit('setLastRepoName', this.theDesign)
+        store.dispatch('loadDesign', this.theDesign) // a good beginning
       }
     },
     computed: {
@@ -134,24 +161,26 @@
         return dRepo
       },
       repoName: function () {
-        // return this.designRepo
-        //   ? this.designRepo.name
-        //   : 'empty (until we remember what you had, please begin from the Finder)'
         return this.designRepo
           ? this.designRepo.name
-          : 'empty (until we remember what you had, please begin from the Finder)'
+          : '' // 'until' // n.b. need something here on recovery from empty Viewer, as events try before ready next time
+        // *todo* asap: should be a variable we can use for actual flag, to avoid all ghosts like this
       },
       summaryTitle:  function () {
-        let sani = this.htmlSanitize(this.repoName)
+        if (this.repoName && this.repoName !== "") { // fix why this even gets called soon...
+          let sani = this.htmlSanitize(this.repoName)
 
-        sani = sani.replace(/-+/ig, ' ')
-        sani = this.titleCase(this.spaceDashes(sani))
+          sani = sani.replace(/-+/ig, ' ')
+          sani = this.titleCase(this.spaceDashes(sani))
 
-        if (sani.match(/mit/i)) {
-          // *todo* def special casing for demos until we get Vuex on line to pass real title
-          return sani.replace(/mit/i, 'MIT')
+          if (sani.match(/mit/i)) {
+            // *todo* def special casing for demos until we get Vuex on line to pass real title
+            return sani.replace(/mit/i, 'MIT')
+          } else {
+            return sani
+          }
         } else {
-          return sani
+          return ""
         }
       },
       summaryText: function () {
@@ -163,6 +192,9 @@
         //   store.getters.summaryMarkdown)
       },
       repos: function () {
+        // console.log ('init:this.$static: ' + this.$static)
+        // console.log ('repos:designRepos[theDesign].name: ' + store.getters.designRepos[this.theDesign].name)
+        // console.log ('repos:designRepos: ' + JSON.stringify(store.getters.designRepos))
         return typeof this.$static !== 'undefined'
           ? this.$static.gitapi.organization.repositories.nodes
           : store.getters.designRepos
@@ -174,6 +206,7 @@
       },
       docsTexts () {
         let texts = new Array()
+        // this.designRepo.docs.folders[0].contents.files.forEach(file => {
         this.designRepo.docs.entries[0].object.entries.forEach(file => {
           // console.log('file: ' + JSON.stringify(file))
           if (file.name.search(/\.md/) > 0) {
@@ -210,6 +243,9 @@
           '/'  + this.repoBranch + '/summary.jpg'
       },
       imagesImgs () {
+
+        // *todo* push this back into texts, if order of need allows? this is cheap and safe...
+
         let images = new Array()
         let repoImages = null
         this.designRepo.docs.entries.forEach(file => {
@@ -454,6 +490,7 @@
 
   .design-image-hold {
     margin: 3% auto;
+    max-height: 60vw; /* *todo* careful - improves, but mind aspect ratio again - improve where/how later */
   }
 
   .doc-title {
@@ -493,6 +530,36 @@
   @media only screen and (max-width: 420px) {
     .hide-small {
       display: none;
+    }
+  }
+
+
+  .announcement-look {
+    background: linear-gradient(to right, rgb(86, 180, 211), rgb(52, 143, 80));
+    color: lightgoldenrodyellow;
+    padding: 40px;
+    margin: -20px;
+    min-height: 80vh;
+  }
+
+  .announcement-frame {
+    max-width: 700px;
+    margin: 40px auto;
+  }
+
+  .announcement-message {
+    margin: 40px;
+  }
+
+  @media only screen and (max-width: 640px) {
+    .announcement-look {
+      padding: 20px;
+      margin: -20px;
+      min-height: 80vh;
+    }
+
+    .announcement-message {
+      margin: 20px;
     }
   }
 

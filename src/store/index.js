@@ -1,15 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import store from '~/store'
+import VuexPersistence from 'vuex-persist'
 import axios from 'axios'
 
-
-// Import client to vuex to pass data to actions
-// import { defaultClient as apolloClient } from '../main'
+import store from '~/store'
 
 Vue.use(Vuex)
 
-// helpers -- have to be this way; Vuex is not like a Vue component
+// helpers and local objects -- have to be this way; Vuex is not like a Vue component
 
 const safeEnv = (value, preset) => { // don't use words like default...
   if (!value) {
@@ -17,6 +15,14 @@ const safeEnv = (value, preset) => { // don't use words like default...
   }
   return value
 }
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+  // *todo* by their lights, this isn't correct, blocks. When upgrade, also remove dupli-saves from troubleshooting, no time now
+  // reducer: (state) => state.currentLastRepoName, // just this, at first. later, much
+})
+
+// begin the store definition
 
 export default new Vuex.Store({
   state:{
@@ -44,10 +50,14 @@ export default new Vuex.Store({
     // Axios config
     currentAxiosWireTimeout: safeEnv(process.env.GRIDSOME_AXIOS_WIRE_TIMEOUT, 5000)
   },
+  plugins: [
+    vuexLocal.plugin // don't lose me; persistence happens here
+  ],
   created () {
     if (this.state.currentAlgoAdminKey) {
       console.log('enabled for admin')
     }
+    console.log('recovered state.currentLastRepoName: ' + state.currentLastRepoName)
   },
   mutations:{
     // Change the state of language, for example
@@ -81,6 +91,7 @@ console.log('intended loadDesign:design: ' + design)
         }
       }
       console.log('actual loadDesign:design: ' + design)
+      store.commit('setLastRepoName', design) // this is where we remember it for next time
 
       // all right, let's query the design with all parts we need off Github
       // *todo* first thing we'll get is the Summary, but soon all in one query, take off that in client
