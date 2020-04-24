@@ -1,32 +1,64 @@
 <template>
   <div>
-<!-- leaving hide-on-scroll for the moment at least, because it disturbs link targeting to take out...   -->
     <v-app-bar app dark color="dark-blue" :hide-on-scroll="hideWhen">
-<!--      <v-toolbar-items max-width>-->
-
       <span class="hidden-md-and-up">
         <v-app-bar-nav-icon class="hidden-sg-and-up" @click="sidebar = !sidebar" color="blue">
         </v-app-bar-nav-icon>
       </span>
 <!--      <v-img src="/resources/image/combatcovid.png" max-width="50px"></v-img>-->
+
       <v-toolbar-title>
         <router-link to="/" tag="span" style="cursor: pointer">
           <span class="bar-title">{{ $static.metadata.siteName }}</span>
         </router-link>
       </v-toolbar-title>
-<!--      <v-spacer></v-spacer>-->
 
       <v-list class="hidden-sm-and-down"
                        v-for="(item, key) in items"
                        :key="item.label">
+        <div v-if="item.label === 'Viewer' && !designRemembered">
+          <v-menu
+                  nudge-right="-60"
+                  nudge-bottom="40"
+                  :v-model="false"
+                  :disabled="false"
+                  :absolute="false"
+                  :open-on-hover="true"
+                  :close-on-click="true"
+                  :close-on-content-click="true"
+
+                  :offset-x="true"
+                  :offset-y="true"          >
+
+            <template v-slot:activator="{ on }">
+              <v-btn icon v-on="on" color="red">
+                <v-btn text color="red" :class="item.class" exact @click="firstTimeViewer = !firstTimeViewer">{{item.label}}</v-btn>
+              </v-btn>
+            </template>
+            <div class="menu-announcement-look horiz-center">
+              <div class="menu-announcement-frame">
+                <div class="menu-announcement-message">
+                  <h2>Hi, looks like you're new here, Welcome...</h2>
+                  <br>
+                  <h3>Use the Finder, please, and you can choose a Design</h3>
+                  <br>
+                  <p class="">(After the first time, we'll always remember it!)</p>
+                </div>
+              </div>
+            </div>
+          </v-menu>
+
+        </div>
+        <div v-else>
           <v-btn text :color="item.color" :class="item.class" exact :to="item.name">{{item.label}}</v-btn>
+        </div>
       </v-list>
       <v-spacer></v-spacer>
-
       <v-menu
               left
               bottom
       >
+
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on" color="yellow">
             <v-icon>{{ extrasIcon }}</v-icon>
@@ -41,7 +73,39 @@
                 v-for="item in items"
                 :key="item.name"
         >
-          <v-btn text exact :to="item.name">{{item.label}}</v-btn>
+          <div v-if="item.label === 'Viewer' && !designRemembered">
+            <v-menu
+                    nudge-width="320"
+                    nudge-bottom
+                    :v-model="false"
+                    :disabled="false"
+                    :absolute="false"
+                    :open-on-hover="true"
+                    :close-on-click="true"
+                    :close-on-content-click="true"
+
+                    :offset-x="true"
+                    :offset-y="true"          >
+
+              <template v-slot:activator="{ on }">
+                <v-btn  v-on="on" text color="red" :class="item.class" exact @click="firstTimeViewer = !firstTimeViewer">{{item.label}}</v-btn>
+              </template>
+              <div class="menu-announcement-look">
+                <div class="menu-announcement-frame">
+                  <div class="menu-announcement-message">
+                    <h2>Hi, looks like you're new here, Welcome...</h2>
+                    <br>
+                    <h3>Use the Finder, please, and you can choose a Design</h3>
+                    <br>
+                    <p class="horiz-center">(After the first time, we'll always remember it!)</p>
+                  </div>
+                </div>
+              </div>
+            </v-menu>
+          </div>
+          <div v-else>
+            <v-btn text :color="item.color" :class="item.class" exact :to="item.name">{{item.label}}</v-btn>
+          </div>
         </div>
       </v-list>
     </v-navigation-drawer>
@@ -60,7 +124,8 @@
 <script>
 
   import { mdiDotsVertical, mdiDotsHorizontal } from '@mdi/js'
-  import BookmarksMenu from './BookmarksMenu';
+  import BookmarksMenu from './BookmarksMenu'
+  import store from '~/store'
 
   export default {
     name: "Nav",
@@ -69,13 +134,14 @@
       return {
         sidebar: false,
         choicesBar: false,
+        firstTimeViewer: false,
         ccwhIcon: '/resources/images/combatcovid.png',
         extrasIcon: mdiDotsVertical,
         designIcon: mdiDotsHorizontal,
         items: [
           {name: '/', label: 'Home', color: 'teal', class: 'spaced-btn'},
           {name: '/finder', label: 'Finder', color: 'blue', class: 'soft-antwerp-light'},
-          {name: '/viewer', label: 'Viewer', color: 'blue', class: 'soft-antwerp-light' },
+          {name: '/viewer', label: 'Viewer', color: 'blue', class: 'soft-antwerp-light spaced-btn' },
           {name: '/documentation', label: 'Documentation', color: 'teal', class: 'spaced-btn'},
           {name: '/about', label: 'About', color: 'teal', class: 'spaced-btn'}
         ]
@@ -89,7 +155,10 @@
         } else {
           return false
         }
-      }
+      },
+      designRemembered: function  () {
+        return store.getters.lastRepoName
+      },
     }
   }
 </script>
@@ -117,14 +186,6 @@
     padding: 10px;
     background-color: white;
   }
-  .our-bar {
-    width: 100%;
-  }
-  .v-toolbar.v-toolbar--absolute {width: auto !important;}
-
-  .v-toolbar__content, .v-toolbar__extension {
-    padding: 0 !important;
-  }
   .momento {
     background-color: white;
     height: 400px;
@@ -141,4 +202,40 @@
     color: #2b8cb4 !important;
     margin: 2px;
   }
+
+  .horiz-center {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .menu-announcement-look {
+    background: linear-gradient(to right, rgb(86, 180, 211), rgb(52, 143, 80));
+    /*background: beige;*/
+    color: lightgoldenrodyellow;
+    /*color: #0c3e72;*/
+    padding: 40px;
+    margin: -20px;
+    overflow: hidden; /* no scrollbars, thank you */
+  }
+
+  .menu-announcement-frame {
+    max-width: 700px;
+    margin: 40px auto;
+  }
+
+  .menu-announcement-message {
+    margin: 40px;
+  }
+
+  @media only screen and (max-width: 640px) {
+    .menu-announcement-look {
+      padding: 20px;
+      margin: -20px;
+    }
+
+    .menu-announcement-message {
+      margin: 20px;
+    }
+  }
+
 </style>
