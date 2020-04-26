@@ -4,7 +4,7 @@
     <v-col cols="3">
     <aside>
       <div class>
-        <Sidebar @navigate="sidebarOpen = true" />
+        <Sidebar @navigate="SidebarOpen = true" />
       </div>
     </aside>
 

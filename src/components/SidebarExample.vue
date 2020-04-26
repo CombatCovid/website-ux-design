@@ -46,10 +46,10 @@
       ></v-switch>
     </v-row> -->
 
-    <v-card
+    <!-- <v-card
       height="400"
       class="overflow-hidden"
-    >
+    > -->
       <v-navigation-drawer
         v-model="drawer"
         :color="color"
@@ -118,8 +118,8 @@
         ],
         right: false,
         permanent: true,
-        miniVariant: false,
-        expandOnHover: false,
+        miniVariant: true,
+        expandOnHover: true,
         background: false,
       }
     },
