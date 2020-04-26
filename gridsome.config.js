@@ -25,7 +25,8 @@ module.exports = {
         fieldName: 'gitapi',
         typeName: 'GitApi',
         headers: {
-          Authorization: 'Bearer ' + process.env.GRIDSOME_CC_SINGLE_AUTH
+          Authorization: 'Bearer '
+            + process.env.GRIDSOME_CC_SINGLE_AUTH
         }
       },
     }
