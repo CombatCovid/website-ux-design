@@ -23,8 +23,9 @@ const vuexLocal = (typeof window === 'undefined')
     })
   : new VuexPersistence({
       storage: window.localStorage,
-      // *todo* by their lights, this isn't correct, blocks. When upgrade, also remove dupli-saves from troubleshooting, no time now
-      // reducer: (state) => state.currentLastRepoName, // just this, at first. later, much
+      reducer: (state) => ({
+        currentLastRepoName: state.currentLastRepoName, // just this, at first. later, much
+      }),
     })
 
 // here the store state composition. We'll soon put more complex objects in it
@@ -46,7 +47,7 @@ export default new Vuex.Store({
     currentRepoBranch: safeEnv(process.env.GRIDSOME_REPO_BRANCH, 'develop'),
 
     // Algolia presets
-    currentAlgoIndex: process.env.GRIDSOME_ALGO_SEARCH_INDEX,
+    currentAlgoSearchIndex: process.env.GRIDSOME_ALGO_SEARCH_INDEX,
     currentAlgoAppId: process.env.GRIDSOME_ALGO_APPLICATION_ID,
     currentAlgoSearchKey: process.env.GRIDSOME_ALGO_SEARCH_KEY,
     currentAlgoAdminKey: process.env.GRIDSOME_ALGO_ADMIN_KEY,
@@ -67,22 +68,42 @@ export default new Vuex.Store({
   mutations:{
     // Change the state of language, for example
     loadRepo (context, namedDesign = null) {
-    // console.log ('loadRepo: namedDesign is ' + JSON.stringify(namedDesign))
-    // console.log ('loadRepo: context is ' + JSON.stringify(context))
+      // console.log ('loadRepo: namedDesign is ' + JSON.stringify(namedDesign))
+      // console.log ('loadRepo: context is ' + JSON.stringify(context))
 
-    // *todo* this will get interesting as we start multiple memory, really using it to advantage
-      this.state.currentRepos.push(namedDesign.repo)
-      this.state.currentSummaryMarkdown = namedDesign.repo.repository.readMe.text
-      this.state.currentLastRepoName = namedDesign.design
+      // *todo* this will get interesting as we start multiple memory, really using it to advantage
+      if (namedDesign && namedDesign.repo) {
+        this.state.currentRepos.push(namedDesign.repo)
+        this.state.currentSummaryMarkdown = namedDesign.repo.repository.readMe.text
+        this.state.currentLastRepoName = namedDesign.design
+      } else if(namedDesign && namedDesign.errors) {
+        console.log('store loadRepo: errors: ' + JSON.stringify(namedDesign.errors) +
+          ', context: ' + JSON.stringify(context))
+      } else {
+        console.log('store loadRepo: Error: no namedDesign!: context: '
+          + JSON.stringify(context))
+      }
     },
     setLastRepoName (context, design) {
       this.state.currentLastRepoName = design
-    }
+    },
+    setAlgoSearchIndex (context, indexName = null) {
+      this.state.currentAlgoSearchIndex = indexName
+    },
+
+    // *todo* these, possibly other presets needing careful feed until Vuex reducer is sorted out
+    setAlgoSearchIndexesList (context, indexesList = null) {
+      this.state.currentAlgoIndexesList = indexesList
+    },
+    setCheckerBuilderReposInfo (context, repoInfo = null) {
+      this.state.currentLastRepoName = repoInfo
+    },
+    // end reducer temporary sortings
   },
   actions:{
     // initiate asynchronous repo/s load, for example
+
     loadDesign ({ commit, state }, design) {
-console.log('intended loadDesign:design: ' + design)
       if (!design || design.length <= 0) {
         console.log ('loadDesign: no design given to load')
         // *todo* this will mostly work; fully when we browser-persist aspects of Vuex state
@@ -95,7 +116,7 @@ console.log('intended loadDesign:design: ' + design)
           return;
         }
       }
-      console.log('actual loadDesign:design: ' + design)
+      // console.log('actual loadDesign:design: ' + design)
       store.commit('setLastRepoName', design) // this is where we remember it for next time
 
       // all right, let's query the design with all parts we need off Github
@@ -122,6 +143,8 @@ console.log('intended loadDesign:design: ' + design)
         `query repoQuery { 
   repository(name: "${repoName}", owner: "CombatCovid") {
     name
+    nameWithOwner
+    isPrivate
     readMe: object(expression: "${branch}:README.md") {
     ... on Blob {
         text
@@ -185,7 +208,7 @@ console.log('intended loadDesign:design: ' + design)
             commit('loadRepo', {
               design: design,
               repo: response.data.data,
-              error: null
+              errors: null
             })
             commit('setLastRepoName', design)
           },
@@ -195,7 +218,7 @@ console.log('intended loadDesign:design: ' + design)
             commit('loadRepo', {
               design: design,
               repo: null,
-              error: msg
+              errors: msg
             })
           })
         .finally(function () {
@@ -221,18 +244,19 @@ console.log('intended loadDesign:design: ' + design)
     lastRepoName: state => state.currentLastRepoName,
 
     // Algolia access information
-    algoIndexName: state => state.currentAlgoIndex,
+    algoSearchIndex: state => state.currentAlgoSearchIndex,
     algoAppId: state => state.currentAlgoAppId,
     algoSearchKey: state => state.currentAlgoSearchKey,
     algoAdminKey: state => state.currentAlgoAdminKey, // null if not any, normal & correct
     algoIndexesList: state => {
       let list = []
-      console.log('initial: ' + state.currentAlgoIndexesList)
+      // console.log('initial: ' + state.currentAlgoIndexesList)
       try {
         list = JSON.parse(state.currentAlgoIndexesList)
       }
       catch (err) {
-        console.log('store.algoIndexesList error: ' + err)
+        list = 'Error: ' + err
+        console.log('store.AlgoSearchIndexesList error: ' + err)
       }
       return list
     },

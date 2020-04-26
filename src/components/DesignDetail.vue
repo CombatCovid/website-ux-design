@@ -155,7 +155,7 @@
         }
         if (dRepo) {
           // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo) )
-          console.log('DesignDetail:designRepo:: name ' + dRepo.name)
+          // console.log('DesignDetail:designRepo:: name ' + dRepo.name)
         }
 
         return dRepo
@@ -238,9 +238,25 @@
         return this.imageFolder + 'img/'
       },
       summaryImg: function () {
-        return 'https://raw.githubusercontent.com/CombatCovid/' +
-          this.htmlSanitize(this.repoName) +
-          '/'  + this.repoBranch + '/summary.jpg'
+
+        if (!this.designRepo) {
+          return null // we're not ready yet, in the event scheme of things
+        }
+
+        let imgUrl
+        const summaryImage = this.designRepo.summaryImg
+        const nameWithOwner = this.designRepo.nameWithOwner
+        const summaryJpg = '/summary.jpg'
+
+        if (this.designRepo.isPrivate) {
+          imgUrl = '/resources/image/private-placeholder.png'
+        } else if (summaryImage && summaryImage !== null) {
+          imgUrl = `https://raw.githubusercontent.com/${nameWithOwner}/${this.repoBranch}${summaryJpg}`
+        } else {
+          imgUrl = '/resources/image/no-summary-img-placeholder.png'
+        }
+
+        return imgUrl
       },
       imagesImgs () {
 
@@ -490,7 +506,7 @@
 
   .design-image-hold {
     margin: 3% auto;
-    max-height: 60vw; /* *todo* careful - improves, but mind aspect ratio again - improve where/how later */
+    max-height: 66vw; /* *todo* careful - improves, but mind aspect ratio again - improve where/how later */
   }
 
   .doc-title {
