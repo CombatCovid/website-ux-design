@@ -1,35 +1,43 @@
 <template>
-  <v-navigation-drawer permanent>
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title class="title">Application</v-list-item-title>
-        <v-list-item-subtitle>subtext</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-
-    <v-divider></v-divider>
-
-    <v-list dense nav>
-      <v-list-item v-for="page in pages" :id="page" :key="page">
-        <!-- <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-icon>-->
-
+  <div>
+  <v-navigation-drawer 
+    permanent
+    absolute
+    >
+      <v-list-item>
         <v-list-item-content>
-          <router-link :to="`${page.path}`">
-            <v-list-item-title>{{ page.title }}</v-list-item-title>
-          </router-link>
+          <v-list-item-title class="title">
+            Guides 
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            How to document and upload
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-    </v-list>
-  </v-navigation-drawer>
-  <!-- <div style="margin:0 auto; max-width:800px; padding-top:20px;">
-    <li v-for="page in pages" :id="page" :key="page">
-      <router-link :to="`${page.path}`">
-      {{page.title}}
-      </router-link>
-      </li>
-  </div>-->
+
+      <v-divider></v-divider>
+
+      <v-list
+        dense
+        nav
+      >
+        <v-list-item
+          v-for="page in pages"
+          :key="page.title"
+          link
+        >
+          <!-- <v-list-item-icon>
+            <v-icon>{{ page.icon }}</v-icon>
+          </v-list-item-icon> -->
+          <router-link :to="`${page.path}`">
+          <v-list-item-content>
+            <v-list-item-title>{{ page.title }}</v-list-item-title>
+          </v-list-item-content>
+          </router-link>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </div>
 </template>
 
 <static-query>
@@ -95,3 +103,7 @@ export default {
   }
 };
 </script>
+<style scopted>
+
+  
+</style>

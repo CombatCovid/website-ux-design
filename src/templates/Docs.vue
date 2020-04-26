@@ -1,16 +1,16 @@
 <template>
-  <Layout class="content" style="margin:0 auto;width:1300px">
+  <Layout class="" style="">
     <v-row>
     <v-col cols="3">
-    <!-- <aside>
+    <aside>
       <div class>
         <Sidebar @navigate="sidebarOpen = true" />
       </div>
-    </aside> -->
+    </aside>
 
-    <!-- <div>
+    <div>
       <slot />
-    </div> -->
+    </div> 
     </v-col>
     <div>
     <section class="docs-container">
@@ -52,6 +52,7 @@ export default {
 </script>
 
 <style scoped>
+
 @media screen and (min-width: 800px) {
   .docs-container {
     padding-top: 3rem;
