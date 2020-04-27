@@ -140,8 +140,8 @@
         designIcon: mdiDotsHorizontal,
         items: [
           {name: '/', label: 'Home', color: 'teal', class: 'spaced-btn'},
-          {name: '/finder', label: 'Finder', color: 'blue', class: 'soft-antwerp-light'},
-          {name: '/viewer', label: 'Viewer', color: 'blue', class: 'soft-antwerp-light spaced-btn' },
+          // {name: '/finder', label: 'Finder', color: 'blue', class: 'soft-antwerp-light'},
+          // {name: '/viewer', label: 'Viewer', color: 'blue', class: 'soft-antwerp-light spaced-btn' },
           {name: '/documentation', label: 'Documentation', color: 'teal', class: 'spaced-btn'},
           {name: '/about', label: 'About', color: 'teal', class: 'spaced-btn'}
         ]
