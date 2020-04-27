@@ -1,0 +1,50 @@
+  query DesignDetail  {
+    gitapi {
+      organization(login:"CombatCovid"){
+        repositories(first:50){
+          nodes {
+            name
+            nameWithOwner
+            docs: object(expression: "master:docs") {
+              ... on GitApi_Tree {
+                folders: entries {
+                  lang: name
+                  ... FolderInfo
+                }
+              }
+             }
+             images: object(expression: "master:docs/img") {
+               ... on GitApi_Tree {
+                 entries {
+                   name
+                 }
+               }
+             }
+             srcs: object(expression: "master:src") {
+               ... on GitApi_Tree {
+                 entries {
+                   name
+                 }
+               }
+             }
+          }
+        }
+      }
+    }
+  }
+
+fragment FolderInfo on GitApi_TreeEntry {
+    contents: object {
+      ... on GitApi_Tree {
+        files: entries {
+          name
+          object {
+            ...on GitApi_Blob {
+              isBinary
+              text
+            }
+          }
+        }
+      }
+    }
+  }

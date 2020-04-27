@@ -14,14 +14,18 @@
               </h2>
             </div>
             <v-layout xs12 md4 row wrap class="pt-2 ma-3" justify-center>
-              <!-- <v-btn to="/finder" class="ma-1 centered"
+              <v-btn to="/finder" class="ma-1 centered"
                      dark color="blue">Search for designs
-              </v-btn> -->
+              </v-btn>
               <v-btn to="/documentation#prepare" class="ma-1 centered"
                      dark color="orange">Upload designs
               </v-btn>
             </v-layout>
-
+            <v-layout xs12 md4 row wrap class="pt-2 close-up-top" justify-center>
+              <v-btn to="/documentation#cautionary" class="ma-1 centered"
+                     dark color="teal">Consider for designs...
+              </v-btn>
+            </v-layout>
           </v-flex>
           <v-flex py-5 xs12 sm12 md4 style="margin:1.5em;">
             <div class="iframe--shadow">
@@ -211,5 +215,8 @@
     }
   }
 
+  .close-up-top {
+    margin-top: 5px;
+  }
 
 </style>

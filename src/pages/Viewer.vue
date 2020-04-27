@@ -42,7 +42,7 @@
     },
     components: {VerticalMD, HorizontalMD},
     async mounted () {
-      console.log ('Viewer: route params: ' + JSON.stringify(this.$route.params))
+      // console.log ('Viewer: route params: ' + JSON.stringify(this.$route.params))
     }
   }
 </script>

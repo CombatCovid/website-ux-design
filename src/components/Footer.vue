@@ -38,6 +38,9 @@
         {{ new Date().getFullYear() }} — <strong>The CombatCovid with Hardware Team License: GPL 2.0
       </strong>
       </v-card-text>
+        <v-card-text>
+          <a class="white--text" href="/about#impressum"><strong>Impressum</strong></a>
+      </v-card-text>
     </v-card>
   </v-footer>
 </template>
@@ -52,7 +55,6 @@
     name: 'the-footer',  // don't use a name that is part of the html spec
     data: () => ({
       icons: [
-        { name: mdiDiscord, link: "https://discord.gg/rYHCBt" },
         { name: mdiGithub, link: "https://github.com/CombatCovid/SPA-website" }
       ]
     }),
