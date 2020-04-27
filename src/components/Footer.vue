@@ -55,7 +55,6 @@
     name: 'the-footer',  // don't use a name that is part of the html spec
     data: () => ({
       icons: [
-        { name: mdiDiscord, link: "https://discord.gg/rYHCBt" },
         { name: mdiGithub, link: "https://github.com/CombatCovid/SPA-website" }
       ]
     }),

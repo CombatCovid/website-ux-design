@@ -50,13 +50,11 @@
           <p>Contact details and address: </p>
           <pre>
             Primary Contact/Project Leader:
-              Jose Carlos Urra Llanusa
-              TU Delft Open Hardware Lab
-              1 Rotterdamseweg 10 C  #122
-              2826AM Delft, The Netherlands
-            email: jose.urra86@gmail.com
-            phone: +31 626897533
-            Discord: CombatCovid19-with-hardware, @jurra
+              Jose Carlos Urra
+              TU Delft Library
+              Prometheusplein 1,
+              2628 ZC Delft, The Netherlands
+              email: combatcovid820@gmail.com
           </pre>
 
           <h3>We ask you to kindly read our Cautionary Statement:</h3>
