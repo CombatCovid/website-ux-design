@@ -16,7 +16,13 @@ const appMixins = {
       // we do images first, as their match is more specific than similar-looking links
       // *todo* need also to fix docs.md so they are not links...!
       lines = this.fixAllMarkdownImages(this.stripFrontMatter(lines), site, gitUrlRepoFolder)
-      return this.fixAllWebLinks(lines, site, gitUrlRepoFolder)
+      try {
+        lines = this.fixAllWebLinks(lines, site, gitUrlRepoFolder)
+      } catch (e) {
+        console.log ('fixAllWebLinks error: ' + e)
+      }
+      // console.log('cleanFormatMarkdown out: ' + lines)
+      return lines
     },
     stripFrontMatter: function (lines) {
       // *todo* later some way that VueMarkdown handles this itself? Not apparently...
@@ -26,15 +32,19 @@ const appMixins = {
       // this preserves necessary order dependence
       lines = this.fixDirectInlineWebLinks(lines, site, gitUrlRepoFolder)
       lines = this.fixUrlMarkdownLinks(lines, site, gitUrlRepoFolder)
-      lines = this.fixLocalPathedMarkdownLinks(lines, site, gitUrlRepoFolder)
+      // lines = this.fixLocalPathedMarkdownLinks(lines, site, gitUrlRepoFolder)
       return lines
     },
     fixLocalPathedMarkdownLinks (lines, site, gitUrlRepoFolder) {
       // *todo* as we discover how
-      // lines = lines.replace(/([^\!]|^)\[\s*([\w-_\s]+[^\[])*\s*\]\s*\([\.\/]+([^\)]*)\s*\)/gmi,
-      //   ' <a href="' + `${gitUrlRepoFolder}` + '$3" target="_blank" rel="noreferrer noopener">$2</a>')
+      // *todo* what I've done is flip back  to this earlier RE, as it doesn't run away with
+      // the problematic paragraph in the Wisconsin Shield repo. This also has a clash
+      // which misformats the links there. Other things have priority today, and rewriting
+      // that area itself is not unrealistic as a way to handle, if we need.
       lines = lines.replace(/([^\!]|^)\[\s*([\w-_\s]+[^\[])*\s*\]\s*\([\.\/]+([^\)]*)\s*\)/gmi,
         ' <a href="' + `${gitUrlRepoFolder}` + '$3" target="_blank" rel="noreferrer noopener">$2</a>')
+      // lines = lines.replace(/([^\!]|^)\[\s*([\w-_\s]+[^\[])*\s*\]\s*\([\.\/]+([^\)]*)\s*\)/gmi,
+      //   ' <a href="' + `${gitUrlRepoFolder}` + '$3" target="_blank" rel="noreferrer noopener">$2</a>')
       // console.log('fixlocalpathedlinks:gitRepoUrLFolder: ' + gitUrlRepoFolder)
       // console.log('fixlocalpathedlinks: ' + lines)
       return lines
@@ -60,8 +70,8 @@ const appMixins = {
       return this.fixUrlMarkdownImages(lines, site, gitUrlRepoFolder)
     },
     fixLocalPathedMarkdownImages (lines, site, gitUrlRepoFolder) {
-      lines = lines.replace(/\!\[(.*)\]\s?\(\/?([a-z0-9-\/\.]+)\)/gmi,
-        ` <img src="${site}/$2" alt="$1" target="_blank" class='md-image-fit'><p class="md-caption-fit"> $1</p>`)
+      lines = lines.replace(/\!\[(.*)\]\s?\(\/?([a-z0-9\-_\/\.]+)\)/gmi,
+        ` <img src="${site}/$2" alt="$1" target="_blank" class='md-image-fit'>`)
       return lines
     },
     fixUrlMarkdownImages (lines, site = 'https://github.com/') {

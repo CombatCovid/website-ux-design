@@ -1,33 +1,21 @@
 <template>
   <v-card d-flex hover v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
     <v-col class="col">
-<!--      <v-flex>-->
-
-
-    <div class="card-image-holder">
-      <img v-if="repo.cardImage"
-             p-5 class="white--text align-end card-image"
-             :src="getImgUrl(repo.nameWithOwner, repo.cardImage)"
-      >
-      </img>
-      <img v-else
-
-             p-5 class="white--text align-end card-image"
-             src="/resources/image/image-placeholder.png"
-      >
-      </img>
-    </div>
+      <div class="card-image-holder">
+        <img p-5 class="white--text align-end card-image"
+               :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)">
+      </div>
       <div class="bottom-block">
         <h2 v-text="repo.title" class="card-title wrapping-text horiz-center"></h2>
         <p class="card-subtitle wrapping-text horiz-center">{{ niceTruncate(repo.description) }}</p>
       </div>
-<!--      </v-flex>-->
     </v-col>
   </v-card>
 
 </template>
 
 <script>
+
   export default {
     name: "JoseCard",
     props: {
@@ -37,29 +25,33 @@
           title: 'A Repo',
           name: 'a-repo',
           nameWithOwner: 'a-repo-repo-owner',
+          isPrivate: false,
           description: 'this is a repo',
           cardImage: '/cardimage.jpg',
           cardSummary: '/Readme.md',
           thumbImage: 'thumbimage.jpg',
+          repoBranch: 'master',
         }
       }
     },
+    computed: {
+    },
     methods: {
-      getImgUrl: function (nameWithOwner, fileName) {
-        if (fileName !== null) {
-          // console.log('fileName: ' + fileName)
-          // console.log('cardImage path: ' + `https://raw.githubusercontent.com/${nameWithOwner}/master${fileName}`)
-          return `https://raw.githubusercontent.com/${nameWithOwner}/master${fileName}`
+      getImgUrl: function (nameWithOwner, isPrivate, cardImage) {
+        if (isPrivate) {
+          return '/resources/image/private-placeholder.png'
+        } else if (cardImage && cardImage !== null) {
+          return `https://raw.githubusercontent.com/${nameWithOwner}/${this.repo.repoBranch}${cardImage}`
         } else {
-          return "/resources/image/image-placeholder.png"
+          return '/resources/image/no-summary-img-placeholder.png'
         }
       },
       showContent(repoName, summaryDoc, summaryImage){
-        console.log('JoseCard: showContent: '+
-          'repoName: ' + `${repoName}`,
-          'summaryDoc: ' + `${summaryDoc}`,
-          'summaryImage: ' + `${summaryImage}`,
-        )
+        // console.log('JoseFinderCard: showContent: '+
+        //   'repoName: ' + `${repoName}`,
+        //   'summaryDoc: ' + `${summaryDoc}`,
+        //   'summaryImage: ' + `${summaryImage}`,
+        // )
         if (repoName) {
           return this.$router.push(
             {
