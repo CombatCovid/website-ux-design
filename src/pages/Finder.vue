@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <v-container>
+    <!-- <v-container> -->
         <h1 class="horiz-center">Finder</h1>
 
         <client-only>
@@ -32,7 +32,7 @@
 
           </ais-instant-search>
         </client-only>
-    </v-container>
+    <!-- </v-container> -->
   </Layout>
 </template>
 
@@ -64,7 +64,7 @@
 <style scoped>
   .horiz-center {
     margin: 0 auto;
-    text-align: center;
+    /* text-align: center; */
   }
   .searchbox {
     margin: 15px;
