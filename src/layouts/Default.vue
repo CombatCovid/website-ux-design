@@ -28,17 +28,5 @@
 </script>
 
 <style>
-a {
-    text-decoration: none;
-}
-
-/** Styles applied to code blocks in documentation */
-code{
-  color:#c6cfe6 !important;
-  font-weight:100 !important;
-  width:100% !important;
-  padding:1em;
-  background-color: #2e374a !important;
-}
 
 </style>

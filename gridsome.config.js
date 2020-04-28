@@ -6,34 +6,8 @@
 
 module.exports = {
   siteName: 'CombatCovid',
-  // siteUrl: 'https://CombatCovid.github.io',
+  siteUrl: 'https://CombatCovid.github.io',
   // pathPrefix: '/SPA-website', // NO NO NO NO NO! At least for general use. Completely explodes the build manifest
-  settings: {
-    sidebar: [
-      {
-        name: 'docs',
-        sections: [
-          {
-            title: 'Getting Started',
-            items: [
-              '/docs/Test/',
-              '/docs/Documentation/',
-
-            ]
-          }
-          // {
-          //   title: 'Configuration',
-          //   items: [
-          //     '/docs/settings/',
-          //     '/docs/sidebar/',
-          //   ]
-          // }
-        ]
-      }
-    ]
-  },
-
-
   plugins: [
     {
       use: '@gridsome/vue-remark',
