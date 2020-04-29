@@ -89,6 +89,7 @@ a{
 }
 
 .card__image {
+  border-bottom: #C5C6C8 solid 1px;
   width:100%;
   height:150px;
   object-fit:cover;
@@ -99,7 +100,6 @@ a{
 }
 
 .card__content {
-  /* border-top: #C5C6C8 solid 1px; */
   padding: 1em;
   margin-bottom:1em;
   /* position: relative; */
