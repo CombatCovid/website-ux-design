@@ -1,25 +1,26 @@
 <template>
-  <v-card d-flex hover v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
-    <!-- <v-col class=""> -->
-    <!-- <v-img
-      :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)"
-      height="250"
-      width=""
-    ></v-img>-->
-    <div class="card__image" :style="getStyles(getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage))">
-      <!-- Set the image background instead of actual image -->
-      <!-- <img
-        p-5
-        class="white--text align-end card-image"
-        style="width:100%;"
-        :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)"
-      /> -->
+  <v-card class d-flex hover  v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
+    <div
+      class="card__image"
+      :style="getStyles(getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage))"
+    >
     </div>
-    <div class>
-      <v-card-title v-text="repo.title" class></v-card-title>
-      <v-card-subtitle class>{{ niceTruncate(repo.description) }}</v-card-subtitle>
+    <div class="card__content">
+      <h3 v-text="repo.title" class></h3>
+      <p class>{{ niceTruncate(repo.description) }}</p>
     </div>
-    <!-- </v-col> -->
+    <div style="position:relative;margin-top:1em;">
+      <v-card-actions class="card__btns">
+        <v-btn
+          outlined
+          small
+          v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)"
+        >documentation</v-btn>
+        <v-btn color="green" dark small>
+          <a :href="getRepoZip(repo.nameWithOwner, repo.repoBranch)" target="_blank">download</a>
+        </v-btn>
+      </v-card-actions>
+    </div>
   </v-card>
 </template>
 
@@ -40,19 +41,24 @@ export default {
         thumbImage: "thumbimage.jpg",
         repoBranch: "master"
       }
-    },
+    }
   },
-  computed: {
-  },
+  computed: {},
   methods: {
-    getStyles:function(url){
-      return{
+    getStyles: function(url) {
+      return {
         // "height":`200px`,
-        "background":`linear-gradient(180deg, rgba(51, 94, 165, 0.4) 0%, rgba(255, 255, 255, 0) 152.64%), url(${url})`,
+        background: ` linear-gradient(180deg, rgba(1, 44, 68, 0.56) 0%, rgba(1, 44, 68, 0.12) 100.13%),url(${url})`,
         "background-size": "cover",
         "background-color": this.bgColor,
         height: `${this.height}px`
-      }
+      };
+    },
+    getRepoZip: function(nameWithOwner, repoBranch) {
+      console.log(
+        `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`
+      );
+      return `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`;
     },
     getImgUrl: function(nameWithOwner, isPrivate, cardImage) {
       if (isPrivate) {
@@ -82,9 +88,30 @@ export default {
 </script>
 
 <style scoped>
-.card__image{
-  height:100px;
+a{
+ text-decoration: none;
+ color:white !important; 
+}
+.card {
+  background: #1d3557;
 }
 
+.card__image {
+  height: 150px;
+}
 
+.card__content {
+  border-top: #C5C6C8 solid 1px;
+  padding: 1.5em;
+  position: relative;
+  height: 200px;
+}
+
+.card__btns {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 0.8em;
+}
 </style>
