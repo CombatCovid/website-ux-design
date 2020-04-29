@@ -1,9 +1,8 @@
 <template>
   <v-card class d-flex hover  v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
     <div
-      class="card__image"
-      :style="getStyles(getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage))"
-    >
+      class="card__image">
+      <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)">
     </div>
     <div class="card__content">
       <h3 v-text="repo.title" class></h3>
@@ -43,15 +42,7 @@ export default {
   },
   computed: {},
   methods: {
-    getStyles: function(url) {
-      return {
-        // "height":`200px`,
-        background: ` linear-gradient(180deg, rgba(1, 44, 68, 0.56) 0%, rgba(1, 44, 68, 0.12) 100.13%),url(${url})`,
-        "background-size": "cover",
-        "background-color": this.bgColor,
-        height: `${this.height}px`
-      };
-    },
+    
     getRepoZip: function(nameWithOwner, repoBranch) {
       console.log(
         `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`
@@ -96,7 +87,13 @@ a{
 }
 
 .card__image {
-  height: 150px;
+  width:100%;
+  height:150px;
+  object-fit:cover;
+}
+
+.card__gradient::after{
+    background-image: linear-gradient(to bottom, transparent 0%, white 100%);
 }
 
 .card__content {
