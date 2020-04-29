@@ -45,7 +45,6 @@ export default {
   methods: {
     getStyles: function(url) {
       return {
-        // "height":`200px`,
         background: ` linear-gradient(180deg, rgba(1, 44, 68, 0.56) 0%, rgba(1, 44, 68, 0.12) 100.13%),url(${url})`,
         "background-size": "cover",
         "background-color": this.bgColor,
@@ -53,9 +52,6 @@ export default {
       };
     },
     getRepoZip: function(nameWithOwner, repoBranch) {
-      console.log(
-        `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`
-      );
       return `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`;
     },
     getImgUrl: function(nameWithOwner, isPrivate, cardImage) {
