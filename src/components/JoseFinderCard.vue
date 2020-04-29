@@ -1,9 +1,10 @@
 <template>
   <v-card class d-flex hover  v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
-    <div
-      class="card__image"
-      :style="getStyles(getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage))"
-    >
+    <div class="card__gradient">
+      <div
+        class="card__image">
+        <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)">
+      </div>
     </div>
     <div class="card__content">
       <h3 v-text="repo.title" class></h3>
@@ -43,15 +44,11 @@ export default {
   },
   computed: {},
   methods: {
-    getStyles: function(url) {
-      return {
-        background: ` linear-gradient(180deg, rgba(1, 44, 68, 0.56) 0%, rgba(1, 44, 68, 0.12) 100.13%),url(${url})`,
-        "background-size": "cover",
-        "background-color": this.bgColor,
-        height: `${this.height}px`
-      };
-    },
+    
     getRepoZip: function(nameWithOwner, repoBranch) {
+      console.log(
+        `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`
+      );
       return `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`;
     },
     getImgUrl: function(nameWithOwner, isPrivate, cardImage) {
@@ -92,11 +89,17 @@ a{
 }
 
 .card__image {
-  height: 150px;
+  width:100%;
+  height:150px;
+  object-fit:cover;
+}
+
+.card__gradient::after{
+    background-image: linear-gradient(to bottom, transparent 0%, white 100%);
 }
 
 .card__content {
-  border-top: #C5C6C8 solid 1px;
+  /* border-top: #C5C6C8 solid 1px; */
   padding: 1em;
   margin-bottom:1em;
   /* position: relative; */
@@ -109,6 +112,34 @@ a{
   position: absolute;
   bottom: 0;
   padding-bottom: 0.8em;
+}
+
+.card__gradient{
+  position:relative;
+  display:inline-block;
+}
+
+
+/* 
+#002f4b,#dc4225 
+Convert HEX to RGBA - http://hex2rgba.devoth.com/
+*/
+.card__gradient:after {
+  content:'';
+  position:absolute;
+  left:0; top:0;
+  width:100%; height:100%;
+  display:inline-block;
+  background: -moz-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%, rgba(1, 44, 68, 0.12) 100.13%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(220, 66, 37, 0.5)), color-stop(100%,rgba(0,47,75,0.5))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%,rgba(1, 44, 68, 0.12) 100.13%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%,rgba(1, 44, 68, 0.12) 100.13%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%,rgba(1, 44, 68, 0.12) 100.13%); /* IE10+ */
+  background: linear-gradient(180deg, rgba(1, 44, 68, 0.56) 0%, rgba(1, 44, 68, 0.12) 100.13%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002f4b', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+}
+.card__gradient img{
+  display:block;
 }
 
 @media only screen and (min-width:1200px){
