@@ -9,7 +9,6 @@
       <h3 v-text="repo.title" class></h3>
       <p class>{{ niceTruncate(repo.description) }}</p>
     </div>
-    <div style="position:relative;margin-top:1em;">
       <v-card-actions class="card__btns">
         <v-btn
           outlined
@@ -20,7 +19,6 @@
           <a :href="getRepoZip(repo.nameWithOwner, repo.repoBranch)" target="_blank">download</a>
         </v-btn>
       </v-card-actions>
-    </div>
   </v-card>
 </template>
 
@@ -92,8 +90,9 @@ a{
  text-decoration: none;
  color:white !important; 
 }
-.card {
-  background: #1d3557;
+
+.card{
+  position:relative;
 }
 
 .card__image {
@@ -102,9 +101,10 @@ a{
 
 .card__content {
   border-top: #C5C6C8 solid 1px;
-  padding: 1.5em;
-  position: relative;
-  height: 200px;
+  padding: 1em;
+  margin-bottom:1em;
+  /* position: relative; */
+  /* height: 200px; */
 }
 
 .card__btns {
@@ -114,4 +114,11 @@ a{
   bottom: 0;
   padding-bottom: 0.8em;
 }
+
+@media only screen and (min-width:1200px){
+  .card__content{
+    padding:1.5em;
+  }
+}
+
 </style>

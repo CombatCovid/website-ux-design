@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <!-- <v-container> -->
+    <div class="finder__container">
         <h1 class="horiz-center">Finder</h1>
 
         <client-only>
@@ -16,8 +16,12 @@
               <div slot-scope="{ items }">
                 <v-layout d-flex flex-wrap>
                   <v-row d-flex cols="1">
-                    <v-col cols="12" md="3"
-                           class="d-flex child-flex"
+                    <v-col 
+                          cols="12" 
+                          md="4"
+                          sm="6"
+                          lg="3"
+                          class="d-flex child-flex"
                            v-for="(item, index) in items" :key="index">
                       <JoseFinderCard :repo="{ title: item.title, name: item.name,
                         nameWithOwner: item.nameWithOwner, isPrivate: item.isPrivate,
@@ -32,7 +36,7 @@
 
           </ais-instant-search>
         </client-only>
-    <!-- </v-container> -->
+    </div>
   </Layout>
 </template>
 
@@ -62,6 +66,7 @@
 </script>
 
 <style scoped>
+  
   .horiz-center {
     margin: 0 auto;
     /* text-align: center; */
@@ -75,4 +80,11 @@
   .clear-above {
     margin-top: 10px;
   }
+
+@media only screen and (min-width:1600px){
+  .finder__container{
+    width:85%;
+    margin:auto;
+  }
+}
 </style>
