@@ -95,9 +95,6 @@ a{
   object-fit:cover;
 }
 
-.card__gradient::after{
-    background-image: linear-gradient(to bottom, transparent 0%, white 100%);
-}
 
 .card__content {
   padding: 1em;
@@ -118,7 +115,6 @@ a{
   position:relative;
   display:inline-block;
 }
-
 
 /* 
 #002f4b,#dc4225 
