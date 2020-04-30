@@ -1,9 +1,7 @@
 <template>
   <v-card class d-flex hover  v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
     <div class="card__gradient">
-      <!-- <div class=""> -->
         <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)">
-      <!-- </div> -->
     </div>
     <div class="card__content">
       <h3 v-text="repo.title" class></h3>
@@ -91,7 +89,7 @@ a{
   border-bottom: #C5C6C8 solid 1px;
   width:100%;
   height:150px;
-  object-fit:cover;
+  object-fit:cover !important;
 }
 
 
@@ -113,6 +111,7 @@ a{
 .card__gradient{
   position:relative;
   display:inline-block;
+  width:100%;
 }
 
 /* 
