@@ -1,10 +1,9 @@
 <template>
   <v-card class d-flex hover  v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
     <div class="card__gradient">
-      <div
-        class="">
+      <!-- <div class=""> -->
         <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)">
-      </div>
+      <!-- </div> -->
     </div>
     <div class="card__content">
       <h3 v-text="repo.title" class></h3>
