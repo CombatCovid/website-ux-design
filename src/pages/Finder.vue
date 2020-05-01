@@ -132,7 +132,7 @@
   }
 
   .searchBox__input > input{
-    /* width:80%; */
+    width:80%;
   }
 
   .searchBox__input:focus, input:focus{
