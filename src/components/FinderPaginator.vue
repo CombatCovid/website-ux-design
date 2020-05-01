@@ -53,7 +53,18 @@
 }
 
 .paginator__btn{
-    margin: 0 0.5em 0.5em 0;
+    margin: 0.5em 0.5em 0.5em 0;
+    padding:0.5em 0.5em 0.5em 0.5em;
+    box-shadow: 1px 5px 7px rgba(29, 53, 87, 0.15);
+    border-radius: 3px;
+    /* background-color: #FFFFFd !important; */
 }
+
+.paginator__btn:hover {
+    /* background-color: #F9FDFF !important; */
+    box-shadow: 1px 15px 17px rgba(29, 53, 87, 0.15) !important;
+}
+
+    
     
 </style>

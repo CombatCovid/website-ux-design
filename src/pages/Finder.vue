@@ -1,11 +1,7 @@
 <template>
   <Layout class="finder">
     <div class="finder__container">
-      <v-layout d-flex style="width:30%;margin:0 auto">
-        <!-- <h1 class="horiz-center" style="margin-right:1em;">FINDER</h1> -->
-     </v-layout>
         <client-only>
-
           <ais-instant-search 
             :index-name="indexName"
             :search-client="searchClient" 
@@ -15,20 +11,25 @@
             <ais-configure :hits-per-page.camel="8" />
             <!-- <ais-powered-by/> -->
             <ais-search-box>
-              <div class="searchBox" slot-scope="{ currentRefinement, isSearchStalled, refine }">
+              <div class="finder__header" slot-scope="{ currentRefinement, isSearchStalled, refine }">
+              <div class="searchBox">
                 <div>
                 <h1>FINDER</h1>
                 <ais-powered-by/>
                 </div>
+                <div class="searchBox__input">
+                <v-icon style="margin-right:0.2em;" large>{{mdiMagnify}}</v-icon>
                 <input
-                  class="searchBox__input"
+                  class=""
                   type="search"
                   v-model="currentRefinement"
                   @input="refine($event.currentTarget.value)"
                   placeholder="Type keywords like ventilator or 3D printing"
                 ></input>
+                </div>
                 <span :hidden="!isSearchStalled">Loading...</span>
                 <FinderPaginator/>
+                </div>
 
               </div>
             </ais-search-box>
@@ -69,6 +70,8 @@
   import store from '~/store'
   import FinderPaginator from '../components/FinderPaginator'
   import JoseFinderCard from '../components/JoseFinderCard'
+  import { mdiMagnify } from "@mdi/js";
+
 
   export default {
     metaInfo: {
@@ -83,6 +86,7 @@
           store.getters.algoSearchKey
         ),
         repoBranch: store.getters.repoBranch,
+        mdiMagnify: mdiMagnify
       }
     },
     components: { JoseFinderCard , FinderPaginator }
@@ -92,6 +96,12 @@
 <style scoped>
   .finder{
     background-color: #F3F4F4;
+  }
+
+  .finder__header{
+    display:flex;
+    justify-content:space-around;
+    width:100%;
   }
 
   .finder__paginator{
@@ -120,31 +130,23 @@
     width:100%;
   }
 
+  .searchBox__input > input{
+    width:80%;
+  }
+
+  .searchBox__input:focus, input:focus{
+    outline: none;
+  }
+
   .searchForm{
     margin:3em;
   }
-  .searchInput{
-    color:blue !important;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    box-sizing: border-box;
-  }
-  .horiz-center {
-    margin: 0 auto;
-    /* text-align: center; */
-  }
+  
   .searchbox {
     margin: 15px;
   }
-  .low-attention {
-    font-size: x-small;
-  }
-  .clear-above {
-    margin-top: 10px;
-  }
+  
+  
 
 @media only screen and (min-width:1600px){
   .finder__container{
