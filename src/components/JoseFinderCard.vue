@@ -43,9 +43,6 @@ export default {
   methods: {
     
     getRepoZip: function(nameWithOwner, repoBranch) {
-      console.log(
-        `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`
-      );
       return `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`;
     },
     getImgUrl: function(nameWithOwner, isPrivate, cardImage) {

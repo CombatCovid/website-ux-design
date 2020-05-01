@@ -5,27 +5,31 @@
         <!-- <h1 class="horiz-center" style="margin-right:1em;">FINDER</h1> -->
      </v-layout>
         <client-only>
+
           <ais-instant-search 
             :index-name="indexName"
             :search-client="searchClient" 
-            class="horiz-center searchbox"
-            
+            class="horiz-center searchbox"    
             >
 
             <ais-configure :hits-per-page.camel="8" />
-
             <!-- <ais-powered-by/> -->
             <ais-search-box>
               <div class="searchBox" slot-scope="{ currentRefinement, isSearchStalled, refine }">
-                <h1>FINDER 🔍</h1>
+                <div>
+                <h1>FINDER</h1>
+                <ais-powered-by/>
+                </div>
                 <input
                   class="searchBox__input"
                   type="search"
                   v-model="currentRefinement"
                   @input="refine($event.currentTarget.value)"
                   placeholder="Type keywords like ventilator or 3D printing"
-                >
+                ></input>
                 <span :hidden="!isSearchStalled">Loading...</span>
+                <FinderPaginator/>
+
               </div>
             </ais-search-box>
             
@@ -63,6 +67,7 @@
 
   import algoliasearch from 'algoliasearch'
   import store from '~/store'
+  import FinderPaginator from '../components/FinderPaginator'
   import JoseFinderCard from '../components/JoseFinderCard'
 
   export default {
@@ -77,16 +82,23 @@
           store.getters.algoAppId,
           store.getters.algoSearchKey
         ),
-        repoBranch: store.getters.repoBranch
+        repoBranch: store.getters.repoBranch,
       }
     },
-    components: { JoseFinderCard },
+    components: { JoseFinderCard , FinderPaginator }
   }
 </script>
 
 <style scoped>
   .finder{
     background-color: #F3F4F4;
+  }
+
+  .finder__paginator{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
   }
 
   .searchBox{
