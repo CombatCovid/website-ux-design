@@ -112,6 +112,7 @@
   }
 
   .searchBox{
+    width:100%;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -131,7 +132,7 @@
   }
 
   .searchBox__input > input{
-    width:80%;
+    /* width:80%; */
   }
 
   .searchBox__input:focus, input:focus{
@@ -156,6 +157,10 @@
 }
 
 @media only screen and (min-width:1000px){
+  .finder__header{
+    /* width:100%; */
+  }
+  
   .searchBox{
     display:flex;
     align-items:center;
