@@ -3,3 +3,25 @@
 @tailwind components;
 
 @tailwind utilities;
+
+:root {
+  /* Primary colors */
+  --primary100: #046fab;
+  --primary75: #3c8cb9;
+  --primary50: #74aac8;
+  --primary25: #adc8d7;
+
+  /* Accent colors */
+  --accent100: #5dba00;
+  --accent75: #82c83d;
+  --accent50: #a8d77a;
+  --accent25: #cde5b7;
+
+  /* Gray colors */
+  --gray100: #161b23;
+  --gray75: #50545a;
+  --gray50: #8a8d91;
+  --gray25: #c5c6c8;
+  --gray15: #f3f4f4;
+  --white100: #fafcfd;
+}
