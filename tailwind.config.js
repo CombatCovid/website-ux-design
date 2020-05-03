@@ -19,6 +19,12 @@ module.exports = {
         'white-100': 'var(--white-100) !important',
         white: '#fff !important',
       },
+      borderRadius: {
+        '2xl': '20px',
+      },
+      boxShadow: {
+        lg: '0px 10px 25px rgba(29, 53, 87, 0.26)',
+      },
     },
   },
   variants: {},

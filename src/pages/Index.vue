@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div class="w-screen bg-primary-100">
+    <main class="w-screen bg-primary-100">
       <!-- <div class="h-full w-full relative top-0 left-0">
         <div class="absolute svg">
           <Virus />
@@ -50,9 +50,95 @@
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
-    <div class="container max-w-5xl"></div>
+    <section class="container max-w-5xl mt-20">
+      <h2 class="text-center text-2xl md:text-3xl font-bold text-primary-100">
+        HOW THE APP WORKS
+      </h2>
+      <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-100" />
+
+      <div class="md:grid grid-cols-2 gap-12 mt-16">
+        <div class="card grid grid-cols-6">
+          <div class="col-span-5">
+            <h2 class="text-gray-100 font-bold text-3xl">Instant search</h2>
+            <p class="text-gray-75 text-xl">
+              Go to FINDER and search for keywords like mask
+            </p>
+          </div>
+          <div>
+            <InstantSearch />
+          </div>
+        </div>
+        <div class="card grid grid-cols-6">
+          <div class="col-span-5">
+            <h2 class="text-gray-100 font-bold text-3xl">Download designs</h2>
+            <p class="text-gray-75 text-xl">
+              Download instantly the design you’ve chosen based on its features
+              and your needs
+            </p>
+          </div>
+          <div>
+            <Download />
+          </div>
+        </div>
+        <div class="card grid grid-cols-6">
+          <div class="col-span-5">
+            <h2 class="text-gray-100 font-bold text-3xl">
+              Complete Documentation
+            </h2>
+            <p class="text-gray-75 text-xl">
+              Find guides, bill of materials, and images of designs
+            </p>
+          </div>
+          <div>
+            <Document />
+          </div>
+        </div>
+        <div class="card grid grid-cols-6">
+          <div class="col-span-5">
+            <h2 class="text-gray-100 font-bold text-3xl">
+              Github based content delivery
+            </h2>
+            <p class="text-gray-75 text-xl">
+              We use github powerful apis to build documents
+            </p>
+          </div>
+          <div>
+            <Github />
+          </div>
+        </div>
+        <div class="card grid grid-cols-6">
+          <div class="col-span-5">
+            <h2 class="text-gray-100 font-bold text-3xl">
+              Markdown based template
+            </h2>
+            <p class="text-gray-75 text-xl">
+              User markup interoperable format to facilitate export to different
+              formats including epubs, and pdfs
+            </p>
+          </div>
+          <div>
+            <Markdown />
+          </div>
+        </div>
+        <div class="card grid grid-cols-6">
+          <div class="col-span-5">
+            <h2 class="text-gray-100 font-bold text-3xl">
+              Learn how to document open hardware
+            </h2>
+            <p class="text-gray-75 text-xl">
+              User markup interoperable format to facilitate export to different
+              formats including epubs, and pdfs
+            </p>
+          </div>
+          <div>
+            <Learn />
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div class="parallax">
       <v-layout py-12 row wrap justify-center>
         <v-flex class="ma-2" xs12 sm12 md4 lg4>
@@ -163,6 +249,14 @@
 <script>
 import Virus from '~/assets/Virus.svg';
 import Play from '~/assets/Play.svg';
+import InstantSearch from '~/assets/InstantSearch.svg';
+import Download from '~/assets/Download.svg';
+import Github from '~/assets/Github.svg';
+import Learn from '~/assets/Learn.svg';
+import Search from '~/assets/Search.svg';
+import Lock from '~/assets/Lock.svg';
+import Document from '~/assets/Document.svg';
+import Markdown from '~/assets/Markdown.svg';
 
 export default {
   metaInfo: {
@@ -171,6 +265,14 @@ export default {
   components: {
     Virus,
     Play,
+    InstantSearch,
+    Download,
+    Github,
+    Learn,
+    Search,
+    Lock,
+    Document,
+    Markdown,
   },
   data() {
     return {
@@ -253,5 +355,10 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   @apply absolute flex justify-center items-center rounded-full bg-accent-75 cursor-pointer;
+}
+
+.card {
+  min-height: 172px;
+  @apply shadow-lg bg-white-100 p-6 rounded-2xl;
 }
 </style>
