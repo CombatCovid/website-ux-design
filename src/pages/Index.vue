@@ -194,7 +194,7 @@
     </section>
 
     <div
-      class="fixed w-screen h-screen top-0 left-0 flex justify-center items-center transparent-bg"
+      class="animate fixed w-screen h-screen top-0 left-0 right-0 bottom-0 flex justify-center items-center transparent-bg overflow-hidden"
       v-if="isOpen"
     >
       <div class="absolute top-0 right-0 mr-10 mt-10 rounded-full flex justify-center items-center">
@@ -296,6 +296,10 @@ export default {
   margin: auto auto;
 }
 
+.animate {
+  animation: animate 0.4s ease;
+}
+
 @keyframes spread {
   from {
     width: 120px;
@@ -305,6 +309,22 @@ export default {
   to {
     width: 150px;
     height: 150px;
+  }
+}
+
+@keyframes animate {
+  from {
+    width: 0%;
+    height: 0%;
+    top: 30%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    opacity: 0.3;
+  }
+  to {
+    width: 100vw;
+    height: 100vh;
+    opacity: 1;
   }
 }
 
