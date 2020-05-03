@@ -200,6 +200,7 @@
       <div class="absolute top-0 right-0 mr-10 mt-10 rounded-full flex justify-center items-center">
         <button class="close text-white" v-on:click="isOpen = !isOpen">&times;</button>
       </div>
+      <div class="loading"></div>
       <iframe
         class="iframe"
         src="https://www.youtube.com/embed/lIPwHRS_imY"
@@ -300,6 +301,16 @@ export default {
   animation: animate 0.4s ease;
 }
 
+.loading {
+  width: 90px;
+  height: 90px;
+  animation: loading 1s infinite alternate ease;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  @apply bg-white-100 rounded-full absolute;
+}
+
 @keyframes spread {
   from {
     width: 120px;
@@ -309,6 +320,20 @@ export default {
   to {
     width: 150px;
     height: 150px;
+  }
+}
+
+@keyframes loading {
+  from {
+    opacity: 0.3;
+    width: 60px;
+    height: 60px;
+  }
+  to {
+    opacity: 0.7;
+
+    width: 30px;
+    height: 30px;
   }
 }
 
