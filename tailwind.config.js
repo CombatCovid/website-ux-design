@@ -16,7 +16,7 @@ module.exports = {
         'gray-50': 'var(--gray50) !important',
         'gray-25': 'var(--gray25) !important',
         'gray-15': 'var(--gray15) !important',
-        'white-100': 'var(--white-100) !important',
+        'white-100': 'var(--white100) !important',
         white: '#fff !important',
       },
       borderRadius: {

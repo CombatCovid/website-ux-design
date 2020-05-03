@@ -52,13 +52,13 @@
       </div>
     </main>
 
-    <section class="container max-w-5xl mt-20">
-      <h2 class="text-center text-2xl md:text-3xl font-bold text-primary-100">
+    <section class="container max-w-5xl py-20">
+      <h2 class="text-center text-2xl md:text-3xl font-bold text-primary-75">
         HOW THE APP WORKS
       </h2>
-      <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-100" />
+      <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
 
-      <div class="md:grid grid-cols-2 gap-12 mt-16">
+      <div class="grid md:grid-cols-2 gap-12 mt-16">
         <div class="card grid grid-cols-6">
           <div class="col-span-5">
             <h2 class="text-gray-100 font-bold text-3xl">Instant search</h2>
@@ -139,110 +139,108 @@
       </div>
     </section>
 
-    <div class="parallax">
-      <v-layout py-12 row wrap justify-center>
-        <v-flex class="ma-2" xs12 sm12 md4 lg4>
-          <div class="header--text hero-statements">
-            <h1 class="horiz-center font-weight-bold">
-              Combat covid&nbsp;with hardware
-            </h1>
-            <h2 class="horiz-center font-weight-light">
-              Search for well documented&nbsp;
-              <span class="title-emphasis">designs</span>&nbsp;🔍 <br />and
-              <span class="title-emphasis">document</span> new solutions
-            </h2>
-          </div>
-          <v-layout xs12 md4 row wrap class="pt-2 ma-3" justify-center>
-            <v-btn to="/finder" class="ma-1 centered" dark color="blue"
-              >Search for designs</v-btn
-            >
-            <v-btn
-              to="/documentation#prepare"
-              class="ma-1 centered"
-              dark
-              color="orange"
-              >Upload designs</v-btn
-            >
-          </v-layout>
-          <v-layout xs12 md4 row wrap class="pt-2 close-up-top" justify-center>
-            <v-btn
-              to="/documentation#cautionary"
-              class="ma-1 centered"
-              dark
-              color="teal"
-              >Consider for designs...</v-btn
-            >
-          </v-layout>
-        </v-flex>
-        <v-flex py-5 xs12 sm12 md4 style="margin:1.5em;">
-          <div class="iframe--shadow">
-            <div class="iframe-container">
-              <iframe
-                class="iframe"
-                src="https://www.youtube.com/embed/lIPwHRS_imY"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
+    <div class="bg-gray-15">
+      <section class="container max-w-5xl py-20">
+        <h2 class="text-center text-2xl md:text-3xl font-bold text-primary-75">
+          HOW TO DOCUMENT A SOLUTION
+        </h2>
+        <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
+
+        <div class="grid md:grid-cols-2 gap-12 mt-16">
+          <div class="card grid bg-white-100 grid-cols-6">
+            <div class="col-span-5">
+              <h2 class="text-gray-100 font-bold text-3xl">
+                Find validated solutions
+              </h2>
+              <p class="text-gray-75 text-xl">
+                Make sure we are uploading a solution that is effective
+              </p>
+            </div>
+            <div>
+              <Search />
             </div>
           </div>
-        </v-flex>
-      </v-layout>
+          <div class="card grid bg-white-100 grid-cols-6">
+            <div class="col-span-5">
+              <h2 class="text-gray-100 font-bold text-3xl">
+                Community guidance
+              </h2>
+              <p class="text-gray-75 text-xl">
+                We have a team of contributors that can help you
+              </p>
+            </div>
+            <div>
+              <People />
+            </div>
+          </div>
+          <div class="card grid bg-white-100 grid-cols-6">
+            <div class="col-span-5">
+              <h2 class="text-gray-100 font-bold text-3xl">
+                Standard
+              </h2>
+              <p class="text-gray-75 text-xl">
+                Follow conventions for simple documentation
+              </p>
+            </div>
+            <div>
+              <Lock />
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-    <v-layout py-10 class="section-2" row wrap justify-center>
-      <v-flex class xs12 sm4 md4 max-12>
-        <v-list>
-          <v-subheader class="font-weight-bold">HOW THE APP WORKS</v-subheader>
-          <v-list-item v-for="(item, i) in appFeatures" :key="i">
-            <v-list-item-content>
-              <v-list-item-title
-                class="font-weight-bold"
-                v-html="item.title"
-              ></v-list-item-title>
-              <v-list-item-subtitle
-                v-html="item.subtitle"
-              ></v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-flex>
-      <v-flex class xs12 sm4 md4 max-12>
-        <v-list>
-          <v-subheader class="font-weight-bold"
-            >HOW TO DOCUMENT A SOLUTION</v-subheader
-          >
-          <v-list-item v-for="(item, i) in documentation" :key="i">
-            <v-list-item-content>
-              <v-list-item-title
-                class="font-weight-bold"
-                v-html="item.title"
-              ></v-list-item-title>
-              <v-list-item-subtitle
-                v-html="item.subtitle"
-              ></v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-flex>
-      <v-flex class xs12 sm3 md3 max-12>
-        <v-list>
-          <v-subheader class="font-weight-bold"
-            >CONTRIBUTE TO CODE AND MORE</v-subheader
-          >
-          <v-list-item v-for="(item, i) in contribute" :key="i">
-            <v-list-item-content>
-              <v-list-item-title
-                class="font-weight-bold"
-                v-html="item.title"
-              ></v-list-item-title>
-              <v-list-item-subtitle
-                v-html="item.subtitle"
-              ></v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-flex>
-    </v-layout>
+
+    <section class="container max-w-5xl py-20">
+      <h2 class="text-center text-2xl md:text-3xl font-bold text-accent-75">
+        CONTRIBUTE TO CODE AND MORE
+      </h2>
+      <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-accent-75" />
+
+      <div class="grid md:grid-cols-2 gap-12 mt-16">
+        <div class="card bg-primary-100">
+          <h2 class="text-white font-bold text-3xl">
+            Find validated solutions
+          </h2>
+          <p class="text-white text-xl">
+            Make sure we are uploading a solution that is effective
+          </p>
+        </div>
+        <div class="card bg-primary-100">
+          <h2 class="text-white font-bold text-3xl">
+            Community guidance
+          </h2>
+          <p class="text-white text-xl">
+            We have a team of contributors that can help you
+          </p>
+        </div>
+        <div class="card bg-primary-100">
+          <h2 class="text-white font-bold text-3xl">
+            Standard
+          </h2>
+          <p class="text-white text-xl">
+            Follow conventions for simple documentation
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative py-20 note w-full bg-primary-100">
+      <!-- <div
+        class="background-color absolute top-0 opacity-50 w-full h-full bg-primary-100 z-0"
+      ></div> -->
+      <div class="container max-w-5xl text-center z-20">
+        <h2 class="text-2xl text-white font-bold">NOTE</h2>
+        <p class="mt-6 text-white text-xl">
+          You're meeting the demonstration app of the Combat Covid with Hardware
+          project. This is a fast-moving Alpha production, so be reassured if
+          you find that items may move, appear, disappear, and at moments
+          perhaps not function entirely as you expected. We're moving rapidly
+          and constantly to add what's needed for early real use, and anything
+          unexpected will soon be repaired. Thank you for your patience, and
+          especially for your interest.
+        </p>
+      </div>
+    </section>
   </Layout>
 </template>
 
@@ -257,6 +255,7 @@ import Search from '~/assets/Search.svg';
 import Lock from '~/assets/Lock.svg';
 import Document from '~/assets/Document.svg';
 import Markdown from '~/assets/Markdown.svg';
+import People from '~/assets/People.svg';
 
 export default {
   metaInfo: {
@@ -273,6 +272,7 @@ export default {
     Lock,
     Document,
     Markdown,
+    People,
   },
   data() {
     return {
@@ -360,5 +360,12 @@ export default {
 .card {
   min-height: 172px;
   @apply shadow-lg bg-white-100 p-6 rounded-2xl;
+}
+
+.note {
+  background: center linear-gradient(rgba(4, 111, 171, 0.5)),
+    url(/images/doctors.jpg);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 </style>
