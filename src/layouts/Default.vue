@@ -1,12 +1,9 @@
 <template>
-  <v-app>
-    <v-content>
-      <Nav/>
-<!--      <v-container>-->
-        <slot/>
-<!--      </v-container>-->
-    </v-content>
-  </v-app>
+  <main>
+    <Nav />
+    <slot />
+    <Footer />
+  </main>
 </template>
 
 <static-query>
@@ -18,15 +15,16 @@
 </static-query>
 
 <script>
-  import Nav from '~/components/Nav.vue'
+import Nav from "~/components/Nav.vue";
+import Footer from "~/components/Footer";
 
-  export default {
-    components: {
-      "Nav": Nav
-    }
+export default {
+  components: {
+    Nav: Nav,
+    Footer: Footer
   }
+};
 </script>
 
 <style>
-
 </style>
