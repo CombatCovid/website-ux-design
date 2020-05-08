@@ -1,14 +1,17 @@
 <template>
   <Layout>
     <main class="w-screen bg-primary-100 bg-image">
-      <div class="container py-24 max-w-5xl mx-auto md:flex">
-        <div class="flex-3">
-          <h1 class="text-white font-semibold text-5xl" style="text-transform: uppercase;">
+      <div class="container py-24 max-w-5xl mx-auto md:flex pr-6">
+        <div class="flex-3 mt-20 md:mt-0">
+          <h1
+            class="text-white font-semibold text-3xl md:text-5xl"
+            style="text-transform: uppercase;"
+          >
             Combat covid
             <br />
             <span class="text-primary-25 font-bold">with hardware</span>
           </h1>
-          <hr class="w-full my-4 rounded-full h-2 bg-primary-25 border-none" />
+          <hr class="w-full my-4 rounded-full h-1 md:h-2 bg-primary-25 border-none" />
 
           <p class="text-xl md:text-2xl text-white">
             Search for well documented
@@ -17,22 +20,22 @@
             <b>document</b> new solutions
           </p>
 
-          <div class="flex mt-6">
+          <div class="md:flex md:mt-6 mt-12">
             <g-link to="/finder">
               <button
-                class="py-2 px-6 bg-accent-75 rounded-lg hover:shadow-xl hover:bg-accent-100 font-bold text-white"
+                class="block md:inline-block py-2 px-6 bg-accent-75 rounded-lg hover:shadow-xl w-full md:w-auto hover:bg-accent-100 font-bold text-white"
               >Search for designs</button>
             </g-link>
 
             <g-link to="/documentation#prepare">
               <button
-                class="py-2 px-6 border-2 border-white border-solid ml-6 rounded-lg hover:shadow-xl font-bold text-white"
+                class="block md:inline-block py-2 px-6 border-2 border-white border-solid mt-4 w-full md:w-auto md:mt-0 md:ml-6 rounded-lg hover:shadow-xl font-bold text-white"
               >Upload designs</button>
             </g-link>
           </div>
         </div>
 
-        <div class="flex-1 flex justify-center items-center relative">
+        <div class="flex-1 flex justify-center items-center relative mt-24 md:mt-0">
           <div class="circle-transparent"></div>
           <button class="solid" v-on:click="isOpen = !isOpen">
             <Play />

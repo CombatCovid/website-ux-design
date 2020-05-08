@@ -37,3 +37,8 @@
   background-attachment: fixed;
   background-position: center;
 }
+
+button,
+button:focus {
+  outline: none;
+}
