@@ -1,4 +1,12 @@
-// This is where project configuration and plugin options are located. 
+const tailwind = require('tailwindcss');
+const purgecss = require('@fullhuman/postcss-purgecss');
+
+const postcssPlugins = [tailwind()];
+
+if (process.env.NODE_ENV === 'production')
+  postcssPlugins.push(purgecss(require('./purgecss.config.js')));
+
+// This is where project configuration and plugin options are located.
 // Learn more: https://gridsome.org/docs/config
 
 // Changes here require a server restart.
@@ -15,8 +23,8 @@ module.exports = {
         typeName: 'Documentation', // Required
         baseDir: './content/docs', // Where .md files are located
         pathPrefix: '/docs', // Add route prefix. Optional
-        template: './src/templates/Docs.vue' // Optional
-      }
+        template: './src/templates/Docs.vue', // Optional
+      },
     },
     {
       use: '@gridsome/source-graphql',
@@ -25,10 +33,22 @@ module.exports = {
         fieldName: 'gitapi',
         typeName: 'GitApi',
         headers: {
-          Authorization: 'Bearer '
-            + process.env.GRIDSOME_CC_SINGLE_AUTH
-        }
+          Authorization: 'Bearer ' + process.env.GRIDSOME_CC_SINGLE_AUTH,
+        },
       },
-    }
-  ]
-}
+    },
+  ],
+  css: {
+    loaderOptions: {
+      postcss: {
+        plugins: postcssPlugins,
+      },
+    },
+  },
+
+  chainWebpack: (config) => {
+    const svgRule = config.module.rule('svg');
+    svgRule.uses.clear();
+    svgRule.use('vue-svg-loader').loader('vue-svg-loader');
+  },
+};
