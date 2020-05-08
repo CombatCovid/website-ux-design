@@ -1,9 +1,11 @@
 <template>
-  <main>
+  <div class="flex flex-col min-h-screen">
     <Nav />
-    <slot />
+    <div class="flex-1">
+      <slot />
+    </div>
     <Footer />
-  </main>
+  </div>
 </template>
 
 <static-query>
@@ -27,4 +29,7 @@ export default {
 </script>
 
 <style>
+footer {
+  justify-self: flex-start;
+}
 </style>
