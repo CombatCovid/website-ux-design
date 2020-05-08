@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen h-20 bg-primary-100 text-white bg-image">
+  <div class="w-screen h-20 bg-primary-100 fixed top-0 text-white bg-image hidden md:block">
     <div class="container mx-auto max-w-5xl flex items-center h-full">
       <g-link to="/" class="text-white-100 font-bold mr-4">
         {{
