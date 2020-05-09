@@ -8,16 +8,28 @@
           $static.metadata.siteName
           }}
         </g-link>
-
         <nav class="flex">
-          <g-link
+          <div
             v-for="item in items"
+            class="p-4 mx-2 text-primary-25 hover:text-white-100"
+          >
+          <g-link 
+            v-if="item.label == 'Home'"
             :key="item.label"
             exact
-            active-class="text-white-100 font-bold"
-            :to="item.name"
-            class="p-4 mx-2 text-primary-25 hover:font-semibold"
-          >{{ item.label }}</g-link>
+            id="Home"
+            active-class="text-white-100 font-semibold"
+            :to="item.name">{{ item.label }}</g-link>
+          <g-link 
+            v-else
+            :key="item.label"
+            exact
+            id="Home"
+            active-class="text-white-100 font-semibold"
+            :to="item.name">{{ item.label }}</g-link>
+          
+          </div>
+
         </nav>
       </div>
     </div>
@@ -111,6 +123,8 @@
   }
 </static-query>
 
+
+
 <script>
 import { mdiDotsVertical, mdiDotsHorizontal } from "@mdi/js";
 import BookmarksMenu from "./BookmarksMenu";
@@ -166,21 +180,25 @@ export default {
     changeOnScroll() {
       /** Here we do it when is mounted with vanilla javascript */
       let nav = document.getElementById('nav')
-      let state = window.scrollY; 
-      // console.log(`THIS IS TEST${nav}`);
+      let state = window.scrollY 
       if(state > 20){
-         nav.classList.remove('bg-image')
+        nav.classList.remove('bg-image')
       }
       else{
         nav.classList.add('bg-image')
       }
-    },
+  },
     toggleMenu: function() {
       this.isOpen = !this.isOpen;
     }
   },
   mounted() {
-    window.addEventListener('scroll', this.changeOnScroll);
+    let home = this.$el.querySelector('#Home')
+    console.log(home.classList.contains('font-semibold'))
+    if(home.classList.contains('font-semibold')){
+      window.addEventListener('scroll', this.changeOnScroll);
+    }
+    else{}
   }
 };
 </script>
