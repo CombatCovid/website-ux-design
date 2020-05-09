@@ -44,69 +44,19 @@
     <section class="container max-w-5xl py-20">
       <h2 class="text-center text-2xl md:text-3xl font-bold text-primary-75">HOW THE APP WORKS</h2>
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
-
+      
       <div class="grid md:grid-cols-2 gap-12 mt-16">
-        <div class="card grid grid-cols-6">
+        <div class="card grid grid-cols-6"
+          v-for="(item, i) in appFeatures" :key="i"
+        >
           <div class="col-span-5">
-            <h2 class="text-gray-100 font-bold text-3xl">Instant search</h2>
-            <p class="text-gray-75 text-xl">Go to FINDER and search for keywords like mask</p>
+            <h2 class="text-gray-100 font-bold text-3xl"
+              v-html="item.title"
+            > </h2>
+            <p class="text-gray-75 text-xl" v-html="item.subtitle"></p>
           </div>
           <div>
-            <InstantSearch />
-          </div>
-        </div>
-        <div class="card grid grid-cols-6">
-          <div class="col-span-5">
-            <h2 class="text-gray-100 font-bold text-3xl">Download designs</h2>
-            <p class="text-gray-75 text-xl">
-              Download instantly the design you’ve chosen based on its features
-              and your needs
-            </p>
-          </div>
-          <div>
-            <Download />
-          </div>
-        </div>
-        <div class="card grid grid-cols-6">
-          <div class="col-span-5">
-            <h2 class="text-gray-100 font-bold text-3xl">Complete Documentation</h2>
-            <p class="text-gray-75 text-xl">Find guides, bill of materials, and images of designs</p>
-          </div>
-          <div>
-            <Document />
-          </div>
-        </div>
-        <div class="card grid grid-cols-6">
-          <div class="col-span-5">
-            <h2 class="text-gray-100 font-bold text-3xl">Github based content delivery</h2>
-            <p class="text-gray-75 text-xl">We use github powerful apis to build documents</p>
-          </div>
-          <div>
-            <Github />
-          </div>
-        </div>
-        <div class="card grid grid-cols-6">
-          <div class="col-span-5">
-            <h2 class="text-gray-100 font-bold text-3xl">Markdown based template</h2>
-            <p class="text-gray-75 text-xl">
-              User markup interoperable format to facilitate export to different
-              formats including epubs, and pdfs
-            </p>
-          </div>
-          <div>
-            <Markdown />
-          </div>
-        </div>
-        <div class="card grid grid-cols-6">
-          <div class="col-span-5">
-            <h2 class="text-gray-100 font-bold text-3xl">Learn how to document open hardware</h2>
-            <p class="text-gray-75 text-xl">
-              User markup interoperable format to facilitate export to different
-              formats including epubs, and pdfs
-            </p>
-          </div>
-          <div>
-            <Learn />
+            <component :is="item.icon"/>
           </div>
         </div>
       </div>
@@ -120,36 +70,20 @@
         <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
 
         <div class="grid md:grid-cols-2 gap-12 mt-16">
-          <div class="card grid bg-white-100 grid-cols-6">
-            <div class="col-span-5">
-              <h2 class="text-gray-100 font-bold text-3xl">Find validated solutions</h2>
-              <p
-                class="text-gray-75 text-xl"
-              >Make sure we are uploading a solution that is effective</p>
-            </div>
-            <div>
-              <Search />
-            </div>
+        <div class="card grid grid-cols-6"
+          v-for="(item, i) in documentation" :key="i"
+        >
+          <div class="col-span-5">
+            <h2 class="text-gray-100 font-bold text-3xl"
+              v-html="item.title"
+            > </h2>
+            <p class="text-gray-75 text-xl" v-html="item.subtitle"></p>
           </div>
-          <div class="card grid bg-white-100 grid-cols-6">
-            <div class="col-span-5">
-              <h2 class="text-gray-100 font-bold text-3xl">Community guidance</h2>
-              <p class="text-gray-75 text-xl">We have a team of contributors that can help you</p>
-            </div>
-            <div>
-              <People />
-            </div>
-          </div>
-          <div class="card grid bg-white-100 grid-cols-6">
-            <div class="col-span-5">
-              <h2 class="text-gray-100 font-bold text-3xl">Standard</h2>
-              <p class="text-gray-75 text-xl">Follow conventions for simple documentation</p>
-            </div>
-            <div>
-              <Lock />
-            </div>
+          <div>
+            <component :is="item.icon"/>
           </div>
         </div>
+      </div>
       </section>
     </div>
 
@@ -159,18 +93,11 @@
       >CONTRIBUTE TO CODE AND MORE</h2>
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-accent-75" />
 
-      <div class="grid md:grid-cols-2 gap-12 mt-16">
-        <div class="card bg-primary-100">
-          <h2 class="text-white font-bold text-3xl">Find validated solutions</h2>
-          <p class="text-white text-xl">Make sure we are uploading a solution that is effective</p>
-        </div>
-        <div class="card bg-primary-100">
-          <h2 class="text-white font-bold text-3xl">Community guidance</h2>
-          <p class="text-white text-xl">We have a team of contributors that can help you</p>
-        </div>
-        <div class="card bg-primary-100">
-          <h2 class="text-white font-bold text-3xl">Standard</h2>
-          <p class="text-white text-xl">Follow conventions for simple documentation</p>
+      <div class="grid md:grid-cols-3 gap-5 mt-16">
+        
+        <div v-for="(item, i) in contribute" class="card bg-primary-100">
+          <h2 class="text-white text-2xl" v-html="item.title"></h2>
+          <p class="text-white"v-html="item.subtitle"></p>
         </div>
       </div>
     </section>
@@ -224,6 +151,11 @@ import Lock from "~/assets/Lock.svg";
 import Document from "~/assets/Document.svg";
 import Markdown from "~/assets/Markdown.svg";
 import People from "~/assets/People.svg";
+import Osh from "~/assets/Osh2.svg";
+import Standard from "~/assets/Standard.svg";
+import Validate from "~/assets/Audit.svg";
+
+
 
 export default {
   metaInfo: {
@@ -240,18 +172,38 @@ export default {
     Lock,
     Document,
     Markdown,
-    People
+    People,
+    Osh,
+    Standard,
+    Validate
   },
   data() {
     return {
-      isOpen: false
-      // icons: [
-      //   'fab fa-facebook',
-      //   'fab fa-twitter',
-      //   'fab fa-google-plus',
-      //   'fab fa-linkedin',
-      //   'fab fa-instagram',
-      // ],
+      isOpen: false,
+      appFeatures:[
+          { title:"Instant search", subtitle:`Go to FINDER and search for keywords like mask`, icon: "Search" },
+          { title: "Download", subtitle: "Download instantly the design you have chosen", icon:"Download"},
+          { title: "Complete documentation", subtitle: "Find guides, bill of materials, and images", icon:"Document"},
+          { title: "Github based content delivery", subtitle: "We use github powerful apis to build documents", icon:"Github"},
+          { title: "Markdown based", subtitle: "Use Markdown interoperable format to export easily to different formats including epob, pdf, html", icon:"Markdown"},
+          
+           { title:"Standard", subtitle:"Follow conventions for simple documentation", icon:"Standard" },
+
+        ],
+        documentation:[
+          { title: "Learn to document open hardware", subtitle: "We help you with a starting template, resources and community support", icon:"Osh"},
+          { title: "Review and validate", subtitle: "Make sure we are uploading a solution that is effective", icon:"Validate"},
+          { title: "Get community help", subtitle: "We have a team of contributors that can help you", icon:"People"},
+         
+
+        ],
+        contribute:[
+          { title:"Code", subtitle:"Help us work on new features", icon:"InstantSearch" },
+          { title: "Clinical feedback", subtitle: "Help us get feedback from experts on solutions", icon:"InstantSearch"},
+          { title: "Translate", subtitle: "Translate to new languages", icon:"InstantSearch"},
+          { title: "Identify new solutions", subtitle: "Help us adding more solutions to the list", icon:"InstantSearch"},
+          { title: "Contact authors", subtitle: "Help us reach the authors of solutions to update the content", icon:"InstantSearch"},
+        ],
     };
   }
 };
@@ -280,7 +232,7 @@ export default {
 
 .card {
   min-height: 172px;
-  @apply shadow-lg bg-white-100 p-6 rounded-2xl;
+  @apply shadow-lg bg-white-100 p-6 rounded-lg;
 }
 
 .iframe {
