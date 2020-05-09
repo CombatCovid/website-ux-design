@@ -14,9 +14,9 @@
               </h2>
             </div>
             <v-layout xs12 md4 row wrap class="pt-2 ma-3" justify-center>
-              <v-btn to="/finder" class="ma-1 centered"
-                     dark color="blue">Search for designs
-              </v-btn>
+<!--              <v-btn to="/finder" class="ma-1 centered"-->
+<!--                     dark color="blue">Search for designs-->
+<!--              </v-btn>-->
               <v-btn to="/documentation#prepare" class="ma-1 centered"
                      dark color="orange">Upload designs
               </v-btn>
