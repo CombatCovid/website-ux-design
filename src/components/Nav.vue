@@ -24,7 +24,6 @@
             v-else
             :key="item.label"
             exact
-            id="Home"
             active-class="text-white-100 font-semibold"
             :to="item.name">{{ item.label }}</g-link>
           
@@ -181,24 +180,28 @@ export default {
       /** Here we do it when is mounted with vanilla javascript */
       let nav = document.getElementById('nav')
       let state = window.scrollY 
-      if(state > 20){
-        nav.classList.remove('bg-image')
-      }
-      else{
-        nav.classList.add('bg-image')
-      }
-  },
+        if(state > 20){
+          nav.classList.remove('bg-image')
+        }
+        else{
+          nav.classList.add('bg-image')
+        }
+    },
     toggleMenu: function() {
       this.isOpen = !this.isOpen;
     }
   },
   mounted() {
+    let nav = document.getElementById('nav')
     let home = this.$el.querySelector('#Home')
     console.log(home.classList.contains('font-semibold'))
     if(home.classList.contains('font-semibold')){
       window.addEventListener('scroll', this.changeOnScroll);
     }
-    else{}
+    // else if(home.classList.contains('font-semibold')== false){
+    //   nav.classList.remove('bg-image')
+    //   // window.removeEventListener('scroll', this.changeOnScroll);
+    // }
   }
 };
 </script>
