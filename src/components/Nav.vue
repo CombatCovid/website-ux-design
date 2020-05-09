@@ -1,6 +1,7 @@
 <template>
   <span>
-    <div class="w-screen h-20 bg-primary-100 fixed top-0 text-white bg-image hidden md:block">
+    <div id="nav" class="w-screen h-20 bg-primary-100 fixed top-0 text-white bg-image hidden md:block"
+    >
       <div class="container mx-auto max-w-5xl flex items-center h-full">
         <g-link to="/" class="text-white-100 font-bold mr-4">
           {{
@@ -73,7 +74,6 @@
     <div class="md:hidden fixed top-0 w-screen h-screen overflow-hidden z-10" v-if="isOpen">
       <div
         class="w-screen h-screen fixed overflow-hidden bg-primary-100 opacity-75"
-        v-bind:class="{'translate': isOpen}"
         @click="toggleMenu"
       ></div>
       <div
@@ -121,6 +121,7 @@ export default {
   components: { BookmarksMenu },
   data: function() {
     return {
+      scrollPosition: null,
       isOpen: false,
       choicesBar: false,
       firstTimeViewer: false,
@@ -162,16 +163,35 @@ export default {
     }
   },
   methods: {
+    changeOnScroll() {
+      /** Here we do it when is mounted with vanilla javascript */
+      let nav = document.getElementById('nav')
+      let state = window.scrollY; 
+      // console.log(`THIS IS TEST${nav}`);
+      if(state > 20){
+         nav.classList.remove('bg-image')
+      }
+      else{
+        nav.classList.add('bg-image')
+      }
+    },
     toggleMenu: function() {
       this.isOpen = !this.isOpen;
     }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.changeOnScroll);
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.test{
+  color:red !important;
+}
+
 .translate {
-  animation: animate alternate 0.5s ease-in-out;
+  animation: animate alternate 0.2s ease-in-out;
 }
 
 @keyframes animate {

@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <main class="w-screen bg-primary-100 bg-image">
-      <div class="container py-24 max-w-5xl mx-auto md:flex pr-6">
+      <div class="container py-32 max-w-5xl mx-auto md:flex pr-6">
         <div class="flex-3 mt-20 md:mt-0">
           <h1
             class="text-white font-semibold text-3xl md:text-5xl"
