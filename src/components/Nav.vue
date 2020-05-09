@@ -1,6 +1,6 @@
 <template>
   <span>
-    <div id="nav" class="w-screen h-20 bg-primary-100 fixed top-0 text-white bg-image hidden md:block"
+    <div id="nav" class="w-screen h-20 bg-primary-100 fixed top-0 text-white bg-image hidden md:block z-20"
     >
       <div class="container mx-auto max-w-5xl flex items-center h-full">
         <g-link to="/" class="text-white-100 font-bold mr-4">
