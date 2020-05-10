@@ -1,45 +1,35 @@
 <template>
   <span>
-    <div id="nav" class="w-screen h-20 bg-primary-100 fixed top-0 text-white bg-image hidden md:block z-20"
-    >
+    <div class="navbar w-screen h-20 fixed top-0 text-white hidden md:block z-20">
       <div class="container mx-auto max-w-5xl flex items-center h-full">
-        <g-link to="/" class="text-white-100 font-bold mr-4">
-          {{
-          $static.metadata.siteName
-          }}
-        </g-link>
+        <g-link to="/" class="text-white-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
         <nav class="flex">
           <div
+            :key="item.label"
             v-for="item in items"
             class="p-4 mx-2 text-primary-25 hover:text-white-100"
           >
-          <g-link 
-            v-if="item.label == 'Home'"
-            :key="item.label"
-            exact
-            id="Home"
-            active-class="text-white-100 font-semibold"
-            :to="item.name">{{ item.label }}</g-link>
-          <g-link 
-            v-else
-            :key="item.label"
-            exact
-            active-class="text-white-100 font-semibold"
-            :to="item.name">{{ item.label }}</g-link>
-          
+            <g-link
+              v-if="item.label == 'Home'"
+              exact
+              id="Home"
+              active-class="text-white-100 font-semibold"
+              :to="item.name"
+            >{{ item.label }}</g-link>
+            <g-link
+              v-else
+              exact
+              active-class="text-white-100 font-semibold"
+              :to="item.name"
+            >{{ item.label }}</g-link>
           </div>
-
         </nav>
       </div>
     </div>
 
-    <div class="w-screen h-20 bg-primary-100 fixed top-0 text-white bg-image md:hidden">
+    <div class="navbar w-screen h-20 fixed top-0 text-white z-10 md:hidden">
       <div class="container mx-auto max-w-5xl flex items-center justify-between h-full">
-        <g-link to="/" class="text-white-100 font-bold mr-4">
-          {{
-          $static.metadata.siteName
-          }}
-        </g-link>
+        <g-link to="/" class="text-white-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
 
         <button class="mr-4" @click="toggleMenu">
           <svg
@@ -88,15 +78,11 @@
         @click="toggleMenu"
       ></div>
       <div
-        v-bind:class="{'translate': isOpen}"
+        v-bind:class="{ translate: isOpen }"
         class="h-screen w-4/6 z-20 bg-white fixed top-0 left-0 shadow-2xl p-6"
       >
         <div class="mb-6">
-          <g-link to="/" class="text-primary-100 font-bold mr-4">
-            {{
-            $static.metadata.siteName
-            }}
-          </g-link>
+          <g-link to="/" class="text-primary-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
         </div>
 
         <nav class="flex flex-col">
@@ -122,8 +108,6 @@
   }
 </static-query>
 
-
-
 <script>
 import { mdiDotsVertical, mdiDotsHorizontal } from "@mdi/js";
 import BookmarksMenu from "./BookmarksMenu";
@@ -135,9 +119,8 @@ export default {
   data: function() {
     return {
       scrollPosition: null,
+      homePage: false,
       isOpen: false,
-      choicesBar: false,
-      firstTimeViewer: false,
       ccwhIcon: "/resources/images/combatcovid.png",
       extrasIcon: mdiDotsVertical,
       designIcon: mdiDotsHorizontal,
@@ -178,25 +161,31 @@ export default {
   methods: {
     changeOnScroll() {
       /** Here we do it when is mounted with vanilla javascript */
-      let nav = document.getElementById('nav')
-      let state = window.scrollY 
-        if(state > 20){
-          nav.classList.remove('bg-image')
+      let nav = document.getElementsByClassName("navbar");
+      let state = window.scrollY;
+
+      const isHomePage = window.location.pathname === "/";
+      if (state > 20 && isHomePage) {
+        nav.forEach(item => item.classList.add("bg-primary-100"));
+      } else {
+        if (state < 20 && isHomePage) {
+          nav.forEach(item => item.classList.remove("bg-primary-100"));
         }
-        else{
-          nav.classList.add('bg-image')
-        }
+      }
     },
     toggleMenu: function() {
       this.isOpen = !this.isOpen;
     }
   },
   mounted() {
-    let nav = document.getElementById('nav')
-    let home = this.$el.querySelector('#Home')
-    console.log(home.classList.contains('font-semibold'))
-    if(home.classList.contains('font-semibold')){
-      window.addEventListener('scroll', this.changeOnScroll);
+    let nav = document.getElementsByClassName("navbar");
+    let home = this.$el.querySelector("#Home");
+    console.log(home.classList.contains("font-semibold"));
+    if (home.classList.contains("font-semibold")) {
+      window.addEventListener("scroll", this.changeOnScroll);
+    }
+    if (window.location.pathname !== "/") {
+      nav.forEach(item => item.classList.add("bg-primary-100"));
     }
     // else if(home.classList.contains('font-semibold')== false){
     //   nav.classList.remove('bg-image')
@@ -207,8 +196,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.test{
-  color:red !important;
+.test {
+  color: red !important;
 }
 
 .translate {
