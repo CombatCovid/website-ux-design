@@ -11,7 +11,7 @@
     <!--    <v-col cols="6" class="xhidden-md-and-up">-->
     <v-col cols="12">
       <v-flex>
-        <DesignDetail :design="design" :summaryDoc="summaryDoc" :summaryImage="summaryImage"/>
+        <DesignDetail :design="design" :summaryDoc="summaryDoc" :summaryImage="summaryImage" />
       </v-flex>
     </v-col>
     <!--    </v-col>-->
@@ -19,20 +19,19 @@
 </template>
 
 <script>
-  import BookmarksMenu from '~/components/BookmarksMenu'
-  import DesignDetail from '~/components/DesignDetail'
+import BookmarksMenu from "~/components/BookmarksMenu";
+import DesignDetail from "~/components/DesignDetail";
 
-  export default {
-    props: {
-      design: { type: String, default: "" },
-      summaryDoc: { type: String, default: null },
-      summaryImage: { type: String, default: '/summary.jpg' }
-    },
-    name: "HorizontalMD",
-    components: { BookmarksMenu, DesignDetail }
-  }
+export default {
+  props: {
+    design: { type: String, default: "" },
+    summaryDoc: { type: String, default: null },
+    summaryImage: { type: String, default: "/summary.jpg" }
+  },
+  name: "HorizontalMD",
+  components: { BookmarksMenu, DesignDetail }
+};
 </script>
 
 <style scoped>
-
 </style>
