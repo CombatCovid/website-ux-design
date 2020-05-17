@@ -1,8 +1,13 @@
 <template>
-  <div>
+  <div class="container max-w-5xl">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
+        <div class="flex col-start-7">
+          <div class="col-span-2">
+            <g-image src="~/assets/avatar.png" cla width="500" />
+          </div>
+        </div>
         <div
           v-if="imagesShow"
           class="images-slide image-display-mask design-image-hold docs-show-pane"
@@ -184,7 +189,7 @@ export default {
         // fix why this even gets called soon...
         let sani = this.htmlSanitize(this.repoName);
 
-        sani = sani.replace(/-+/gi, " ");
+        sani = sani.replace(/-+/gi, " "); // TODO: I think this is not necessary since the _this.spaceDashes() method trims all the dashes including underscores better.
         sani = this.titleCase(this.spaceDashes(sani));
 
         if (sani.match(/mit/i)) {
@@ -238,18 +243,19 @@ export default {
           );
         }
       });
-      // console.log ('texts: ' + JSON.stringify(texts))
+
+      // console.log("texts: " + JSON.stringify(texts));
       this.nrTexts = texts.length;
       return texts;
     },
     imageFolder: function() {
-      return (
+      const imageF =
         "https://raw.githubusercontent.com/CombatCovid/" +
         this.repoName +
         "/" +
         this.repoBranch +
-        "/docs/"
-      );
+        "/docs/";
+      return imageF;
     },
     summaryImageFolder: function() {
       // console.log('summaryImageFolder: repoBranch: ' + this.repoBranch)
@@ -262,13 +268,14 @@ export default {
       );
     },
     repoTreeFolder: function() {
-      return (
+      const repoTreeF =
         "https://github.com/CombatCovid/" +
         this.repoName +
         "/tree/" +
         this.repoBranch +
-        "/"
-      );
+        "/";
+
+      return repoTreeF;
     },
     imagePath: function() {
       return this.imageFolder + "img/";
