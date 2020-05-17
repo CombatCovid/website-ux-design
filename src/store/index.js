@@ -34,6 +34,7 @@ export default new Vuex.Store({
   state:{
     loading:false,
     language:"EN",
+    currentPage:null,
     currentRepos:[],
     currentLastRepoName: null,
     currentSummaryMarkdown: 'retrieving...',
@@ -66,6 +67,10 @@ export default new Vuex.Store({
     console.log('recovered state.currentLastRepoName: ' + state.currentLastRepoName)
   },
   mutations:{
+    PAGE_PATH:(state, value) => {
+      state.currentPage = value;
+    },
+
     // Change the state of language, for example
     loadRepo (context, namedDesign = null) {
       // console.log ('loadRepo: namedDesign is ' + JSON.stringify(namedDesign))
@@ -101,7 +106,6 @@ export default new Vuex.Store({
     // end reducer temporary sortings
   },
   actions:{
-    // initiate asynchronous repo/s load, for example
 
     loadDesign ({ commit, state }, design) {
       if (!design || design.length <= 0) {

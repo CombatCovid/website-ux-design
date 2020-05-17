@@ -104,11 +104,16 @@
   query{
     metadata{
       siteName
+    },
+    allPage{
+      path
+    	context
     }
   }
 </static-query>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 import { mdiDotsVertical, mdiDotsHorizontal } from "@mdi/js";
 import BookmarksMenu from "./BookmarksMenu";
 import store from "~/store";
@@ -143,6 +148,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(['currentPage']),
     hideWhen: function() {
       if (typeof window !== "undefined") {
         const w =
@@ -175,12 +181,22 @@ export default {
     },
     toggleMenu: function() {
       this.isOpen = !this.isOpen;
+    },
+    setCurrentPage(){
+      store.commit("PAGE_PATH", this.currentPage)
     }
   },
+  computed: {
+    currentPage:() => {
+      return `${window.location.pathname}`
+    }
+  },
+  
   mounted() {
+    this.setCurrentPage();
     let nav = document.getElementsByClassName("navbar");
     let home = this.$el.querySelector("#Home");
-    console.log(home.classList.contains("font-semibold"));
+    // console.log(home.classList.contains("font-semibold"));
     if (home.classList.contains("font-semibold")) {
       window.addEventListener("scroll", this.changeOnScroll);
     }
