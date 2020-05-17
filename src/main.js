@@ -4,6 +4,7 @@ import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import InstantSearch from 'vue-instantsearch';
 import DefaultLayout from '~/layouts/Default.vue';
+import HomeLayout from '~/layouts/Home.vue';
 
 // Require tailwindcss config
 require('~/main.css');
@@ -167,4 +168,5 @@ export default function(Vue, { router, head, isClient, appOptions }) {
 
   appOptions.vuetify = new Vuetify(opts);
   Vue.component('Layout', DefaultLayout);
+  Vue.component('HomeLayout', HomeLayout);
 }

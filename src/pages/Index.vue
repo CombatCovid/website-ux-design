@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <HomeLayout>
     <main class="w-screen bg-primary-100 bg-image">
       <div class="container py-32 max-w-5xl mx-auto md:flex pr-6">
         <div class="flex-3 mt-20 md:mt-0">
@@ -47,19 +47,15 @@
     <section class="container max-w-5xl py-20">
       <h2 class="text-center text-2xl md:text-3xl font-bold text-primary-75">HOW THE APP WORKS</h2>
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
-      
+
       <div class="grid md:grid-cols-2 gap-12 mt-16">
-        <div class="card grid grid-cols-6"
-          v-for="(item, i) in appFeatures" :key="i"
-        >
+        <div class="card grid grid-cols-6" v-for="(item, i) in appFeatures" :key="i">
           <div class="col-span-5">
-            <h2 class="text-gray-100 font-bold text-3xl"
-              v-html="item.title"
-            > </h2>
+            <h2 class="text-gray-100 font-bold text-3xl" v-html="item.title"></h2>
             <p class="text-gray-75 text-xl" v-html="item.subtitle"></p>
           </div>
           <div>
-            <component :is="item.icon"/>
+            <component :is="item.icon" />
           </div>
         </div>
       </div>
@@ -73,20 +69,16 @@
         <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
 
         <div class="grid md:grid-cols-2 gap-12 mt-16">
-        <div class="card grid grid-cols-6"
-          v-for="(item, i) in documentation" :key="i"
-        >
-          <div class="col-span-5">
-            <h2 class="text-gray-100 font-bold text-3xl"
-              v-html="item.title"
-            > </h2>
-            <p class="text-gray-75 text-xl" v-html="item.subtitle"></p>
-          </div>
-          <div>
-            <component :is="item.icon"/>
+          <div class="card grid grid-cols-6" v-for="(item, i) in documentation" :key="i">
+            <div class="col-span-5">
+              <h2 class="text-gray-100 font-bold text-3xl" v-html="item.title"></h2>
+              <p class="text-gray-75 text-xl" v-html="item.subtitle"></p>
+            </div>
+            <div>
+              <component :is="item.icon" />
+            </div>
           </div>
         </div>
-      </div>
       </section>
     </div>
 
@@ -97,10 +89,9 @@
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-accent-75" />
 
       <div class="grid md:grid-cols-3 gap-5 mt-16">
-        
         <div v-for="(item, i) in contribute" class="card bg-primary-100">
           <h2 class="text-white text-2xl" v-html="item.title"></h2>
-          <p class="text-white"v-html="item.subtitle"></p>
+          <p class="text-white" v-html="item.subtitle"></p>
         </div>
       </div>
     </section>
@@ -139,7 +130,7 @@
         allowfullscreen
       ></iframe>
     </div>
-  </Layout>
+  </HomeLayout>
 </template>
 
 <script>
@@ -157,8 +148,6 @@ import People from "~/assets/People.svg";
 import Osh from "~/assets/Osh2.svg";
 import Standard from "~/assets/Standard.svg";
 import Validate from "~/assets/Audit.svg";
-
-
 
 export default {
   metaInfo: {
@@ -183,30 +172,86 @@ export default {
   data() {
     return {
       isOpen: false,
-      appFeatures:[
-          { title:"Instant search", subtitle:`Go to FINDER and search for keywords like mask`, icon: "Search" },
-          { title: "Download", subtitle: "Download instantly the design you have chosen", icon:"Download"},
-          { title: "Complete documentation", subtitle: "Find guides, bill of materials, and images", icon:"Document"},
-          { title: "Github based content delivery", subtitle: "We use github powerful apis to build documents", icon:"Github"},
-          { title: "Markdown based", subtitle: "Use Markdown interoperable format to export easily to different formats including epob, pdf, html", icon:"Markdown"},
-          
-           { title:"Standard", subtitle:"Follow conventions for simple documentation", icon:"Standard" },
+      appFeatures: [
+        {
+          title: "Instant search",
+          subtitle: `Go to FINDER and search for keywords like mask`,
+          icon: "Search"
+        },
+        {
+          title: "Download",
+          subtitle: "Download instantly the design you have chosen",
+          icon: "Download"
+        },
+        {
+          title: "Complete documentation",
+          subtitle: "Find guides, bill of materials, and images",
+          icon: "Document"
+        },
+        {
+          title: "Github based content delivery",
+          subtitle: "We use github powerful apis to build documents",
+          icon: "Github"
+        },
+        {
+          title: "Markdown based",
+          subtitle:
+            "Use Markdown interoperable format to export easily to different formats including epob, pdf, html",
+          icon: "Markdown"
+        },
 
-        ],
-        documentation:[
-          { title: "Learn to document open hardware", subtitle: "We help you with a starting template, resources and community support", icon:"Osh"},
-          { title: "Review and validate", subtitle: "Make sure we are uploading a solution that is effective", icon:"Validate"},
-          { title: "Get community help", subtitle: "We have a team of contributors that can help you", icon:"People"},
-         
-
-        ],
-        contribute:[
-          { title:"Code", subtitle:"Help us work on new features", icon:"InstantSearch" },
-          { title: "Clinical feedback", subtitle: "Help us get feedback from experts on solutions", icon:"InstantSearch"},
-          { title: "Translate", subtitle: "Translate to new languages", icon:"InstantSearch"},
-          { title: "Identify new solutions", subtitle: "Help us adding more solutions to the list", icon:"InstantSearch"},
-          { title: "Contact authors", subtitle: "Help us reach the authors of solutions to update the content", icon:"InstantSearch"},
-        ],
+        {
+          title: "Standard",
+          subtitle: "Follow conventions for simple documentation",
+          icon: "Standard"
+        }
+      ],
+      documentation: [
+        {
+          title: "Learn to document open hardware",
+          subtitle:
+            "We help you with a starting template, resources and community support",
+          icon: "Osh"
+        },
+        {
+          title: "Review and validate",
+          subtitle: "Make sure we are uploading a solution that is effective",
+          icon: "Validate"
+        },
+        {
+          title: "Get community help",
+          subtitle: "We have a team of contributors that can help you",
+          icon: "People"
+        }
+      ],
+      contribute: [
+        {
+          title: "Code",
+          subtitle: "Help us work on new features",
+          icon: "InstantSearch"
+        },
+        {
+          title: "Clinical feedback",
+          subtitle: "Help us get feedback from experts on solutions",
+          icon: "InstantSearch"
+        },
+        {
+          title: "Translate",
+          subtitle: "Translate to new languages",
+          icon: "InstantSearch"
+        },
+        {
+          title: "Identify new solutions",
+          subtitle: "Help us adding more solutions to the list",
+          icon: "InstantSearch"
+        },
+        {
+          title: "Contact authors",
+          subtitle:
+            "Help us reach the authors of solutions to update the content",
+          icon: "InstantSearch"
+        }
+      ]
     };
   }
 };

@@ -1,16 +1,26 @@
 <template>
-  <div>
+  <div class="container max-w-5xl">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-        <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
+        <div class="flex col-start-7">
+          <div class="col-span-2">
+            <g-image src="~/assets/avatar.png" cla width="500" />
+          </div>
+        </div>
+        <div
+          v-if="imagesShow"
+          class="images-slide image-display-mask design-image-hold docs-show-pane"
+        >
           <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
             <v-btn @click="slideImages('<')"><</v-btn>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <v-btn class="xslider-title" v-on="on" @click="popImages">
-                  Design Images ({{ nrImages }})
-                </v-btn>
+                <v-btn
+                  class="xslider-title"
+                  v-on="on"
+                  @click="popImages"
+                >Design Images ({{ nrImages }})</v-btn>
               </template>
               <span>Click to return to the summary.</span>
             </v-tooltip>
@@ -19,7 +29,8 @@
           <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
             <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
               <div class="horiz-center">
-                <img :src="imagesImg" alt="imagesImg" width="100%"> <!-- that width 100% is critical -->
+                <img :src="imagesImg" alt="imagesImg" width="100%" />
+                <!-- that width 100% is critical -->
               </div>
             </VueGlideSlide>
           </VueGlide>
@@ -29,25 +40,26 @@
             <div class="horiz-center doc-title fix-box temp-shift-small-screen" @click="popImages">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn v-on="on">Summary Image - click<span class="hide-small">&nbsp;for&nbsp;all</span></v-btn>
+                  <v-btn v-on="on">
+                    Summary Image - click
+                    <span class="hide-small">&nbsp;for&nbsp;all</span>
+                  </v-btn>
                 </template>
                 <span>Click to see view all the design images. Click again to return to the summary.</span>
               </v-tooltip>
             </div>
             <div class="images-slide">
-              <img :src="summaryImg" alt="summaryImg" class="design-image"/>
+              <img :src="summaryImg" alt="summaryImg" class="design-image" />
             </div>
           </div>
         </div>
-        <hr color="#e3ebef" size="2px" class="rule-appearance">
+        <hr color="#e3ebef" size="2px" class="rule-appearance" />
         <div v-if="docsShow" class="docs-show-pane">
           <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
             <v-btn @click="slideDocs('<')"><</v-btn>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <v-btn v-on="on" @click="popDocs">
-                  Design Documents ({{ nrTexts }})
-                </v-btn>
+                <v-btn v-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</v-btn>
               </template>
               <span>Click to return to the summary.</span>
             </v-tooltip>
@@ -58,7 +70,10 @@
               <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
                 <!--        Slide {{ i }}-->
                 <div class="docs-slide">
-                  <VueMarkdown :source="unscopeBasisMarkup(docText)" :postrender="unscopeBasisMarkup" />
+                  <VueMarkdown
+                    :source="unscopeBasisMarkup(docText)"
+                    :postrender="unscopeBasisMarkup"
+                  />
                 </div>
               </VueGlideSlide>
             </VueGlide>
@@ -68,13 +83,16 @@
           <div class="horiz-center doc-title fix-box temp-shift-small-screen">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <v-btn @click="popDocs" v-on="on">Design Summary - click<span class="hide-small">&nbsp;for&nbsp;all</span></v-btn>
+                <v-btn @click="popDocs" v-on="on">
+                  Design Summary - click
+                  <span class="hide-small">&nbsp;for&nbsp;all</span>
+                </v-btn>
               </template>
               <span>Click to see view all the design documentse. Click again to return to the summary.</span>
             </v-tooltip>
           </div>
           <div class="docs-slide docs-slides-pane">
-            <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup"/>
+            <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup" />
           </div>
         </div>
       </div>
@@ -91,215 +109,238 @@
   </div>
 </template>
 <script>
+import VueMarkdown from "vue-markdown";
+import { Glide, GlideSlide } from "vue-glide-js";
+import "vue-glide-js/dist/vue-glide.css";
+import store from "~/store";
 
-  import VueMarkdown from 'vue-markdown'
-  import { Glide, GlideSlide } from 'vue-glide-js'
-  import 'vue-glide-js/dist/vue-glide.css'
-  import store from '~/store'
-
-  export default {
-    name: "DesignDetail",
-    props: {
-      design: { type: String, default: "" }
-    },
-    components: {
-      VueMarkdown,
-      [Glide.name]: Glide,
-      [GlideSlide.name]: GlideSlide
-    },
-    data: function () {
-      return {
-        announcementNeeded: false,
-        announceMessage1: 'announce1',
-        announceMessage2: 'announce2',
-        theDesign: this.design, // this because we may mutate from the prop...
-        nrTexts: 1,
-        nrImages: 1,
-        imagesShow: false,
-        docsShow: false,
-        repoBranch: store.getters.repoBranch // essential so we choose it
+export default {
+  name: "DesignDetail",
+  props: {
+    design: { type: String, default: "" }
+  },
+  components: {
+    VueMarkdown,
+    [Glide.name]: Glide,
+    [GlideSlide.name]: GlideSlide
+  },
+  data: function() {
+    return {
+      announcementNeeded: false,
+      announceMessage1: "announce1",
+      announceMessage2: "announce2",
+      theDesign: this.design, // this because we may mutate from the prop...
+      nrTexts: 1,
+      nrImages: 1,
+      imagesShow: false,
+      docsShow: false,
+      repoBranch: store.getters.repoBranch // essential so we choose it
+    };
+  },
+  mounted() {
+    if (!this.theDesign || this.theDesign.length <= 0) {
+      this.theDesign = store.getters.lastRepoName; // so use it if had any
+      if (!this.theDesign) {
+        // still, then we'll need a Find first
+        this.announcementNeeded = true;
+        this.announceMessage1 =
+          "It looks like it's the first time you've used this app on your browser, or after you've cleared its cache, so we don't yet know what you'd like the Viewer to show.";
+        this.announceMessage2 =
+          "Just use the Finder now, to choose your first Design. We'll show it -- and afterwards, we'll remember it, and any other Design which was the last one you viewed.";
+      } else {
+        this.announcementNeeded = false;
+        store.dispatch("loadDesign", this.theDesign); // a good beginning, recovered via persistenc4e
       }
+    } else {
+      this.announcementNeeded = false;
+      store.commit("setLastRepoName", this.theDesign);
+      store.dispatch("loadDesign", this.theDesign); // a good beginning
+      // console.log({ store });
+    }
+  },
+  computed: {
+    // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
+    designRepo: function() {
+      // this is used when Viewer is called directly
+      // *todo* we'll do something with validity via Vuex persistence to do better here
+      // *todo* at this moment first valid is fifth - metadata will rescue
+      let dRepo = null; // this.repos[4]
+
+      if (this.repos && this.repos.length > 0 && this.theDesign) {
+        const filtered = this.repos.filter(
+          repo => repo.repository.name === this.theDesign
+        );
+        // console.log('DesignDetail:filtered: ' + JSON.stringify(filtered) )
+        dRepo = filtered.length > 0 ? filtered[0].repository : null;
+      }
+      if (dRepo) {
+        // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo) )
+        // console.log('DesignDetail:designRepo:: name ' + dRepo.name)
+      }
+
+      return dRepo;
     },
-    mounted () {
-      if (!this.theDesign || this.theDesign.length <= 0) {
-        this.theDesign = store.getters.lastRepoName // so use it if had any
-        if (!this.theDesign) { // still, then we'll need a Find first
-          this.announcementNeeded = true
-          this.announceMessage1 = 'It looks like it\'s the first time you\'ve used this app on your browser, or after you\'ve cleared its cache, so we don\'t yet know what you\'d like the Viewer to show.'
-          this.announceMessage2 = 'Just use the Finder now, to choose your first Design. We\'ll show it -- and afterwards, we\'ll remember it, and any other Design which was the last one you viewed.'
+    repoName: function() {
+      return this.designRepo ? this.designRepo.name : ""; // 'until' // n.b. need something here on recovery from empty Viewer, as events try before ready next time
+      // *todo* asap: should be a variable we can use for actual flag, to avoid all ghosts like this
+    },
+    summaryTitle: function() {
+      if (this.repoName && this.repoName !== "") {
+        // fix why this even gets called soon...
+        let sani = this.htmlSanitize(this.repoName);
+
+        sani = sani.replace(/-+/gi, " "); // TODO: I think this is not necessary since the _this.spaceDashes() method trims all the dashes including underscores better.
+        sani = this.titleCase(this.spaceDashes(sani));
+
+        if (sani.match(/mit/i)) {
+          // *todo* def special casing for demos until we get Vuex on line to pass real title
+          return sani.replace(/mit/i, "MIT");
         } else {
-          this.announcementNeeded = false
-          store.dispatch('loadDesign', this.theDesign) // a good beginning, recovered via persistenc4e
+          return sani;
         }
       } else {
-        this.announcementNeeded = false
-        store.commit('setLastRepoName', this.theDesign)
-        store.dispatch('loadDesign', this.theDesign) // a good beginning
+        return "";
       }
     },
-    computed: {
-      // _Always_ sanitize anything that might contain html...soon in Vuex, we anticipate
-      designRepo: function () {
-
-        // this is used when Viewer is called directly
-        // *todo* we'll do something with validity via Vuex persistence to do better here
-        // *todo* at this moment first valid is fifth - metadata will rescue
-        let dRepo = null // this.repos[4]
-
-        if (this.repos && this.repos.length > 0 && this.theDesign) {
-          const filtered = this.repos.filter (repo => repo.repository.name === this.theDesign)
-          // console.log('DesignDetail:filtered: ' + JSON.stringify(filtered) )
-          dRepo = filtered.length > 0
-            ? filtered[0].repository
-            : null
-        }
-        if (dRepo) {
-          // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo) )
-          // console.log('DesignDetail:designRepo:: name ' + dRepo.name)
-        }
-
-        return dRepo
-      },
-      repoName: function () {
-        return this.designRepo
-          ? this.designRepo.name
-          : '' // 'until' // n.b. need something here on recovery from empty Viewer, as events try before ready next time
-        // *todo* asap: should be a variable we can use for actual flag, to avoid all ghosts like this
-      },
-      summaryTitle:  function () {
-        if (this.repoName && this.repoName !== "") { // fix why this even gets called soon...
-          let sani = this.htmlSanitize(this.repoName)
-
-          sani = sani.replace(/-+/ig, ' ')
-          sani = this.titleCase(this.spaceDashes(sani))
-
-          if (sani.match(/mit/i)) {
-            // *todo* def special casing for demos until we get Vuex on line to pass real title
-            return sani.replace(/mit/i, 'MIT')
-          } else {
-            return sani
-          }
-        } else {
-          return ""
-        }
-      },
-      summaryText: function () {
-        // console.log ('summaryMarkdown: ' + store.getters.summaryMarkdown)
-        return this.cleanFormatMarkdown(
-          store.getters.summaryMarkdown, this.summaryImageFolder, this.repoTreeFolder)
-        // *todo* isn't this alternate call actually correct at this point?? -- fix
-        // return this.htmlSanitize(
-        //   store.getters.summaryMarkdown)
-      },
-      repos: function () {
-        // console.log ('init:this.$static: ' + this.$static)
-        // console.log ('repos:designRepos[theDesign].name: ' + store.getters.designRepos[this.theDesign].name)
-        // console.log ('repos:designRepos: ' + JSON.stringify(store.getters.designRepos))
-        return typeof this.$static !== 'undefined'
-          ? this.$static.gitapi.organization.repositories.nodes
-          : store.getters.designRepos
-      },
-      summaryTxt: function () {
-        // const sanitary = this.htmlSanitize(this.repoName + '/' + this.summaryText)
-        // const sanitary = this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
-        // return this.cleanFormatMarkdown(sanitary, this.repoBlobsFolder)
-      },
-      docsTexts () {
-        let texts = new Array()
-        // this.designRepo.docs.folders[0].contents.files.forEach(file => {
-        this.designRepo.docs.entries[0].object.entries.forEach(file => {
-          // console.log('file: ' + JSON.stringify(file))
-          if (file.name.search(/\.md/) > 0) {
-            texts.push(this.cleanFormatMarkdown(
-              this.htmlSanitize(file.object.text), this.imageFolder, this.repoTreeFolder))
-          }
-        })
-        // console.log ('texts: ' + JSON.stringify(texts))
-        this.nrTexts = texts.length
-        return texts
-      },
-      imageFolder: function () {
-        return 'https://raw.githubusercontent.com/CombatCovid/' +
-          this.repoName +
-          '/'  + this.repoBranch + '/docs/'
-      },
-      summaryImageFolder: function () {
-        // console.log('summaryImageFolder: repoBranch: ' + this.repoBranch)
-        return 'https://raw.githubusercontent.com/CombatCovid/' +
-          this.repoName +
-          '/'  + this.repoBranch + '/'
-      },
-      repoTreeFolder: function () {
-        return 'https://github.com/CombatCovid/' +
-          this.repoName +
-          '/tree/'  + this.repoBranch + '/'
-      },
-      imagePath: function () {
-        return this.imageFolder + 'img/'
-      },
-      summaryImg: function () {
-
-        if (!this.designRepo) {
-          return null // we're not ready yet, in the event scheme of things
-        }
-
-        let imgUrl
-        const summaryImage = this.designRepo.summaryImg
-        const nameWithOwner = this.designRepo.nameWithOwner
-        const summaryJpg = '/summary.jpg'
-
-        if (this.designRepo.isPrivate) {
-          imgUrl = '/resources/image/private-placeholder.png'
-        } else if (summaryImage && summaryImage !== null) {
-          imgUrl = `https://raw.githubusercontent.com/${nameWithOwner}/${this.repoBranch}${summaryJpg}`
-        } else {
-          imgUrl = '/resources/image/no-summary-img-placeholder.png'
-        }
-
-        return imgUrl
-      },
-      imagesImgs () {
-
-        // *todo* push this back into texts, if order of need allows? this is cheap and safe...
-
-        let images = new Array()
-        let repoImages = null
-        this.designRepo.docs.entries.forEach(file => {
-          if (file.lang === 'img') {
-            repoImages = file.object.entries
-          }
-        })
-
-        if (repoImages) {
-          repoImages.forEach(entry => {
-            if (entry.name.search(/jpg|png|jpeg|gif/i) > 0) {
-              images.push(this.imagePath + this.htmlSanitize(entry.name))
-            }
-          })
-        } else {
-          this.nrImages = 0
-          return null
-        }
-
-        this.nrImages = images.length
-        return images
-      }
+    summaryText: function() {
+      // console.log ('summaryMarkdown: ' + store.getters.summaryMarkdown)
+      const summary = this.cleanFormatMarkdown(
+        store.getters.summaryMarkdown,
+        this.summaryImageFolder,
+        this.repoTreeFolder
+      );
+      // console.log(store.getters.summaryMarkdown);
+      return summary;
+      // *todo* isn't this alternate call actually correct at this point?? -- fix
+      // return this.htmlSanitize(
+      //   store.getters.summaryMarkdown)
     },
-    methods: {
-      popImages: function () {
-        this.imagesShow = !this.imagesShow;
-      },
-      slideImages: function (direction) {
-        this.$refs.imagesSlider.go(direction)
-      },
-      popDocs: function () {
-        this.docsShow = !this.docsShow;
-      },
-      slideDocs: function (direction) {
-        this.$refs.docsSlider.go(direction)
+    repos: function() {
+      // console.log ('init:this.$static: ' + this.$static)
+      // console.log ('repos:designRepos[theDesign].name: ' + store.getters.designRepos[this.theDesign].name)
+      // console.log ('repos:designRepos: ' + JSON.stringify(store.getters.designRepos))
+      return typeof this.$static !== "undefined"
+        ? this.$static.gitapi.organization.repositories.nodes
+        : store.getters.designRepos;
+    },
+    summaryTxt: function() {
+      // const sanitary = this.htmlSanitize(this.repoName + '/' + this.summaryText)
+      // const sanitary = this.htmlSanitize(this.designRepo.docs.folders[0].contents.files[0].object.text)
+      // return this.cleanFormatMarkdown(sanitary, this.repoBlobsFolder)
+    },
+    docsTexts() {
+      let texts = new Array();
+      // this.designRepo.docs.folders[0].contents.files.forEach(file => {
+      this.designRepo.docs.entries[0].object.entries.forEach(file => {
+        // console.log('file: ' + JSON.stringify(file))
+        if (file.name.search(/\.md/) > 0) {
+          texts.push(
+            this.cleanFormatMarkdown(
+              this.htmlSanitize(file.object.text),
+              this.imageFolder,
+              this.repoTreeFolder
+            )
+          );
+        }
+      });
+
+      // console.log("texts: " + JSON.stringify(texts));
+      this.nrTexts = texts.length;
+      return texts;
+    },
+    imageFolder: function() {
+      const imageF =
+        "https://raw.githubusercontent.com/CombatCovid/" +
+        this.repoName +
+        "/" +
+        this.repoBranch +
+        "/docs/";
+      return imageF;
+    },
+    summaryImageFolder: function() {
+      // console.log('summaryImageFolder: repoBranch: ' + this.repoBranch)
+      return (
+        "https://raw.githubusercontent.com/CombatCovid/" +
+        this.repoName +
+        "/" +
+        this.repoBranch +
+        "/"
+      );
+    },
+    repoTreeFolder: function() {
+      const repoTreeF =
+        "https://github.com/CombatCovid/" +
+        this.repoName +
+        "/tree/" +
+        this.repoBranch +
+        "/";
+
+      return repoTreeF;
+    },
+    imagePath: function() {
+      return this.imageFolder + "img/";
+    },
+    summaryImg: function() {
+      if (!this.designRepo) {
+        return null; // we're not ready yet, in the event scheme of things
       }
+
+      let imgUrl;
+      const summaryImage = this.designRepo.summaryImg;
+      const nameWithOwner = this.designRepo.nameWithOwner;
+      const summaryJpg = "/summary.jpg";
+
+      if (this.designRepo.isPrivate) {
+        imgUrl = "/resources/image/private-placeholder.png";
+      } else if (summaryImage && summaryImage !== null) {
+        imgUrl = `https://raw.githubusercontent.com/${nameWithOwner}/${this.repoBranch}${summaryJpg}`;
+      } else {
+        imgUrl = "/resources/image/no-summary-img-placeholder.png";
+      }
+
+      return imgUrl;
+    },
+    imagesImgs() {
+      // *todo* push this back into texts, if order of need allows? this is cheap and safe...
+
+      let images = new Array();
+      let repoImages = null;
+      this.designRepo.docs.entries.forEach(file => {
+        if (file.lang === "img") {
+          repoImages = file.object.entries;
+        }
+      });
+
+      if (repoImages) {
+        repoImages.forEach(entry => {
+          if (entry.name.search(/jpg|png|jpeg|gif/i) > 0) {
+            images.push(this.imagePath + this.htmlSanitize(entry.name));
+          }
+        });
+      } else {
+        this.nrImages = 0;
+        return null;
+      }
+
+      this.nrImages = images.length;
+      return images;
+    }
+  },
+  methods: {
+    popImages: function() {
+      this.imagesShow = !this.imagesShow;
+    },
+    slideImages: function(direction) {
+      this.$refs.imagesSlider.go(direction);
+    },
+    popDocs: function() {
+      this.docsShow = !this.docsShow;
+    },
+    slideDocs: function(direction) {
+      this.$refs.docsSlider.go(direction);
     }
   }
+};
 </script>
 
 // this was a temporary solution, as Gridsome supports just id and path
@@ -315,8 +356,7 @@
 </static-query>
 
 <style>
-
-  /*
+/*
     here are the filter-translated equivalents for the converted Markdown:
     h1 -> .h1-unscoped, etc.. These have to be in <style> non-scoped,
     as Markdown conversions can't be scoped. Translation by unscopeBasisMarkup()
@@ -327,270 +367,268 @@
     cns/narration-sd 11Apr2020
 }  */
 
+.h1-unscoped {
+  /*font-size: 0.9em;*/
+  margin-bottom: 1em;
+}
+
+.h2-unscoped {
+  /*font-size: 0.85em;*/
+  margin-bottom: 1em;
+}
+
+.h3-unscoped {
+  /*font-size: 0.8em;*/
+  margin-bottom: 1em;
+}
+
+.h4-unscoped {
+  /*font-size: 0.7em;*/
+  margin-bottom: 1em;
+}
+
+.li-unscoped {
+  /*font-size: 0.9em;*/
+  margin-bottom: 1em;
+}
+
+.p-unscoped {
+  /*font-size: 0.9em;*/
+  margin-bottom: 1em;
+}
+
+@media only screen and (max-width: 640px) {
   .h1-unscoped {
-    /*font-size: 0.9em;*/
+    font-size: 0.9em;
     margin-bottom: 1em;
   }
 
   .h2-unscoped {
-    /*font-size: 0.85em;*/
+    font-size: 0.85em;
     margin-bottom: 1em;
   }
 
   .h3-unscoped {
-    /*font-size: 0.8em;*/
-    margin-bottom: 1em;
+    font-size: 0.8em;
+    margin-bottom: 0.8em;
   }
 
   .h4-unscoped {
-    /*font-size: 0.7em;*/
-    margin-bottom: 1em;
+    font-size: 0.7em;
+    margin-bottom: 0.8em;
   }
 
   .li-unscoped {
-    /*font-size: 0.9em;*/
-    margin-bottom: 1em;
+    font-size: 0.9em !important;
+    margin-bottom: 0.9em;
   }
 
   .p-unscoped {
-    /*font-size: 0.9em;*/
-    margin-bottom: 1em;
+    font-size: 0.9em !important;
+    margin-bottom: 0.9em;
   }
+}
+/** end unscoped markup conversion tags, so far: h5 and h6 available */
 
-  @media only screen and (max-width: 640px) {
-    .h1-unscoped {
-      font-size: 0.9em;
-      margin-bottom: 1em;
-    }
+.md-image-fit {
+  /* must be unscoped, as these apply to unscoped rendered Markdown */
+  width: 90%;
+  margin: 2% 5% 0 5%;
+}
 
-    .h2-unscoped {
-      font-size: 0.85em;
-      margin-bottom: 1em;
-    }
+.md-caption-fit {
+  text-align: center;
+  margin: 0 auto;
+}
 
-    .h3-unscoped {
-      font-size: 0.8em;
-      margin-bottom: 0.8em;
-    }
+.v-application ul {
+  padding-left: 16px; /* *todo* defeat v, maybe tag instead later */
+}
 
-    .h4-unscoped {
-      font-size: 0.7em;
-      margin-bottom: 0.8em;
-    }
-
-    .li-unscoped {
-      font-size: 0.9em !important;
-      margin-bottom: 0.9em;
-    }
-
-    .p-unscoped {
-      font-size: 0.9em !important;
-      margin-bottom: 0.9em;
-    }
-  }
-  /** end unscoped markup conversion tags, so far: h5 and h6 available */
-
-  .md-image-fit { /* must be unscoped, as these apply to unscoped rendered Markdown */
-    width: 90%;
-    margin: 2% 5% 0 5%
-  }
-
-  .md-caption-fit {
-    text-align: center;
-    margin: 0 auto;
-  }
-
+@media only screen and (max-width: 959px) {
   .v-application ul {
-    padding-left: 16px /* *todo* defeat v, maybe tag instead later */
+    padding-left: 10px; /* *todo* defeat v, maybe tag instead later */
   }
-
-  @media only screen and (max-width: 959px) {
-    .v-application ul {
-      padding-left: 10px; /* *todo* defeat v, maybe tag instead later */
-    }
-  }
-
+}
 </style>
 
 <style scoped>
-
-  /* *todo* later we'll have our own md-h1 etc. for, used via filter on md as it
+/* *todo* later we'll have our own md-h1 etc. for, used via filter on md as it
        becomes html, so then to be in control of its formatting on screens */
-  /*h1, h2, h3, h4 {*/
-  /*  font-size: medium;*/
-  /*}*/
+/*h1, h2, h3, h4 {*/
+/*  font-size: medium;*/
+/*}*/
 
-  /*@media only screen and (max-width: 959px) {*/
-  /*  h1, h2, h3, h4 {*/
-  /*    font-size: small;*/
-  /*  }*/
-  /*}*/
+/*@media only screen and (max-width: 959px) {*/
+/*  h1, h2, h3, h4 {*/
+/*    font-size: small;*/
+/*  }*/
+/*}*/
 
-  .slider-title {
-    margin-top: 20px;
-  }
+.slider-title {
+  margin-top: 20px;
+}
 
-  .image-display-mask {
-    overflow: hidden !important;
-  }
+.image-display-mask {
+  overflow: hidden !important;
+}
 
-  .images-slide {
-    /* these along with box-fix is absolutely essential: centering and
+.images-slide {
+  /* these along with box-fix is absolutely essential: centering and
       fixing the aspect ratio, and at all media sizes, is half the key */
-    width: 72%;
-    /*max-height: 600px;*/
-    margin: 0 auto;
-  }
+  width: 72%;
+  /*max-height: 600px;*/
+  margin: 0 auto;
+}
 
-  .slide-image {
-    width: 600px;
-    max-height: 600px;
-  }
+.slide-image {
+  width: 600px;
+  max-height: 600px;
+}
 
-  .docs-show-pane {
-    margin-top: 2rem;
-    /*background-color: teal;*/
-    /* *todo* later work out: background-color: #348F50 !important;*/
-  }
+.docs-show-pane {
+  margin-top: 2rem;
+  /*background-color: teal;*/
+  /* *todo* later work out: background-color: #348F50 !important;*/
+}
 
+.docs-slide {
+  width: 80%;
+  margin: 0 10%;
+}
+@media only screen and (min-width: 1601px) {
   .docs-slide {
-    width: 80%;
-    margin: 0 10%;
+    max-width: 1600px; /* 1600px;*/
   }
-  @media only screen and (min-width: 1601px) {
-    .docs-slide {
-      max-width: 1600px; /* 1600px;*/
-    }
-  }
+}
 
-  @media only screen and (max-width: 959px) {
-    .docs-slide {
-      width: 94%;
-      max-height: 600px;
-      margin: 0 2%;
-    }
-  }
-
-  .slide-docs {
-    width: 600px;
+@media only screen and (max-width: 959px) {
+  .docs-slide {
+    width: 94%;
     max-height: 600px;
+    margin: 0 2%;
   }
+}
 
+.slide-docs {
+  width: 600px;
+  max-height: 600px;
+}
+
+.normal-h-size {
+  font-size: larger;
+}
+
+@media only screen and (max-width: 959px) {
   .normal-h-size {
-    font-size: larger;
-  }
-
-  @media only screen and (max-width: 959px) {
-    .normal-h-size {
-      font-size: small;
-    }
-  }
-
-  .horiz-center {
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .doc-title {
-    padding: 0 20px 20px 20px;
-  }
-
-  .design-image {
-    width: 100%;
-  }
-  @media only screen and (min-width: 1601px) {
-    .container {
-      max-width: 1600px;
-    }
-  }
-
-  .design-image-hold {
-    margin: 3% auto;
-    max-height: 66vw; /* *todo* careful - improves, but mind aspect ratio again - improve where/how later */
-  }
-
-  .doc-title {
-    padding: 0 20px 20px 20px;
-  }
-
-  .formal-look {
-    color: #1d5c87;
-    font-family: Roboto, sans-serif;
     font-size: small;
-    padding: 20px;
-    max-width: 640px;
   }
+}
 
-  .rule-appearance {
-    color: #e3ebef;
-    margin-bottom: 40px;
+.horiz-center {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.doc-title {
+  padding: 0 20px 20px 20px;
+}
+
+.design-image {
+  width: 100%;
+}
+@media only screen and (min-width: 1601px) {
+  .container {
+    max-width: 1600px;
   }
+}
 
-  .fix-box {
-    /* this is absolutely crucial, and a bigger half of solving
+.design-image-hold {
+  margin: 3% auto;
+  max-height: 66vw; /* *todo* careful - improves, but mind aspect ratio again - improve where/how later */
+}
+
+.doc-title {
+  padding: 0 20px 20px 20px;
+}
+
+.formal-look {
+  color: #1d5c87;
+  font-family: Roboto, sans-serif;
+  font-size: small;
+  padding: 20px;
+  max-width: 640px;
+}
+
+.rule-appearance {
+  color: #e3ebef;
+  margin-bottom: 40px;
+}
+
+.fix-box {
+  /* this is absolutely crucial, and a bigger half of solving
        the out-of control image problem, with images-slide */
-    box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+@media only screen and (max-width: 639px) {
+  .temp-shift-small-screen {
+    margin-left: -10px;
   }
+}
 
-  @media only screen and (max-width: 639px) {
-    .temp-shift-small-screen {
-      margin-left: -10px;
-    }
+.docs-slides-pane {
+  /* see below */
+  /*background-color: #56B4D3;*/
+  padding: 0 10px;
+}
+
+@media only screen and (max-width: 420px) {
+  .hide-small {
+    display: none;
   }
+}
 
-  .docs-slides-pane { /* see below */
-    /*background-color: #56B4D3;*/
-    padding: 0 10px;
-  }
+.announcement-look {
+  background: linear-gradient(to right, rgb(86, 180, 211), rgb(52, 143, 80));
+  color: lightgoldenrodyellow;
+  padding: 40px;
+  margin: -20px;
+  min-height: 80vh;
+}
 
-  @media only screen and (max-width: 420px) {
-    .hide-small {
-      display: none;
-    }
-  }
+.announcement-frame {
+  max-width: 700px;
+  margin: 40px auto;
+}
 
+.announcement-message {
+  margin: 40px;
+}
 
+@media only screen and (max-width: 640px) {
   .announcement-look {
-    background: linear-gradient(to right, rgb(86, 180, 211), rgb(52, 143, 80));
-    color: lightgoldenrodyellow;
-    padding: 40px;
+    padding: 20px;
     margin: -20px;
     min-height: 80vh;
   }
 
-  .announcement-frame {
-    max-width: 700px;
-    margin: 40px auto;
-  }
-
   .announcement-message {
-    margin: 40px;
+    margin: 20px;
   }
+}
 
-  @media only screen and (max-width: 640px) {
-    .announcement-look {
-      padding: 20px;
-      margin: -20px;
-      min-height: 80vh;
-    }
-
-    .announcement-message {
-      margin: 20px;
-    }
-  }
-
-  /* *todo* that docs-slides-pane _overrides_ padding set where?? in glide? later../ */
-  /*@media only screen and (max-width: 1024px) {*/
-  /*  .docs-slides-pane {*/
-  /*    !*background-color: #56B4D3;*!*/
-  /*    padding: 0 50px;*/
-  /*  }*/
-  /*}*/
-  /*@media only screen and (max-width: 639px) {*/
-  /*  .docs-slides-pane {*/
-  /*    !*background-color: #56B4D3;*!*/
-  /*    padding: 0;*/
-  /*  }*/
-  /*}*/
-
+/* *todo* that docs-slides-pane _overrides_ padding set where?? in glide? later../ */
+/*@media only screen and (max-width: 1024px) {*/
+/*  .docs-slides-pane {*/
+/*    !*background-color: #56B4D3;*!*/
+/*    padding: 0 50px;*/
+/*  }*/
+/*}*/
+/*@media only screen and (max-width: 639px) {*/
+/*  .docs-slides-pane {*/
+/*    !*background-color: #56B4D3;*!*/
+/*    padding: 0;*/
+/*  }*/
+/*}*/
 </style>

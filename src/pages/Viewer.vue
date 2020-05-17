@@ -4,11 +4,7 @@
       <h1 class="horiz-center">Viewer</h1>
       <div class="xmaster-detail">
         <v-container class="grey lighten-5">
-          <HorizontalMD
-            :design="design"
-            :summaryDoc="summaryDoc"
-            :summaryImage="summaryImage"
-          />
+          <HorizontalMD :design="design" :summaryDoc="summaryDoc" :summaryImage="summaryImage" />
         </v-container>
       </div>
     </v-container>
@@ -16,14 +12,14 @@
 </template>
 
 <script>
-import HorizontalMD from '@/components/HorizontalMD';
-import VerticalMD from '@/components/VerticalMD';
+import HorizontalMD from "@/components/HorizontalMD";
+import VerticalMD from "@/components/VerticalMD";
 
 export default {
   metaInfo: {
-    title: 'Viewer',
+    title: "Viewer"
   },
-  name: 'viewer',
+  name: "viewer",
   props: {
     // repoName: String,
     // summaryDoc: String,
@@ -34,21 +30,21 @@ export default {
       design: this.$route.params.design,
       summaryImage: this.$route.params.summaryImage,
       anchorParts: {
-        target: '_blank',
-        rel: 'noreferrer noopener',
+        target: "_blank",
+        rel: "noreferrer noopener"
       },
-      numberRepos: 99,
+      numberRepos: 99
     };
   },
   computed: {
     summaryDoc: function() {
       return this.$route.params.summaryDoc;
-    },
+    }
   },
   components: { VerticalMD, HorizontalMD },
   async mounted() {
     // console.log ('Viewer: route params: ' + JSON.stringify(this.$route.params))
-  },
+  }
 };
 </script>
 
