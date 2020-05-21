@@ -31,6 +31,10 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+body {
+  overflow-x: hidden !important;
+}
+
 .bg-image {
   background: center linear-gradient(rgba(4, 110, 171, 0.644)),
     url(/images/doctors.jpg);

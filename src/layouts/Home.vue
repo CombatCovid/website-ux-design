@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col min-h-screen">
     <Nav />
-    <div class="flex-1 mt-24">
+    <div class="flex-1">
       <slot />
     </div>
     <Footer />
@@ -17,7 +17,6 @@
 </static-query>
 
 <script>
-import store from "~/store"
 import Nav from "~/components/Nav.vue";
 import Footer from "~/components/Footer";
 
@@ -25,11 +24,6 @@ export default {
   components: {
     Nav: Nav,
     Footer: Footer
-  },
-  computed(){
-    isLander: {
-      return store.state.currentPage;
-    }
   }
 };
 </script>
