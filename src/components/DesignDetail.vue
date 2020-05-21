@@ -3,11 +3,11 @@
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-        <div class="flex col-start-7">
+        <!-- <div class="flex col-start-7">
           <div class="col-span-2">
             <g-image src="~/assets/avatar.png" cla width="500" />
           </div>
-        </div>
+        </div> -->
         <div
           v-if="imagesShow"
           class="images-slide image-display-mask design-image-hold docs-show-pane"
