@@ -37,23 +37,20 @@
 
             <ais-hits class="clear-above">
               <div slot-scope="{ items }">
-                <v-layout d-flex flex-wrap>
-                  <v-row d-flex cols="1">
-                    <v-col 
-                          cols="12" 
-                          md="4"
-                          sm="6"
-                          lg="3"
-                          class="d-flex child-flex"
-                           v-for="(item, index) in items" :key="index">
+                <div class="">
+                  <div class="flex flex-wrap">
+                    <div 
+                      class="lg:w-1/4 md:w-1/3 sm:w-auto p-2 "
+                      v-for="(item, index) in items" :key="index"
+                      >
                       <JoseFinderCard :repo="{ title: item.title, name: item.name,
                         nameWithOwner: item.nameWithOwner, isPrivate: item.isPrivate,
                         description: item.description, cardImage: item.cardImage,
                         summaryDoc: item.cardSummary, summaryImage: item.cardImage,
                         repoBranch: repoBranch }"/>
-                    </v-col>
-                  </v-row>
-                </v-layout>
+                    </div>
+                  </div>
+                </div>
               </div>
             </ais-hits>
   

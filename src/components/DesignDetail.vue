@@ -67,9 +67,9 @@
           </div>
           <div class="docs-slides-pane">
             <VueGlide :perView="1" :gap="10" :rewind="false" type="carousel" ref="docsSlider">
-              <VueGlideSlide class="markdown" v-for="(docText, i) in docsTexts" :key="i">
+              <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
                 <!--        Slide {{ i }}-->
-                <div class="docs-slide">
+                <div class="docs-slide" >
                   <VueMarkdown
                     :source="unscopeBasisMarkup(docText)"
                     :postrender="unscopeBasisMarkup"
@@ -355,7 +355,7 @@ export default {
 <static-query>
 </static-query>
 
-<style lang="scss" >
+<style lang="scss"  >
 /*
     here are the filter-translated equivalents for the converted Markdown:
     h1 -> .h1-unscoped, etc.. These have to be in <style> non-scoped,
@@ -367,6 +367,9 @@ export default {
     cns/narration-sd 11Apr2020
 }  */
 .markdown {
+  & img{
+    width:100%;
+  }
   @apply text-lg font-light leading-normal;
   & * + *,  & li + li, & li > p + p, & p + p {
     @apply mt-4;

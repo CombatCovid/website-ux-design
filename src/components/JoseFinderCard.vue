@@ -1,23 +1,21 @@
 <template>
-  <v-card class d-flex hover  v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
-    <div class="card__gradient">
-        <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)">
+    <div class="card border-solid border rounded-md border-gray-400" v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
+      <div class="card__gradient">
+          <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)">
+      </div>
+      <div class="card__content">
+        <p class="font-bold" v-text="repo.title"></p>
+        <p class="font-light">{{ niceTruncate(repo.description) }}</p>
+      </div>
+        <div class="card__btns">
+          <!-- <div
+            v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)"
+          >documentation</div>
+          <div color="green">
+            <a :href="getRepoZip(repo.nameWithOwner, repo.repoBranch)" target="_blank">download</a>
+          </div> -->
+        </div>
     </div>
-    <div class="card__content">
-      <h3 v-text="repo.title" class></h3>
-      <p class>{{ niceTruncate(repo.description) }}</p>
-    </div>
-      <v-card-actions class="card__btns">
-        <v-btn
-          outlined
-          small
-          v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)"
-        >documentation</v-btn>
-        <v-btn color="green" dark small>
-          <a :href="getRepoZip(repo.nameWithOwner, repo.repoBranch)" target="_blank">download</a>
-        </v-btn>
-      </v-card-actions>
-  </v-card>
 </template>
 
 <script>
@@ -72,7 +70,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+*{
+  margin: auto;
+  text-align:left;
+}
 a{
  text-decoration: none;
  color:white !important; 
@@ -80,7 +82,16 @@ a{
 
 .card{
   position:relative;
+  height:350px;
+  cursor:pointer;
 }
+
+.card:hover{
+    transition: box-shadow 0.2s ease-in-out;
+    -webkit-box-shadow: -4px 4px 38px -5px rgba(130,130,130,1);
+    -moz-box-shadow: -4px 4px 38px -5px rgba(130,130,130,1);
+    box-shadow: -4px 4px 38px -5px rgba(130,130,130,1);
+  }
 
 .card__image {
   border-bottom: #C5C6C8 solid 1px;
@@ -93,8 +104,7 @@ a{
 .card__content {
   padding: 1em;
   margin-bottom:1em;
-  /* position: relative; */
-  /* height: 200px; */
+
 }
 
 .card__btns {
