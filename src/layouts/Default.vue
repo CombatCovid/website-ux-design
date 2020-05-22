@@ -1,17 +1,17 @@
 <template>
-  <div class="flex flex-col min-h-screen">
+  <div class="">
     <Nav />
-    <div class="flex-1 mt-24">
+    <div class="flex-1 pt-24">
       <slot />
     </div>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
 <static-query>
   query {
     metadata {
-              siteName
+      siteName
     }
   }
 </static-query>
@@ -36,6 +36,6 @@ export default {
 
 <style>
 footer {
-  justify-self: flex-start;
+  /* justify-self: flex-start; */
 }
 </style>
