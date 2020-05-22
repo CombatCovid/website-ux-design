@@ -4,7 +4,7 @@ const purgecss = require('@fullhuman/postcss-purgecss');
 const postcssPlugins = [tailwind()];
 
 if (process.env.NODE_ENV === 'production')
-  postcssPlugins.push(purgecss(require('./purgecss.config.js')));
+  // postcssPlugins.push(purgecss(require('./purgecss.config.js')));
 
 // This is where project configuration and plugin options are located.
 // Learn more: https://gridsome.org/docs/config
