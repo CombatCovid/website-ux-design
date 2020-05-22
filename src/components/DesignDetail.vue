@@ -397,10 +397,16 @@ export default {
     @apply border-l-4 pl-4 italic;
   } 
   & ul, & ol {
-    content:"-";
+    position:relative;
     @apply pl-5;
     @screen sm {
       @apply pl-10;
+    }
+    & > li:before{
+      content: "–";
+      position: absolute;
+      /*change margin to move dash around*/
+      margin-left: -1em;
     }
   }
 }
