@@ -1,5 +1,5 @@
 <template>
-  <div class="container max-w-5xl">
+  <div class="container max-w-5xl markdown">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
@@ -67,7 +67,7 @@
           </div>
           <div class="docs-slides-pane">
             <VueGlide :perView="1" :gap="10" :rewind="false" type="carousel" ref="docsSlider">
-              <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
+              <VueGlideSlide class="markdown" v-for="(docText, i) in docsTexts" :key="i">
                 <!--        Slide {{ i }}-->
                 <div class="docs-slide">
                   <VueMarkdown
@@ -355,7 +355,7 @@ export default {
 <static-query>
 </static-query>
 
-<style>
+<style lang="scss" >
 /*
     here are the filter-translated equivalents for the converted Markdown:
     h1 -> .h1-unscoped, etc.. These have to be in <style> non-scoped,
@@ -366,104 +366,44 @@ export default {
     They are, and I can assure they are essentiaal, unscoped as here.
     cns/narration-sd 11Apr2020
 }  */
-
-.h1-unscoped {
-  /*font-size: 0.9em;*/
-  margin-bottom: 1em;
-}
-
-.h2-unscoped {
-  /*font-size: 0.85em;*/
-  margin-bottom: 1em;
-}
-
-.h3-unscoped {
-  /*font-size: 0.8em;*/
-  margin-bottom: 1em;
-}
-
-.h4-unscoped {
-  /*font-size: 0.7em;*/
-  margin-bottom: 1em;
-}
-
-.li-unscoped {
-  /*font-size: 0.9em;*/
-  margin-bottom: 1em;
-}
-
-.p-unscoped {
-  /*font-size: 0.9em;*/
-  margin-bottom: 1em;
-}
-
-@media only screen and (max-width: 640px) {
-  .h1-unscoped {
-    font-size: 0.9em;
-    margin-bottom: 1em;
+.markdown {
+  @apply text-lg font-light leading-normal;
+  & * + *,  & li + li, & li > p + p, & p + p {
+    @apply mt-4;
   }
-
-  .h2-unscoped {
-    font-size: 0.85em;
-    margin-bottom: 1em;
+  & strong {
+    @apply text-black font-bold;
   }
-
-  .h3-unscoped {
-    font-size: 0.8em;
-    margin-bottom: 0.8em;
+  & a {
+    @apply text-blue-600 font-semibold;
   }
-
-  .h4-unscoped {
-    font-size: 0.7em;
-    margin-bottom: 0.8em;
+  & strong a {
+    @apply font-bold;
   }
-
-  .li-unscoped {
-    font-size: 0.9em !important;
-    margin-bottom: 0.9em;
+  
+  & h2 {
+    @apply leading-tight text-xl font-bold text-black mb-2 mt-10;
   }
-
-  .p-unscoped {
-    font-size: 0.9em !important;
-    margin-bottom: 0.9em;
+   & h3 {
+    @apply leading-tight text-lg font-bold text-black mt-8 -mb-2;
+  } 
+  & code {
+    @apply text-sm inline px-1;
+  } 
+   & pre code {
+    @apply block bg-black p-4 rounded;
+  }
+  & blockquote {
+    @apply border-l-4 pl-4 italic;
+  } 
+  & ul, & ol {
+    content:"-";
+    @apply pl-5;
+    @screen sm {
+      @apply pl-10;
+    }
   }
 }
-/** end unscoped markup conversion tags, so far: h5 and h6 available */
-
-.md-image-fit {
-  /* must be unscoped, as these apply to unscoped rendered Markdown */
-  width: 90%;
-  margin: 2% 5% 0 5%;
-}
-
-.md-caption-fit {
-  text-align: center;
-  margin: 0 auto;
-}
-
-.v-application ul {
-  padding-left: 16px; /* *todo* defeat v, maybe tag instead later */
-}
-
-@media only screen and (max-width: 959px) {
-  .v-application ul {
-    padding-left: 10px; /* *todo* defeat v, maybe tag instead later */
-  }
-}
-</style>
-
-<style scoped>
-/* *todo* later we'll have our own md-h1 etc. for, used via filter on md as it
-       becomes html, so then to be in control of its formatting on screens */
-/*h1, h2, h3, h4 {*/
-/*  font-size: medium;*/
-/*}*/
-
-/*@media only screen and (max-width: 959px) {*/
-/*  h1, h2, h3, h4 {*/
-/*    font-size: small;*/
-/*  }*/
-/*}*/
 
 .slider-title {
   margin-top: 20px;
