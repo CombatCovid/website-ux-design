@@ -26,8 +26,8 @@ export default {
     Nav: Nav,
     Footer: Footer
   },
-  computed(){
-    isLander: {
+  computed:{
+    currentPage: function() {
       return store.state.currentPage;
     }
   }
