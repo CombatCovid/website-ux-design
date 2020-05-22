@@ -14,7 +14,7 @@
               <div class="finder__header" slot-scope="{ currentRefinement, isSearchStalled, refine }">
               <div class="searchBox">
                 <div>
-                <h1>FINDER</h1>
+                <h1 class="text-3xl font-bold">FINDER</h1>
                 <ais-powered-by/>
                 </div>
                 <div class="searchBox__input">
@@ -93,6 +93,7 @@
 <style scoped>
   .finder{
     background-color: #F3F4F4;
+    min-height:100vh;
   }
 
   .finder__header{
