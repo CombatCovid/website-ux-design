@@ -1,5 +1,5 @@
 <template>
-  <div class="container max-w-5xl markdown">
+  <div class="container max-w-5xl xl:w-1/2 md: xs:w-full">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
@@ -26,7 +26,7 @@
             </v-tooltip>
             <v-btn @click="slideImages('>')">></v-btn>
           </div>
-          <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
+          <VueGlide :perView="1" :gap="30" :rewind="false" type="slider" ref="imagesSlider">
             <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
               <div class="horiz-center">
                 <img :src="imagesImg" alt="imagesImg" width="100%" />
@@ -66,9 +66,8 @@
             <v-btn @click="slideDocs('>')">></v-btn>
           </div>
           <div class="docs-slides-pane">
-            <VueGlide :perView="1" :gap="10" :rewind="false" type="carousel" ref="docsSlider">
+            <VueGlide :perView="1" :gap="10" :rewind="false" type="slider" ref="docsSlider">
               <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
-                <!--        Slide {{ i }}-->
                 <div class="docs-slide" >
                   <VueMarkdown
                     :source="unscopeBasisMarkup(docText)"
@@ -91,7 +90,7 @@
               <span>Click to see view all the design documentse. Click again to return to the summary.</span>
             </v-tooltip>
           </div>
-          <div class="docs-slide docs-slides-pane">
+          <div class="docs-slide docs-slides-pane markdown">
             <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup" />
           </div>
         </div>
@@ -366,6 +365,8 @@ export default {
     They are, and I can assure they are essentiaal, unscoped as here.
     cns/narration-sd 11Apr2020
 }  */
+
+
 .markdown {
   & img{
     width:100%;
@@ -566,18 +567,4 @@ export default {
     margin: 20px;
   }
 }
-
-/* *todo* that docs-slides-pane _overrides_ padding set where?? in glide? later../ */
-/*@media only screen and (max-width: 1024px) {*/
-/*  .docs-slides-pane {*/
-/*    !*background-color: #56B4D3;*!*/
-/*    padding: 0 50px;*/
-/*  }*/
-/*}*/
-/*@media only screen and (max-width: 639px) {*/
-/*  .docs-slides-pane {*/
-/*    !*background-color: #56B4D3;*!*/
-/*    padding: 0;*/
-/*  }*/
-/*}*/
 </style>
