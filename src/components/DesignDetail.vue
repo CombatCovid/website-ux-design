@@ -26,7 +26,7 @@
             </v-tooltip>
             <v-btn @click="slideImages('>')">></v-btn>
           </div>
-          <VueGlide :perView="1" :gap="30" :rewind="false" type="slider" ref="imagesSlider">
+          <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
             <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
               <div class="horiz-center">
                 <img :src="imagesImg" alt="imagesImg" width="100%" />
