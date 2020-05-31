@@ -1,5 +1,5 @@
 <template>
-  <div class="design-detail__ container max-w-5xl xl:w-4/6  xs:w-full">
+  <div class="container max-w-5xl xl:w-1/2 md: xs:w-full">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
@@ -354,7 +354,7 @@ export default {
 <static-query>
 </static-query>
 
-<style lang="scss">
+<style lang="scss"  >
 /*
     here are the filter-translated equivalents for the converted Markdown:
     h1 -> .h1-unscoped, etc.. These have to be in <style> non-scoped,
@@ -488,7 +488,7 @@ export default {
   width: 100%;
 }
 @media only screen and (min-width: 1601px) {
-  .design-detail__container {
+  .container {
     max-width: 1600px;
   }
 }
