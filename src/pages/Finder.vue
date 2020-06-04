@@ -65,6 +65,7 @@
 
   import algoliasearch from 'algoliasearch'
   import store from '~/store'
+  import { setAlgoliaConfig } from '~/modules/habitat-requests'
   import FinderPaginator from '../components/FinderPaginator'
   import JoseFinderCard from '../components/JoseFinderCard'
   import { mdiMagnify } from "@mdi/js";
@@ -78,13 +79,33 @@
       return {
         numberRepos: 3,
         indexName: store.getters.algoSearchIndex,
-        searchClient: algoliasearch(
-          store.getters.algoAppId,
-          store.getters.algoSearchKey
-        ),
+        // searchClient: algoliasearch(
+        //   store.getters.algoAppId,
+        //   store.getters.algoSearchKey
+        // ),
         repoBranch: store.getters.repoBranch,
         mdiMagnify: mdiMagnify
       }
+    },
+    beforeCreate: () => {
+      setAlgoliaConfig() // must prepare before Algolia parts get used
+    },
+    computed: {
+      algoliaError: () => { return store.getters.algoConfigError },
+      algoliaReady: () => { return store.getters.algoConfigReady },
+      indexName: () => { return store.getters.algoSearchIndex },
+      searchClient: () =>
+      {
+        return algoliasearch(
+          store.getters.algoAppId,
+          store.getters.algoSearchKey
+        )
+      },
+    },
+    methods: {
+      algoApp: () => {
+        return JSON.stringify(store.getters.currentAlgoSearchIndex)
+      },
     },
     components: { JoseFinderCard , FinderPaginator }
   }

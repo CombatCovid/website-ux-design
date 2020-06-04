@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersistence, { MockStorage } from 'vuex-persist'
+import { safeEnv } from '../modules/habitat-protocol' // temporary
+import { retrieveDesign } from '../modules/habitat-requests' // temporary
 import axios from 'axios'
 
 import store from '~/store'
@@ -47,25 +49,28 @@ export default new Vuex.Store({
     currentRepoKey: process.env.GRIDSOME_REPO_KEY,
     currentRepoBranch: safeEnv(process.env.GRIDSOME_REPO_BRANCH, 'develop'),
 
-    // Algolia presets
-    currentAlgoSearchIndex: process.env.GRIDSOME_ALGO_SEARCH_INDEX,
-    currentAlgoAppId: process.env.GRIDSOME_ALGO_APPLICATION_ID,
-    currentAlgoSearchKey: process.env.GRIDSOME_ALGO_SEARCH_KEY,
-    currentAlgoAdminKey: process.env.GRIDSOME_ALGO_ADMIN_KEY,
-    currentAlgoIndexesList: process.env.GRIDSOME_ALGO_INDEXES_LIST,
+    // Algolia values
+    currentAlgoSearchIndex: safeEnv(process.env.GRIDSOME_ALGO_SEARCH_INDEX, 'not-set'),
+    currentAlgoAppId: safeEnv(process.env.GRIDSOME_ALGO_APPLICATION_ID, 'not-set'),
+    currentAlgoSearchKey: safeEnv(process.env.GRIDSOME_ALGO_SEARCH_KEY, 'not-set'),
+    currentAlgoAdminKey: safeEnv(process.env.GRIDSOME_ALGO_ADMIN_KEY, 'not-set'),
+    currentAlgoIndexesList: safeEnv(process.env.GRIDSOME_ALGO_INDEXES_LIST, 'not-set'),
 
     // Axios config
-    currentAxiosWireTimeout: safeEnv(process.env.GRIDSOME_AXIOS_WIRE_TIMEOUT, 5000)
+    currentAxiosWireTimeout: safeEnv(process.env.GRIDSOME_AXIOS_WIRE_TIMEOUT, 5000),
+
+    // Algolia status
+    currentAlgoliaConfigReady: false,
+    currentAlgoliaConfigError: null,
+
+    // RepoRequest status
+    currentRepoRequestError: null,
+    currentRepoRequestReady: false,
   },
   plugins: [
     vuexLocal.plugin // don't lose me; persistence happens here
   ],
-  created () {
-    if (this.state.currentAlgoAdminKey) {
-      console.log('enabled for admin')
-    }
-    console.log('recovered state.currentLastRepoName: ' + state.currentLastRepoName)
-  },
+  // not a Vue component, so no created(), etc..
   mutations:{
     PAGE_PATH:(state, value) => {
       state.currentPage = value;
@@ -92,8 +97,39 @@ export default new Vuex.Store({
     setLastRepoName (context, design) {
       this.state.currentLastRepoName = design
     },
+    setRepoReqReady (context, status = false) {
+      this.state.currentRepoRequestReady = status
+    },
+    setRepoReqError (context, error = null) {
+      this.state.currentRepoRequestError = error
+    },
+    setAlgoConfigReady(context, ready = null) {
+      this.state.currentAlgoliaConfigReady = ready
+    },
+    setAlgoConfigError (context, error = null) {
+      this.state.currentAlgoliaConfigError = error
+    },
+    // *todo* we're keeping these until clear no dev .env sets are needed
+    setAlgoAppId (context, appId = null) {
+      this.state.currentAlgoAppId = appId
+    },
     setAlgoSearchIndex (context, indexName = null) {
       this.state.currentAlgoSearchIndex = indexName
+    },
+    setAlgoSearchKey (context, searchKey = null) {
+      this.state.currentAlgoSearchKey = searchKey
+    },
+    setAlgoSearchConfig(context, result = null) {
+      if (result.errors) {
+        this.state.currentAlgoliaConfigError = result.errors
+      } else if (!result.response) {
+        this.state.currentAlgoliaConfigError = 'setAlgoSearchConfig: no config provided!'
+      } else {
+        this.state.currentAlgoAppId = result.response.app
+        this.state.currentAlgoSearchIndex = result.response.index
+        this.state.currentAlgoSearchKey = result.response.read
+        this.state.currentAlgoliaConfigReady = true
+      }
     },
 
     // *todo* these, possibly other presets needing careful feed until Vuex reducer is sorted out
@@ -106,7 +142,13 @@ export default new Vuex.Store({
     // end reducer temporary sortings
   },
   actions:{
-
+    setAlgoConfig ({commit, state}, settings) {
+      commit('setAlgoConfigReady', settings.ready)
+      commit('setAlgoConfigError', settings.error)
+    },
+    loadAlgoConfig ({ commit, state}, result) {
+      commit('setAlgoSearchConfig', result)
+    },
     loadDesign ({ commit, state }, design) {
       if (!design || design.length <= 0) {
         console.log ('loadDesign: no design given to load')
@@ -248,6 +290,8 @@ export default new Vuex.Store({
     lastRepoName: state => state.currentLastRepoName,
 
     // Algolia access information
+    algoConfigReady: state => state.currentAlgoliaConfigReady,
+    algoConfigError: state => state.currentAlgoliaConfigError,
     algoSearchIndex: state => state.currentAlgoSearchIndex,
     algoAppId: state => state.currentAlgoAppId,
     algoSearchKey: state => state.currentAlgoSearchKey,
@@ -260,7 +304,7 @@ export default new Vuex.Store({
       }
       catch (err) {
         list = 'Error: ' + err
-        console.log('store.AlgoSearchIndexesList error: ' + err)
+        console.log('store: AlgoSearchIndexesList error: ' + err)
       }
       return list
     },
