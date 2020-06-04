@@ -2,48 +2,48 @@
   <Layout class="finder">
     <div class="finder__container">
       <div v-if="algoliaReady">
-      <client-only>
-          <ais-instant-search 
+        <client-only>
+          <ais-instant-search
             :index-name="indexName"
-            :search-client="searchClient" 
-            class="horiz-center searchbox"    
-            >
+            :search-client="searchClient"
+            class="horiz-center searchbox"
+          >
 
-            <ais-configure :hits-per-page.camel="9" />
+            <ais-configure :hits-per-page.camel="9"/>
             <!-- <ais-powered-by/> -->
             <ais-search-box>
               <div class="finder__header" slot-scope="{ currentRefinement, isSearchStalled, refine }">
-              <div class="searchBox">
-                <div>
-                <h1>FINDER</h1>
-                <ais-powered-by/>
-                </div>
-                <div class="searchBox__input">
-                <v-icon style="margin-right:0.2em;" large>{{mdiMagnify}}</v-icon>
-                <input
-                  class=""
-                  type="search"
-                  v-model="currentRefinement"
-                  @input="refine($event.currentTarget.value)"
-                  placeholder="Type keywords like ventilator or 3D printing"
-                ></input>
-                </div>
-                <span :hidden="!isSearchStalled">Loading...</span>
-                <FinderPaginator/>
+                <div class="searchBox">
+                  <div>
+                    <h1>FINDER</h1>
+                    <ais-powered-by/>
+                  </div>
+                  <div class="searchBox__input">
+                    <v-icon style="margin-right:0.2em;" large>{{mdiMagnify}}</v-icon>
+                    <input
+                      class=""
+                      type="search"
+                      v-model="currentRefinement"
+                      @input="refine($event.currentTarget.value)"
+                      placeholder="Type keywords like ventilator or 3D printing"
+                    ></input>
+                  </div>
+                  <span :hidden="!isSearchStalled">Loading...</span>
+                  <FinderPaginator/>
                 </div>
 
               </div>
             </ais-search-box>
-            
+
 
             <ais-hits class="clear-above">
               <div slot-scope="{ items }">
                 <div class="">
                   <div class="flex flex-wrap">
-                    <div 
+                    <div
                       class="lg:w-1/4 md:w-1/3 sm:w-auto p-2 "
                       v-for="(item, index) in items" :key="index"
-                      >
+                    >
                       <JoseFinderCard :repo="{ title: item.title, name: item.name,
                         nameWithOwner: item.nameWithOwner, isPrivate: item.isPrivate,
                         description: item.description, cardImage: item.cardImage,
@@ -54,7 +54,7 @@
                 </div>
               </div>
             </ais-hits>
-  
+
 
           </ais-instant-search>
         </client-only>
