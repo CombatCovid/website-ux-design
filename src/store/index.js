@@ -11,12 +11,12 @@ Vue.use(Vuex)
 
 // helpers and local objects -- have to be this way; Vuex is not like a Vue component
 
-const safeEnv = (value, preset) => { // don't use words like default...
-  if (!value) {
-    value = preset
-  }
-  return value
-}
+// const safeEnv = (value, preset) => { // don't use words like default...
+//   if (!value) {
+//     value = preset
+//   }
+//   return value
+// }
 
 // as ever, non-browser must be catered for during build
 const vuexLocal = (typeof window === 'undefined')
