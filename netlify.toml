@@ -1,6 +1,7 @@
 [build]
-  Command = "npm run build"
-  Publish = "dist"
+  command = "npm run build"
+  base = "/"
+  publish = "/dist"
 
 [[headers]]
   # Define which paths this specific [[headers]] block will cover.
