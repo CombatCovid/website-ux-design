@@ -1,0 +1,19 @@
+[build]
+  Command = "npm run build"
+
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  # n.b. in some sense this is duplicate, but for any moments or changes, makes safe
+  # and in all cases, oh my, the formats. Better be careful. And...
+  # _none_ of these, here or for redirects, affects function headers
+  # at all. Their's are to be hard-coded in the callback.
+  for = "/*"
+    [headers.values]
+      X-From = "Netlify"
+      X-Robots-Tag = '''
+      noindex,
+      nofollow
+      '''
+      Access-Control-Allow-Origin = "*"
+      Referrer-Policy = "origin-when-cross-origin"
+      Access-Control-Allow-Headers = "*"
