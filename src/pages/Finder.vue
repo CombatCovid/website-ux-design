@@ -1,14 +1,15 @@
 <template>
   <Layout class="finder">
     <div class="finder__container">
-        <client-only>
+      <div v-if="algoliaReady">
+      <client-only>
           <ais-instant-search 
             :index-name="indexName"
             :search-client="searchClient" 
             class="horiz-center searchbox"    
             >
 
-            <ais-configure :hits-per-page.camel="8" />
+            <ais-configure :hits-per-page.camel="9" />
             <!-- <ais-powered-by/> -->
             <ais-search-box>
               <div class="finder__header" slot-scope="{ currentRefinement, isSearchStalled, refine }">
@@ -57,6 +58,11 @@
 
           </ais-instant-search>
         </client-only>
+      </div>
+      <div v-else-if="algoliaError">
+        <h2>Sorry, app isn't able to connect.</h2>
+        <h2>{{ algoliaError }}</h2>
+      </div>
     </div>
   </Layout>
 </template>
@@ -78,7 +84,7 @@
     data: function () {
       return {
         numberRepos: 3,
-        indexName: store.getters.algoSearchIndex,
+        // indexName: store.getters.algoSearchIndex,
         // searchClient: algoliasearch(
         //   store.getters.algoAppId,
         //   store.getters.algoSearchKey
