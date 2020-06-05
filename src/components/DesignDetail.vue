@@ -1,5 +1,5 @@
 <template>
-  <div class="container max-w-5xl xl:w-1/2 md: xs:w-full">
+  <div class="container xl:w-4/5 xs:w-full">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
@@ -14,16 +14,16 @@
         >
           <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
             <button class="button__red" @click="slideImages('<')"><</button>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
+            <!-- <v-tooltip bottom> -->
+              <template>
                 <v-btn
                   class="xslider-title"
                   v-on="on"
                   @click="popImages"
                 >Design Images ({{ nrImages }})</v-btn>
               </template>
-              <span>Click to return to the summary.</span>
-            </v-tooltip>
+              <!-- <span>Click to return to the summary.</span> -->
+            <!-- </v-tooltip> -->
             <v-btn @click="slideImages('>')">></v-btn>
           </div>
           <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
