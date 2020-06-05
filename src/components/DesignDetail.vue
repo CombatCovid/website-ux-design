@@ -1,17 +1,15 @@
 <template>
   <div class="container max-w-5xl xl:w-1/2 md: xs:w-full">
     <div v-if="!announcementNeeded">
-      <div v-if="theDesign">
+      <div v-if="repoError">
+        <h2>Repo Error: {{ repoError }}</h2>
+      </div>
+      <div v-else-if="loading">
+        <h2>Loading...</h2>
+      </div>
+      <div v-else-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-        <!-- <div class="flex col-start-7">
-          <div class="col-span-2">
-            <g-image src="~/assets/avatar.png" cla width="500" />
-          </div>
-        </div> -->
-        <div
-          v-if="imagesShow"
-          class="images-slide image-display-mask design-image-hold docs-show-pane"
-        >
+        <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
           <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
             <v-btn @click="slideImages('<')"><</v-btn>
             <v-tooltip bottom>
@@ -133,7 +131,7 @@ export default {
       nrImages: 1,
       imagesShow: false,
       docsShow: false,
-      repoBranch: store.getters.repoBranch // essential so we choose it
+      repoBranch: store.getters.lastRepoBranch // essential so we choose it
     };
   },
   mounted() {
@@ -152,7 +150,7 @@ export default {
       }
     } else {
       this.announcementNeeded = false;
-      store.commit("setLastRepoName", this.theDesign);
+      // store.commit("setLastRepoName", this.theDesign);
       store.dispatch("loadDesign", this.theDesign); // a good beginning
       // console.log({ store });
     }
@@ -167,10 +165,12 @@ export default {
 
       if (this.repos && this.repos.length > 0 && this.theDesign) {
         const filtered = this.repos.filter(
-          repo => repo.repository.name === this.theDesign
+          repo => repo.name === this.theDesign
         );
         // console.log('DesignDetail:filtered: ' + JSON.stringify(filtered) )
-        dRepo = filtered.length > 0 ? filtered[0].repository : null;
+        dRepo = filtered.length > 0
+          ? filtered[0]
+          : null;
       }
       if (dRepo) {
         // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo) )
@@ -178,6 +178,12 @@ export default {
       }
 
       return dRepo;
+    },
+    loading: function () {
+      return  !store.getters.repoRequestReady
+    },
+    repoError: function () {
+      return store.getters.repoRequestError
     },
     repoName: function() {
       return this.designRepo ? this.designRepo.name : ""; // 'until' // n.b. need something here on recovery from empty Viewer, as events try before ready next time
@@ -188,8 +194,8 @@ export default {
         // fix why this even gets called soon...
         let sani = this.htmlSanitize(this.repoName);
 
-        sani = sani.replace(/-+/gi, " "); // TODO: I think this is not necessary since the _this.spaceDashes() method trims all the dashes including underscores better.
-        sani = this.titleCase(this.spaceDashes(sani));
+          sani = sani.replace(/-+/ig, ' ');
+          sani = this.titleCase(this.spaceDashes(sani));
 
         if (sani.match(/mit/i)) {
           // *todo* def special casing for demos until we get Vuex on line to pass real title
@@ -203,13 +209,10 @@ export default {
     },
     summaryText: function() {
       // console.log ('summaryMarkdown: ' + store.getters.summaryMarkdown)
-      const summary = this.cleanFormatMarkdown(
+      return this.cleanFormatMarkdown(
         store.getters.summaryMarkdown,
         this.summaryImageFolder,
-        this.repoTreeFolder
-      );
-      // console.log(store.getters.summaryMarkdown);
-      return summary;
+        this.repoTreeFolder);
       // *todo* isn't this alternate call actually correct at this point?? -- fix
       // return this.htmlSanitize(
       //   store.getters.summaryMarkdown)
@@ -229,13 +232,12 @@ export default {
     },
     docsTexts() {
       let texts = new Array();
-      // this.designRepo.docs.folders[0].contents.files.forEach(file => {
-      this.designRepo.docs.entries[0].object.entries.forEach(file => {
+      this.designRepo.docs.langs[0].content.items.forEach(file => {
         // console.log('file: ' + JSON.stringify(file))
         if (file.name.search(/\.md/) > 0) {
           texts.push(
             this.cleanFormatMarkdown(
-              this.htmlSanitize(file.object.text),
+              this.htmlSanitize(file.item.text),
               this.imageFolder,
               this.repoTreeFolder
             )
@@ -243,38 +245,25 @@ export default {
         }
       });
 
-      // console.log("texts: " + JSON.stringify(texts));
+      // console.log("texts: " + JSON.stringify(texts))
       this.nrTexts = texts.length;
       return texts;
     },
-    imageFolder: function() {
-      const imageF =
-        "https://raw.githubusercontent.com/CombatCovid/" +
+    imageFolder: function () {
+      return 'https://raw.githubusercontent.com/CombatCovid/' +
         this.repoName +
-        "/" +
-        this.repoBranch +
-        "/docs/";
-      return imageF;
+        '/'  + this.repoBranch + '/docs/';
     },
-    summaryImageFolder: function() {
-      // console.log('summaryImageFolder: repoBranch: ' + this.repoBranch)
-      return (
-        "https://raw.githubusercontent.com/CombatCovid/" +
-        this.repoName +
-        "/" +
-        this.repoBranch +
-        "/"
-      );
+   summaryImageFolder: function() {
+     // console.log('summaryImageFolder: repoBranch: ' + this.repoBranch)
+     return 'https://raw.githubusercontent.com/CombatCovid/' +
+       this.repoName +
+       '/'  + this.repoBranch + '/';
     },
     repoTreeFolder: function() {
-      const repoTreeF =
-        "https://github.com/CombatCovid/" +
+      return 'https://github.com/CombatCovid/' +
         this.repoName +
-        "/tree/" +
-        this.repoBranch +
-        "/";
-
-      return repoTreeF;
+        '/tree/'  + this.repoBranch + '/';
     },
     imagePath: function() {
       return this.imageFolder + "img/";
@@ -284,42 +273,49 @@ export default {
         return null; // we're not ready yet, in the event scheme of things
       }
 
-      let imgUrl;
-      const summaryImage = this.designRepo.summaryImg;
-      const nameWithOwner = this.designRepo.nameWithOwner;
-      const summaryJpg = "/summary.jpg";
+        let imgUrl;
+        let summaryImage = this.designRepo.summaryImg;
+        // *todo* same fixup as for store github and fauna, until fixing schema
+        console.log ('summsryImage type: ' + typeof summaryImage);
+        console.log ('summsryImage: ' + JSON.stringify(summaryImage));
+        summaryImage = summaryImage && typeof summaryImage === 'object'
+          ? summaryImage.text
+          : summaryImage;
 
-      if (this.designRepo.isPrivate) {
-        imgUrl = "/resources/image/private-placeholder.png";
-      } else if (summaryImage && summaryImage !== null) {
-        imgUrl = `https://raw.githubusercontent.com/${nameWithOwner}/${this.repoBranch}${summaryJpg}`;
-      } else {
-        imgUrl = "/resources/image/no-summary-img-placeholder.png";
-      }
+        const nameWithOwner = this.designRepo.nameWithOwner;
+        const summaryJpg = '/summary.jpg';
+
+        if (this.designRepo.isPrivate) {
+          imgUrl = '/resources/image/private-placeholder.png';
+        } else if (true || (summaryImage && summaryImage !== null)) { //*todo* true || bodge, but we do want fixed
+          imgUrl = `https://raw.githubusercontent.com/${nameWithOwner}/${this.repoBranch}${summaryJpg}`;
+        } else {
+          imgUrl = '/resources/image/no-summary-img-placeholder.png';
+        }
 
       return imgUrl;
     },
     imagesImgs() {
       // *todo* push this back into texts, if order of need allows? this is cheap and safe...
 
-      let images = new Array();
-      let repoImages = null;
-      this.designRepo.docs.entries.forEach(file => {
-        if (file.lang === "img") {
-          repoImages = file.object.entries;
-        }
-      });
-
-      if (repoImages) {
-        repoImages.forEach(entry => {
-          if (entry.name.search(/jpg|png|jpeg|gif/i) > 0) {
-            images.push(this.imagePath + this.htmlSanitize(entry.name));
+        let images = new Array();
+        let repoImages = null;
+        this.designRepo.docs.langs.forEach(folder => {
+          if (folder.lang === 'img') {
+            repoImages = folder.content.items;
           }
-        });
-      } else {
-        this.nrImages = 0;
-        return null;
-      }
+        })
+
+        if (repoImages) {
+          repoImages.forEach(file => {
+            if (file.name.search(/jpg|png|jpeg|gif/i) > 0) {
+              images.push(this.imagePath + this.htmlSanitize(file.name));
+            }
+          });
+        } else {
+          this.nrImages = 0;
+          return null;
+        }
 
       this.nrImages = images.length;
       return images;
