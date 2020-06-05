@@ -1,3 +1,26 @@
-.button__red{
-    color: red;
+.btn{
+    @apply py-2 px-6 rounded bg-gray-300 font-normal;
 }
+
+.btn:hover{
+    @apply shadow-md bg-gray-400; 
+}
+
+.buttons > .btn {
+    @apply mr-2 mb-10;
+}
+
+// .btn--accent{
+//     @apply bg-accent-75;
+// }
+
+// .btn--inverted{
+//     @apply block text-white;
+// }
+
+
+// @screen md{
+//     .btn{
+//         @apply bg-accent-500 w-auto inline-block;
+//     }
+// }
