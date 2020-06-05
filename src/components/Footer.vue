@@ -11,22 +11,26 @@
 </template>
 
 <script>
-import { mdiDiscord, mdiGithub } from '@mdi/js';
+import { mdiDiscord, mdiGithub } from "@mdi/js";
 
 export default {
-  name: 'the-footer', // don't use a name that is part of the html spec
+  name: "the-footer", // don't use a name that is part of the html spec
   data: () => ({
     icons: [
-      { name: mdiDiscord, link: 'https://discord.gg/rYHCBt' },
-      { name: mdiGithub, link: 'https://github.com/CombatCovid/SPA-website' },
-    ],
-  }),
+      { name: mdiDiscord, link: "https://discord.gg/rYHCBt" },
+      { name: mdiGithub, link: "https://github.com/CombatCovid/SPA-website" }
+    ]
+  })
 };
 </script>
 
-<style scoped>
-.footer-text {
-  text-align: center;
+<style lang="scss" scoped>
+footer {
+  justify-self: flex-start;
+
+  .footer-text {
+    text-align: center;
+  }
 }
 
 @media only screen and (min-width: 1120px) {

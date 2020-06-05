@@ -1,7 +1,7 @@
 <template>
   <HomeLayout>
     <main class="w-screen bg-primary-100 bg-image">
-      <div class="container py-32 max-w-5xl mx-auto md:flex pr-6">
+      <div class="container py-32 mx-auto md:flex pr-6">
         <div class="flex-3 mt-20 md:mt-0">
           <h1
             class="text-white font-semibold text-3xl md:text-5xl"
@@ -44,7 +44,7 @@
       </div>
     </main>
 
-    <section class="container max-w-5xl py-20">
+    <section class="container py-20">
       <h2 class="text-center text-2xl md:text-3xl font-bold text-primary-75">HOW THE APP WORKS</h2>
 
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
@@ -63,7 +63,7 @@
     </section>
 
     <div class="bg-gray-15">
-      <section class="container max-w-5xl py-20">
+      <section class="container py-20">
         <h2
           class="text-center text-2xl md:text-3xl font-bold text-primary-75"
         >HOW TO DOCUMENT A SOLUTION</h2>
@@ -82,7 +82,7 @@
       </section>
     </div>
 
-    <section class="container max-w-5xl py-20">
+    <section class="container py-20">
       <h2
         class="text-center text-2xl md:text-3xl font-bold text-accent-75"
       >CONTRIBUTE TO CODE AND MORE</h2>
@@ -100,7 +100,7 @@
       <!-- <div
         class="background-color absolute top-0 opacity-50 w-full h-full bg-primary-100 z-0"
       ></div>-->
-      <div class="container max-w-5xl text-center z-20">
+      <div class="container text-center z-20">
         <h2 class="text-2xl text-white font-bold">NOTE</h2>
         <p class="mt-6 text-white text-xl">
           You're meeting the demonstration app of the Combat Covid with Hardware
@@ -258,6 +258,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.container {
+  max-width: 64rem;
+}
 .circle-transparent {
   width: 150px;
   height: 150px;
