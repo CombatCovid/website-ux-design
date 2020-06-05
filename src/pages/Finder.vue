@@ -5,37 +5,46 @@
           <ais-instant-search 
             :index-name="indexName"
             :search-client="searchClient" 
-            class="horiz-center searchbox"    
+            class=""    
             >
 
             <ais-configure :hits-per-page.camel="8" />
             <!-- <ais-powered-by/> -->
-            <ais-search-box>
-              <div class="finder__header" slot-scope="{ currentRefinement, isSearchStalled, refine }">
-              <div class="searchBox">
+            <ais-search-box class="fixed z-50 w-full bg-gray-200 px-5 border border-solid border-gray-400">
+              <div class="" slot-scope="{ currentRefinement, isSearchStalled, refine }">
+              <div class="md:flex md:flex-col lg:flex-row items-center pl-5 mb-2">
                 <div>
-                <h1>FINDER</h1>
+                <h1 class="font-bold text-xl">FINDER</h1>
                 <ais-powered-by/>
                 </div>
-                <div class="searchBox__input">
-                <v-icon style="margin-right:0.2em;" large>{{mdiMagnify}}</v-icon>
-                <input
-                  class=""
-                  type="search"
-                  v-model="currentRefinement"
-                  @input="refine($event.currentTarget.value)"
-                  placeholder="Type keywords like ventilator or 3D printing"
-                ></input>
+                <div class="md:w-full lg:w-3/5">
+                  <div class="md:mx-5 shadow-xl rounded-md sm:my-3 bg-white p-4">
+                    <div class="flex">
+                    <!-- <svg class="fill-current h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M26.398 3C21.7053 3 17.1179 4.39157 13.216 6.99874C9.31405 9.60591 6.27288 13.3116 4.47703 17.6472C2.68118 21.9827 2.2113 26.7535 3.12682 31.3561C4.04234 35.9587 6.30213 40.1864 9.62043 43.5047C12.9387 46.823 17.1665 49.0828 21.7691 49.9984C26.3717 50.9139 31.1425 50.444 35.478 48.6481C39.8136 46.8523 43.5193 43.8111 46.1264 39.9092C48.7336 36.0073 50.1252 31.4199 50.1252 26.7271C50.1248 20.4344 47.6248 14.3996 43.1752 9.94996C38.7256 5.50035 32.6907 3.0004 26.398 3V3Z" stroke="#2D9CDB" stroke-width="4.83333" stroke-miterlimit="10"/>
+                      <path d="M44.1006 44.4293L60.6714 61" stroke="#2D9CDB" stroke-width="4.83333" stroke-miterlimit="10" stroke-linecap="round"/>
+                    </svg> -->
+                    <input
+                      class="text-xl w-full"
+                      type="search"
+                      v-model="currentRefinement"
+                      @input="refine($event.currentTarget.value)"
+                      placeholder="Type keywords like ventilator or 3D printing"
+                    ></input>
+                    <span :hidden="!isSearchStalled">Loading...</span>
+                    </div>
+                  </div>
                 </div>
-                <span :hidden="!isSearchStalled">Loading...</span>
-                <FinderPaginator/>
+                <div class="w-8">
+                  <FinderPaginator/>
+                </div>
                 </div>
 
               </div>
             </ais-search-box>
             
 
-            <ais-hits class="clear-above">
+            <ais-hits class="clear-above pt-24">
               <div slot-scope="{ items }">
                 <div class="">
                   <div class="flex flex-wrap">
@@ -67,7 +76,8 @@
   import store from '~/store'
   import FinderPaginator from '../components/FinderPaginator'
   import JoseFinderCard from '../components/JoseFinderCard'
-  import { mdiMagnify } from "@mdi/js";
+  // import { mdiMagnify } from "@mdi/js";
+  import Search from "~/assets/Search.svg";
 
 
   export default {
@@ -83,10 +93,10 @@
           store.getters.algoSearchKey
         ),
         repoBranch: store.getters.repoBranch,
-        mdiMagnify: mdiMagnify
+        // mdiMagnify: mdiMagnify
       }
     },
-    components: { JoseFinderCard , FinderPaginator }
+    components: { JoseFinderCard , FinderPaginator, Search }
   }
 </script>
 

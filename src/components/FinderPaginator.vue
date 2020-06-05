@@ -1,6 +1,6 @@
 <template>
     <ais-pagination>
-        <v-layout d-flex class="paginator"
+        <div class="flex"
             slot-scope="{
             currentRefinement,
             nbPages,
@@ -11,15 +11,15 @@
             createURL
             }"
         >
-            <v-btn class="paginator__btn" v-if="!isFirstPage" :href="createURL(0)" @click.prevent="refine(0)">
+            <button class="paginator__btn" v-if="!isFirstPage" :href="createURL(0)" @click.prevent="refine(0)">
                 ‹‹
-            </v-btn>
-            <v-btn class="paginator__btn" v-if="!isFirstPage" 
+            </button>
+            <button class="paginator__btn" v-if="!isFirstPage" 
                   :href="createURL(currentRefinement - 1)"
                   @click.prevent="refine(currentRefinement - 1)">
                 ‹
-            </v-btn>
-            <v-btn class="paginator__btn"
+            </button>
+            <button class="paginator__btn"
                 v-for="page in pages" :key="page"
                 :href="createURL(page)"
                 :style="{ fontWeight: page === currentRefinement ? 'bold' : '' }"
@@ -30,21 +30,21 @@
             >
                 {{ page + 1 }}
             </a>
-            </v-btn>
-            <v-btn class="paginator__btn" v-if="!isLastPage"
+            </button>
+            <button class="paginator__btn" v-if="!isLastPage"
                 :href="createURL(currentRefinement + 1)"
                 @click.prevent="refine(currentRefinement + 1)"
             >
             ›
-            </v-btn>
-            <v-btn class="paginator__btn" v-if="!isLastPage" :href="createURL(nbPages)" @click.prevent="refine(nbPages)">
+            </button>
+            <button class="paginator__btn" v-if="!isLastPage" :href="createURL(nbPages)" @click.prevent="refine(nbPages)">
                 ››
-            </v-btn>
-        </v-layout>
+            </button>
+        </div>
     </ais-pagination>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .paginator{
     display:flex;
     flex-direction:row;
@@ -53,8 +53,10 @@
 }
 
 .paginator__btn{
+    @apply px-5 py-2;
+    // padding: 1rem 3rem 1rem 1rem;
     margin: 0.5em 0.5em 0.5em 0;
-    padding:0.5em 0.5em 0.5em 0.5em;
+    // padding:0.5em 0.5em 0.5em 0.5em;
     box-shadow: 1px 5px 7px rgba(29, 53, 87, 0.15);
     border-radius: 3px;
     /* background-color: #FFFFFd !important; */

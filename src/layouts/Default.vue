@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <Nav />
-    <div class="flex-1 pt-24">
+    <div class="flex-1 pt-16">
       <slot />
     </div>
     <!-- <Footer /> -->
