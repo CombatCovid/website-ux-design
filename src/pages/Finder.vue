@@ -9,7 +9,7 @@
             class="horiz-center searchbox"
           >
 
-            <ais-configure :hits-per-page.camel="9"/>
+            <ais-configure :hits-per-page.camel="hitsPerPage"/>
             <!-- <ais-powered-by/> -->
             <ais-search-box>
               <div class="finder__header" slot-scope="{ currentRefinement, isSearchStalled, refine }">
@@ -83,12 +83,9 @@
     },
     data: function () {
       return {
-        numberRepos: 3,
-        // indexName: store.getters.algoSearchIndex,
-        // searchClient: algoliasearch(
-        //   store.getters.algoAppId,
-        //   store.getters.algoSearchKey
-        // ),
+        // interesting puzzle if hitsPerPage should be fixed, but how otherwise set?
+        // really, it's fine as it is
+        hitsPerPage: 8,
         repoBranch: store.getters.lastRepoBranch,
         mdiMagnify: mdiMagnify
       }

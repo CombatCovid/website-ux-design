@@ -11,11 +11,9 @@
   # at all. Their's are to be hard-coded in the callback.
   for = "/*"
     [headers.values]
-      X-From = "Netlify"
+      X-From = "Combat Covid with Hardware"
       X-Robots-Tag = '''
       noindex,
       nofollow
       '''
-#      Access-Control-Allow-Origin = "*"
-#      Referrer-Policy = "origin-when-cross-origin"
-#      Access-Control-Allow-Headers = "*"
+
