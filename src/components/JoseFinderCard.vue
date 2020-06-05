@@ -1,21 +1,24 @@
 <template>
-    <div class="card border-solid border rounded-md border-gray-400" v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
-      <div class="card__gradient">
-          <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)">
-      </div>
-      <div class="card__content">
-        <p class="font-bold" v-text="repo.title"></p>
-        <p class="font-light">{{ niceTruncate(repo.description) }}</p>
-      </div>
-        <div class="card__btns">
-          <!-- <div
+  <div
+    class="card hover:shadow-2xl transition-shadow duration-500 bg-white rounded-2xl overflow-hidden"
+    v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)"
+  >
+    <div class="card__gradient">
+      <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)" />
+    </div>
+    <div class="card__content">
+      <p class="font-bold" v-text="repo.title"></p>
+      <p class="font-light">{{ niceTruncate(repo.description) }}</p>
+    </div>
+    <div class="card__btns">
+      <!-- <div
             v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)"
           >documentation</div>
           <div color="green">
             <a :href="getRepoZip(repo.nameWithOwner, repo.repoBranch)" target="_blank">download</a>
-          </div> -->
-        </div>
+      </div>-->
     </div>
+  </div>
 </template>
 
 <script>
@@ -39,7 +42,6 @@ export default {
   },
   computed: {},
   methods: {
-    
     getRepoZip: function(nameWithOwner, repoBranch) {
       return `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`;
     },
@@ -71,40 +73,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-*{
+* {
   margin: auto;
-  text-align:left;
+  text-align: left;
 }
-a{
- text-decoration: none;
- color:white !important; 
-}
-
-.card{
-  position:relative;
-  height:350px;
-  cursor:pointer;
+a {
+  text-decoration: none;
+  color: white !important;
 }
 
-.card:hover{
-    transition: box-shadow 0.2s ease-in-out;
-    -webkit-box-shadow: -4px 4px 38px -5px rgba(130,130,130,1);
-    -moz-box-shadow: -4px 4px 38px -5px rgba(130,130,130,1);
-    box-shadow: -4px 4px 38px -5px rgba(130,130,130,1);
-  }
+.card {
+  position: relative;
+  height: 350px;
+  cursor: pointer;
+}
 
 .card__image {
-  border-bottom: #C5C6C8 solid 1px;
-  width:100%;
-  height:150px;
-  object-fit:cover !important;
+  border-bottom: #c5c6c8 solid 1px;
+  width: 100%;
+  height: 150px;
+  object-fit: cover !important;
 }
-
 
 .card__content {
   padding: 1em;
-  margin-bottom:1em;
-
+  margin-bottom: 1em;
 }
 
 .card__btns {
@@ -115,10 +108,10 @@ a{
   padding-bottom: 0.8em;
 }
 
-.card__gradient{
-  position:relative;
-  display:inline-block;
-  width:100%;
+.card__gradient {
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
 /* 
@@ -126,27 +119,54 @@ a{
 Convert HEX to RGBA - http://hex2rgba.devoth.com/
 */
 .card__gradient:after {
-  content:'';
-  position:absolute;
-  left:0; top:0;
-  width:100%; height:100%;
-  display:inline-block;
-  background: -moz-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%, rgba(1, 44, 68, 0.12) 100.13%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(220, 66, 37, 0.5)), color-stop(100%,rgba(0,47,75,0.5))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%,rgba(1, 44, 68, 0.12) 100.13%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%,rgba(1, 44, 68, 0.12) 100.13%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%,rgba(1, 44, 68, 0.12) 100.13%); /* IE10+ */
-  background: linear-gradient(180deg, rgba(1, 44, 68, 0.56) 0%, rgba(1, 44, 68, 0.12) 100.13%); /* W3C */
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  background: -moz-linear-gradient(
+    top,
+    rgba(1, 44, 68, 0.56) 0%,
+    rgba(1, 44, 68, 0.12) 100.13%
+  ); /* FF3.6+ */
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, rgba(220, 66, 37, 0.5)),
+    color-stop(100%, rgba(0, 47, 75, 0.5))
+  ); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(
+    top,
+    rgba(1, 44, 68, 0.56) 0%,
+    rgba(1, 44, 68, 0.12) 100.13%
+  ); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(
+    top,
+    rgba(1, 44, 68, 0.56) 0%,
+    rgba(1, 44, 68, 0.12) 100.13%
+  ); /* Opera 11.10+ */
+  background: -ms-linear-gradient(
+    top,
+    rgba(1, 44, 68, 0.56) 0%,
+    rgba(1, 44, 68, 0.12) 100.13%
+  ); /* IE10+ */
+  background: linear-gradient(
+    180deg,
+    rgba(1, 44, 68, 0.56) 0%,
+    rgba(1, 44, 68, 0.12) 100.13%
+  ); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002f4b', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
 }
-.card__gradient img{
-  display:block;
+.card__gradient img {
+  display: block;
 }
 
-@media only screen and (min-width:1200px){
-  .card__content{
-    padding:1.5em;
+@media only screen and (min-width: 1200px) {
+  .card__content {
+    padding: 1.5em;
   }
 }
-
 </style>
