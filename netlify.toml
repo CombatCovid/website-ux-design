@@ -16,6 +16,6 @@
       noindex,
       nofollow
       '''
-      Access-Control-Allow-Origin = "*"
-      Referrer-Policy = "origin-when-cross-origin"
-      Access-Control-Allow-Headers = "*"
+#      Access-Control-Allow-Origin = "*"
+#      Referrer-Policy = "origin-when-cross-origin"
+#      Access-Control-Allow-Headers = "*"

@@ -89,7 +89,7 @@
         //   store.getters.algoAppId,
         //   store.getters.algoSearchKey
         // ),
-        repoBranch: store.getters.repoBranch,
+        repoBranch: store.getters.lastRepoBranch,
         mdiMagnify: mdiMagnify
       }
     },
