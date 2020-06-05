@@ -46,6 +46,7 @@
 
     <section class="container max-w-5xl py-20">
       <h2 class="text-center text-2xl md:text-3xl font-bold text-primary-75">HOW THE APP WORKS</h2>
+
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
 
       <div class="grid md:grid-cols-2 gap-12 mt-16">
@@ -67,7 +68,6 @@
           class="text-center text-2xl md:text-3xl font-bold text-primary-75"
         >HOW TO DOCUMENT A SOLUTION</h2>
         <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
-
         <div class="grid md:grid-cols-2 gap-12 mt-16">
           <div class="card grid grid-cols-6" v-for="(item, i) in documentation" :key="i">
             <div class="col-span-5">
@@ -89,7 +89,7 @@
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-accent-75" />
 
       <div class="grid md:grid-cols-3 gap-5 mt-16">
-        <div v-for="(item, i) in contribute" class="card bg-primary-100">
+        <div v-for="(item) in contribute" :key="item.title" class="card bg-primary-100">
           <h2 class="text-white text-2xl" v-html="item.title"></h2>
           <p class="text-white" v-html="item.subtitle"></p>
         </div>

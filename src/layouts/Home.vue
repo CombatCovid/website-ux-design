@@ -22,8 +22,8 @@ import Footer from "~/components/Footer";
 
 export default {
   components: {
-    Nav: Nav,
-    Footer: Footer
+    Nav,
+    Footer
   }
 };
 </script>
