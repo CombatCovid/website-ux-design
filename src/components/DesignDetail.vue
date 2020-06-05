@@ -13,7 +13,7 @@
           class="images-slide image-display-mask design-image-hold docs-show-pane"
         >
           <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
-            <v-btn @click="slideImages('<')"><</v-btn>
+            <button class="button__red" @click="slideImages('<')"><</button>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
                 <v-btn
@@ -355,6 +355,7 @@ export default {
 </static-query>
 
 <style lang="scss"  >
+@import "../sass/button.scss";
 /*
     here are the filter-translated equivalents for the converted Markdown:
     h1 -> .h1-unscoped, etc.. These have to be in <style> non-scoped,
