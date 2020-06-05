@@ -1,5 +1,5 @@
 <template>
-  <Layout class="finder">
+  <Layout class="finder min-h-screen">
     <div class="">
         <client-only>
           <ais-instant-search 
