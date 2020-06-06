@@ -60,7 +60,7 @@
         </client-only>
       </div>
       <div v-else-if="algoliaError">
-        <h2>Sorry, app isn't able to connect.</h2>
+        <h2>Sorry, we aren't able to connect at this time.</h2>
         <h2>{{ algoliaError }}</h2>
       </div>
     </div>

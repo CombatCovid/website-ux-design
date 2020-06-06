@@ -46,12 +46,15 @@ const setAlgoliaConfig = async () => {
 
   await postTo (habitatUrl, headers, body)
     .then (async result => {
-      if (!result.response) {
-        throw result.errors // this looks a little tricky, but it is most correct...
+      if (!result) {
+        throw new Error ('empty POST response')
       } else if (typeof result.response !== 'object') { // got our benign hello world text instead...
         throw new Error ('client isn\'t authorized')
+      } else if (result.response.fault) {
+        throw new Error (result.response.fault)
+      } else {
+        await store.dispatch('loadAlgoConfig', result) // always via dispatch
       }
-      await store.dispatch('loadAlgoConfig', result) // always via dispatch
     })
     .catch(e => {
       store.dispatch ('setAlgoConfig', {
@@ -65,7 +68,6 @@ const setAlgoliaConfig = async () => {
 
 const retrieveDesign = async (repoName, branch) => {
 
-  // console.log('retrieving repoView design')
   const headers = {
     'Content-Type': 'application/json'
   }
@@ -81,20 +83,21 @@ const retrieveDesign = async (repoName, branch) => {
 
   const repoResult = await postTo (habitatUrl, headers, body)
     .then (result => {
-      // console.log('retrieveDesign: result: ' + JSON.stringify(result))
-      if (!result.response) {
-        throw result.errors // this may look tricky, but it is again, most correct...
-      // true/false || here can force conveniently to see error for test
+      if (!result) { // actual GraphQL errors -- and with GitHub, they can be there even with response
+        throw new Error ('empty POST response')
       } else if (typeof result.response !== 'object') { // got our benign hello world text instead...
         throw new Error ('client isn\'t authorized')
+      }  else if (result.response.fault) { // internal operations faults
+        throw new Error (result.response.fault)
+      } else {
+        store.dispatch('loadDesignRepo', {
+          design: repoName,
+          repo: result.response,
+          errors: null
+        })
+        store.dispatch('setLastRepoName', repoName)
+        store.dispatch('setRepoRequestReady', true)
       }
-      store.dispatch('loadDesignRepo', {
-        design: repoName,
-        repo: result.response,
-        errors: null
-      })
-      store.dispatch('setLastRepoName', repoName)
-      store.dispatch('setRepoRequestReady', true)
     })
     .catch (e => {
       console.log ('retrieveDesign: error: '+ e.message)
