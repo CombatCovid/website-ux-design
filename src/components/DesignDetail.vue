@@ -63,8 +63,8 @@
           <div class="docs-slides-pane">
             <VueGlide :perView="1" :gap="10" :rewind="false" type="slider" ref="docsSlider">
               <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
-                <div class="" >
-                  <VueMarkdown class="markdown"
+                <div class="markdown" >
+                  <VueMarkdown class=""
                     :source="unscopeBasisMarkup(docText)"
                     :postrender="unscopeBasisMarkup"
                   />
