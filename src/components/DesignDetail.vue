@@ -1,13 +1,6 @@
 <template>
   <div class="container max-w-5xl xl:w-1/2 md: xs:w-full">
     <div v-if="!announcementNeeded">
-      <div v-if="repoError">
-        <h2>Sorry, we aren't able to retrieve this design.</h2>
-        <h2>{{ repoError }}</h2>
-      </div>
-      <div v-else-if="loading">
-        <h2>Loading...</h2>
-      </div>
       <div v-else-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
         <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
