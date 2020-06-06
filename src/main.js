@@ -1,7 +1,7 @@
 // This is the main.js file. Import global CSS and scripts here.
 // The Client API can be used here. Learn more: gridsome.org/docs/client-api
-import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css';
+// import Vuetify from 'vuetify';
+// import 'vuetify/dist/vuetify.min.css';
 import InstantSearch from 'vue-instantsearch';
 import DefaultLayout from '~/layouts/Default.vue';
 import HomeLayout from '~/layouts/Home.vue';
@@ -146,27 +146,27 @@ export default function(Vue, { router, head, isClient, appOptions }) {
       'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700;1,800;1,900&display=swap',
   });
 
-  const opts = {
-    icons: {
-      iconfont: 'mdiSvg',
-    },
-    theme: {
-      options: { customProperties: true },
-      themes: {
-        light: {
-          primary: '#046FAB',
-          secondary: '#0c0c0c',
-          accent: '#767f94',
-        },
-      },
-    },
-  };
+  // const opts = {
+  //   icons: {
+  //     iconfont: 'mdiSvg',
+  //   },
+  //   theme: {
+  //     options: { customProperties: true },
+  //     themes: {
+  //       light: {
+  //         primary: '#046FAB',
+  //         secondary: '#0c0c0c',
+  //         accent: '#767f94',
+  //       },
+  //     },
+  //   },
+  // };
 
   Vue.mixin(appMixins);
-  Vue.use(Vuetify);
+  // Vue.use(Vuetify);
   Vue.use(InstantSearch);
 
-  appOptions.vuetify = new Vuetify(opts);
+  // appOptions.vuetify = new Vuetify(opts);
   Vue.component('Layout', DefaultLayout);
   Vue.component('HomeLayout', HomeLayout);
 }
