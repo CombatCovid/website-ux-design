@@ -27,6 +27,7 @@ module.exports = {
       },
       borderRadius: {
         '2xl': '20px',
+        'xl' : '16px',
       },
       boxShadow: {
         lg: '0px 10px 25px rgba(29, 53, 87, 0.26)',

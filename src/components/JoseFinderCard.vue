@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card hover:shadow-2xl transition-shadow duration-500 bg-white rounded-2xl overflow-hidden"
+    class="card hover:shadow-2xl transition-shadow duration-200 bg-white rounded-xl overflow-hidden border border-solid border-gray-25"
     v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)"
   >
     <div class="card__gradient">

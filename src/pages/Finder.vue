@@ -10,7 +10,7 @@
 
             <ais-configure :hits-per-page.camel="8" />
             <!-- <ais-powered-by/> -->
-            <ais-search-box class="fixed z-50 w-full bg-gray-200 px-5 border border-solid border-gray-400">
+            <ais-search-box class="fixed z-50 w-full bg-gray-15 px-5 border border-solid border-gray-25">
               <div class="" slot-scope="{ currentRefinement, isSearchStalled, refine }">
               <div class="md:flex md:flex-col lg:flex-row items-center pl-5 mb-2">
                 <div>
@@ -96,7 +96,6 @@
       }
     },
     components: { JoseFinderCard , FinderPaginator, Search }
-  }
 };
 </script>
 
