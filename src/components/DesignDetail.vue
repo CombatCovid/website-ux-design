@@ -37,7 +37,7 @@
                 <template>
                   <button class="btn" v-on="on">
                     See all images
-                    <span class="hide-small">&nbsp;for&nbsp;all</span>
+                    <!-- <span class="hide-small">&nbsp;for&nbsp;all</span> -->
                   </button>
                 </template>
                 <!-- <span>Click to see view all the design images. Click again to return to the summary.</span> -->
