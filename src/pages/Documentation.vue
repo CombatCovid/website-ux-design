@@ -158,21 +158,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container > * {
-  line-height: 2;
+.container {
+  max-width: 64rem;
+  & > * {
+    line-height: 2;
 
-  p {
-    margin-bottom: 1rem;
-  }
+    p {
+      margin-bottom: 1rem;
+    }
 
-  h2 {
-    font-size: 1.5em;
-    margin-top: 2rem;
-  }
-  h2::before {
-    content: "# ";
-    font-size: 1.5em;
-    margin-left: -1.1em;
+    h2 {
+      font-size: 1.5em;
+      margin-top: 2rem;
+    }
+    h2::before {
+      content: "# ";
+      font-size: 1.5em;
+      margin-left: -1.1em;
+    }
   }
 }
 </style>

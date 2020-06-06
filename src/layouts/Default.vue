@@ -1,10 +1,10 @@
 <template>
-  <div class="">
+  <div class="flex flex-col min-h-screen">
     <Nav />
     <div class="flex-1 pt-16">
       <slot />
     </div>
-    <!-- <Footer /> -->
+    <Footer />
   </div>
 </template>
 
@@ -17,16 +17,16 @@
 </static-query>
 
 <script>
-import store from "~/store"
+import store from "~/store";
 import Nav from "~/components/Nav.vue";
 import Footer from "~/components/Footer";
 
 export default {
   components: {
-    Nav: Nav,
-    Footer: Footer
+    Nav,
+    Footer
   },
-  computed:{
+  computed: {
     currentPage: function() {
       return store.state.currentPage;
     }
