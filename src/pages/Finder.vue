@@ -94,8 +94,8 @@
         // interesting puzzle if hitsPerPage should be fixed, but how otherwise set?
         // really, it's fine as it is
         hitsPerPage: 8,
-        repoBranch: store.getters.lastRepoBranch,
-        mdiMagnify: mdiMagnify
+        repoBranch: store.getters.lastRepoBranch
+        // mdiMagnify: mdiMagnify
       }
     },
     beforeCreate: () => {
