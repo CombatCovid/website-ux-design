@@ -13,16 +13,20 @@
         <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
           <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
             <v-btn @click="slideImages('<')"><</v-btn>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  class="xslider-title"
-                  v-on="on"
-                  @click="popImages"
-                >Design Images ({{ nrImages }})</v-btn>
-              </template>
-              <span>Click to return to the summary.</span>
-            </v-tooltip>
+<!--            <v-tooltip bottom>-->
+<!--              <template v-slot:activator="{ on }">-->
+            <v-btn
+              class="xslider-title"
+              @click="popImages"
+            >Design Images ({{ nrImages }})</v-btn>
+<!--            <v-btn-->
+<!--              class="xslider-title"-->
+<!--              v-on="on"-->
+<!--              @click="popImages"-->
+<!--            >Design Images ({{ nrImages }})</v-btn>-->
+<!--              </template>-->
+<!--              <span>Click to return to the summary.</span>-->
+<!--            </v-tooltip>-->
             <v-btn @click="slideImages('>')">></v-btn>
           </div>
           <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
@@ -37,15 +41,16 @@
         <div v-else class="design-image-hold">
           <div class="image-display-mask">
             <div class="horiz-center doc-title fix-box temp-shift-small-screen" @click="popImages">
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-btn v-on="on">
+<!--              <v-tooltip bottom>-->
+<!--                <template v-slot:activator="{ on }">-->
+                  <v-btn>
+<!--                <v-btn v-on="on">-->
                     Summary Image - click
                     <span class="hide-small">&nbsp;for&nbsp;all</span>
                   </v-btn>
-                </template>
-                <span>Click to see view all the design images. Click again to return to the summary.</span>
-              </v-tooltip>
+<!--                </template>-->
+<!--                <span>Click to see view all the design images. Click again to return to the summary.</span>-->
+<!--              </v-tooltip>-->
             </div>
             <div class="images-slide">
               <img :src="summaryImg" alt="summaryImg" class="design-image" />
@@ -56,12 +61,13 @@
         <div v-if="docsShow" class="docs-show-pane">
           <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
             <v-btn @click="slideDocs('<')"><</v-btn>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</v-btn>
-              </template>
-              <span>Click to return to the summary.</span>
-            </v-tooltip>
+<!--            <v-tooltip bottom>-->
+<!--              <template v-slot:activator="{ on }">-->
+            <v-btn @click="popDocs">Design Documents ({{ nrTexts }})</v-btn>
+<!--            <v-btn v-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</v-btn>-->
+<!--              </template>-->
+<!--              <span>Click to return to the summary.</span>-->
+<!--            </v-tooltip>-->
             <v-btn @click="slideDocs('>')">></v-btn>
           </div>
           <div class="docs-slides-pane">
@@ -79,15 +85,16 @@
         </div>
         <div v-else>
           <div class="horiz-center doc-title fix-box temp-shift-small-screen">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn @click="popDocs" v-on="on">
+<!--            <v-tooltip bottom>-->
+<!--              <template v-slot:activator="{ on }">-->
+                <v-btn @click="popDocs">
+<!--              <v-btn @click="popDocs" v-on="on">-->
                   Design Summary - click
                   <span class="hide-small">&nbsp;for&nbsp;all</span>
                 </v-btn>
-              </template>
-              <span>Click to see view all the design documentse. Click again to return to the summary.</span>
-            </v-tooltip>
+<!--              </template>-->
+<!--              <span>Click to see view all the design documentse. Click again to return to the summary.</span>-->
+<!--            </v-tooltip>-->
           </div>
           <div class="docs-slide docs-slides-pane markdown">
             <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup" />
