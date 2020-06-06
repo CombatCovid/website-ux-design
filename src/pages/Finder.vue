@@ -1,6 +1,6 @@
 <template>
-  <Layout class="bg-gray-15">
-    <div class="finder__container">
+  <Layout class="finder min-h-screen">
+    <div class="">
         <client-only>
           <ais-instant-search 
             :index-name="indexName"

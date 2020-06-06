@@ -1,6 +1,6 @@
 <template>
   <span>
-    <div class="navbar w-screen h-20 fixed top-0 text-white hidden md:block z-20">
+    <div class="navbar w-screen h-16 fixed top-0 text-white hidden md:block z-20">
       <div class="container mx-auto max-w-5xl flex items-center h-full">
         <g-link to="/" class="text-white-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
         <nav class="flex">

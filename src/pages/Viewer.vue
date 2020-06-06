@@ -1,13 +1,9 @@
 <template>
-  <Layout>
-    <v-container>
-      <h1 class="horiz-center">Viewer</h1>
+  <Layout class="pt-10">
+      <h1 class="text-center text-3xl">Viewer</h1>
       <div class="xmaster-detail">
-        <v-container class="grey lighten-5">
           <HorizontalMD :design="design" :summaryDoc="summaryDoc" :summaryImage="summaryImage" />
-        </v-container>
       </div>
-    </v-container>
   </Layout>
 </template>
 
