@@ -419,6 +419,8 @@ export default {
   }
 }
 
+</style>
+<style scoped>
 .slider-title {
   margin-top: 20px;
 }
