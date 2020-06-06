@@ -1,7 +1,10 @@
 <template>
-    <div class="card border-solid border rounded-md border-gray-400" v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)">
+  <div
+    class="card hover:shadow-2xl transition-shadow duration-200 bg-white rounded-xl overflow-hidden border border-solid border-gray-25"
+    v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)"
+  >
       <div class="card__gradient">
-          <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)">
+      <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)" />
       </div>
       <div class="card__content">
         <p class="font-bold" v-text="repo.title"></p>
@@ -39,7 +42,6 @@ export default {
   },
   computed: {},
   methods: {
-    
     getRepoZip: function(nameWithOwner, repoBranch) {
       return `https://github.com/${nameWithOwner}/archive/${repoBranch}.zip`;
     },
@@ -86,25 +88,16 @@ a{
   cursor:pointer;
 }
 
-.card:hover{
-    transition: box-shadow 0.2s ease-in-out;
-    -webkit-box-shadow: -4px 4px 38px -5px rgba(130,130,130,1);
-    -moz-box-shadow: -4px 4px 38px -5px rgba(130,130,130,1);
-    box-shadow: -4px 4px 38px -5px rgba(130,130,130,1);
-  }
-
 .card__image {
-  border-bottom: #C5C6C8 solid 1px;
+  border-bottom: #c5c6c8 solid 1px;
   width:100%;
   height:150px;
   object-fit:cover !important;
 }
 
-
 .card__content {
   padding: 1em;
   margin-bottom:1em;
-
 }
 
 .card__btns {
@@ -126,17 +119,45 @@ a{
 Convert HEX to RGBA - http://hex2rgba.devoth.com/
 */
 .card__gradient:after {
-  content:'';
+  content: "";
   position:absolute;
-  left:0; top:0;
-  width:100%; height:100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   display:inline-block;
-  background: -moz-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%, rgba(1, 44, 68, 0.12) 100.13%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(220, 66, 37, 0.5)), color-stop(100%,rgba(0,47,75,0.5))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%,rgba(1, 44, 68, 0.12) 100.13%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%,rgba(1, 44, 68, 0.12) 100.13%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(1, 44, 68, 0.56) 0%,rgba(1, 44, 68, 0.12) 100.13%); /* IE10+ */
-  background: linear-gradient(180deg, rgba(1, 44, 68, 0.56) 0%, rgba(1, 44, 68, 0.12) 100.13%); /* W3C */
+  background: -moz-linear-gradient(
+    top,
+    rgba(1, 44, 68, 0.56) 0%,
+    rgba(1, 44, 68, 0.12) 100.13%
+  ); /* FF3.6+ */
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, rgba(220, 66, 37, 0.5)),
+    color-stop(100%, rgba(0, 47, 75, 0.5))
+  ); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(
+    top,
+    rgba(1, 44, 68, 0.56) 0%,
+    rgba(1, 44, 68, 0.12) 100.13%
+  ); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(
+    top,
+    rgba(1, 44, 68, 0.56) 0%,
+    rgba(1, 44, 68, 0.12) 100.13%
+  ); /* Opera 11.10+ */
+  background: -ms-linear-gradient(
+    top,
+    rgba(1, 44, 68, 0.56) 0%,
+    rgba(1, 44, 68, 0.12) 100.13%
+  ); /* IE10+ */
+  background: linear-gradient(
+    180deg,
+    rgba(1, 44, 68, 0.56) 0%,
+    rgba(1, 44, 68, 0.12) 100.13%
+  ); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002f4b', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
 }
 .card__gradient img{
@@ -148,5 +169,4 @@ Convert HEX to RGBA - http://hex2rgba.devoth.com/
     padding:1.5em;
   }
 }
-
 </style>

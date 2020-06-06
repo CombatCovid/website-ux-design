@@ -1,6 +1,6 @@
 <template>
   <span>
-    <div class="navbar w-screen h-20 fixed top-0 text-white hidden md:block z-20">
+    <div class="navbar w-screen h-16 fixed top-0 text-white hidden md:block z-20">
       <div class="container mx-auto max-w-5xl flex items-center h-full">
         <g-link to="/" class="text-white-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
         <nav class="flex">
@@ -113,7 +113,7 @@
 </static-query>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations } from "vuex";
 import { mdiDotsVertical, mdiDotsHorizontal } from "@mdi/js";
 import BookmarksMenu from "./BookmarksMenu";
 import store from "~/store";
@@ -148,7 +148,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['currentPage']),
+    ...mapState(["currentPage"]),
     hideWhen: function() {
       if (typeof window !== "undefined") {
         const w =
@@ -183,12 +183,12 @@ export default {
       this.isOpen = !this.isOpen;
     },
     setCurrentPage(){
-      store.commit("PAGE_PATH", this.currentPage)
+      store.commit("PAGE_PATH", this.currentPage);
     }
   },
   computed: {
     currentPage:() => {
-      return `${window.location.pathname}`
+      return `${window.location.pathname}`;
     }
   },
   
@@ -212,6 +212,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  max-width: 64rem;
+}
 .test {
   color: red !important;
 }

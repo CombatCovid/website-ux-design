@@ -1,0 +1,52 @@
+.markdown {
+    max-width:850px;
+    margin:auto;
+
+    & img{
+      max-height:500px;
+
+    }
+    @apply text-lg font-light leading-normal;
+
+    & * + *,  & li + li, & li > p + p, & p + p {
+      @apply mt-4;
+    }
+    & strong {
+      @apply text-black font-bold;
+    }
+    & a {
+      @apply text-blue-600 font-semibold;
+    }
+    & strong a {
+      @apply font-bold;
+    }
+
+    & h2 {
+      @apply leading-tight text-xl font-bold text-black mb-2 mt-10;
+    }
+     & h3 {
+      @apply leading-tight text-lg font-bold text-black mt-8 -mb-2;
+    }
+    & code {
+      @apply text-sm inline px-1;
+    }
+     & pre code {
+      @apply block bg-black p-4 rounded;
+    }
+    & blockquote {
+      @apply border-l-4 pl-4 italic;
+    }
+    & ul, & ol {
+      position:relative;
+      @apply pl-5;
+      @screen sm {
+        @apply pl-10;
+      }
+      & > li:before{
+        content: "–";
+        position: absolute;
+        /*change margin to move dash around*/
+        margin-left: -1em;
+      }
+    }
+  }

@@ -1,26 +1,25 @@
 <template>
-  <div class="container max-w-5xl xl:w-1/2 md: xs:w-full">
+  <div class="container xl:w-4/5 xs:w-full">
     <div v-if="!announcementNeeded">
-      <div v-else-if="theDesign">
+      <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-        <div v-if="imagesShow" class="images-slide image-display-mask design-image-hold docs-show-pane">
-          <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
-            <v-btn @click="slideImages('<')"><</v-btn>
+        <div
+          v-if="imagesShow"
+          class="images-slide image-display-mask design-image-hold docs-show-pane"
+        >
+          <div class="flex justify-center buttons">
+            <button class="btn" @click="slideImages('<')"><</button>
 <!--            <v-tooltip bottom>-->
-<!--              <template v-slot:activator="{ on }">-->
-            <v-btn
-              class="xslider-title"
+              <template>
+                <button
+                  class="btn"
+                  v-on="on"
               @click="popImages"
-            >Design Images ({{ nrImages }})</v-btn>
-<!--            <v-btn-->
-<!--              class="xslider-title"-->
-<!--              v-on="on"-->
-<!--              @click="popImages"-->
-<!--            >Design Images ({{ nrImages }})</v-btn>-->
-<!--              </template>-->
+                >Design Images ({{ nrImages }})</button>
+              </template>
 <!--              <span>Click to return to the summary.</span>-->
 <!--            </v-tooltip>-->
-            <v-btn @click="slideImages('>')">></v-btn>
+            <button class="btn" @click="slideImages('>')">></button>
           </div>
           <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
             <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
@@ -35,13 +34,12 @@
           <div class="image-display-mask">
             <div class="horiz-center doc-title fix-box temp-shift-small-screen" @click="popImages">
 <!--              <v-tooltip bottom>-->
-<!--                <template v-slot:activator="{ on }">-->
-                  <v-btn>
-<!--                <v-btn v-on="on">-->
-                    Summary Image - click
-                    <span class="hide-small">&nbsp;for&nbsp;all</span>
-                  </v-btn>
-<!--                </template>-->
+                <template>
+                  <button class="btn" v-on="on">
+                    See all images
+                    <!-- <span class="hide-small">&nbsp;for&nbsp;all</span> -->
+                  </button>
+                </template>
 <!--                <span>Click to see view all the design images. Click again to return to the summary.</span>-->
 <!--              </v-tooltip>-->
             </div>
@@ -52,21 +50,20 @@
         </div>
         <hr color="#e3ebef" size="2px" class="rule-appearance" />
         <div v-if="docsShow" class="docs-show-pane">
-          <div class="d-flex flex-nowrap justify-center doc-title fix-box temp-shift-small-screen">
-            <v-btn @click="slideDocs('<')"><</v-btn>
+          <div class="flex justify-center buttons doc-title">
+            <button class="btn" @click="slideDocs('<')"><</button>
 <!--            <v-tooltip bottom>-->
-<!--              <template v-slot:activator="{ on }">-->
-            <v-btn @click="popDocs">Design Documents ({{ nrTexts }})</v-btn>
-<!--            <v-btn v-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</v-btn>-->
-<!--              </template>-->
+              <template>
+                <button class="btn" v-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</button>
+              </template>
 <!--              <span>Click to return to the summary.</span>-->
 <!--            </v-tooltip>-->
-            <v-btn @click="slideDocs('>')">></v-btn>
+            <button class="btn" @click="slideDocs('>')">></button>
           </div>
           <div class="docs-slides-pane">
             <VueGlide :perView="1" :gap="10" :rewind="false" type="slider" ref="docsSlider">
               <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
-                <div class="docs-slide" >
+                <div class="markdown docs-slide" >
                   <VueMarkdown
                     :source="unscopeBasisMarkup(docText)"
                     :postrender="unscopeBasisMarkup"
@@ -77,19 +74,18 @@
           </div>
         </div>
         <div v-else>
-          <div class="horiz-center doc-title fix-box temp-shift-small-screen">
+          <div class="flex justify-center">
 <!--            <v-tooltip bottom>-->
-<!--              <template v-slot:activator="{ on }">-->
-                <v-btn @click="popDocs">
-<!--              <v-btn @click="popDocs" v-on="on">-->
-                  Design Summary - click
-                  <span class="hide-small">&nbsp;for&nbsp;all</span>
-                </v-btn>
-<!--              </template>-->
+              <template>
+                <button class="btn" @click="popDocs" v-on="on">
+                  See full documentation
+                </button>
+              </template>
 <!--              <span>Click to see view all the design documentse. Click again to return to the summary.</span>-->
 <!--            </v-tooltip>-->
           </div>
           <div class="docs-slide docs-slides-pane markdown">
+            <h1 class="text-3xl">Design Summary</h1>
             <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup" />
           </div>
         </div>
@@ -352,6 +348,7 @@ export default {
 </static-query>
 
 <style lang="scss"  >
+@import "../sass/button.scss";
 /*
     here are the filter-translated equivalents for the converted Markdown:
     h1 -> .h1-unscoped, etc.. These have to be in <style> non-scoped,
@@ -362,58 +359,8 @@ export default {
     They are, and I can assure they are essentiaal, unscoped as here.
     cns/narration-sd 11Apr2020
 }  */
+@import "../sass/markdown.scss";
 
-
-.markdown {
-  & img{
-    width:100%;
-  }
-  @apply text-lg font-light leading-normal;
-  & * + *,  & li + li, & li > p + p, & p + p {
-    @apply mt-4;
-  }
-  & strong {
-    @apply text-black font-bold;
-  }
-  & a {
-    @apply text-blue-600 font-semibold;
-  }
-  & strong a {
-    @apply font-bold;
-  }
-  
-  & h2 {
-    @apply leading-tight text-xl font-bold text-black mb-2 mt-10;
-  }
-   & h3 {
-    @apply leading-tight text-lg font-bold text-black mt-8 -mb-2;
-  } 
-  & code {
-    @apply text-sm inline px-1;
-  } 
-   & pre code {
-    @apply block bg-black p-4 rounded;
-  }
-  & blockquote {
-    @apply border-l-4 pl-4 italic;
-  } 
-  & ul, & ol {
-    position:relative;
-    @apply pl-5;
-    @screen sm {
-      @apply pl-10;
-    }
-    & > li:before{
-      content: "–";
-      position: absolute;
-      /*change margin to move dash around*/
-      margin-left: -1em;
-    }
-  }
-}
-
-</style>
-<style scoped>
 .slider-title {
   margin-top: 20px;
 }

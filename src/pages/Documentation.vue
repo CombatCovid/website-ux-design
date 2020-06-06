@@ -158,7 +158,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container > * {
+.container {
+  max-width: 64rem;
+  & > * {
   line-height: 2;
 
   p {
@@ -174,5 +176,6 @@ export default {
     font-size: 1.5em;
     margin-left: -1.1em;
   }
+}
 }
 </style>
