@@ -1,5 +1,4 @@
 module.exports = {
-  // purge: false, // purge: [],
   purge: [
     './src/**/*.html',
     './src/**/*.vue',
