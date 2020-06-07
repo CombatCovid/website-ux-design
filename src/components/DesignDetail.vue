@@ -13,7 +13,7 @@
               <template>
                 <button
                   class="btn"
-                  v-on="on"
+                  xxv-on="on"
                   @click="popImages"
                 >Design Images ({{ nrImages }})</button>
               </template>
@@ -35,7 +35,7 @@
             <div class="horiz-center doc-title fix-box temp-shift-small-screen" @click="popImages">
               <!-- <v-tooltip bottom> -->
                 <template>
-                  <button class="btn" v-on="on">
+                  <button class="btn" xv-on="on">
                     See all images
                     <!-- <span class="hide-small">&nbsp;for&nbsp;all</span> -->
                   </button>
@@ -54,7 +54,7 @@
             <button class="btn" @click="slideDocs('<')"><</button>
             <!-- <v-tooltip bottom> -->
               <template>
-                <button class="btn" v-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</button>
+                <button class="btn" xv-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</button>
               </template>
               <!-- <span>Click to return to the summary.</span> -->
             <!-- </v-tooltip> -->
@@ -77,7 +77,7 @@
           <div class="flex justify-center">
             <!-- <v-tooltip bottom> -->
               <template>
-                <button class="btn" @click="popDocs" v-on="on">
+                <button class="btn" @click="popDocs" xv-on="on">
                   See full documentation
                 </button>
               </template>

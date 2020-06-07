@@ -1,5 +1,5 @@
 {
-  "name": "combat-covid",
+  "name": "combat-Covid",
   "private": true,
   "scripts": {
     "build": "gridsome build",
@@ -20,7 +20,7 @@
     "babel-runtime": "^6.26.0",
     "core-js": "^3.6.4",
     "gridsome": "^0.7.14",
-    "tailwind": "^4.0.0",
+    "tailwindcss": "^1.4.6",
     "vue-glide-js": "^1.3.14",
     "vue-instantsearch": "^2.7.0",
     "vue-markdown": "^2.2.4",
@@ -35,7 +35,6 @@
     "node-sass": "^4.14.0",
     "prettier": "^1.18.2",
     "sass-loader": "^8.0.2",
-    "tailwindcss": "^1.4.0",
     "vue-svg-loader": "^0.16.0"
   },
   "browserslist": [
