@@ -63,8 +63,8 @@
           <div class="docs-slides-pane">
             <VueGlide :perView="1" :gap="10" :rewind="false" type="slider" ref="docsSlider">
               <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
-                <div class="markdown docs-slide" >
-                  <VueMarkdown
+                <div class="markdown" >
+                  <VueMarkdown class=""
                     :source="unscopeBasisMarkup(docText)"
                     :postrender="unscopeBasisMarkup"
                   />
@@ -84,7 +84,7 @@
 <!--              <span>Click to see view all the design documentse. Click again to return to the summary.</span>-->
 <!--            </v-tooltip>-->
           </div>
-          <div class="docs-slide docs-slides-pane markdown">
+          <div class="markdown">
             <h1 class="text-3xl">Design Summary</h1>
             <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup" />
           </div>
