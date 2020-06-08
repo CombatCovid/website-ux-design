@@ -1,4 +1,4 @@
-// here we gain the data that the Vuex store will distribbute
+// here we gain the data that the Vuex store will distribute
 
 import store from '../store'
 import { safeEnv, postTo } from './habitat-protocol'
