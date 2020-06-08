@@ -229,7 +229,7 @@ export default {
     },
     docsTexts() {
       let texts = new Array();
-      if(this.designRepo.docs && this.designRepo.langs) {
+      if(this.designRepo.docs && this.designRepo.docs.langs) {
         // *todo* not '0' here - need to get actual lang in when we do langs....
         // *todo* this old code should be called with the repo also
         this.designRepo.docs.langs[0].content.items.forEach(file => {
