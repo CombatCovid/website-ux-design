@@ -1,5 +1,5 @@
 // habitat-protocol lets us contact any of our sources, details taken care of
-
+// n.b. Must always keep this file content the same, for both app and Habitat
 import axios from 'axios';
 
 const safeEnv = (value, preset) => { // don't use words like default...
@@ -53,14 +53,9 @@ const postTo = async (url, headers, body) => {
         errors: response.errors // GraphQl always can have some, making this non-null
       }
     })
-    .catch ((error) => {
-      result = {
-        response: null,
-        errors: error // this would be an Axios error, if occurred there
-      }
-    })
+    // no .catch here, as in other places where we want the simple error to propate to lower handler
     .finally(() => {
-      clearTimeout(timeoutID)
+      clearTimeout(timeoutID) // always
     })
   return result
 }
@@ -74,7 +69,7 @@ const handleResponseData = (responseData) => {
   } catch (e) {
     // assure response is always opaque to aid security
     responseObj = Object.assign(responseObj, {
-      error: 'protocol error: expected not returned.' // always no details, opague
+      error: 'protocol error: expected not returned.' // always no details, opaque
     })
   }
   return responseObj
