@@ -31,8 +31,7 @@ const setAlgoliaConfig = async () => {
 
   await postTo (habitatUrl, headers, body)
     .then (async result => {
-      // CRITICAL: never log here, as could disclose access codes
-      console.log ('algolia result: ' + JSON.stringify(result))
+      // CRITICAL: never console.log anywhere here, as could disclose access codes
       if (!result) {
         throw new Error ('empty POST response')
       } else if (typeof result.response !== 'object') { // got our benign hello world text instead...
