@@ -151,6 +151,9 @@ export default new Vuex.Store({
     // *todo* end reducer temporary sortings from above
   },
   actions:{
+    setPagePath ({commit, state}, pagePath) {
+      commit("PAGE_PATH", pagePath)
+    },
     setAlgoConfig ({commit, state}, settings) {
       commit('setAlgoConfigReady', settings.ready)
       commit('setAlgoConfigError', settings.error)

@@ -229,21 +229,27 @@ export default {
     },
     docsTexts() {
       let texts = new Array();
-      this.designRepo.docs.langs[0].content.items.forEach(file => {
-        // console.log('file: ' + JSON.stringify(file))
-        if (file.name.search(/\.md/) > 0) {
-          texts.push(
-            this.cleanFormatMarkdown(
-              this.htmlSanitize(file.item.text),
-              this.imageFolder,
-              this.repoTreeFolder
-            )
-          );
-        }
-      });
+      if(this.designRepo.docs && this.designRepo.langs) {
+        // *todo* not '0' here - need to get actual lang in when we do langs....
+        // *todo* this old code should be called with the repo also
+        this.designRepo.docs.langs[0].content.items.forEach(file => {
+          // console.log('file: ' + JSON.stringify(file))
+          if (file.name.search(/\.md/) > 0) {
+            texts.push(
+              this.cleanFormatMarkdown(
+                this.htmlSanitize(file.item.text),
+                this.imageFolder,
+                this.repoTreeFolder
+              )
+            );
+          }
+        });
+        this.nrTexts = texts.length
+      } else {
+        texts.push('<h2 style="text-align: center;">No Design Documents in this repo yet!</h2><br>')
+        this.nrTexts = 0 // no real ones...
+      }
 
-      // console.log("texts: " + JSON.stringify(texts))
-      this.nrTexts = texts.length;
       return texts;
     },
     imageFolder: function () {
@@ -273,8 +279,8 @@ export default {
         let imgUrl;
         let summaryImage = this.designRepo.summaryImg;
         // *todo* same fixup as for store github and fauna, until fixing schema
-        console.log ('summsryImage type: ' + typeof summaryImage);
-        console.log ('summsryImage: ' + JSON.stringify(summaryImage));
+        // console.log ('summaryImage type: ' + typeof summaryImage);
+        // console.log ('summaryImage: ' + JSON.stringify(summaryImage));
         summaryImage = summaryImage && typeof summaryImage === 'object'
           ? summaryImage.text
           : summaryImage;
@@ -297,21 +303,24 @@ export default {
 
         let images = new Array();
         let repoImages = null;
-        this.designRepo.docs.langs.forEach(folder => {
-          if (folder.lang === 'img') {
-            repoImages = folder.content.items;
-          }
-        })
+
+        if (this.designRepo.docs && this.designRepo.docs.langs) { // sometimes they don't even have this - Sterilo...
+          this.designRepo.docs.langs.forEach(folder => {
+            if (folder.lang === 'img') {
+              repoImages = folder.content.items;
+            }
+          })
+        }
 
         if (repoImages) {
           repoImages.forEach(file => {
             if (file.name.search(/jpg|png|jpeg|gif/i) > 0) {
-              images.push(this.imagePath + this.htmlSanitize(file.name));
+              images.push(this.imagePath + this.htmlSanitize(file.name))
             }
-          });
+          })
         } else {
           this.nrImages = 0;
-          return null;
+          return ['/resources/image/no-design-imgs-placeholder.png']
         }
 
       this.nrImages = images.length;

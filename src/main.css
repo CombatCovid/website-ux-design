@@ -37,7 +37,7 @@ body {
 
 .bg-image {
   background: center linear-gradient(rgba(4, 110, 171, 0.644)),
-    url(/images/doctors.jpg);
+    url(/resources/image/doctors.jpg);
   background-attachment: fixed;
   background-position: center;
 }

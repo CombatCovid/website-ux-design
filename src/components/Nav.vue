@@ -162,6 +162,9 @@ export default {
     },
     designRemembered: function() {
       return store.getters.lastRepoName;
+    },
+    currentPage:() => {
+      return `${window.location.pathname}`;
     }
   },
   methods: {
@@ -183,15 +186,9 @@ export default {
       this.isOpen = !this.isOpen;
     },
     setCurrentPage(){
-      store.commit("PAGE_PATH", this.currentPage);
+      store.dispatch('setPagePath', this.currentPage) // _never_ commit directly from Vue...
     }
   },
-  computed: {
-    currentPage:() => {
-      return `${window.location.pathname}`;
-    }
-  },
-  
   mounted() {
     this.setCurrentPage();
     let nav = document.getElementsByClassName("navbar");
