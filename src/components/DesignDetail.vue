@@ -290,7 +290,7 @@ export default {
 
         if (this.designRepo.isPrivate) {
           imgUrl = '/resources/image/private-placeholder.png';
-        } else if (true || (summaryImage && summaryImage !== null)) { //*todo* true || bodge, but we do want fixed
+        } else if (summaryImage && summaryImage !== null) {
           imgUrl = `https://raw.githubusercontent.com/${nameWithOwner}/${this.repoBranch}${summaryJpg}`;
         } else {
           imgUrl = '/resources/image/no-summary-img-placeholder.png';
@@ -318,6 +318,12 @@ export default {
               images.push(this.imagePath + this.htmlSanitize(file.name))
             }
           })
+
+          // one of two ways to be empty - no folder, or no images...see just below
+          if (images.length <= 0) {
+            this.nrImages = 0;
+            return ['/resources/image/no-design-imgs-placeholder.png']
+          }
         } else {
           this.nrImages = 0;
           return ['/resources/image/no-design-imgs-placeholder.png']
