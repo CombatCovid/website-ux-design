@@ -23,11 +23,11 @@ const developOnlyCode = // the null default is important here
   safeEnv(process.env.GRIDSOME_NEVER_ON_PRODUCTION_ONLY_DEV_NETLIFY_OR_SERVER_ACCESS, null)
 
 const actualDevAccess = () => {
-  let validCode = developOnlyCode && developOnlyCode.length >= 31
+  let validCode = developOnlyCode !== null && developOnlyCode.length >= 31
   if (!validCode) {
     // keep the logics entirely separate; this is just to inform, and we are about safety
     // also, there can be more checks in future
-    console.log ('improper develoOnlyCode')
+    console.log ('improper developOnlyCode')
   }
   return validCode
     ? developOnlyCode
