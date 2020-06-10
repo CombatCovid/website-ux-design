@@ -170,7 +170,7 @@ export default {
           : null;
       }
       if (dRepo) {
-        // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo) )
+        // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo))
         // console.log('DesignDetail:designRepo:: name ' + dRepo.name)
       }
 
