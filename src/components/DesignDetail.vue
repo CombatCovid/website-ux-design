@@ -278,11 +278,11 @@ export default {
 
         let imgUrl;
         let summaryImage = this.designRepo.summaryImg;
-        // *todo* same fixup as for store github and fauna, until fixing schema
+        // *todo* same fixup as for store github and fauna, until upgrading schema
         // console.log ('summaryImage type: ' + typeof summaryImage);
         // console.log ('summaryImage: ' + JSON.stringify(summaryImage));
         summaryImage = summaryImage && typeof summaryImage === 'object'
-          ? summaryImage.text
+          ? summaryImage.present
           : summaryImage;
 
         const nameWithOwner = this.designRepo.nameWithOwner;
@@ -290,7 +290,7 @@ export default {
 
         if (this.designRepo.isPrivate) {
           imgUrl = '/resources/image/private-placeholder.png';
-        } else if (true || (summaryImage && summaryImage !== null)) { //*todo* true || bodge, but we do want fixed
+        } else if (summaryImage && summaryImage !== null) {
           imgUrl = `https://raw.githubusercontent.com/${nameWithOwner}/${this.repoBranch}${summaryJpg}`;
         } else {
           imgUrl = '/resources/image/no-summary-img-placeholder.png';
@@ -318,6 +318,12 @@ export default {
               images.push(this.imagePath + this.htmlSanitize(file.name))
             }
           })
+
+          // one of two ways to be empty - no folder, or no images...see just below
+          if (images.length <= 0) {
+            this.nrImages = 0;
+            return ['/resources/image/no-design-imgs-placeholder.png']
+          }
         } else {
           this.nrImages = 0;
           return ['/resources/image/no-design-imgs-placeholder.png']
