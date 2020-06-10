@@ -11,9 +11,30 @@ const configAccessIdentity = safeEnv(process.env.GRIDSOME_CONTENT_ACCESS_IDENTIT
 // again, it may be set locally for dev, but normally on Netlify for each app instance
 const habitatUrl = safeEnv(process.env.GRIDSOME_HABITAT_ACCESS, 'no-access')
 
+// this is a quality that can be set in .env ONLY for local (localhost) development use, only with
+// having also set habitatUrl to a _development_ Habitat. It will have been prepared, and you will know because
 
-// gain Algolia config, according to an app's .env values for access
-// see important notes. where this is used, in Finder
+// When this is possible, \you'll have been told the development Habitat to use,
+// and the developOnlyCode for it together.
+
+// This will never the regular live Habitat, which in any case will never.
+// allow your development environment to connect.
+const developOnlyCode = // the null default is important here
+  safeEnv(process.env.GRIDSOME_NEVER_ON_PRODUCTION_ONLY_DEV_NETLIFY_OR_SERVER_ACCESS, null)
+
+const actualDevAccess = () => {
+  let validCode = developOnlyCode && developOnlyCode.length >= 31
+  if (!validCode) {
+    // keep the logics entirely separate; this is just to inform, and we are about safety
+    // also, there can be more checks in future
+    console.log ('improper develoOnlyCode')
+  }
+  return validCode
+    ? developOnlyCode
+    : null
+}
+
+// Our purpose here: to gain Algolia config, for where this is used, to enable Finder
 const setAlgoliaConfig = async () => {
 
   if (await developmentAlgoliaConfig()) {
@@ -27,7 +48,11 @@ const setAlgoliaConfig = async () => {
   const headers = {
     'Content-Type': 'application/json'
   }
-  const body = JSON.stringify({ target: "finder", for: configAccessIdentity })
+  const body = JSON.stringify({
+    target: "finder",
+    for: configAccessIdentity,
+    devAccess: actualDevAccess() // which will normally be null, as Habitat knows
+  })
 
   await postTo (habitatUrl, headers, body)
     .then (async result => {
@@ -65,7 +90,8 @@ const retrieveDesign = async (repoName, branch) => {
             name: repoName,
             branch: branch,
             date: (new Date()).getTime().toString(), // this is bogus; later from Vuex marking our data
-            for: "content-team"
+            for: "content-team",
+            devAccess: actualDevAccess() // which will normally be null, which Habitat knows
           })
   store.dispatch('setRepoRequestError', null) // clear before we attempt
 

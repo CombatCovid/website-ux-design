@@ -278,11 +278,11 @@ export default {
 
         let imgUrl;
         let summaryImage = this.designRepo.summaryImg;
-        // *todo* same fixup as for store github and fauna, until fixing schema
+        // *todo* same fixup as for store github and fauna, until upgrading schema
         // console.log ('summaryImage type: ' + typeof summaryImage);
         // console.log ('summaryImage: ' + JSON.stringify(summaryImage));
         summaryImage = summaryImage && typeof summaryImage === 'object'
-          ? summaryImage.text
+          ? summaryImage.present
           : summaryImage;
 
         const nameWithOwner = this.designRepo.nameWithOwner;
