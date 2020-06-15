@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@algolia/client-search": "^4.2.0",
-    "@fullhuman/postcss-purgecss": "^2.1.2",
     "@glidejs/glide": "^3.4.1",
     "@gridsome/source-graphql": "^0.1.0",
     "@gridsome/vue-remark": "^0.1.10",
