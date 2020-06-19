@@ -32,6 +32,10 @@
                 class="block md:inline-block py-2 px-6 border-2 border-white border-solid mt-4 w-full md:w-auto md:mt-0 md:ml-6 rounded-lg hover:shadow-xl font-bold text-white"
               >Upload designs</button>
             </g-link>
+            <button
+              class="block md:inline-block py-2 px-6 border-2 border-white border-solid mt-4 w-full md:w-auto md:mt-0 md:ml-6 rounded-lg hover:shadow-xl font-bold text-white"
+              @click="initFauna(faunaDbName)"
+            >Initialize Fauna {{ faunaDbName }}</button>
           </div>
         </div>
 
@@ -134,6 +138,7 @@
 </template>
 
 <script>
+import { requestFaunaInit } from '../modules/habitat-initialize' // *todo* rather in Builder
 import Virus from "~/assets/Virus.svg";
 import Play from "~/assets/Play.svg";
 import InstantSearch from "~/assets/InstantSearch.svg";
@@ -251,8 +256,14 @@ export default {
             "Help us reach the authors of solutions to update the content",
           icon: "InstantSearch"
         }
-      ]
+      ],
+      faunaDbName: 'ccwh-repos-staging', // *todo* and deal with this hard-coded naming, spec'd habitat ident?
     };
+  },
+  methods: {
+    initFauna: function (dbName) {
+      requestFaunaInit(dbName)
+    }
   }
 };
 </script>

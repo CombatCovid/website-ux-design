@@ -350,18 +350,6 @@ export default {
 };
 </script>
 
-// this was a temporary solution, as Gridsome supports just id and path
-// as query variables at this time. Probably the answer is axios in the
-// component build -- next to try, but need this out today. As long as
-// this is the way, then, it's a two-points-of truth solution.
-// To change the branch the app views,
-// - alter the tail of this query script name to either develop or master
-// - set the environmental GRIDSOME_REPO_BRANCH to match.
-
-//  *todo* but now this is legacy, as we have active wire and Vuex to remember
-<static-query>
-</static-query>
-
 <style lang="scss"  >
 @import "../sass/button.scss";
 /*
