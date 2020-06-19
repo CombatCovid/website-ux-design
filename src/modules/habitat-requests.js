@@ -150,4 +150,4 @@ const developmentAlgoliaConfig = async () => {
   }
 }
 
-export { setAlgoliaConfig, retrieveDesign }
+export { setAlgoliaConfig, retrieveDesign, actualDevAccess }

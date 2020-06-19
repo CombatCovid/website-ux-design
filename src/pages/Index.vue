@@ -251,7 +251,8 @@ export default {
             "Help us reach the authors of solutions to update the content",
           icon: "InstantSearch"
         }
-      ]
+      ],
+      faunaDbName: 'ccwh-repos-staging', // *todo* and deal with this hard-coded naming, spec'd habitat ident?
     };
   }
 };

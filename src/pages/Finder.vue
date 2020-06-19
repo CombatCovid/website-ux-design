@@ -81,7 +81,6 @@
   import { setAlgoliaConfig } from '~/modules/habitat-requests'
   import FinderPaginator from '../components/FinderPaginator'
   import JoseFinderCard from '../components/JoseFinderCard'
-  // import { mdiMagnify } from "@mdi/js";
   import Search from "~/assets/Search.svg";
 
 
