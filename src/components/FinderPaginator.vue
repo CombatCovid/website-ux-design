@@ -1,7 +1,7 @@
 <template>
     <ais-pagination>
     <div
-      class="flex"
+      class="flex md:justify-center lg:justify-start"
             slot-scope="{
             currentRefinement,
             nbPages,
