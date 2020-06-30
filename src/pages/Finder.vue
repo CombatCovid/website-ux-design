@@ -7,14 +7,12 @@
             :search-client="searchClient"
             class=""
           >
-
             <ais-configure :hits-per-page.camel="hitsPerPage"/>
-            <!-- <ais-powered-by/> -->
-            <ais-search-box class="fixed z-50 w-full bg-gray-15 px-5 border border-solid border-gray-25">
+            <ais-search-box class="pt-8 md:pt-0 lg:fixed lg:z-50 w-full bg-gray-15 md:px-5 border border-solid border-gray-25">
               <div class="" slot-scope="{ currentRefinement, isSearchStalled, refine }">
-              <div class="md:flex md:flex-col lg:flex-row items-center pl-5 mb-2">
+              <div class="md:flex md:flex-col lg:flex-row items-center px-5 mb-2">
                   <div>
-                <h1 class="font-bold text-xl">FINDER</h1>
+                      <h1 class="hidden md:block font-bold text-xl">FINDER</h1>
                     <ais-powered-by/>
                   </div>
                 <div class="md:w-full lg:w-3/5">
@@ -25,12 +23,13 @@
                       <path d="M44.1006 44.4293L60.6714 61" stroke="#2D9CDB" stroke-width="4.83333" stroke-miterlimit="10" stroke-linecap="round"/>
                     </svg> -->
                     <input
-                      class="text-xl w-full"
+                      class="text-sm md:text-xl w-full"
                       type="search"
                       v-model="currentRefinement"
                       @input="refine($event.currentTarget.value)"
-                      placeholder="Type keywords like ventilator or 3D printing"
-                    ></input>
+                      placeholder="Type keywords like ventilator or 3D"
+                    >
+                    </input>
                     <span :hidden="!isSearchStalled">Loading...</span>
                     </div>
                   </div>
@@ -44,7 +43,7 @@
             </ais-search-box>
 
 
-            <ais-hits class="clear-above pt-24">
+            <ais-hits class="clear-above lg:pt-24">
               <div slot-scope="{ items }">
                 <div class="">
                   <div class="flex flex-wrap">
