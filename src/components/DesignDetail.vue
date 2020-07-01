@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
+  <div class="">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
         <div v-if="imagesShow">
           <vue-glide
             class="md:mt-8"
-            :gap="60"
+            :gap="50"
             focusAt="center"
             type="carousel"
             :breakpoints="{800: { perView: 1, bullet:false }, 1200: { perView: 2, bullet:true }}"
@@ -32,6 +32,7 @@
             </div>
           </div>
         </div>
+
         <hr color="#e3ebef" size="2px" class="rule-appearance" />
         <div v-if="docsShow" class="docs-show-pane">
           <div class="flex justify-center buttons doc-title">
@@ -42,9 +43,9 @@
           <div class="docs-slides-pane">
             <VueGlide :perView="1" :gap="10" :rewind="false" type="slider" ref="docsSlider">
               <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
-                <div class="markdown">
+                <div class="markdown container">
                   <VueMarkdown
-                    class
+                    class=""
                     :source="unscopeBasisMarkup(docText)"
                     :postrender="unscopeBasisMarkup"
                   />
@@ -55,14 +56,11 @@
         </div>
         <div v-else>
           <div class="flex justify-center">
-            <!--            <v-tooltip bottom>-->
             <template>
               <button class="btn" @click="popDocs" xv-on="on">See full documentation</button>
             </template>
-            <!--              <span>Click to see view all the design documentse. Click again to return to the summary.</span>-->
-            <!--            </v-tooltip>-->
           </div>
-          <div class="markdown">
+          <div class="markdown container">
             <h1 class="text-3xl">Design Summary</h1>
             <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup" />
           </div>
