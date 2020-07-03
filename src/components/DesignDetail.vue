@@ -67,7 +67,7 @@
               <button class="btn" @click="popDocs" xv-on="on">See full documentation</button>
             </template>
           </div>
-          <div class="markdown  xl:w-4/5 xs:w-full">
+          <div class="markdown container md:w-4/5 xl:w-1/2 xs:w-full">
             <h1 class="text-3xl">Design Summary</h1>
             <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup" />
           </div>
