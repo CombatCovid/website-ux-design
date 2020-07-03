@@ -45,6 +45,10 @@
           <div class="docs-slides-pane">
             <VueGlide :perView="1" :gap="10" :rewind="false" type="slider" ref="docsSlider">
               <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
+                <template class="hidden flex justify-between" slot="control">
+                <button class="content-button" data-glide-dir="<"><</button>
+                <button class="content-button" data-glide-dir=">">></button>
+              </template>
                 <div class="markdown container md:w-4/5 xl:w-1/2 xs:w-full">
                   <VueMarkdown
                     class=""
@@ -53,10 +57,7 @@
                   />
                 </div>
               </VueGlideSlide>
-              <template class="flex justify-between" slot="control">
-                <button class="content-button" data-glide-dir="<"><</button>
-                <button class="content-button" data-glide-dir=">">></button>
-              </template>
+              
             </VueGlide>
           </div>
         </div>
