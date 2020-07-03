@@ -3,7 +3,7 @@ $color-active: #497cdd;
 $color-grey: #eee;
 
 div[data-glide-el="controls"] {
-  position: sticky;
+  position: absolute;
   left: 0;
   right: 0;
   top: 40%;
