@@ -14,9 +14,9 @@
             <vue-glide-slide class v-for="(imagesImg, i) in imagesImgs" :key="i">
               <img :src="imagesImg" alt="imagesImg" width="100%" />
             </vue-glide-slide>
-            <template slot="control">
-              <button data-glide-dir="<"><</button>
-              <button data-glide-dir=">">></button>
+            <template class="flex justify-between" slot="control">
+              <button class="slide-image__button" data-glide-dir="<"><</button>
+              <button class="slide-image__button" data-glide-dir=">">></button>
             </template>
           </vue-glide>
         </div>
@@ -36,14 +36,16 @@
         <hr color="#e3ebef" size="2px" class="rule-appearance" />
         <div v-if="docsShow" class="docs-show-pane">
           <div class="flex justify-center buttons doc-title">
-            <template>
+            <button class="btn" @click="slideDocs('<')"><</button>
+            <template> 
               <button class="btn" xv-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</button>
             </template>
+            <button class="btn" @click="slideDocs('>')">></button>
           </div>
           <div class="docs-slides-pane">
             <VueGlide :perView="1" :gap="10" :rewind="false" type="slider" ref="docsSlider">
               <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
-                <div class="markdown container xl:w-4/5 xs:w-full">
+                <div class="markdown container md:w-4/5 xl:w-1/2 xs:w-full">
                   <VueMarkdown
                     class=""
                     :source="unscopeBasisMarkup(docText)"
@@ -51,6 +53,10 @@
                   />
                 </div>
               </VueGlideSlide>
+              <template class="flex justify-between" slot="control">
+                <button class="content-button" data-glide-dir="<"><</button>
+                <button class="content-button" data-glide-dir=">">></button>
+              </template>
             </VueGlide>
           </div>
         </div>
