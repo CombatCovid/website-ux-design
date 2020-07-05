@@ -141,7 +141,7 @@
     justify-content:center;
     align-items:center;
   }
-  
+
   .searchBox__input{
     /* border-style: solid; */
     background-color:white;
@@ -166,7 +166,7 @@ input:focus {
   .searchForm{
     margin:3em;
   }
-  
+
   .searchbox {
     margin: 15px;
   }
@@ -182,13 +182,13 @@ input:focus {
   .finder__header{
     /* width:100%; */
   }
-  
+
   .searchBox{
     display:flex;
     align-items:center;
     flex-direction:row;
     justify-content:center;
-    width:100%; 
+    width:100%;
     margin:0 auto;
     margin-top:1.5em;
     margin-bottom:2.5em;
