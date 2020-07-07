@@ -435,11 +435,7 @@ export default {
 .design-image {
   width: 100%;
 }
-@media only screen and (min-width: 1601px) {
-  .container {
-    max-width: 1600px;
-  }
-}
+
 
 .design-image-hold {
   margin: 3% auto;
