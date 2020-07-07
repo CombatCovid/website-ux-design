@@ -140,8 +140,8 @@ export default {
           label: "Viewer"
         },
         {
-          name: "/documentation",
-          label: "Documentation"
+          name: "/docs",
+          label: "Docs"
         },
         { name: "/about", label: "About" }
       ]
