@@ -24,7 +24,7 @@
           </aside>-->
           <aside class="sidebar pt-16" :class="{ 'open': sidebarOpen }" :style="sidebarStyle">
             <div class="w-full pb-16 bg-ui-background">
-              <Sidebar @navigate="sidebarOpen = true" />
+              <Sidebar @navigate="sidebarOpen = false" />
             </div>
           </aside>
 
@@ -36,7 +36,7 @@
 
       <div v-if="hasSidebar" class="fixed bottom-0 right-0 z-50 p-8 lg:hidden">
         <button
-          class="p-3 text-white rounded-full shadow-lg bg-ui-primary hover:text-white"
+          class="p-3 text-white rounded-full shadow-lg bg-primary-100 hover:text-white"
           @click="sidebarOpen = ! sidebarOpen"
         >
           <XIcon v-if="sidebarOpen" />
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       headerHeight: 0,
-      sidebarOpen: true
+      sidebarOpen: false
     };
   },
   watch: {
@@ -99,7 +99,7 @@ export default {
       };
     },
     hasSidebar() {
-      return this.$page && this.headerHeight > 0;
+      return this.$page;
     }
   },
   mounted() {
