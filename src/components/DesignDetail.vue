@@ -1,5 +1,5 @@
 <template>
-  <div class="container xl:w-4/5 xs:w-full">
+  <div class="container m-auto xl:w-4/5 xs:w-full">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
