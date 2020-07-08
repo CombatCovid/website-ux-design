@@ -1,20 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersistence, { MockStorage } from 'vuex-persist'
-import axios from 'axios'
-
-import store from '~/store'
+import { safeEnv } from '../modules/habitat-protocol' // temporary
+import { retrieveDesign } from '../modules/habitat-requests' // temporary
 
 Vue.use(Vuex)
 
 // helpers and local objects -- have to be this way; Vuex is not like a Vue component
-
-const safeEnv = (value, preset) => { // don't use words like default...
-  if (!value) {
-    value = preset
-  }
-  return value
-}
 
 // as ever, non-browser must be catered for during build
 const vuexLocal = (typeof window === 'undefined')
@@ -36,51 +28,73 @@ export default new Vuex.Store({
     language:"EN",
     currentPage:null,
     currentRepos:[],
-    currentLastRepoName: null,
     currentSummaryMarkdown: 'retrieving...',
 
     // GitHub API config
-    currentGithubPersonalAuthKey: process.env.GRIDSOME_CC_SINGLE_AUTH,
+    currentGithubPersonalAuthKey: safeEnv(process.env.GRIDSOME_CC_SINGLE_AUTH,'not-set'),
 
     // config of repos
-    currentRepoAccount: process.env.GRIDSOME_REPO_ACCOUNT,
-    currentRepoKey: process.env.GRIDSOME_REPO_KEY,
-    currentRepoBranch: safeEnv(process.env.GRIDSOME_REPO_BRANCH, 'develop'),
+    currentRepoAccount: safeEnv(process.env.GRIDSOME_REPO_ACCOUNT,'not-set'),
+    currentLastRepoName: null,
+    // *todo* don't preset develop, soon...
+    currentLastRepoBranch: safeEnv(process.env.GRIDSOME_REPO_BRANCH, 'develop'),
 
-    // Algolia presets
-    currentAlgoSearchIndex: process.env.GRIDSOME_ALGO_SEARCH_INDEX,
-    currentAlgoAppId: process.env.GRIDSOME_ALGO_APPLICATION_ID,
-    currentAlgoSearchKey: process.env.GRIDSOME_ALGO_SEARCH_KEY,
-    currentAlgoAdminKey: process.env.GRIDSOME_ALGO_ADMIN_KEY,
-    currentAlgoIndexesList: process.env.GRIDSOME_ALGO_INDEXES_LIST,
+    // Algolia values
+    currentAlgoSearchIndex: safeEnv(process.env.GRIDSOME_ALGO_SEARCH_INDEX, 'not-set'),
+    currentAlgoAppId: safeEnv(process.env.GRIDSOME_ALGO_APPLICATION_ID, 'not-set'),
+    currentAlgoSearchKey: safeEnv(process.env.GRIDSOME_ALGO_SEARCH_KEY, 'not-set'),
+    currentAlgoAdminKey: safeEnv(process.env.GRIDSOME_ALGO_ADMIN_KEY, 'not-set'),
+    currentAlgoIndexesList: safeEnv(process.env.GRIDSOME_ALGO_INDEXES_LIST, 'not-set'),
 
     // Axios config
-    currentAxiosWireTimeout: safeEnv(process.env.GRIDSOME_AXIOS_WIRE_TIMEOUT, 5000)
+    currentAxiosWireTimeout: safeEnv(process.env.GRIDSOME_AXIOS_WIRE_TIMEOUT, 5000),
+
+    // Algolia status
+    currentAlgoliaConfigReady: false,
+    currentAlgoliaConfigError: null,
+
+    // RepoRequest status
+    currentRepoRequestError: null,
+    currentRepoRequestReady: false,
   },
   plugins: [
     vuexLocal.plugin // don't lose me; persistence happens here
   ],
-  created () {
-    if (this.state.currentAlgoAdminKey) {
-      console.log('enabled for admin')
-    }
-    console.log('recovered state.currentLastRepoName: ' + state.currentLastRepoName)
-  },
+  // not a Vue component, so no created(), etc..
   mutations:{
     PAGE_PATH:(state, value) => {
       state.currentPage = value;
     },
 
     // Change the state of language, for example
+    // *todo* revisions here coming of several things. Actually handle errored repo, equally
+    // slice rather than push when present, assure persist is enough but no more to find a
+    // bookmark on a new browser, having listed it with at least a thumbnail first.
     loadRepo (context, namedDesign = null) {
-      // console.log ('loadRepo: namedDesign is ' + JSON.stringify(namedDesign))
-      // console.log ('loadRepo: context is ' + JSON.stringify(context))
-
       // *todo* this will get interesting as we start multiple memory, really using it to advantage
       if (namedDesign && namedDesign.repo) {
-        this.state.currentRepos.push(namedDesign.repo)
-        this.state.currentSummaryMarkdown = namedDesign.repo.repository.readMe.text
-        this.state.currentLastRepoName = namedDesign.design
+        const currentIndex =
+          this.state.currentRepos.findIndex(repo => repo.name === namedDesign.design)
+        // console.log('loadRepo: namedDesign: ' + namedDesign.design)
+        // console.log('loadRepo: currentIndex: ' + currentIndex)
+        if (currentIndex >= 0) {
+          this.state.currentRepos =
+            this.state.currentRepos.map ((repo, index) => {
+              return index === currentIndex
+                ? namedDesign.repo
+                : repo
+            })
+        } else {
+          this.state.currentRepos.push(namedDesign.repo)
+        }
+        // *todo* TEMP FIXUP HERE -> looks actually like difference between github and fauna
+        // *todo* also take this opportunity to look into what's going on with repos - push w/o
+        //  *todo* delete needs atom replace; it's just that the detector takes first gets us through.
+        //  *todo* Leftovers to take care of now
+        this.state.currentSummaryMarkdown = typeof namedDesign.repo.readMe === 'object'
+          ? namedDesign.repo.readMe.text
+          : namedDesign.repo.readMe
+        // ****
       } else if(namedDesign && namedDesign.errors) {
         console.log('store loadRepo: errors: ' + JSON.stringify(namedDesign.errors) +
           ', context: ' + JSON.stringify(context))
@@ -89,11 +103,42 @@ export default new Vuex.Store({
           + JSON.stringify(context))
       }
     },
-    setLastRepoName (context, design) {
+    setLastRepoDesignName (context, design) {
       this.state.currentLastRepoName = design
+    },
+    setRepoReqReady (context, status = false) {
+      this.state.currentRepoRequestReady = status
+    },
+    setRepoReqError (context, error = null) {
+      this.state.currentRepoRequestError = error
+    },
+    setAlgoConfigReady(context, ready = null) {
+      this.state.currentAlgoliaConfigReady = ready
+    },
+    setAlgoConfigError (context, error = null) {
+      this.state.currentAlgoliaConfigError = error
+    },
+    // *todo* we're keeping these until clear no dev .env sets are needed
+    setAlgoAppId (context, appId = null) {
+      this.state.currentAlgoAppId = appId
     },
     setAlgoSearchIndex (context, indexName = null) {
       this.state.currentAlgoSearchIndex = indexName
+    },
+    setAlgoSearchKey (context, searchKey = null) {
+      this.state.currentAlgoSearchKey = searchKey
+    },
+    setAlgoSearchConfig(context, result = null) {
+      if (result.errors) {
+        this.state.currentAlgoliaConfigError = result.errors
+      } else if (!result.response) {
+        this.state.currentAlgoliaConfigError = 'setAlgoSearchConfig: no config provided!'
+      } else {
+        this.state.currentAlgoAppId = result.response.app
+        this.state.currentAlgoSearchIndex = result.response.index
+        this.state.currentAlgoSearchKey = result.response.read
+        this.state.currentAlgoliaConfigReady = true
+      }
     },
 
     // *todo* these, possibly other presets needing careful feed until Vuex reducer is sorted out
@@ -103,13 +148,34 @@ export default new Vuex.Store({
     setCheckerBuilderReposInfo (context, repoInfo = null) {
       this.state.currentLastRepoName = repoInfo
     },
-    // end reducer temporary sortings
+    // *todo* end reducer temporary sortings from above
   },
   actions:{
-
-    loadDesign ({ commit, state }, design) {
+    setPagePath ({commit, state}, pagePath) {
+      commit("PAGE_PATH", pagePath)
+    },
+    setAlgoConfig ({commit, state}, settings) {
+      commit('setAlgoConfigReady', settings.ready)
+      commit('setAlgoConfigError', settings.error)
+    },
+    loadAlgoConfig ({ commit, state}, result) {
+      commit('setAlgoSearchConfig', result)
+    },
+    setLastRepoName ({ commit, state}, design) {
+      commit('setLastRepoDesignName', design)
+    },
+    setRepoRequestReady ({ commit, state}, status) {
+      commit('setRepoReqReady', status)
+    },
+    setRepoRequestError ({ commit, state}, result) {
+      commit('setRepoReqError', result)
+    },
+    loadDesignRepo ({ commit, state}, designRepo) {
+      commit ('loadRepo', designRepo)
+    },
+    async loadDesign ({ commit, state }, design, branch = 'develop') { // just for now, develop
       if (!design || design.length <= 0) {
-        console.log ('loadDesign: no design given to load')
+        console.log ('loadDesign: no design given to load!')
         // *todo* this will mostly work; fully when we browser-persist aspects of Vuex state
         const lastDesign = this.getters.lastRepoName
         if (lastDesign) {
@@ -120,114 +186,12 @@ export default new Vuex.Store({
           return;
         }
       }
-      // console.log('actual loadDesign:design: ' + design)
-      store.commit('setLastRepoName', design) // this is where we remember it for next time
+      console.log('actual loadDesign:design: ' + design)
+      // *todo* decide if we really want to set this here, or now, if unerred in retrieveDesign
+      // commit('setLastRepoName', design) // this is where we remember it for next time
 
-      // all right, let's query the design with all parts we need off Github
-      // *todo* first thing we'll get is the Summary, but soon all in one query, take off that in client
-
-      // n.b. this is _essential_ logic to cause an actual timeout from
-      // axios's hung promise if instead of a server answering, there is no
-      // response at all. Without it, the app -- and the web browser --
-      // until the alert comes up to shut down the window or tab.
-      // Promise cancellation is done this way, at least by Axios now
-      const CancelToken = axios.CancelToken
-      const source = CancelToken.source(function (c) {
-        console.log ('Cancelling as no connection occurred: ' + c)
-      })
-
-      const timeoutID = setTimeout(() => {
-        source.cancel()
-      }, this.getters.axiosWireTimeout)
-
-      const repoName = design
-      const branch = 'develop' // *todo* don't forget to parameteretize as menu comes in
-
-      const repoQuery =
-        `query repoQuery { 
-  repository(name: "${repoName}", owner: "CombatCovid") {
-    name
-    nameWithOwner
-    isPrivate
-    readMe: object(expression: "${branch}:README.md") {
-    ... on Blob {
-        text
-      }
-    }
-    summaryImg: object(expression: "${branch}:summary.jpg") {
-      __typename
-      commitResourcePath
-      commitUrl
-    ... on Blob {
-        isBinary
-        byteSize
-        commitUrl
-      }
-    }
-    docs: object(expression: "${branch}:docs") {
-    ... on Tree {
-        id
-        entries {
-          lang: name
-          object {
-          ... on Tree {
-              entries {
-                name
-                #                 mode
-                type
-                object {
-                ... on Blob {
-                    text
-                    isBinary
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}`
-
-      const gitApiQueryUrl = 'https://api.github.com/graphql'
-      const token = this.state.currentGithubPersonalAuthKey
-      const headers = {
-        Authorization: 'Bearer ' + token,
-        'Content-Type': 'application/json'
-      }
-
-      // console.log('headers: ' + JSON.stringify(headers))
-      const config = {
-        method: 'post',
-        url: gitApiQueryUrl,
-        data: { query: repoQuery },
-        headers: headers,
-        timeout: this.getters.axiosWireTimeout + 1000,
-        cancelToken: source.token
-      }
-
-      axios(config)
-        .then(response => {
-            commit('loadRepo', {
-              design: design,
-              repo: response.data.data,
-              errors: null
-            })
-            commit('setLastRepoName', design)
-          },
-          error => {
-            const nsg = 'repo[' + design+ '] retrieval error: ' + JSON.stringify(error)
-            console.log(msg)
-            commit('loadRepo', {
-              design: design,
-              repo: null,
-              errors: msg
-            })
-          })
-        .finally(function () {
-          clearTimeout(timeoutID)
-        })
+      // now we'll ask Habitat to give us the repo
+      await retrieveDesign(design, branch)
     }
   },
   getters:{ // Dispatch current state values
@@ -238,16 +202,17 @@ export default new Vuex.Store({
 
     // central project repo information
     repoAccount: state => state.currentRepoAccount,
-    repoKey: state => state.currentRepoKey,
-    repoBranch: state => state.currentRepoBranch,
+    lastRepoName: state => state.currentLastRepoName,
+    lastRepoBranch: state => state.currentLastRepoBranch,
+    repoRequestReady: state => state.currentRepoRequestReady,
+    repoRequestError: state => state.currentRepoRequestError,
 
     // tuning
     axiosWireTimeout: state => state.currentAxiosWireTimeout,
 
-    // recovery
-    lastRepoName: state => state.currentLastRepoName,
-
     // Algolia access information
+    algoConfigReady: state => state.currentAlgoliaConfigReady,
+    algoConfigError: state => state.currentAlgoliaConfigError,
     algoSearchIndex: state => state.currentAlgoSearchIndex,
     algoAppId: state => state.currentAlgoAppId,
     algoSearchKey: state => state.currentAlgoSearchKey,
@@ -260,7 +225,7 @@ export default new Vuex.Store({
       }
       catch (err) {
         list = 'Error: ' + err
-        console.log('store.AlgoSearchIndexesList error: ' + err)
+        console.log('store: AlgoSearchIndexesList error: ' + err)
       }
       return list
     },

@@ -20,6 +20,11 @@ const appMixins = {
       // which is otherwise the best available
       // we do images first, as their match is more specific than similar-looking links
       // *todo* need also to fix docs.md so they are not links...!
+      // *todo* some upgrades needed for increasing repo docs complexities
+      // *todo* here's one: how to make the video play in new tab? Probably the
+      // answer we can give is to string match on youtube, youtu.be, other standards
+      // maybe even the word video in the label. Those are the available clues.
+      //  [![WATCH VIDEO HERE](../img/FRONT-VIDEO-ASSEMBLY.png)](https://youtu.be/DLQxyWLqXpQ)
       lines = this.fixAllMarkdownImages(
         this.stripFrontMatter(lines),
         site,

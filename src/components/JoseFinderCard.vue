@@ -3,15 +3,15 @@
     class="card hover:shadow-2xl transition-shadow duration-200 bg-white rounded-xl overflow-hidden border border-solid border-gray-25"
     v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)"
   >
-    <div class="card__gradient">
+      <div class="card__gradient">
       <img class="card__image" :src="getImgUrl(repo.nameWithOwner, repo.isPrivate, repo.cardImage)" />
-    </div>
-    <div class="card__content">
-      <p class="font-bold" v-text="repo.title"></p>
-      <p class="font-light">{{ niceTruncate(repo.description) }}</p>
-    </div>
-    <div class="card__btns">
-      <!-- <div
+      </div>
+      <div class="card__content">
+        <p class="font-bold" v-text="repo.title"></p>
+        <p class="font-light">{{ niceTruncate(repo.description) }}</p>
+      </div>
+        <div class="card__btns">
+          <!-- <div
             v-on:click="showContent(repo.name, repo.cardSummary, repo.cardImage)"
           >documentation</div>
           <div color="green">
@@ -90,14 +90,14 @@ a {
 
 .card__image {
   border-bottom: #c5c6c8 solid 1px;
-  width: 100%;
-  height: 150px;
-  object-fit: cover !important;
+  width:100%;
+  height:150px;
+  object-fit:cover !important;
 }
 
 .card__content {
   padding: 1em;
-  margin-bottom: 1em;
+  margin-bottom:1em;
 }
 
 .card__btns {
@@ -120,12 +120,12 @@ Convert HEX to RGBA - http://hex2rgba.devoth.com/
 */
 .card__gradient:after {
   content: "";
-  position: absolute;
+  position:absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  display: inline-block;
+  display:inline-block;
   background: -moz-linear-gradient(
     top,
     rgba(1, 44, 68, 0.56) 0%,

@@ -1,90 +1,73 @@
 <template>
-  <div class="container m-auto xl:w-4/5 xs:w-full">
+  <div class="">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
-        <div
-          v-if="imagesShow"
-          class="images-slide image-display-mask design-image-hold docs-show-pane"
-        >
-          <div class="flex justify-center buttons">
-            <button class="btn" @click="slideImages('<')"><</button>
-            <!-- <v-tooltip bottom> -->
-              <template>
-                <button
-                  class="btn"
-                  v-on="on"
-                  @click="popImages"
-                >Design Images ({{ nrImages }})</button>
-              </template>
-              <!-- <span>Click to return to the summary.</span> -->
-            <!-- </v-tooltip> -->
-            <button class="btn" @click="slideImages('>')">></button>
-          </div>
-          <VueGlide :perView="1" :gap="30" :rewind="false" type="carousel" ref="imagesSlider">
-            <VueGlideSlide class="xslide-image" v-for="(imagesImg, i) in imagesImgs" :key="i">
-              <div class="horiz-center">
-                <img :src="imagesImg" alt="imagesImg" width="100%" />
-                <!-- that width 100% is critical -->
-              </div>
-            </VueGlideSlide>
-          </VueGlide>
+        <div v-if="imagesShow">
+          <vue-glide
+            class="md:mt-8"
+            :gap="50"
+            focusAt="center"
+            type="carousel"
+            :breakpoints="{800: { perView: 1, bullet:false }, 1200: { perView: 2, bullet:true }}"
+          >
+            <vue-glide-slide class v-for="(imagesImg, i) in imagesImgs" :key="i">
+              <img :src="imagesImg" alt="imagesImg" width="100%" />
+            </vue-glide-slide>
+            <template class="flex justify-between" slot="control">
+              <button class="slide-image__button" data-glide-dir="<"><</button>
+              <button class="slide-image__button" data-glide-dir=">">></button>
+            </template>
+          </vue-glide>
         </div>
         <div v-else class="design-image-hold">
           <div class="image-display-mask">
             <div class="horiz-center doc-title fix-box temp-shift-small-screen" @click="popImages">
-              <!-- <v-tooltip bottom> -->
-                <template>
-                  <button class="btn" v-on="on">
-                    See all images
-                    <!-- <span class="hide-small">&nbsp;for&nbsp;all</span> -->
-                  </button>
-                </template>
-                <!-- <span>Click to see view all the design images. Click again to return to the summary.</span> -->
-              <!-- </v-tooltip> -->
+              <template>
+                <button class="btn" xv-on="on">See all images</button>
+              </template>
             </div>
             <div class="images-slide">
               <img :src="summaryImg" alt="summaryImg" class="design-image" />
             </div>
           </div>
         </div>
+
         <hr color="#e3ebef" size="2px" class="rule-appearance" />
         <div v-if="docsShow" class="docs-show-pane">
           <div class="flex justify-center buttons doc-title">
             <button class="btn" @click="slideDocs('<')"><</button>
-            <!-- <v-tooltip bottom> -->
-              <template>
-                <button class="btn" v-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</button>
-              </template>
-              <!-- <span>Click to return to the summary.</span> -->
-            <!-- </v-tooltip> -->
+            <template> 
+              <button class="btn" xv-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</button>
+            </template>
             <button class="btn" @click="slideDocs('>')">></button>
           </div>
           <div class="docs-slides-pane">
             <VueGlide :perView="1" :gap="10" :rewind="false" type="slider" ref="docsSlider">
               <VueGlideSlide v-for="(docText, i) in docsTexts" :key="i">
-                <div class="markdown" >
-                  <VueMarkdown class=""
+                <template class="hidden flex justify-between" slot="control">
+                <button class="content-button" data-glide-dir="<"><</button>
+                <button class="content-button" data-glide-dir=">">></button>
+              </template>
+                <div class="markdown container md:w-4/5 xl:w-1/2 xs:w-full">
+                  <VueMarkdown
+                    class=""
                     :source="unscopeBasisMarkup(docText)"
                     :postrender="unscopeBasisMarkup"
                   />
                 </div>
               </VueGlideSlide>
+              
             </VueGlide>
           </div>
         </div>
         <div v-else>
           <div class="flex justify-center">
-            <!-- <v-tooltip bottom> -->
-              <template>
-                <button class="btn" @click="popDocs" v-on="on">
-                  See full documentation
-                </button>
-              </template>
-              <!-- <span>Click to see view all the design documentse. Click again to return to the summary.</span> -->
-            <!-- </v-tooltip> -->
+            <template>
+              <button class="btn" @click="popDocs" xv-on="on">See full documentation</button>
+            </template>
           </div>
-          <div class="markdown">
+          <div class="markdown container md:w-4/5 xl:w-1/2 xs:w-full">
             <h1 class="text-3xl">Design Summary</h1>
             <VueMarkdown :source="summaryText" :postrender="unscopeBasisMarkup" />
           </div>
@@ -128,7 +111,7 @@ export default {
       nrImages: 1,
       imagesShow: false,
       docsShow: false,
-      repoBranch: store.getters.repoBranch // essential so we choose it
+      repoBranch: store.getters.lastRepoBranch // essential so we choose it
     };
   },
   mounted() {
@@ -147,7 +130,7 @@ export default {
       }
     } else {
       this.announcementNeeded = false;
-      store.commit("setLastRepoName", this.theDesign);
+      // store.commit("setLastRepoName", this.theDesign);
       store.dispatch("loadDesign", this.theDesign); // a good beginning
       // console.log({ store });
     }
@@ -162,17 +145,23 @@ export default {
 
       if (this.repos && this.repos.length > 0 && this.theDesign) {
         const filtered = this.repos.filter(
-          repo => repo.repository.name === this.theDesign
+          repo => repo.name === this.theDesign
         );
         // console.log('DesignDetail:filtered: ' + JSON.stringify(filtered) )
-        dRepo = filtered.length > 0 ? filtered[0].repository : null;
+        dRepo = filtered.length > 0 ? filtered[0] : null;
       }
       if (dRepo) {
-        // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo) )
+        // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo))
         // console.log('DesignDetail:designRepo:: name ' + dRepo.name)
       }
 
       return dRepo;
+    },
+    loading: function() {
+      return !store.getters.repoRequestReady;
+    },
+    repoError: function() {
+      return store.getters.repoRequestError;
     },
     repoName: function() {
       return this.designRepo ? this.designRepo.name : ""; // 'until' // n.b. need something here on recovery from empty Viewer, as events try before ready next time
@@ -183,7 +172,7 @@ export default {
         // fix why this even gets called soon...
         let sani = this.htmlSanitize(this.repoName);
 
-        sani = sani.replace(/-+/gi, " "); // TODO: I think this is not necessary since the _this.spaceDashes() method trims all the dashes including underscores better.
+        sani = sani.replace(/-+/gi, " ");
         sani = this.titleCase(this.spaceDashes(sani));
 
         if (sani.match(/mit/i)) {
@@ -198,13 +187,11 @@ export default {
     },
     summaryText: function() {
       // console.log ('summaryMarkdown: ' + store.getters.summaryMarkdown)
-      const summary = this.cleanFormatMarkdown(
+      return this.cleanFormatMarkdown(
         store.getters.summaryMarkdown,
         this.summaryImageFolder,
         this.repoTreeFolder
       );
-      // console.log(store.getters.summaryMarkdown);
-      return summary;
       // *todo* isn't this alternate call actually correct at this point?? -- fix
       // return this.htmlSanitize(
       //   store.getters.summaryMarkdown)
@@ -224,32 +211,39 @@ export default {
     },
     docsTexts() {
       let texts = new Array();
-      // this.designRepo.docs.folders[0].contents.files.forEach(file => {
-      this.designRepo.docs.entries[0].object.entries.forEach(file => {
-        // console.log('file: ' + JSON.stringify(file))
-        if (file.name.search(/\.md/) > 0) {
-          texts.push(
-            this.cleanFormatMarkdown(
-              this.htmlSanitize(file.object.text),
-              this.imageFolder,
-              this.repoTreeFolder
-            )
-          );
-        }
-      });
+      if (this.designRepo.docs && this.designRepo.docs.langs) {
+        // *todo* not '0' here - need to get actual lang in when we do langs....
+        // *todo* this old code should be called with the repo also
+        this.designRepo.docs.langs[0].content.items.forEach(file => {
+          // console.log('file: ' + JSON.stringify(file))
+          if (file.name.search(/\.md/) > 0) {
+            texts.push(
+              this.cleanFormatMarkdown(
+                this.htmlSanitize(file.item.text),
+                this.imageFolder,
+                this.repoTreeFolder
+              )
+            );
+          }
+        });
+        this.nrTexts = texts.length;
+      } else {
+        texts.push(
+          '<h2 style="text-align: center;">No Design Documents in this repo yet!</h2><br>'
+        );
+        this.nrTexts = 0; // no real ones...
+      }
 
-      // console.log("texts: " + JSON.stringify(texts));
-      this.nrTexts = texts.length;
       return texts;
     },
     imageFolder: function() {
-      const imageF =
+      return (
         "https://raw.githubusercontent.com/CombatCovid/" +
         this.repoName +
         "/" +
         this.repoBranch +
-        "/docs/";
-      return imageF;
+        "/docs/"
+      );
     },
     summaryImageFolder: function() {
       // console.log('summaryImageFolder: repoBranch: ' + this.repoBranch)
@@ -262,14 +256,13 @@ export default {
       );
     },
     repoTreeFolder: function() {
-      const repoTreeF =
+      return (
         "https://github.com/CombatCovid/" +
         this.repoName +
         "/tree/" +
         this.repoBranch +
-        "/";
-
-      return repoTreeF;
+        "/"
+      );
     },
     imagePath: function() {
       return this.imageFolder + "img/";
@@ -280,7 +273,15 @@ export default {
       }
 
       let imgUrl;
-      const summaryImage = this.designRepo.summaryImg;
+      let summaryImage = this.designRepo.summaryImg;
+      // *todo* same fixup as for store github and fauna, until upgrading schema
+      // console.log ('summaryImage type: ' + typeof summaryImage);
+      // console.log ('summaryImage: ' + JSON.stringify(summaryImage));
+      summaryImage =
+        summaryImage && typeof summaryImage === "object"
+          ? summaryImage.present
+          : summaryImage;
+
       const nameWithOwner = this.designRepo.nameWithOwner;
       const summaryJpg = "/summary.jpg";
 
@@ -299,21 +300,31 @@ export default {
 
       let images = new Array();
       let repoImages = null;
-      this.designRepo.docs.entries.forEach(file => {
-        if (file.lang === "img") {
-          repoImages = file.object.entries;
-        }
-      });
 
-      if (repoImages) {
-        repoImages.forEach(entry => {
-          if (entry.name.search(/jpg|png|jpeg|gif/i) > 0) {
-            images.push(this.imagePath + this.htmlSanitize(entry.name));
+      if (this.designRepo.docs && this.designRepo.docs.langs) {
+        // sometimes they don't even have this - Sterilo...
+        this.designRepo.docs.langs.forEach(folder => {
+          if (folder.lang === "img") {
+            repoImages = folder.content.items;
           }
         });
+      }
+
+      if (repoImages) {
+        repoImages.forEach(file => {
+          if (file.name.search(/jpg|png|jpeg|gif/i) > 0) {
+            images.push(this.imagePath + this.htmlSanitize(file.name));
+          }
+        });
+
+        // one of two ways to be empty - no folder, or no images...see just below
+        if (images.length <= 0) {
+          this.nrImages = 0;
+          return ["/resources/image/no-design-imgs-placeholder.png"];
+        }
       } else {
         this.nrImages = 0;
-        return null;
+        return ["/resources/image/no-design-imgs-placeholder.png"];
       }
 
       this.nrImages = images.length;
@@ -337,18 +348,6 @@ export default {
 };
 </script>
 
-// this was a temporary solution, as Gridsome supports just id and path
-// as query variables at this time. Probably the answer is axios in the
-// component build -- next to try, but need this out today. As long as
-// this is the way, then, it's a two-points-of truth solution.
-// To change the branch the app views,
-// - alter the tail of this query script name to either develop or master
-// - set the environmental GRIDSOME_REPO_BRANCH to match.
-
-//  *todo* but now this is legacy, as we have active wire and Vuex to remember
-<static-query>
-</static-query>
-
 <style lang="scss"  >
 @import "../sass/button.scss";
 /*
@@ -362,6 +361,7 @@ export default {
     cns/narration-sd 11Apr2020
 }  */
 @import "../sass/markdown.scss";
+@import "../sass/glide.scss";
 
 .slider-title {
   margin-top: 20px;
@@ -374,15 +374,15 @@ export default {
 .images-slide {
   /* these along with box-fix is absolutely essential: centering and
       fixing the aspect ratio, and at all media sizes, is half the key */
-  width: 72%;
+  @apply w-full;
   /*max-height: 600px;*/
   margin: 0 auto;
 }
 
-.slide-image {
-  width: 600px;
-  max-height: 600px;
-}
+// .slide-image {
+//   width: 600px;
+//   max-height: 600px;
+// }
 
 .docs-show-pane {
   margin-top: 2rem;
@@ -394,6 +394,13 @@ export default {
   width: 80%;
   margin: 0 10%;
 }
+
+@screen md {
+  .images-slide {
+    @apply w-3/5;
+  }
+}
+
 @media only screen and (min-width: 1601px) {
   .docs-slide {
     max-width: 1600px; /* 1600px;*/
@@ -439,7 +446,8 @@ export default {
 
 .design-image-hold {
   margin: 3% auto;
-  max-height: 66vw; /* *todo* careful - improves, but mind aspect ratio again - improve where/how later */
+
+  // max-height: 66vw; /* *todo* careful - improves, but mind aspect ratio again - improve where/how later */
 }
 
 .doc-title {
