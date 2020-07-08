@@ -4,15 +4,9 @@
       <div v-if="theDesign">
         <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
         <div v-if="imagesShow">
-          <vue-glide
-            class="md:mt-8"
-            :gap="50"
-            focusAt="center"
-            type="carousel"
-            :breakpoints="{800: { perView: 1, bullet:false }, 1200: { perView: 2, bullet:true }}"
-          >
-            <vue-glide-slide class v-for="(imagesImg, i) in imagesImgs" :key="i">
-              <img :src="imagesImg" alt="imagesImg" width="100%" />
+          <Vue-glide :perView="1" :gap="10" :rewind="false" type="slider">
+            <vue-glide-slide class="" v-for="(imagesImg, i) in imagesImgs" :key="i">
+              <img class="w-full md:w-2/3 lg:w-1/2 mx-auto" :src="imagesImg" alt="imagesImg" />
             </vue-glide-slide>
             <template class="flex justify-between" slot="control">
               <button class="slide-image__button" data-glide-dir="<"><</button>
