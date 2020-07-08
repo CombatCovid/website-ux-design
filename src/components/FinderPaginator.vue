@@ -72,8 +72,4 @@
   /* background-color: #F9FDFF !important; */
   box-shadow: 1px 15px 17px rgba(29, 53, 87, 0.15) !important;
 }
-<<<<<<< HEAD
 </style>
-=======
-</style>
->>>>>>> feature/cloudy-strength
