@@ -2,10 +2,10 @@
   <div class="">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
-        <h1 class="normal-h-size horiz-center">This design is: {{ summaryTitle }}</h1>
+        <h1 class="normal-h-size horiz-center"><span class="font-bold">This design is: </span> <span class="font-light">{{ summaryTitle }}</span></h1>
         <div v-if="imagesShow">
           <Vue-glide :perView="1" :gap="10" :rewind="false" type="slider">
-            <vue-glide-slide class="" v-for="(imagesImg, i) in imagesImgs" :key="i">
+            <vue-glide-slide class="pt-2" v-for="(imagesImg, i) in imagesImgs" :key="i">
               <img class="w-full md:w-2/3 lg:w-1/2 mx-auto" :src="imagesImg" alt="imagesImg" />
             </vue-glide-slide>
             <template class="flex justify-between" slot="control">
