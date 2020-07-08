@@ -1,7 +1,7 @@
 <template>
   <span>
     <div class="navbar w-screen h-16 fixed top-0 text-white hidden md:block z-20">
-      <div class="container flex items-center h-full">
+      <div class="container mx-auto flex items-center h-full">
         <g-link to="/" class="text-white-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
         <nav class="flex">
           <div
