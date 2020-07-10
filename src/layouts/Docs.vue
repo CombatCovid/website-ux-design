@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col min-h-screen">
     <Nav class=""/>
-    <div class="font-sans antialiased text-ui-typo bg-ui-background">
+    <div class="font-sans font-light antialiased text-ui-typo bg-ui-background">
       <div class="flex flex-col justify-start min-h-screen">
         <!-- <header
         ref="header"
@@ -166,7 +166,7 @@ h1,
 h2,
 h3,
 h4 {
-  @apply leading-snug font-black mb-4 text-ui-typo;
+  @apply leading-snug font-bold mb-4 text-ui-typo;
 
   &:hover {
     a::before {
