@@ -28,9 +28,9 @@ export default {
 footer {
   justify-self: flex-start;
 
-.footer-text {
-  text-align: center;
-}
+  .footer-text {
+    text-align: center;
+  }
 }
 
 @media only screen and (min-width: 1120px) {

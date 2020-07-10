@@ -1,7 +1,7 @@
 <template>
     <ais-pagination>
     <div
-      class="flex"
+      class="flex md:justify-center lg:justify-start"
             slot-scope="{
             currentRefinement,
             nbPages,
@@ -69,7 +69,7 @@
 }
 
 .paginator__btn:hover {
-    /* background-color: #F9FDFF !important; */
-    box-shadow: 1px 15px 17px rgba(29, 53, 87, 0.15) !important;
+  /* background-color: #F9FDFF !important; */
+  box-shadow: 1px 15px 17px rgba(29, 53, 87, 0.15) !important;
 }
 </style>

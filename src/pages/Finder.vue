@@ -7,14 +7,12 @@
             :search-client="searchClient"
             class=""
           >
-
             <ais-configure :hits-per-page.camel="hitsPerPage"/>
-            <!-- <ais-powered-by/> -->
-            <ais-search-box class="fixed z-50 w-full bg-gray-15 px-5 border border-solid border-gray-25">
+            <ais-search-box class="pt-8 md:pt-0 lg:fixed lg:z-50 w-full bg-gray-15 md:px-5 border border-solid border-gray-25">
               <div class="" slot-scope="{ currentRefinement, isSearchStalled, refine }">
-              <div class="md:flex md:flex-col lg:flex-row items-center pl-5 mb-2">
+              <div class="md:flex md:flex-col lg:flex-row items-center px-5 mb-2">
                   <div>
-                <h1 class="font-bold text-xl">FINDER</h1>
+                      <h1 class="hidden md:block font-bold text-xl">FINDER</h1>
                     <ais-powered-by/>
                   </div>
                 <div class="md:w-full lg:w-3/5">
@@ -25,12 +23,13 @@
                       <path d="M44.1006 44.4293L60.6714 61" stroke="#2D9CDB" stroke-width="4.83333" stroke-miterlimit="10" stroke-linecap="round"/>
                     </svg> -->
                     <input
-                      class="text-xl w-full"
+                      class="text-sm md:text-xl w-full"
                       type="search"
                       v-model="currentRefinement"
                       @input="refine($event.currentTarget.value)"
-                      placeholder="Type keywords like ventilator or 3D printing"
-                    ></input>
+                      placeholder="Type keywords like ventilator or 3D"
+                    >
+                    </input>
                     <span :hidden="!isSearchStalled">Loading...</span>
                     </div>
                   </div>
@@ -44,7 +43,7 @@
             </ais-search-box>
 
 
-            <ais-hits class="clear-above pt-24">
+            <ais-hits class="clear-above lg:pt-24">
               <div slot-scope="{ items }">
                 <div class="">
                   <div class="flex flex-wrap">
@@ -128,12 +127,13 @@
     width:100%;
   }
 
-  .finder__paginator{
-    display:flex;
-    flex-direction:row;
-    justify-content:center;
-    align-items:center;
-  }
+.searchBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
   .searchBox{
     width:100%;
@@ -142,7 +142,7 @@
     justify-content:center;
     align-items:center;
   }
-  
+
   .searchBox__input{
     /* border-style: solid; */
     background-color:white;
@@ -155,9 +155,9 @@
     width:100%;
   }
 
-  .searchBox__input > input{
-    width:80%;
-  }
+.searchBox__input > input {
+  width: 80%;
+}
 
 .searchBox__input:focus,
 input:focus {
@@ -167,45 +167,45 @@ input:focus {
   .searchForm{
     margin:3em;
   }
-  
+
   .searchbox {
     margin: 15px;
   }
 
-@media only screen and (min-width:1600px){
-  .finder__container{
-    width:85%;
-    margin:auto;
+@media only screen and (min-width: 1600px) {
+  .finder__container {
+    width: 85%;
+    margin: auto;
   }
 }
 
-@media only screen and (min-width:1000px){
-  .finder__header{
+@media only screen and (min-width: 1000px) {
+  .finder__header {
     /* width:100%; */
   }
-  
+
   .searchBox{
     display:flex;
     align-items:center;
     flex-direction:row;
     justify-content:center;
-    width:100%; 
+    width:100%;
     margin:0 auto;
     margin-top:1.5em;
     margin-bottom:2.5em;
   }
 
-  .searchBox__input{
-    width:600px;
-    margin-left:1em;
-    margin-right:1em;
-    padding:1em 0.5em 1em 1em;
-    font-size:1.3em;
+  .searchBox__input {
+    width: 600px;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 1em 0.5em 1em 1em;
+    font-size: 1.3em;
     border-radius: 10px;
   }
 
-  .searchBox span{
-    font-size:1em;
+  .searchBox span {
+    font-size: 1em;
   }
 }
 </style>

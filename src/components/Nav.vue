@@ -1,7 +1,7 @@
 <template>
   <span>
     <div class="navbar w-screen h-16 fixed top-0 text-white hidden md:block z-20">
-      <div class="container mx-auto max-w-5xl flex items-center h-full">
+      <div class="container mx-auto flex items-center h-full">
         <g-link to="/" class="text-white-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
         <nav class="flex">
           <div
@@ -27,8 +27,8 @@
       </div>
     </div>
 
-    <div class="navbar w-screen h-20 fixed top-0 text-white z-10 md:hidden">
-      <div class="container mx-auto max-w-5xl flex items-center justify-between h-full">
+    <div class="navbar w-screen h-16 fixed top-0 text-white z-10 md:hidden">
+      <div class="container px-2 sm:px-0 mx-auto flex items-center justify-between h-full">
         <g-link to="/" class="text-white-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
 
         <button class="mr-4" @click="toggleMenu">
@@ -140,8 +140,8 @@ export default {
           label: "Viewer"
         },
         {
-          name: "/documentation",
-          label: "Documentation"
+          name: "/docs",
+          label: "Docs"
         },
         { name: "/about", label: "About" }
       ]
@@ -209,13 +209,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  max-width: 64rem;
-}
-.test {
-  color: red !important;
-}
-
 .translate {
   animation: animate alternate 0.2s ease-in-out;
 }

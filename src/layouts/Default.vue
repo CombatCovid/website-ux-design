@@ -26,7 +26,7 @@ export default {
     Nav,
     Footer
   },
-  computed:{
+  computed: {
     currentPage: function() {
       return store.state.currentPage;
     }

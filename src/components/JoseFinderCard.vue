@@ -16,9 +16,9 @@
           >documentation</div>
           <div color="green">
             <a :href="getRepoZip(repo.nameWithOwner, repo.repoBranch)" target="_blank">download</a>
-          </div> -->
-        </div>
+      </div>-->
     </div>
+  </div>
 </template>
 
 <script>
@@ -73,19 +73,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-*{
+* {
   margin: auto;
-  text-align:left;
+  text-align: left;
 }
-a{
- text-decoration: none;
- color:white !important; 
+a {
+  text-decoration: none;
+  color: white !important;
 }
 
-.card{
-  position:relative;
-  height:350px;
-  cursor:pointer;
+.card {
+  position: relative;
+  height: 350px;
+  cursor: pointer;
 }
 
 .card__image {
@@ -108,10 +108,10 @@ a{
   padding-bottom: 0.8em;
 }
 
-.card__gradient{
-  position:relative;
-  display:inline-block;
-  width:100%;
+.card__gradient {
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
 /* 
@@ -160,13 +160,13 @@ Convert HEX to RGBA - http://hex2rgba.devoth.com/
   ); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002f4b', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
 }
-.card__gradient img{
-  display:block;
+.card__gradient img {
+  display: block;
 }
 
-@media only screen and (min-width:1200px){
-  .card__content{
-    padding:1.5em;
+@media only screen and (min-width: 1200px) {
+  .card__content {
+    padding: 1.5em;
   }
 }
 </style>
