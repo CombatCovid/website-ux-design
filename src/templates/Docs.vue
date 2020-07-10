@@ -6,7 +6,7 @@
           <!-- <OnThisPage /> -->
         </div>
 
-        <div class="order-1 w-full md:w-2/3">
+        <div class="border-1 w-full md:w-3/4">
           <div class="content" v-html="$page.docs.content" />
 
           <div class="mt-8 pt-8 lg:mt-12 lg:pt-12 border-t border-ui-border">
