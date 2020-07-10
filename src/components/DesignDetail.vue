@@ -2,8 +2,15 @@
   <div class="">
     <div v-if="!announcementNeeded">
       <div v-if="theDesign">
-        <h1 class="normal-h-size horiz-center"><span class="font-bold">This design is: </span> <span class="font-light">{{ summaryTitle }}</span></h1>
+        <h1 class="normal-h-size horiz-center pb-2"><span class="font-bold"></span> <span class="font-regular">{{ summaryTitle }}</span></h1>
         <div v-if="imagesShow">
+          <div class="flex justify-center">
+                <button
+                  class="btn"
+                  v-on="on"
+                  @click="popImages"
+                >Go back to image summary</button>
+              </div>
           <Vue-glide :perView="1" :gap="10" :rewind="false" type="slider">
             <vue-glide-slide class="pt-2" v-for="(imagesImg, i) in imagesImgs" :key="i">
               <img class="w-full md:w-2/3 lg:w-1/2 mx-auto" :src="imagesImg" alt="imagesImg" />
@@ -14,15 +21,15 @@
             </template>
           </vue-glide>
         </div>
-        <div v-else class="design-image-hold">
-          <div class="image-display-mask">
-            <div class="horiz-center doc-title fix-box temp-shift-small-screen" @click="popImages">
-              <template>
+        <div v-else class="">
+          <div class="">
+            <div class="horiz-center fix-box temp-shift-small-screen" @click="popImages">
+              <template class="mx-auto">
                 <button class="btn" xv-on="on">See all images</button>
               </template>
             </div>
-            <div class="images-slide">
-              <img :src="summaryImg" alt="summaryImg" class="design-image" />
+            <div class="py-2">
+              <img :src="summaryImg" alt="summaryImg" class="w-full md:w-2/3 lg:w-1/2 mx-auto" />
             </div>
           </div>
         </div>
