@@ -1,13 +1,12 @@
 <template>
   <div class="">
-    <div v-if="!announcementNeeded">
-      <div v-if="theDesign">
+    <div v-if="!repoError">
+      <div v-if="!loading">
         <h1 class="normal-h-size horiz-center pb-2"><span class="font-bold"></span> <span class="font-regular">{{ summaryTitle }}</span></h1>
         <div v-if="imagesShow">
           <div class="flex justify-center">
                 <button
                   class="btn"
-                  v-on="on"
                   @click="popImages"
                 >Go back to image summary</button>
               </div>
@@ -25,7 +24,7 @@
           <div class="">
             <div class="horiz-center fix-box temp-shift-small-screen" @click="popImages">
               <template class="mx-auto">
-                <button class="btn" xv-on="on">See all images</button>
+                <button class="btn"">See all images</button>
               </template>
             </div>
             <div class="py-2">
@@ -38,8 +37,8 @@
         <div v-if="docsShow" class="docs-show-pane">
           <div class="flex justify-center buttons doc-title">
             <button class="btn" @click="slideDocs('<')"><</button>
-            <template> 
-              <button class="btn" xv-on="on" @click="popDocs">Design Documents ({{ nrTexts }})</button>
+            <template>
+              <button class="btn" @click="popDocs">Design Documents ({{ nrTexts }})</button>
             </template>
             <button class="btn" @click="slideDocs('>')">></button>
           </div>
@@ -58,14 +57,14 @@
                   />
                 </div>
               </VueGlideSlide>
-              
+
             </VueGlide>
           </div>
         </div>
         <div v-else>
           <div class="flex justify-center">
             <template>
-              <button class="btn" @click="popDocs" xv-on="on">See full documentation</button>
+              <button class="btn" @click="popDocs">See full documentation</button>
             </template>
           </div>
           <div class="markdown container md:w-4/5 xl:w-1/2 xs:w-full">
@@ -74,13 +73,19 @@
           </div>
         </div>
       </div>
+      <div v-else  class="announcement-look">
+        <div class="announcement-frame">
+          <h2>Loading...</h2>
+        </div>
+      </div>
     </div>
     <div v-else class="announcement-look">
       <div class="announcement-frame">
         <h2>Greetings...</h2>
         <div class="announcement-message">
           <p>{{ announceMessage1 }}</p>
-          <p>{{ announceMessage2 }}</p>
+          <br> <!-- *todo* not design formatted yet because TailWind -->
+          <p>{{ repoError }}</p>
         </div>
       </div>
     </div>
@@ -104,9 +109,8 @@ export default {
   },
   data: function() {
     return {
-      announcementNeeded: false,
       announceMessage1: "announce1",
-      announceMessage2: "announce2",
+      // announceMessage2: this.repoError,
       theDesign: this.design, // this because we may mutate from the prop...
       nrTexts: 1,
       nrImages: 1,
@@ -117,23 +121,24 @@ export default {
   },
   mounted() {
     if (!this.theDesign || this.theDesign.length <= 0) {
-      this.theDesign = store.getters.lastRepoName; // so use it if had any
+      this.theDesign = store.getters.lastRepoName // so use it if had any
       if (!this.theDesign) {
         // still, then we'll need a Find first
-        this.announcementNeeded = true;
         this.announceMessage1 =
-          "It looks like it's the first time you've used this app on your browser, or after you've cleared its cache, so we don't yet know what you'd like the Viewer to show.";
-        this.announceMessage2 =
-          "Just use the Finder now, to choose your first Design. We'll show it -- and afterwards, we'll remember it, and any other Design which was the last one you viewed.";
+          "It looks like it's the first time you've used this app on your " +
+          "browser, or after you've cleared its cache, so we don't yet know " +
+          "what you'd like the Viewer to show."
+        store.dispatch('setRepoRequestError',
+          "Just use the Finder now, to choose your first Design. " +
+          "We'll show it -- and afterwards, we'll remember it, and " +
+          "any other Design which was the last one you viewed.")
       } else {
-        this.announcementNeeded = false;
-        store.dispatch("loadDesign", this.theDesign); // a good beginning, recovered via persistenc4e
+        store.dispatch('setRepoRequestError', null)
+        store.dispatch("loadDesign", this.theDesign, store.getters.lastRepoBranch) // a good beginning, recovered via persistenc4e
       }
     } else {
-      this.announcementNeeded = false;
-      // store.commit("setLastRepoName", this.theDesign);
-      store.dispatch("loadDesign", this.theDesign); // a good beginning
-      // console.log({ store });
+      store.dispatch('setRepoRequestError', null)
+      store.dispatch("loadDesign", this.theDesign) // a good beginning
     }
   },
   computed: {
@@ -151,9 +156,8 @@ export default {
         // console.log('DesignDetail:filtered: ' + JSON.stringify(filtered) )
         dRepo = filtered.length > 0 ? filtered[0] : null;
       }
-      if (dRepo) {
-        // console.log('DesignDetail:designRepo: ' + JSON.stringify(dRepo))
-        // console.log('DesignDetail:designRepo:: name ' + dRepo.name)
+      if (!dRepo) {
+        this.announceMessage1 = "Unable to retrieve the Design at this time..."
       }
 
       return dRepo;

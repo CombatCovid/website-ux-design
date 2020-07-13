@@ -35,6 +35,30 @@ const actualDevAccess = () => {
     : null
 }
 
+const errorsCheck = (result, attempting) => {
+  // CRITICAL: never console.log anywhere here, as could disclose access codes
+  if (!result) {
+    console.log(attempting + 'empty POST response')
+    throw new Error ('empty POST response')
+  } else if (typeof result.response !== 'object') { // got our benign hello world text instead...
+    throw new Error ('client isn\'t authorized')
+  } else if (result.errors) { // there can possibly be other errors
+    console.log (attempting + 'result:errors: ' + JSON.stringify(result.errors))
+    throw new Error (result.errors)
+  } else if (result.fault) { // or we can post error
+    console.log(attempting + 'result.fault: ' + result.fault)
+    throw new Error(result.fault)
+  }
+}
+
+const amplifyError = (e) => {
+  return e + (e.message.includes('Network Error')
+  || (e.message.includes('404'))
+  || (e.message.includes('Cancel'))
+    ? ' (check browser console for more information)'
+    : '')
+}
+
 // Our purpose here: to gain Algolia config, for where this is used, to enable Finder
 const setAlgoliaConfig = async () => {
 
@@ -57,25 +81,16 @@ const setAlgoliaConfig = async () => {
 
   await postTo (habitatUrl, headers, body)
     .then (async result => {
-      // CRITICAL: never console.log anywhere here, as could disclose access codes
-      if (!result) {
-        throw new Error ('empty POST response')
-      } else if (typeof result.response !== 'object') { // got our benign hello world text instead...
-        throw new Error ('client isn\'t authorized')
-      } else if (result.errors) { // there can possibly be other errors
-        throw new Error (result.errors)
-      } else if (result.response.fault) { // or we can post error
-        throw new Error (result.response.fault)
-      } else {
-        await store.dispatch('loadAlgoConfig', result) // always via dispatch
-      }
+      errorsCheck(result, 'getting Algolia config: ')
+      return result
+    })
+    .then (async result => {
+      await store.dispatch('loadAlgoConfig', result) // always via dispatch
     })
     .catch(e => { // direct axios errors, or ours thrown from result
       store.dispatch ('setAlgoConfig', {
         ready: false,
-        error: e + (e.message.includes('Network Error')
-          ? ' (check browser console for more information)'
-          : '')
+        error: amplifyError(e)
       })
     })
 }
@@ -98,27 +113,20 @@ const retrieveDesign = async (repoName, branch) => {
 
   const repoResult = await postTo (habitatUrl, headers, body)
     .then (result => {
-      if (!result) { // actual GraphQL errors -- and with GitHub, they can be there even with response
-        throw new Error ('empty POST response')
-      } else if (typeof result.response !== 'object') { // got our benign hello world text instead...
-        throw new Error ('client isn\'t authorized')
-      } else if (result.errors) { // there can possibly be other errors
-        throw new Error (result.errors)
-      }  else if (result.response.fault) { // internal operations faults
-        throw new Error (result.response.fault)
-      } else {
-        store.dispatch('loadDesignRepo', {
-          design: repoName,
-          repo: result.response,
-          errors: null
-        })
-        store.dispatch('setLastRepoName', repoName)
-        store.dispatch('setRepoRequestReady', true)
-      }
+      errorsCheck(result, 'retrieving Design info: ')
+      return result
+    })
+    .then (async result => {
+      store.dispatch('loadDesignRepo', {
+        design: repoName,
+        repo: result.response,
+        errors: null
+      })
+      store.dispatch('setLastRepoName', repoName)
+      store.dispatch('setRepoRequestReady', true)
     })
     .catch (e => { // direct axios errors, or ours thrown from result
-      console.log ('retrieveDesign: error: '+ e.message)
-      store.dispatch('setRepoRequestError', e.message)
+      store.dispatch('setRepoRequestError', amplifyError(e))
     })
 }
 
