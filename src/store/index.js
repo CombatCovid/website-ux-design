@@ -44,7 +44,7 @@ export default new Vuex.Store({
     currentAlgoAppId: safeEnv(process.env.GRIDSOME_ALGO_APPLICATION_ID, 'not-set'),
     currentAlgoSearchKey: safeEnv(process.env.GRIDSOME_ALGO_SEARCH_KEY, 'not-set'),
     currentAlgoAdminKey: safeEnv(process.env.GRIDSOME_ALGO_ADMIN_KEY, 'not-set'),
-    currentAlgoIndexesList: safeEnv(process.env.GRIDSOME_ALGO_INDEXES_LIST, 'not-set'),
+    currentAlgoIndexesList: safeEnv(process.env.GRIDSOME_ALGO_INDEXES_LIST, '{ "uninited": "not-set" }'),
 
     // Axios config
     currentAxiosWireTimeout: safeEnv(process.env.GRIDSOME_AXIOS_WIRE_TIMEOUT, 5000),
@@ -173,7 +173,7 @@ export default new Vuex.Store({
     loadDesignRepo ({ commit, state}, designRepo) {
       commit ('loadRepo', designRepo)
     },
-    async loadDesign ({ commit, state }, design, branch = 'develop') { // just for now, develop
+    async loadDesign ({ commit, state }, design, branch = 'develop') {
       if (!design || design.length <= 0) {
         console.log ('loadDesign: no design given to load!')
         // *todo* this will mostly work; fully when we browser-persist aspects of Vuex state
@@ -219,7 +219,7 @@ export default new Vuex.Store({
     algoAdminKey: state => state.currentAlgoAdminKey, // null if not any, normal & correct
     algoIndexesList: state => {
       let list = []
-      // console.log('initial: ' + state.currentAlgoIndexesList)
+      // console.log('initial indexes list: ' + state.currentAlgoIndexesList)
       try {
         list = JSON.parse(state.currentAlgoIndexesList)
       }
