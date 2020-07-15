@@ -120,6 +120,10 @@ export default {
     };
   },
   mounted() {
+    // always begin with the Loading... screen showing
+    store.dispatch('setRepoRequestReady', false)
+
+    // then we prepare, or announce a Finder choice if needed, covering the bases
     if (!this.theDesign || this.theDesign.length <= 0) {
       this.theDesign = store.getters.lastRepoName // so use it if had any
       if (!this.theDesign) {
