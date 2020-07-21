@@ -24,7 +24,7 @@
           <div class="">
             <div class="horiz-center fix-box temp-shift-small-screen" @click="popImages">
               <template class="mx-auto">
-                <button class="btn"">See all images</button>
+                <button class="btn">See all images</button>
               </template>
             </div>
             <div class="py-2">
@@ -283,9 +283,7 @@ export default {
 
       let imgUrl;
       let summaryImage = this.designRepo.summaryImg;
-      // *todo* same fixup as for store github and fauna, until upgrading schema
-      // console.log ('summaryImage type: ' + typeof summaryImage);
-      // console.log ('summaryImage: ' + JSON.stringify(summaryImage));
+
       summaryImage =
         summaryImage && typeof summaryImage === "object"
           ? summaryImage.present
@@ -296,7 +294,13 @@ export default {
 
       if (this.designRepo.isPrivate) {
         imgUrl = "/resources/image/private-placeholder.png";
-      } else if (summaryImage && summaryImage !== null) {
+      } else if (summaryImage && summaryImage === "Blob") {
+        // the condition here is tricky. In our ability to get anything out of GitHub GraphQL API
+        // the only thing properly returned is an object point to "Blob", but if it's missing,
+        // the whole object is replaced with null, which is unacceptable to a database expecting
+        // a structured object type. So we translate null to a fake object, having a string "null".
+        // this will not be equal to "Blob" on retrieval, so our condition properly fails.
+        // When it's "Blob", we know where to get it, which GitHub API decidedly does not.
         imgUrl = `https://raw.githubusercontent.com/${nameWithOwner}/${this.repoBranch}${summaryJpg}`;
       } else {
         imgUrl = "/resources/image/no-summary-img-placeholder.png";

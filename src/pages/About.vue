@@ -57,6 +57,17 @@
               email: combatcovid820@gmail.com
           </pre>
 
+          <h3>Cookies Statement</h3>
+          <p>
+            We use no cookies at all. We use a small cache in
+            persistent local storage to allow performance improvement,
+            and possible future features like repository bookmarks.
+          </p>
+          <p>
+            In none of these features is any data sent at all from
+            your browser, and we do not ask for any personal information
+            in any case, so privacy is assured.
+          </p>
           <h3>We ask you to kindly read our Cautionary Statement:</h3>
           <p>
             Please be careful to note, that while building with 3D Printing can be fun
