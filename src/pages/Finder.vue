@@ -65,7 +65,7 @@
           </ais-instant-search>
         </client-only>
       </div>
-      <div v-else-if="algoliaError">
+      <div v-else-if="algoliaError" class="announcement-frame">
         <h2>Sorry, we aren't able to connect at this time.</h2>
         <h2>{{ algoliaError }}</h2>
       </div>
@@ -217,4 +217,11 @@ input:focus {
     margin: 20px auto;
   }
 }
+
+  .announcement-frame {
+    width: 90%;
+    max-width: 700px;
+    margin: 40px auto;
+  }
+
 </style>

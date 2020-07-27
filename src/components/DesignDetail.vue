@@ -109,8 +109,7 @@ export default {
   },
   data: function() {
     return {
-      announceMessage1: "announce1",
-      // announceMessage2: this.repoError,
+      announceMessage1: "",
       theDesign: this.design, // this because we may mutate from the prop...
       nrTexts: 1,
       nrImages: 1,
@@ -513,6 +512,7 @@ export default {
 }
 
 .announcement-frame {
+  width: 90%;
   max-width: 700px;
   margin: 40px auto;
 }
