@@ -87,17 +87,21 @@
             should actively seek out, for any of the designs.</p>
 
           <p>Please be as aware and concerned also for where a given design may be
-          safe or effective in its use, as in the cautions that face shields mention.</p>
+            safe or effective in its <b><i>use</i></b>, as in the important
+            cautions that Face Shields designs mention.</p>
 
-          <p>You'll see why you'll want and will need to get best and constant advice
-            of those medical persons who will actually use your results, and
-            according to conditions in the situation where you may wish to build them.</p>
+          <p>You'll see why you'll want, and will need to get, the best and
+            constant advice of those medical persons who will actually use
+            your results, according to conditions in the situation where
+            you may wish to build them.</p>
 
-          <p>It's our intention to become as useful as possible on capabilities
-            and concerns, while you can see that the responsibility must remain
-            with you who use the designs. You must do so properly and with
-            informed due care, so that the best can come of your efforts,
-            providing for others through making medical equipment.</p>
+          <p>It's our intention to become as useful as possible on discovering
+            capabilities and concerns, while you can see that the responsibility
+            must remain with you who build from the designs. </p>
+
+          <p>You must do so properly and with informed due care, so that the best
+            can come of your efforts, providing for others through 3D printing
+            and constructing medical equipment.</p>
 
           <p>Thank you.</p>
         </div>
@@ -115,39 +119,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-  /*
-    *todo* all of this seems broken now, due to Tailwind, and in
-    the @media small screen version also.
-
-    This is the fix for universal offset problems with fixed menu bars
-    and links to anchors, compliments of
-    https://css-tricks.com/hash-tag-links-padding/#article-header-id-1
-
-    It needs to be used on every page that can be called through anchors,
-    within the scoped style block wherever one is used.
-  */
-
-  h1:before, h2:before, h3:before, h4:before {
-    display: block;
-    content: " ";
-    height: 60px;
-    margin-top: -60px;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  @media only screen and (min-width: 961px) {
-    h1:before, h2:before, h3:before, h4:before {
-      display: block;
-      content: " ";
-      margin-top: -82px;
-      height: 82px;
-      visibility: hidden;
-      pointer-events: none;
-    }
-  }
-
 
   /*
     *todo* somehow we should have Tailwind automatically doing normal markup as default...
@@ -196,6 +167,38 @@ export default {
   h1.top { /* *todo* this is where you want first of n behavior with Tailwind */
     @apply pt-0;
     @apply pb-2;
+  }
+
+  /*
+    *todo* all of this seems broken now, due to Tailwind??, and in
+    the @media small screen version also.
+
+    This is the fix for universal offset problems with fixed menu bars
+    and links to anchors, compliments of
+    https://css-tricks.com/hash-tag-links-padding/#article-header-id-1
+
+    It needs to be used on every page that can be called through anchors,
+    within the scoped style block wherever one is used.
+  */
+
+  h1:before, h2:before, h3:before, h4:before {
+    display: block;
+    content: " ";
+    height: 64px;
+    margin-top: -64px;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @media only screen and (min-width: 961px) {
+    h1:before, h2:before, h3:before, h4:before {
+      display: block;
+      content: " ";
+      margin-top: -82px;
+      height: 82px;
+      visibility: hidden;
+      pointer-events: none;
+    }
   }
 
   /*end linked anchor fix*/

@@ -43,7 +43,8 @@ footer {
 }
 
 .issues-msg {
-  max-width: 90%;
+  width: 90%;
+  max-width: 768px;
   margin: 0 auto;
 }
 
