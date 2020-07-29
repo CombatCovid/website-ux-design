@@ -1,13 +1,9 @@
+const sidebarConfig = require ('./sidebar.config.js');
+
 const tailwind = require('tailwindcss');
 // const purgecss = require('@fullhuman/postcss-purgecss');
 
 const postcssPlugins = [tailwind()];
-
-// if (process.env.NODE_ENV === 'production') {
-//   // postcssPlugins.push(purgecss(require('./postcss.config.js')));
-//   postcssPlugins.push(purgecss(require('./purgecss.config.js')));
-// }
-
 // This is where project configuration and plugin options are located.
 // Learn more: https://gridsome.org/docs/config
 
@@ -16,18 +12,27 @@ const postcssPlugins = [tailwind()];
 
 module.exports = {
   siteName: 'CombatCovid',
-  siteUrl: 'https://CombatCovid.github.io',
   // pathPrefix: '/SPA-website', // NO NO NO NO NO! At least for general use. Completely explodes the build manifest
+  
+  settings:{
+    sidebar: sidebarConfig,
+  },
   plugins: [
     {
-      use: '@gridsome/vue-remark',
+      use: '@gridsome/source-filesystem',
       options: {
-        typeName: 'Documentation', // Required
-        baseDir: './content/docs', // Where .md files are located
-        pathPrefix: '/docs', // Add route prefix. Optional
-        template: './src/templates/Docs.vue' // Optional
+        baseDir: './content',
+        path: '**/*.md',
+        typeName: 'Docs',
+        remark: {
+          externalLinksTarget: '_blank',
+          externalLinksRel: ['noopener', 'noreferrer'],
+          plugins: [
+            '@gridsome/remark-prismjs'
+          ]
+        }
       }
-    },
+    }
   ],
   css: {
     loaderOptions: {

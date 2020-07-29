@@ -3,9 +3,19 @@
     <p class="text-md text-white-100 text-center">
       &copy; {{ new Date().getFullYear() }} - The CombatCovid with Hardware Team
       License: GPL 2.0
+    </p>
+    <p class="text-md text-white-100 text-center">
       <b>
-        <g-link to="/about#impressum">Impressum</g-link>
+        <g-link to="/about#impressum">Impressum, Cookies, Cautionary Statement</g-link>
       </b>
+    </p>
+    <br>
+    <p class="text-md text-white-100 text-center issues-msg">
+      Should you find issues in using this application,
+      please report them in the Open Source way, on
+      <a href="https://github.com/CombatCovid/combat-covid-issues/issues" target="_blank">
+        <b><u>Combat Covid Issues</u></b></a>,
+      thank you.
     </p>
   </footer>
 </template>
@@ -31,6 +41,12 @@ footer {
   .footer-text {
     text-align: center;
   }
+}
+
+.issues-msg {
+  width: 80%;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 @media only screen and (min-width: 1120px) {

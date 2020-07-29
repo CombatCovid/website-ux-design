@@ -13,6 +13,13 @@ module.exports = {
           50: 'var(--primary50) !important',
           25: 'var(--primary25) !important',
         },
+        ui: {
+          background: 'var(--color-ui-background)',
+          sidebar: 'var(--color-ui-sidebar)',
+          typo: 'var(--color-ui-typo)',
+          primary: 'var(--color-ui-primary)',
+          border: 'var(--color-ui-border)'
+        },
         accent: {
           100: 'var(--accent100) !important',
           75: 'var(--accent75) !important',

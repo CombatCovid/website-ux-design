@@ -1,6 +1,5 @@
 <template>
-  <Layout class="pt-10">
-      <h1 class="text-center text-3xl">Viewer</h1>
+  <Layout class="pt-4">
       <div class="xmaster-detail">
           <HorizontalMD :design="design" :summaryDoc="summaryDoc" :summaryImage="summaryImage" />
       </div>

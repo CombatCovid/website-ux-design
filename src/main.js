@@ -1,7 +1,5 @@
 // This is the main.js file. Import global CSS and scripts here.
 // The Client API can be used here. Learn more: gridsome.org/docs/client-api
-import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css';
 import InstantSearch from 'vue-instantsearch';
 import DefaultLayout from '~/layouts/Default.vue';
 import HomeLayout from '~/layouts/Home.vue';
@@ -20,6 +18,11 @@ const appMixins = {
       // which is otherwise the best available
       // we do images first, as their match is more specific than similar-looking links
       // *todo* need also to fix docs.md so they are not links...!
+      // *todo* some upgrades needed for increasing repo docs complexities
+      // *todo* here's one: how to make the video play in new tab? Probably the
+      // answer we can give is to string match on youtube, youtu.be, other standards
+      // maybe even the word video in the label. Those are the available clues.
+      //  [![WATCH VIDEO HERE](../img/FRONT-VIDEO-ASSEMBLY.png)](https://youtu.be/DLQxyWLqXpQ)
       lines = this.fixAllMarkdownImages(
         this.stripFrontMatter(lines),
         site,
@@ -146,6 +149,15 @@ export default function(Vue, { router, head, isClient, appOptions }) {
       'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700;1,800;1,900&display=swap',
   });
 
+  router.beforeEach((to, _from, next) => {
+    head.meta.push({
+      key: 'og:url',
+      name: 'og:url',
+      content: process.env.GRIDSOME_BASE_PATH + to.path,
+    })
+    next()
+  })
+
   const opts = {
     icons: {
       iconfont: 'mdiSvg',
@@ -163,10 +175,8 @@ export default function(Vue, { router, head, isClient, appOptions }) {
   };
 
   Vue.mixin(appMixins);
-  Vue.use(Vuetify);
   Vue.use(InstantSearch);
 
-  appOptions.vuetify = new Vuetify(opts);
   Vue.component('Layout', DefaultLayout);
   Vue.component('HomeLayout', HomeLayout);
 }
