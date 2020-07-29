@@ -9,11 +9,12 @@
         <g-link to="/about#impressum">Impressum, Cookies, Cautionary Statement</g-link>
       </b>
     </p>
+    <br>
     <p class="text-md text-white-100 text-center issues-msg">
       Should you find issues in using this application,
       please report them in the Open Source way, on
-      <a href="https://github.com/CombatCovid/SPA-website/issues" target="_blank">
-      https://github.com/CombatCovid/SPA-website/issues</a>,
+      <a href="https://github.com/CombatCovid/combat-covid-issues/issues" target="_blank">
+        <b><u>Combat Covid Issues</u></b></a>,
       thank you.
     </p>
   </footer>
@@ -43,8 +44,8 @@ footer {
 }
 
 .issues-msg {
-  width: 90%;
-  max-width: 768px;
+  width: 80%;
+  max-width: 640px;
   margin: 0 auto;
 }
 
