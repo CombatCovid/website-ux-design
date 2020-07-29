@@ -1,13 +1,14 @@
 <template>
   <Layout>
     <div class="formal-look">
-      <h1 class="horiz-center top">Early Release notes:</h1>
+      <h1 class="horiz-center top">Release notes</h1>
       <div class="page-width horiz-center">
         <div class="page-content">
           <p>
-            Be sure to know that you're invited here on an initial release, fresh from
-            our design process with rapid implementation, and that the same
-            is likely true of the Design Documents you'll find and may use. </p>
+            We'd like you to know that you're invited here on an initial release,
+            fresh from our design process with rapid implementation, and that the
+            same is likely true of the Design Documents you'll find and may use.
+          </p>
           <p>In the present Covid circumstances, we've felt it's best
             to get what is useful out to be seen, into public view.
           </p>
@@ -17,17 +18,19 @@
             each with an image and a brief description to help you get an idea about it.</p>
           <p>
             Tapping on a card will bring up the Viewer on that design,
-            where you'll have a quick Summary, and then be ready to tap or click again,
-            into easy reading details over all Design visuals and text Documents.
+            where you'll have a quick Summary, and then be ready to tap or click
+            buttons for Details, into easy reading for all available Design visual
+            Images and text Documents.
           </p>
           <p>
             The Design Documents will usually include a link to visit the originators
-            own website, where you may download all the design's materials, which
-            usually include 3D Printing machine instructions, and often CAD files.
+            own website, where you may find even more detail, and download all the
+            design's materials, which usually include 3D Printing machine instructions,
+            and often additional items such as CAD files.
           </p>
           <p>
             With a tablet or phone, you can just swipe left or right, in the usual way,
-            to move rapidly through what's available -- or if you prefer, tap the
+            to move rapidly through what's available in Details -- or if you prefer, tap the
             arrow buttons that appear. On a laptop or other larger computer, you also can
             use your keyboard arrow buttons, to scroll right or left in a similar way.
           </p>
@@ -40,7 +43,7 @@
             are after, to make this application most useful for you.
           </p>
           <p>Thank you for visiting, and we hope what you find can be useful.</p>
-          <p style="margin-left: 20px;"> -- the Combat Covid with Hardware team.</p>
+          <p class="team-signature"> -- the Combat Covid with Hardware team.</p>
         </div>
         <div class="page-content">
           <h2 id="impressum">Impressum</h2>
@@ -223,6 +226,9 @@ export default {
   }
   .doc-title {
     padding: 0 20px 20px 20px;
+  }
+  .team-signature {
+    margin-left: 20px;
   }
   .formal-look {
     color: #1d5c87;

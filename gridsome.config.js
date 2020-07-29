@@ -1,3 +1,9 @@
+
+const webpack = require('webpack')
+const fs = require('fs')
+const packageJson = fs.readFileSync('./package.json')
+const version = JSON.parse(packageJson).version || 0
+
 const sidebarConfig = require ('./sidebar.config.js');
 
 const tailwind = require('tailwindcss');
@@ -13,7 +19,7 @@ const postcssPlugins = [tailwind()];
 module.exports = {
   siteName: 'CombatCovid',
   // pathPrefix: '/SPA-website', // NO NO NO NO NO! At least for general use. Completely explodes the build manifest
-  
+
   settings:{
     sidebar: sidebarConfig,
   },
@@ -45,5 +51,14 @@ module.exports = {
     const svgRule = config.module.rule('svg');
     svgRule.uses.clear();
     svgRule.use('vue-svg-loader').loader('vue-svg-loader');
+  },
+  configureWebpack: {
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env': {
+          GRIDSOME_CC_APP_VERSION: '"' + version + '"'
+        }
+      })
+    ]
   }
 }

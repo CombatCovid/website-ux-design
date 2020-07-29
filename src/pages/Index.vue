@@ -61,7 +61,7 @@
         </div>
       </div>
     </section>
-    
+
 
     <div class="bg-gray-15">
       <section class="container px-2 sm:px-0 mx-auto py-20">
@@ -93,21 +93,6 @@
           <h2 class="text-white text-2xl" v-html="item.title"></h2>
           <p class="text-white" v-html="item.subtitle"></p>
         </div>
-      </div>
-    </section>
-
-    <section class="relative py-20 bg-image w-full bg-primary-100">
-      <div class="container px-2 sm:px-0 mx-auto text-center z-20">
-        <h2 class="text-2xl text-white font-bold">NOTE</h2>
-        <p class="mt-6 text-white text-xl">
-          You're meeting the demonstration app of the Combat Covid with Hardware
-          project. This is a fast-moving Alpha production, so be reassured if
-          you find that items may move, appear, disappear, and at moments
-          perhaps not function entirely as you expected. We're moving rapidly
-          and constantly to add what's needed for early real use, and anything
-          unexpected will soon be repaired. Thank you for your patience, and
-          especially for your interest.
-        </p>
       </div>
     </section>
 
@@ -248,8 +233,7 @@ export default {
             "Help us reach the authors of solutions to update the content",
           icon: "InstantSearch"
         }
-      ],
-      faunaDbName: 'ccwh-repos-staging', // *todo* and deal with this hard-coded naming, spec'd habitat ident?
+      ]
     };
   }
 };

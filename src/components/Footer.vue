@@ -2,7 +2,7 @@
   <footer class="w-screen bg-primary-100 py-24">
     <p class="text-md text-white-100 text-center">
       &copy; {{ new Date().getFullYear() }} - The CombatCovid with Hardware Team
-      License: GPL 2.0
+      License: GPL 2.0, Version: {{ appVersion }}
     </p>
     <p class="text-md text-white-100 text-center">
       <b>
@@ -12,8 +12,8 @@
     <br>
     <p class="text-md text-white-100 text-center issues-msg">
       Should you find issues in using this application,
-      please report them in the Open Source way, on
-      <a href="https://github.com/CombatCovid/combat-covid-issues/issues" target="_blank">
+      please report them in the Open Source way, via
+      <a href="https://github.com/CombatCovid/combat-covid-issues" target="_blank">
         <b><u>Combat Covid Issues</u></b></a>,
       thank you.
     </p>
@@ -30,7 +30,12 @@ export default {
       { name: mdiDiscord, link: "https://discord.gg/rYHCBt" },
       { name: mdiGithub, link: "https://github.com/CombatCovid/SPA-website" }
     ]
-  })
+  }),
+  computed: {
+    appVersion: function () {
+      return this.pkgAppVersion() // process.env.GRIDSOME_CC_APP_VERSION
+    }
+  }
 };
 </script>
 

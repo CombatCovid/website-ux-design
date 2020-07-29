@@ -138,6 +138,12 @@ const appMixins = {
         ? string
         : string.substring(0, limit - ending.length) + ending;
     },
+    pkgAppVersion () {
+      const version = process.env.GRIDSOME_CC_APP_VERSION
+      return version && version !== 0
+        ? version
+        : '()'
+    }
   },
 };
 

@@ -1,5 +1,6 @@
 {
-  "name": "combat-covid",
+  "name": "combat-covid-web-app",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "gridsome build",
