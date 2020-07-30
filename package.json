@@ -33,7 +33,7 @@
     "yaml": "^1.10.0"
   },
   "devDependencies": {
-    "@mdi/js": "^5.4.45",
+    "@mdi/js": "^5.4.55",
     "lerna": "^3.22.0",
     "node-sass": "^4.14.0",
     "prettier": "^1.18.2",

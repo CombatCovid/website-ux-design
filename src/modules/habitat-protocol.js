@@ -38,7 +38,7 @@ const postTo = async (url, headers, body) => {
 
       // because server HTTP responses show up here, not as error
       const connFault = response.status === 200
-        ? null
+        ? response.fault // this is where we let Habitat say its own condition
         : response.status
 
       result = {

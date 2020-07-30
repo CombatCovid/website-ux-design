@@ -36,16 +36,32 @@ const actualDevAccess = () => {
 }
 
 const errorsCheck = (result, attempting) => {
-  // CRITICAL: never console.log anywhere here, as could disclose access codes
+  // *todo* review this area; had been marked CRITICAL: never console.log anywhere here, as
+  //  could disclose access codes, but I don't think that's true any more as Habitat
+  // now is the only place those codes appear, and a similar guard is in effect. But
+  // the range of possible errors, maybe a little wide, which keeps us anyway safe.
+  // Do check that all necessary JSON.stringify in the line of logging, reporting if needed.
+  // Primary GraphQL query error, and bad access keys have been checked, so the rest
+  // is relatively unimportant, but for completeness of knowledge, and likely future
+  // use, entire shakedown would be good.
   if (!result) {
     console.log(attempting + 'empty POST response')
     throw new Error ('empty POST response')
   } else if (typeof result.response !== 'object') { // got our benign hello world text instead...
+    console.log(attempting + 'client isn\'t authorized')
     throw new Error ('client isn\'t authorized')
   } else if (result.errors) { // there can possibly be other errors
-    console.log (attempting + 'result:errors: ' + JSON.stringify(result.errors))
+    console.log (attempting + 'result.errors: ' + JSON.stringify(result.errors))
     throw new Error (result.errors)
+  } else if (result.response.fault) { // or Habitat can post fault
+    console.log(attempting + 'result.response.fault: ' + result.response.fault)
+    throw new Error(result.response.fault)
+  } else if (result.response.errors) { // or Habitat can post fault
+    console.log(attempting + 'result.response.errors: ' + result.response.fault)
+    throw new Error(result.response.errors)
   } else if (result.fault) { // or we can post error
+    // *todo* Not at all sure this one still has validity; result.response.fault definitely has,
+    // *todo* and that is probably what this intended. Leaving in for release safety, but trace/discover
     console.log(attempting + 'result.fault: ' + result.fault)
     throw new Error(result.fault)
   }

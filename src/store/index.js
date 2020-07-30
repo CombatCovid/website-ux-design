@@ -186,7 +186,7 @@ export default new Vuex.Store({
           return;
         }
       }
-      console.log('actual loadDesign:design: ' + design)
+      // console.log('actual loadDesign:design: ' + design)
       // *todo* decide if we really want to set this here, or now, if unerred in retrieveDesign
       // commit('setLastRepoName', design) // this is where we remember it for next time
 
