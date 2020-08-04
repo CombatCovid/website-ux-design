@@ -1,5 +1,4 @@
 <template>
-          <v-flex class="ma-2" xs12 sm12 md4 lg4>
   <HomeLayout>
     <main class="w-screen bg-primary-100 bg-image">
       <div class="container px-2 sm:px-0 mx-auto py-32  md:flex md:pr-6">
