@@ -1,0 +1,48 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+:root {
+  /* Primary colors */
+  --primary100: #046fab;
+  --primary75: #3c8cb9;
+  --primary50: #74aac8;
+  --primary25: #adc8d7;
+
+  /* Accent colors */
+  --accent100: #5dba00;
+  --accent75: #82c83d;
+  --accent50: #a8d77a;
+  --accent25: #cde5b7;
+
+  /* Gray colors */
+  --gray100: #1d3557;
+  --gray75: #566881;
+  --gray50: #8e9aab;
+  --gray25: #c7cdd5;
+  --gray15: #f3f4f4;
+  --white100: #fffcf6;
+}
+
+* {
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  overflow-x: hidden !important;
+}
+
+.bg-image {
+  background: center linear-gradient(rgba(4, 110, 171, 0.644)),
+    url(/resources/image/doctors.jpg);
+  background-attachment: fixed;
+  background-position: center;
+}
+
+button,
+button:focus {
+  outline: none;
+}

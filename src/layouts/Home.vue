@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-col min-h-screen">
+  <div>
     <Nav />
-    <div class="flex-1 pt-16">
+    <template>
       <slot />
-    </div>
+    </template>
     <Footer />
   </div>
 </template>
@@ -11,13 +11,12 @@
 <static-query>
   query {
     metadata {
-      siteName
+              siteName
     }
   }
 </static-query>
 
 <script>
-import store from "~/store";
 import Nav from "~/components/Nav.vue";
 import Footer from "~/components/Footer";
 
@@ -25,17 +24,12 @@ export default {
   components: {
     Nav,
     Footer
-  },
-  computed: {
-    currentPage: function() {
-      return store.state.currentPage;
-    }
   }
 };
 </script>
 
 <style>
 footer {
-  /* justify-self: flex-start; */
+  justify-self: flex-start;
 }
 </style>

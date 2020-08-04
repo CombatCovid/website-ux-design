@@ -1,0 +1,18 @@
+[build]
+  command = "npm run build"
+  base = "/"
+  publish = "/dist"
+
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  # n.b. in some sense this is duplicate, but for any moments or changes, makes safe
+  # and in all cases, oh my, the formats. Better be careful. And...
+  # _none_ of these, here or for redirects, affects function headers
+  # at all. Their's are to be hard-coded in the callback.
+  for = "/*"
+    [headers.values]
+      X-From = "Combat Covid with Hardware"
+      X-Robots-Tag = '''
+      noindex,
+      nofollow
+      '''

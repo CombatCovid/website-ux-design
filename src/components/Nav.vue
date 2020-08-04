@@ -1,157 +1,154 @@
 <template>
-  <div>
-    <v-app-bar app dark color="dark-blue" :hide-on-scroll="hideWhen">
-      <span class="hidden-md-and-up">
-        <v-app-bar-nav-icon class="hidden-sg-and-up" @click="sidebar = !sidebar" color="blue"></v-app-bar-nav-icon>
-      </span>
-      <!--      <v-img src="/resources/image/combatcovid.png" max-width="50px"></v-img>-->
-
-      <v-toolbar-title>
-        <router-link to="/" tag="span" style="cursor: pointer">
-          <span class="bar-title">{{ $static.metadata.siteName }}</span>
-        </router-link>
-      </v-toolbar-title>
-
-      <v-list class="hidden-sm-and-down" v-for="(item) in items" :key="item.label">
-        <div v-if="item.label === 'Viewer' && !designRemembered">
-          <v-menu
-            nudge-right="-100"
-            nudge-bottom="20"
-            :v-model="false"
-            :disabled="false"
-            :absolute="false"
-            :open-on-hover="true"
-            :close-on-click="true"
-            :close-on-content-click="true"
-            :offset-x="false"
-            :offset-y="true"
+  <span>
+    <div class="navbar w-screen h-16 fixed top-0 text-white hidden md:block z-20">
+      <div class="container mx-auto flex items-center h-full">
+        <g-link to="/" class="text-white-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
+        <nav class="flex">
+          <div
+            :key="item.label"
+            v-for="item in items"
+            class="p-4 mx-2 text-primary-25 hover:text-white-100"
           >
-            <template v-slot:activator="{ on }">
-                <v-btn
-                  text
-                  v-on="on"
-                  color="red"
-                  :class="item.class"
-                  exact
-                  @click="firstTimeViewer = !firstTimeViewer"
-                >{{item.label}}</v-btn>
-            </template>
-            <NavTipMsg/>
+            <g-link
+              v-if="item.label == 'Home'"
+              exact
+              id="Home"
+              active-class="text-white-100 font-semibold"
+              :to="item.name"
+            >{{ item.label }}</g-link>
+            <g-link
+              v-else
+              exact
+              active-class="text-white-100 font-semibold"
+              :to="item.name"
+            >{{ item.label }}</g-link>
+          </div>
+        </nav>
+      </div>
+    </div>
 
-            <!-- <div class="menu-announcement-look horiz-center">
-              <div class="menu-announcement-frame">
-                <div class="menu-announcement-message">
-                  <h2>Hi, looks like you're new here, Welcome...</h2>
-                  <br>
-                  <h3>Use the Finder, please, and you can choose a Design</h3>
-                  <br>
-                  <p class="">(After the first time, we'll always remember it!)</p>
-                </div>
-              </div>
-            </div>-->
-          </v-menu>
+    <div class="navbar w-screen h-16 fixed top-0 text-white z-10 md:hidden">
+      <div class="container px-2 sm:px-0 mx-auto flex items-center justify-between h-full">
+        <g-link to="/" class="text-white-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
+
+        <button class="mr-4" @click="toggleMenu">
+          <svg
+            width="38"
+            height="27"
+            viewBox="0 0 38 27"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M36 9.88885H9.55554"
+              stroke="white"
+              stroke-width="3.77778"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M36 2.33331H2"
+              stroke="white"
+              stroke-width="3.77778"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M36 17.4445H2"
+              stroke="white"
+              stroke-width="3.77778"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M36 25H9.55554"
+              stroke="white"
+              stroke-width="3.77778"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="md:hidden fixed top-0 w-screen h-screen overflow-hidden z-10" v-if="isOpen">
+      <div
+        class="w-screen h-screen fixed overflow-hidden bg-primary-100 opacity-75"
+        @click="toggleMenu"
+      ></div>
+      <div
+        v-bind:class="{ translate: isOpen }"
+        class="h-screen w-4/6 z-20 bg-white fixed top-0 left-0 shadow-2xl p-6"
+      >
+        <div class="mb-6">
+          <g-link to="/" class="text-primary-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
         </div>
-        <div v-else>
-          <v-btn text :color="item.color" :class="item.class" exact :to="item.name">{{item.label}}</v-btn>
-        </div>
-      </v-list>
-      <v-spacer></v-spacer>
-      <v-menu left bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on" color="yellow">
-            <v-icon>{{ extrasIcon }}</v-icon>
-          </v-btn>
-        </template>
-      </v-menu>
-    </v-app-bar>
-    <v-navigation-drawer appf v-model="sidebar" temporary absolute width="200" id="drawer">
-      <v-list dense nav>
-        <div v-for="item in items" :key="item.name">
-          <div v-if="item.label === 'Viewer' && !designRemembered">
-            <v-menu
-              nudge-width="320"
-              nudge-bottom
-              :v-model="false"
-              :disabled="false"
-              :absolute="false"
-              :open-on-hover="true"
-              :close-on-click="true"
-              :close-on-content-click="true"
-              :offset-x="true"
-              :offset-y="true"
-            >
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  v-on="on"
-                  text
-                  color="red"
-                  :class="item.class"
-                  exact
-                  @click="firstTimeViewer = !firstTimeViewer"
-                >{{item.label}}</v-btn>
-              </template>
-              <NavTipMsg/>
-            </v-menu>
-          </div>
-          <div v-else>
-            <v-btn text :color="item.color" :class="item.class" exact :to="item.name">{{item.label}}</v-btn>
-          </div>
-        </div>
-      </v-list>
-    </v-navigation-drawer>
-  </div>
+
+        <nav class="flex flex-col">
+          <g-link
+            v-for="item in items"
+            :key="item.label"
+            exact
+            active-class="text-primary-25 font-bold hover:text-gray-100"
+            :to="item.name"
+            class="p-2 hover:bg-primary-25 rounded-md mx-2 text-gray-100 hover:font-semibold"
+          >{{ item.label }}</g-link>
+        </nav>
+      </div>
+    </div>
+  </span>
 </template>
 
 <static-query>
   query{
     metadata{
       siteName
+    },
+    allPage{
+      path
+    	context
     }
   }
 </static-query>
 
 <script>
-import store from "~/store";
+import { mapState, mapMutations } from "vuex";
 import { mdiDotsVertical, mdiDotsHorizontal } from "@mdi/js";
 import BookmarksMenu from "./BookmarksMenu";
-import NavTipMsg from "./NavTipMsg";
+import store from "~/store";
 
 export default {
   name: "Nav",
-  components: { BookmarksMenu, NavTipMsg },
+  components: { BookmarksMenu },
   data: function() {
     return {
-      sidebar: false,
-      choicesBar: false,
-      firstTimeViewer: false,
+      scrollPosition: null,
+      homePage: false,
+      isOpen: false,
       ccwhIcon: "/resources/images/combatcovid.png",
       extrasIcon: mdiDotsVertical,
       designIcon: mdiDotsHorizontal,
       items: [
-        { name: "/", label: "Home", color: "teal", class: "spaced-btn" },
+        { name: "/", label: "Home" },
         {
           name: "/finder",
-          label: "Finder",
-          color: "blue",
-          class: "soft-antwerp-light"
+          label: "Finder"
         },
         {
           name: "/viewer",
-          label: "Viewer",
-          color: "blue",
-          class: "soft-antwerp-light spaced-btn"
+          label: "Viewer"
         },
         {
-          name: "/documentation",
-          label: "Documentation",
-          color: "teal",
-          class: "spaced-btn"
+          name: "/docs",
+          label: "Docs"
         },
-        { name: "/about", label: "About", color: "teal", class: "spaced-btn" }
+        { name: "/about", label: "About" }
       ]
     };
   },
   computed: {
+    ...mapState(["currentPage"]),
     hideWhen: function() {
       if (typeof window !== "undefined") {
         const w =
@@ -165,83 +162,63 @@ export default {
     },
     designRemembered: function() {
       return store.getters.lastRepoName;
+    },
+    currentPage:() => {
+      return `${window.location.pathname}`;
     }
+  },
+  methods: {
+    changeOnScroll() {
+      /** Here we do it when is mounted with vanilla javascript */
+      let nav = document.getElementsByClassName("navbar");
+      let state = window.scrollY;
+
+      const isHomePage = window.location.pathname === "/";
+      if (state > 20 && isHomePage) {
+        nav.forEach(item => item.classList.add("bg-primary-100"));
+      } else {
+        if (state < 20 && isHomePage) {
+          nav.forEach(item => item.classList.remove("bg-primary-100"));
+        }
+      }
+    },
+    toggleMenu: function() {
+      this.isOpen = !this.isOpen;
+    },
+    setCurrentPage(){
+      store.dispatch('setPagePath', this.currentPage) // _never_ commit directly from Vue...
+    }
+  },
+  mounted() {
+    this.setCurrentPage();
+    let nav = document.getElementsByClassName("navbar");
+    let home = this.$el.querySelector("#Home");
+    // console.log(home.classList.contains("font-semibold"));
+    if (home.classList.contains("font-semibold")) {
+      window.addEventListener("scroll", this.changeOnScroll);
+    }
+    if (window.location.pathname !== "/") {
+      nav.forEach(item => item.classList.add("bg-primary-100"));
+    }
+    // else if(home.classList.contains('font-semibold')== false){
+    //   nav.classList.remove('bg-image')
+    //   // window.removeEventListener('scroll', this.changeOnScroll);
+    // }
   }
 };
 </script>
 
-<style scoped>
-a {
-  color: white;
-  text-decoration: none;
+<style lang="scss" scoped>
+.translate {
+  animation: animate alternate 0.2s ease-in-out;
 }
 
-a:visited {
-  color: white;
-}
-
-/* a:active{
-    background:red;
-  } */
-
-.bar-title {
-  font-size: small;
-  padding: 0 1em;
-}
-.below-bar {
-  margin-top: 60px;
-  padding: 10px;
-  background-color: white;
-}
-.momento {
-  background-color: white;
-  height: 400px;
-  padding: 10px;
-}
-.momento-text {
-  text-align: center;
-  vertical-align: center;
-}
-.spaced-btn {
-  margin: 0 2px;
-}
-.soft-antwerp-light {
-  color: #2b8cb4 !important;
-  margin: 2px;
-}
-
-.horiz-center {
-  margin: 0 auto;
-  text-align: center;
-}
-
-.menu-announcement-look {
-  background: linear-gradient(to right, rgb(86, 180, 211), rgb(52, 143, 80));
-  /*background: beige;*/
-  color: lightgoldenrodyellow;
-  /*color: #0c3e72;*/
-  padding: 40px;
-  margin: -20px;
-  overflow: hidden; /* no scrollbars, thank you */
-}
-
-.menu-announcement-frame {
-  max-width: 700px;
-  margin: 40px auto;
-}
-
-/* .menu-announcement-message {
-    margin: 40px;
-  } */
-
-@media only screen and (max-width: 640px) {
-  .menu-announcement-look {
-    padding: 20px;
-    margin: -20px;
+@keyframes animate {
+  from {
+    transform: translateX(-100%);
   }
-
-  .menu-announcement-message {
-    margin: 20px;
+  to {
+    transform: translateX(0);
   }
 }
 </style>
