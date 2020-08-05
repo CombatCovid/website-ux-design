@@ -2,20 +2,32 @@ module.exports = [
   {
     name: 'docs',
     sections: [
+      // {
+      //   title: 'Getting Started',
+      //   items: [
+      //     // '/docs/intro/',
+      //     // '/docs/installation/',
+      //     // '/docs/writing-content/',
+      //     // '/docs/deploying/',
+      //   ]
+      // },
       {
-        title: 'Getting Started',
+        title: 'Getting started',
         items: [
           '/docs/',
-          '/docs/installation/',
-          '/docs/writing-content/',
-          '/docs/deploying/',
+          '/docs/document/how-to/',
+          '/docs/document/p-example/'
+          // '/docs/sidebar/',
         ]
       },
+      // {
+      //   title: ''
+
+      // },
       {
-        title: 'Configuration',
-        items: [
-          '/docs/settings/',
-          '/docs/sidebar/',
+        title: 'Contribute to code',
+        items:[
+          '/docs/contrib/'
         ]
       }
     ]
