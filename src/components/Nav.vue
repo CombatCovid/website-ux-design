@@ -140,10 +140,10 @@ export default {
           label: "Viewer"
         },
         {
-          name: "/documentation",
+          name: "/docs",
           // *todo* n.b. this is where the switch to new Documentation will occur
           // name: "/docs",
-          label: "Documentation"
+          label: "Guide"
         },
         { name: "/about", label: "About" }
       ]
