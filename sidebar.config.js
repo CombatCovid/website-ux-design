@@ -2,32 +2,35 @@ module.exports = [
   {
     name: 'docs',
     sections: [
-      // {
-      //   title: 'Getting Started',
-      //   items: [
-      //     // '/docs/intro/',
-      //     // '/docs/installation/',
-      //     // '/docs/writing-content/',
-      //     // '/docs/deploying/',
-      //   ]
-      // },
       {
-        title: 'Getting started',
+        title: 'Introduction',
         items: [
+          '/docs/what-it-is/',
           '/docs/',
-          '/docs/document/how-to/',
-          '/docs/document/p-example/'
           // '/docs/sidebar/',
         ]
       },
-      // {
-      //   title: ''
-
-      // },
+      {
+        title: 'Document and Publish',
+        items:[
+          '/docs/publish/how-to/',
+          // '/docs/publish/p-example/',
+          '/docs/publish/translate/',
+          '/docs/publish/books/'
+        ]
+      },
       {
         title: 'Contribute to code',
         items:[
-          '/docs/contrib/'
+          '/docs/contrib/intro/',
+          '/docs/contrib/app-stack/',
+          // '/docs/contrib/issues/'
+        ]
+      },
+      {
+        title: 'Community',
+        items:[
+          '/docs/contrib/channels/'
         ]
       }
     ]
