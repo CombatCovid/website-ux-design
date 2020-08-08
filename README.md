@@ -1,7 +1,7 @@
 # Combat Covid 
 ## Easy to find hardware designs to replicate and combat covid19 around the world
 - 👉 Check the [contributing guidelines](https://github.com/CombatCovid/SPA-website/blob/develop/CONTRIB.md)
-- 👉 [Join the chat](https://discord.gg/HaXuRQ5)
+- 👉 [Join the chat on Discord](https://discord.gg/HaXuRQ5)
 - Take a look at the [project board](https://github.com/CombatCovid/SPA-website/projects/2?fullscreen=true)
 - If you want to focus on formating and compiling documentation [go here](https://github.com/CombatCovid/SPA-website/wiki/Getting-started)
 - Take over a feature in the issues
