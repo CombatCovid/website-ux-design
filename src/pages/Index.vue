@@ -27,10 +27,10 @@
               >Search for designs</button>
             </g-link>
 
-            <g-link to="/documentation#prepare">
+            <g-link to="/docs/publish/how-to/">
               <button
                 class="block md:inline-block py-2 px-6 border-2 border-white border-solid mt-4 w-full md:w-auto md:mt-0 md:ml-6 rounded-lg hover:shadow-xl font-bold text-white"
-              >Upload designs</button>
+              >Document a design</button>
             </g-link>
           </div>
         </div>
@@ -50,7 +50,7 @@
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
 
       <div class="grid md:grid-cols-2 gap-12 mt-16">
-        <g-link :to="item.link" class="card grid grid-cols-6" v-for="(item, i) in appFeatures" :key="i">
+        <g-link :to="item.link" class="card grid grid-cols-6 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" v-for="(item, i) in appFeatures" :key="i">
 
           <div class="col-span-5">
             <h2 class="text-gray-100 font-bold text-3xl" v-html="item.title"></h2>
@@ -163,33 +163,37 @@ export default {
           icon: "Search",
           link:"/finder"
         },
-        // {
-        //   title: "Download",
-        //   subtitle: "Download instantly the design you have chosen",
-        //   icon: "Download"
-        // },
-        // {
-        //   title: "Complete documentation",
-        //   subtitle: "Find guides, bill of materials, and images",
-        //   icon: "Document"
-        // },
-        // {
-        //   title: "Github based content delivery",
-        //   subtitle: "We use github powerful apis to build documents",
-        //   icon: "Github"
-        // },
-        // {
-        //   title: "Markdown based",
-        //   subtitle:
-        //     "Use Markdown interoperable format to export easily to different formats including epob, pdf, html",
-        //   icon: "Markdown"
-        // },
-
-        // {
-        //   title: "Standard",
-        //   subtitle: "Follow conventions for simple documentation",
-        //   icon: "Standard"
-        // }
+        {
+          title: "Download",
+          subtitle: "Download instantly the design you have chosen",
+          icon: "Download",
+          link:"/finder"
+        },
+        {
+          title: "Complete documentation",
+          subtitle: "Find guides, bill of materials, and images",
+          icon: "Document",
+          link:"/finder"
+        },
+        {
+          title: "Github based content delivery",
+          subtitle: "We use github powerful apis to build documents",
+          icon: "Github",
+          link:"/docs/contrib/intro/"
+        },
+        {
+          title: "Markdown based",
+          subtitle:
+            "Use Markdown interoperable format to export easily to different formats including epub, pdf, html",
+          icon: "Markdown",
+          link:"/docs/publish/how-to/"
+        },
+        {
+          title: "Standard",
+          subtitle: "Follow conventions for simple documentation",
+          icon: "Standard",
+          link:"/docs/publish/how-to/"
+        }
       ],
       documentation: [
         {
