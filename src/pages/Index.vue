@@ -35,12 +35,12 @@
           </div>
         </div>
 
-        <div class="flex-1 flex justify-center items-center relative mt-24 md:mt-0">
+        <!-- <div class="flex-1 flex justify-center items-center relative mt-24 md:mt-0">
           <div class="circle-transparent"></div>
           <button class="solid" v-on:click="isOpen = !isOpen">
             <Play />
           </button>
-        </div>
+        </div> -->
       </div>
     </main>
 
@@ -50,7 +50,8 @@
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
 
       <div class="grid md:grid-cols-2 gap-12 mt-16">
-        <div class="card grid grid-cols-6" v-for="(item, i) in appFeatures" :key="i">
+        <g-link :to="item.link" class="card grid grid-cols-6" v-for="(item, i) in appFeatures" :key="i">
+
           <div class="col-span-5">
             <h2 class="text-gray-100 font-bold text-3xl" v-html="item.title"></h2>
             <p class="text-gray-75 text-xl" v-html="item.subtitle"></p>
@@ -58,7 +59,8 @@
           <div>
             <component :is="item.icon" />
           </div>
-        </div>
+          
+        </g-link>
       </div>
     </section>
 
@@ -158,35 +160,36 @@ export default {
         {
           title: "Instant search",
           subtitle: `Go to FINDER and search for keywords like mask`,
-          icon: "Search"
+          icon: "Search",
+          link:"/finder"
         },
-        {
-          title: "Download",
-          subtitle: "Download instantly the design you have chosen",
-          icon: "Download"
-        },
-        {
-          title: "Complete documentation",
-          subtitle: "Find guides, bill of materials, and images",
-          icon: "Document"
-        },
-        {
-          title: "Github based content delivery",
-          subtitle: "We use github powerful apis to build documents",
-          icon: "Github"
-        },
-        {
-          title: "Markdown based",
-          subtitle:
-            "Use Markdown interoperable format to export easily to different formats including epob, pdf, html",
-          icon: "Markdown"
-        },
+        // {
+        //   title: "Download",
+        //   subtitle: "Download instantly the design you have chosen",
+        //   icon: "Download"
+        // },
+        // {
+        //   title: "Complete documentation",
+        //   subtitle: "Find guides, bill of materials, and images",
+        //   icon: "Document"
+        // },
+        // {
+        //   title: "Github based content delivery",
+        //   subtitle: "We use github powerful apis to build documents",
+        //   icon: "Github"
+        // },
+        // {
+        //   title: "Markdown based",
+        //   subtitle:
+        //     "Use Markdown interoperable format to export easily to different formats including epob, pdf, html",
+        //   icon: "Markdown"
+        // },
 
-        {
-          title: "Standard",
-          subtitle: "Follow conventions for simple documentation",
-          icon: "Standard"
-        }
+        // {
+        //   title: "Standard",
+        //   subtitle: "Follow conventions for simple documentation",
+        //   icon: "Standard"
+        // }
       ],
       documentation: [
         {
