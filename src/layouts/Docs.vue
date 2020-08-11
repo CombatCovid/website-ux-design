@@ -28,7 +28,7 @@
             </div>
           </aside>
 
-          <div class="w-full pt-16  pb-24 px-10" :class="{'pl-0 lg:pl-12 lg:w-3/4': hasSidebar}">
+          <div class="w-full pt-16 pb-24 lg:px-10" :class="{'pl-0 lg:pl-12 lg:w-3/4': hasSidebar}">
             <slot />
           </div>
         </main>
