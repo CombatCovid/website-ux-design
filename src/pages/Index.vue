@@ -33,7 +33,6 @@
               >Document a design</button>
             </g-link>
           </div>
-          
         </div>
         <!-- <div class="flex-1 flex justify-center items-center relative mt-24 md:mt-0">
           <div class="circle-transparent"></div>
@@ -65,6 +64,8 @@
         <h2
           class="text-center text-2xl md:text-3xl font-bold text-primary-75"
         >HOW TO DOCUMENT A SOLUTION</h2>
+        <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
+
         <div class="grid md:grid-cols-2 gap-12 mt-16">
           <div v-for="(item, i) in documentation" :key="i">
             <HomeCard
@@ -227,7 +228,8 @@ export default {
         },
         {
           title: "Identify new solutions",
-          subtitle: "Help us adding more solutions to the list and let us know in the chat",
+          subtitle:
+            "Help us adding more solutions to the list and let us know in the chat",
           icon: "InstantSearch",
           link: "https://discord.gg/KB3bwpw",
           blank: true
