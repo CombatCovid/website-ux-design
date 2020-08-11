@@ -145,7 +145,7 @@ export default {
           // name: "/docs",
           label: "Guide"
         },
-        { name: "/about", label: "About" }
+        { name: "/docs/contrib/release", label: "Release notes" }
       ]
     };
   },
