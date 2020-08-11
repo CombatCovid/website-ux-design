@@ -33,6 +33,7 @@
               >Document a design</button>
             </g-link>
           </div>
+          
         </div>
         <!-- <div class="flex-1 flex justify-center items-center relative mt-24 md:mt-0">
           <div class="circle-transparent"></div>
@@ -82,14 +83,11 @@
     <section class="container px-2 sm:px-0 mx-auto py-20">
       <h2
         class="text-center text-2xl md:text-3xl font-bold text-accent-75"
-      >CONTRIBUTE TO CODE AND MORE</h2>
+      >CONTRIBUTE TO THE PROJECT</h2>
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-accent-75" />
 
       <div class="grid md:grid-cols-3 gap-5 mt-16">
         <div v-for="(item, i) in contribute" :key="i">
-          <!-- <div v-for="(item) in contribute" :key="item.title" class="card bg-primary-100"> -->
-          <!-- <h2 class="text-white text-2xl" v-html="item.title"></h2> -->
-          <!-- <p class="text-white" v-html="item.subtitle"></p> -->
           <HomeCard
             styleBg="bg-primary-100"
             styleTitle="text-white text-2xl"
@@ -211,22 +209,28 @@ export default {
         {
           title: "Code",
           subtitle: "Help us work on new features",
-          icon: "InstantSearch"
+          icon: "InstantSearch",
+          link: "/docs/contrib/intro/"
         },
         {
           title: "Clinical feedback",
           subtitle: "Help us get feedback from experts on solutions",
-          icon: "InstantSearch"
+          icon: "InstantSearch",
+          link: "https://discord.gg/KB3bwpw",
+          blank: true
         },
         {
           title: "Translate",
           subtitle: "Translate to new languages",
-          icon: "InstantSearch"
+          icon: "InstantSearch",
+          link: "docs/publish/translate/"
         },
         {
           title: "Identify new solutions",
-          subtitle: "Help us adding more solutions to the list",
-          icon: "InstantSearch"
+          subtitle: "Help us adding more solutions to the list and let us know in the chat",
+          icon: "InstantSearch",
+          link: "https://discord.gg/KB3bwpw",
+          blank: true
         },
         {
           title: "Contact authors",

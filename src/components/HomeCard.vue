@@ -1,6 +1,7 @@
 <template>
-  
-  <g-link v-if="blank == false" :to="getLink(link,blank)"
+  <g-link
+    v-if="blank == false"
+    :to="getLink(link,blank)"
     :class="styleBg"
     class="card grid grid-cols-6 gap-2 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
   >
@@ -14,18 +15,20 @@
   </g-link>
 
   <!-- Blank page -->
-  <div v-else @click="getLink(link,blank)"
+  <div
+    v-else
+    @click="getLink(link,blank)"
+    :class="styleBg"
     class="card grid grid-cols-6 gap-2 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
   >
     <div class="col-span-5">
-      <h2 class="text-gray-100 font-bold text-3xl" v-html="title"></h2>
-      <p class="text-gray-75 text-xl" v-html="subtitle"></p>
+      <h2 :class="styleTitle" v-html="title"></h2>
+      <p :class="styleSubtitle" v-html="subtitle"></p>
     </div>
     <div>
       <component :is="getIcon(icon)" />
     </div>
   </div>
-  
 </template>
 <script>
 import InstantSearch from "~/assets/InstantSearch.svg";
@@ -85,33 +88,32 @@ export default {
     },
 
     // Style classes
-    styleBg:{
+    styleBg: {
       type: String,
       required: false,
       default: "card"
     },
-    styleTitle:{
+    styleTitle: {
       type: String,
       required: false,
       default: "text-gray-100 font-bold text-3xl"
     },
-    styleSubtitle:{
+    styleSubtitle: {
       type: String,
       required: false,
       default: "text-gray-75 text-xl"
-    },
+    }
   },
   data() {
     return {};
   },
   methods: {
     getIcon: function(icon) {
-      return icon? this.icon : null
+      return icon ? this.icon : null;
     },
-    getLink: function(link, blank){
-      return !blank? this.link : window.open(this.link, "_blank")
-    },
-    
+    getLink: function(link, blank) {
+      return !blank ? this.link : window.open(this.link, "_blank");
+    }
   }
 };
 </script>

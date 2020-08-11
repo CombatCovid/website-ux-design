@@ -3,6 +3,11 @@ description: ''
 sidebar: 'docs'
 ---
 # How to document a design
+## Prerequisites
+- In order for the content to show, you as a contributor need to [join the CombatCovid Github organization](https://github.com/CombatCovid).
+- We make sure to curate the quality of the context with reviewers, and once it meets these simple requirements it is added to our instant search service.
+
+## Example of well documented project
 [See this documentation example](https://github.com/CombatCovid/mit-emergency-ventilator). You can also download it to see the final result. 
 
 👉 See this repository example:[**Pulse Oximeter Arduino**](https://github.com/CombatCovid/Pulse-Oximeter-Arduino).

@@ -6,15 +6,18 @@ module.exports = [
         title: 'Introduction',
         items: [
           '/docs/what-it-is/',
+        ]
+      },
+      {
+        title: 'Motivation',
+        items: [
           '/docs/',
-          // '/docs/sidebar/',
         ]
       },
       {
         title: 'Document and Publish',
         items:[
           '/docs/publish/how-to/',
-          // '/docs/publish/p-example/',
           '/docs/publish/translate/',
           '/docs/publish/books/'
         ]
