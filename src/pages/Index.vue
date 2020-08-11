@@ -61,7 +61,7 @@
     </section>
 
     <div class="bg-gray-15">
-      <section class="container px-2 sm:px-0 mx-auto py-20">
+      <section class="container px-2 mx-auto py-20">
         <h2
           class="text-center text-2xl md:text-3xl font-bold text-primary-75"
         >HOW TO DOCUMENT A SOLUTION</h2>
