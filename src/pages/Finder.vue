@@ -65,10 +65,12 @@
           </ais-instant-search>
         </client-only>
       </div>
-      <div v-else-if="algoliaError">
+      <div v-else-if="algoliaError" class="announcement-frame">
         <h2>Sorry, we aren't able to connect at this time.</h2>
         <h2>{{ algoliaError }}</h2>
       </div>
+    <div v-else class="loadingBox">
+      <h2>Loading...</h2> <!-- *todo* needs some nicer formatting now w/ TailWind -->
     </div>
   </Layout>
 </template>
@@ -207,5 +209,19 @@ input:focus {
   .searchBox span {
     font-size: 1em;
   }
+
+  .loadingBox {
+    color: #0c3e72;
+    font-width: bold;
+    text-align: center;
+    margin: 20px auto;
+  }
 }
+
+  .announcement-frame {
+    width: 90%;
+    max-width: 700px;
+    margin: 40px auto;
+  }
+
 </style>

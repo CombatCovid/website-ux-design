@@ -141,9 +141,11 @@ export default {
         },
         {
           name: "/docs",
-          label: "Docs"
+          // *todo* n.b. this is where the switch to new Documentation will occur
+          // name: "/docs",
+          label: "Guide"
         },
-        { name: "/about", label: "About" }
+        { name: "/docs/contrib/release", label: "Release notes" }
       ]
     };
   },

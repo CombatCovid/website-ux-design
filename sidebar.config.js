@@ -3,19 +3,37 @@ module.exports = [
     name: 'docs',
     sections: [
       {
-        title: 'Getting Started',
+        title: 'Introduction',
         items: [
-          '/docs/',
-          '/docs/installation/',
-          '/docs/writing-content/',
-          '/docs/deploying/',
+          '/docs/what-it-is/',
+          '/docs/contrib/release/',
         ]
       },
       {
-        title: 'Configuration',
+        title: 'Motivation',
         items: [
-          '/docs/settings/',
-          '/docs/sidebar/',
+          '/docs/',
+        ]
+      },
+      {
+        title: 'Document and Publish',
+        items:[
+          '/docs/publish/how-to/',
+          '/docs/publish/translate/',
+          '/docs/publish/books/'
+        ]
+      },
+      {
+        title: 'Contribute to code',
+        items:[
+          '/docs/contrib/intro/',
+          '/docs/contrib/app-stack/',
+        ]
+      },
+      {
+        title: 'Community',
+        items:[
+          '/docs/contrib/channels/'
         ]
       }
     ]

@@ -1,57 +1,29 @@
 ---
 description: ''
 sidebar: 'docs'
-next: '/docs/installation/'
+# next: '/docs/document/how-to/'
 ---
 
-# Introduction
+# How we want to help
 
-Docc is a starter theme for [Gridsome](https://gridsome.org/) which is a static site generator powered by Vue. It allows you to quickly start writing your technical documentation for any kind of project.
+Around the world many initiatives are have been trying to mitigate the shortage of equipment and accessories to treat covid19.
+Many designs and groups working on them have been released in various ways and formats. This has been happening through different channels, websites. Here is a short [**list of initiatives**](https://openhardware4.me/open-hardware-leaders.github.io/covid19.html).
 
-## Fast by default
+**The problem we are trying to solve**: The designs(data) being generated is not easy to find, is in different languages, and when it scales to many people participating it becomes a maze of content. Currently the formats, channels and threads are difficult to follow and understand due to the urgency of the moment. We would like to help to improve the process of finding, deciding upon, replicating and deploying these equipments.
 
-This is the catchphrase of Gridsome and true in any sense of the word. Static site generators output plain html files and have other great features like image processing and lazy-loading. After Serving the initial html, Gridsome site turn into a snappy single page application.
+## Our goal
+We would like to help by improving the process of discovering, assessing, and comparing the various projects that are available. This would enable those in need to quickly move on to building the necessary equipment.
 
-If I may quote Gridsome themselves:
+> We are also a group of developer enthusiasts that wanted to put our capacities together to do something relevant during this pandemic. Another ancillary goal in our community is to learn and contribute to open source.
 
-> Gridsome builds ultra performance into every page automatically. You get code splitting, asset optimization, progressive images, and link prefetching out of the box. With Gridsome you get almost perfect page speed scores by default.
+## How it works
+ We use github to publish content, and git to manage version control. We also have a chat where people contributing can ask questions
 
-In combination with [Netlify](https://www.netlify.com/) this theme gives you a perfect Lighthouse score out of the box.
+## What we want to do with this solution
+- Improve accessibility of the current designs
+- Make easy for contributors to generate replication guides and protocols
+  - Experts and lead engineers should be guiding on how to replicate and test this equipment
+- Internationalize the documentation with different languages
 
-## Simple Navigation
 
-Any good documentation has great navigation. This theme has support for an organized sidebar fore cross-page navigation as well as an autmatic generated table of contents for each page in your documentation.
 
-## Search
-
-The search component which is shipped with this theme, automatically indexes all headlines in your markdown pages and provides instant client side search powered by [Fuse.js](https://fusejs.io/).
-
-## Dark Mode
-
-This seems to be a must have for any site in current year. Click the icon at the top of the page and try it out for yourself!
-
-## TailwindCSS
-
-This starter uses [TailwindCSS](https://tailwindcss.com/) for layout and styling. You can easily configure it by editing the `tailwind.config.js` file. [PurgeCSS](https://purgecss.com/) is included as well to keep the bundle size as low as possible and the website fast and snappy!
-
-### Changing Colors
-
-The most inportant colors are defined in the `src/layouts/Default.vue` file at the top of the `style` block via CSS variables. If you want to change the primary color to orange for example, you would simply touch that value there.
-
-```css
-:rrot {
-  --color-ui-primary: theme('colors.orange.600');
-}
-```
-
-## Make it your own
-
-Of course this is just a starter to quickly get you going. After downloading and installing you can do whatever you want with this theme. Check out the `src` folder and take a look at the components.
-
-Docc uses [TailwindCSS](https://tailwindcss.com/). Colors and spacing can easily configured. To change the accent color, you only need to touch a single line in the code.
-
-Don't like how something was designed or implemented? Just change the code and **make it your way**.
-
-### Contribute
-
-If you find any spelling mistakes or have improvements to offer, I am open to anyone who has ideas and wants to contribute to this starter theme.

@@ -18,48 +18,47 @@ const safeEnv = (value, preset) => { // don't use words like default...
 
 const postTo = async (url, headers, body) => {
 
-  const axiosWireTimeout = Number(safeEnv (process.env.AXIOS_WIRE_TIMEOUT, 5000))
+  // normally this will never get hit -- would mean some kind of Netlify/Habitat hang
+  // plain web didn't connect on bad url looks like handled by Algolia stream DNS result
+  const axiosWireTimeout = Number(safeEnv (process.env.AXIOS_WIRE_TIMEOUT, 20000))
 
-  // n.b. the cancel token is _essential_ logic to cause an actual timeout from
-  // axios's hung promise if instead of a server answering, there is no
-  // response at all. Without it, the app -- and the web browser --
-  // until the alert comes up to shut down the window or tab.
-  // Promise cancellation is done this way, at least by Axios now
-  const CancelToken = axios.CancelToken
-  const source = CancelToken.source(function (c) {
-    console.log ('Cancelling as no connection occurred: ' + c)
-  })
-
-  const timeoutID = setTimeout(() => {
-    source.cancel()
-  }, axiosWireTimeout)
-
-  // console.log('headers: ' + JSON.stringify(headers))
   const config = {
     method: 'post',
     url: url,
     data: body,
     headers: headers,
-    timeout: axiosWireTimeout + 1000,
-    cancelToken: source.token
+    timeout: axiosWireTimeout,
+    validateStatus: status => true
   }
 
   let result = null
 
-  await axios(config)
+  return await axios(config)
     .then(response => {
+
+      // because server HTTP responses show up here, not as error
+      const connFault = response.status === 200
+        ? response.fault // this is where we let Habitat say its own condition
+        : response.status
+
       result = {
         response: response.data,
+        fault: connFault,
         errors: response.errors // GraphQl always can have some, making this non-null
       }
+      return result
     })
-    // no .catch here, as in other places where we want the simple error to propate to lower handler
-    .finally(() => {
-      clearTimeout(timeoutID) // always
+    // actually axios does need a catch here, for network errors like bad url
+    .catch(err => {
+      const msg = JSON.stringify(err.toString())
+      result = { // this time it's due to axios report
+        response: {}, // so we're treated as if no POST response in handling
+        errors: null,
+        fault: msg
+      }
+      return result
     })
-  return result
 }
-
 
 //  the intent is that you will always check for result.error before using result
 const handleResponseData = (responseData) => {

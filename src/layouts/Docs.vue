@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col min-h-screen">
     <Nav class=""/>
-    <div class="font-sans antialiased text-ui-typo bg-ui-background">
+    <div class="font-sans font-light antialiased text-ui-typo bg-ui-background">
       <div class="flex flex-col justify-start min-h-screen">
         <!-- <header
         ref="header"
@@ -28,7 +28,7 @@
             </div>
           </aside>
 
-          <div class="w-full pt-16  pb-24 px-10" :class="{'pl-0 lg:pl-12 lg:w-3/4': hasSidebar}">
+          <div class="w-full pt-16 pb-24 lg:px-10" :class="{'pl-0 lg:pl-12 lg:w-3/4': hasSidebar}">
             <slot />
           </div>
         </main>
@@ -166,7 +166,7 @@ h1,
 h2,
 h3,
 h4 {
-  @apply leading-snug font-black mb-4 text-ui-typo;
+  @apply leading-snug font-bold mb-4 text-ui-typo;
 
   &:hover {
     a::before {
