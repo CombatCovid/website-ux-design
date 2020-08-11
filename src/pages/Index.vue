@@ -1,7 +1,7 @@
 <template>
   <HomeLayout>
     <main class="w-screen bg-primary-100 bg-image">
-      <div class="container px-2 sm:px-0 mx-auto py-32  md:flex md:pr-6">
+      <div class="container px-2 sm:px-0 mx-auto py-32 md:flex md:pr-6">
         <div class="flex-3 mt-20 md:mt-0">
           <h1
             class="text-white font-semibold text-3xl md:text-5xl"
@@ -34,36 +34,30 @@
             </g-link>
           </div>
         </div>
-
         <!-- <div class="flex-1 flex justify-center items-center relative mt-24 md:mt-0">
           <div class="circle-transparent"></div>
           <button class="solid" v-on:click="isOpen = !isOpen">
             <Play />
           </button>
-        </div> -->
+        </div>-->
       </div>
     </main>
 
     <section class="container px-2 sm:px-0 mx-auto py-20">
       <h2 class="text-center text-2xl md:text-3xl font-bold text-primary-75">HOW THE APP WORKS</h2>
-
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
-
       <div class="grid md:grid-cols-2 gap-12 mt-16">
-        <g-link :to="item.link" class="card grid grid-cols-6 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" v-for="(item, i) in appFeatures" :key="i">
-
-          <div class="col-span-5">
-            <h2 class="text-gray-100 font-bold text-3xl" v-html="item.title"></h2>
-            <p class="text-gray-75 text-xl" v-html="item.subtitle"></p>
-          </div>
-          <div>
-            <component :is="item.icon" />
-          </div>
-          
-        </g-link>
+        <div v-for="(item, i) in appFeatures" :key="i">
+          <HomeCard
+            :link="item.link"
+            :blank="item.blank"
+            :icon="item.icon"
+            :title="item.title"
+            :subtitle="item.subtitle"
+          ></HomeCard>
+        </div>
       </div>
     </section>
-
 
     <div class="bg-gray-15">
       <section class="container px-2 sm:px-0 mx-auto py-20">
@@ -71,14 +65,15 @@
           class="text-center text-2xl md:text-3xl font-bold text-primary-75"
         >HOW TO DOCUMENT A SOLUTION</h2>
         <div class="grid md:grid-cols-2 gap-12 mt-16">
-          <div class="card grid grid-cols-6" v-for="(item, i) in documentation" :key="i">
-            <div class="col-span-6 sm:col-span-5">
-              <h2 class="text-gray-100 font-bold text-3xl" v-html="item.title"></h2>
-              <p class="text-gray-75 text-xl" v-html="item.subtitle"></p>
-            </div>
-            <div>
-              <component class="my-2" :is="item.icon" />
-            </div>
+          <div v-for="(item, i) in documentation" :key="i">
+            <HomeCard
+              bg
+              :link="item.link"
+              :blank="item.blank"
+              :icon="item.icon"
+              :title="item.title"
+              :subtitle="item.subtitle"
+            ></HomeCard>
           </div>
         </div>
       </section>
@@ -91,9 +86,19 @@
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-accent-75" />
 
       <div class="grid md:grid-cols-3 gap-5 mt-16">
-        <div v-for="(item) in contribute" :key="item.title" class="card bg-primary-100">
-          <h2 class="text-white text-2xl" v-html="item.title"></h2>
-          <p class="text-white" v-html="item.subtitle"></p>
+        <div v-for="(item, i) in contribute" :key="i">
+          <!-- <div v-for="(item) in contribute" :key="item.title" class="card bg-primary-100"> -->
+          <!-- <h2 class="text-white text-2xl" v-html="item.title"></h2> -->
+          <!-- <p class="text-white" v-html="item.subtitle"></p> -->
+          <HomeCard
+            styleBg="bg-primary-100"
+            styleTitle="text-white text-2xl"
+            styleSubtitle="text-white"
+            :link="item.link"
+            :blank="item.blank"
+            :title="item.title"
+            :subtitle="item.subtitle"
+          ></HomeCard>
         </div>
       </div>
     </section>
@@ -119,19 +124,7 @@
 
 <script>
 import Virus from "~/assets/Virus.svg";
-import Play from "~/assets/Play.svg";
-import InstantSearch from "~/assets/InstantSearch.svg";
-import Download from "~/assets/Download.svg";
-import Github from "~/assets/Github.svg";
-import Learn from "~/assets/Learn.svg";
-import Search from "~/assets/Search.svg";
-import Lock from "~/assets/Lock.svg";
-import Document from "~/assets/Document.svg";
-import Markdown from "~/assets/Markdown.svg";
-import People from "~/assets/People.svg";
-import Osh from "~/assets/Osh2.svg";
-import Standard from "~/assets/Standard.svg";
-import Validate from "~/assets/Audit.svg";
+import HomeCard from "~/components/HomeCard.vue";
 
 export default {
   metaInfo: {
@@ -139,19 +132,7 @@ export default {
   },
   components: {
     Virus,
-    Play,
-    InstantSearch,
-    Download,
-    Github,
-    Learn,
-    Search,
-    Lock,
-    Document,
-    Markdown,
-    People,
-    Osh,
-    Standard,
-    Validate
+    HomeCard
   },
   data() {
     return {
@@ -161,38 +142,44 @@ export default {
           title: "Instant search",
           subtitle: `Go to FINDER and search for keywords like mask`,
           icon: "Search",
-          link:"/finder"
+          link: "/finder",
+          blank: false
         },
         {
           title: "Download",
           subtitle: "Download instantly the design you have chosen",
           icon: "Download",
-          link:"/finder"
+          link: "/finder",
+          blank: false
         },
         {
           title: "Complete documentation",
           subtitle: "Find guides, bill of materials, and images",
           icon: "Document",
-          link:"/finder"
+          link: "/finder",
+          blank: false
         },
         {
           title: "Github based content delivery",
           subtitle: "We use github powerful apis to build documents",
           icon: "Github",
-          link:"/docs/contrib/intro/"
+          link: "/docs/contrib/intro/",
+          blank: false
         },
         {
           title: "Markdown based",
           subtitle:
             "Use Markdown interoperable format to export easily to different formats including epub, pdf, html",
           icon: "Markdown",
-          link:"/docs/publish/how-to/"
+          link: "/docs/publish/how-to/",
+          blank: false
         },
         {
           title: "Standard",
           subtitle: "Follow conventions for simple documentation",
           icon: "Standard",
-          link:"/docs/publish/how-to/"
+          link: "/docs/publish/how-to/",
+          blank: false
         }
       ],
       documentation: [
@@ -200,17 +187,24 @@ export default {
           title: "Learn to document open hardware",
           subtitle:
             "We help you with a starting template, resources and community support",
-          icon: "Osh"
+          icon: "Osh",
+          link: "/docs/publish/how-to/"
         },
         {
           title: "Review and validate",
-          subtitle: "Make sure we are uploading a solution that is effective",
-          icon: "Validate"
+          subtitle:
+            "Make sure we are uploading a solution that is effective by getting feedback",
+          icon: "Validate",
+          link: "https://discord.gg/KB3bwpw",
+          blank: true
         },
         {
           title: "Get community help",
-          subtitle: "We have a team of contributors that can help you",
-          icon: "People"
+          subtitle:
+            "We have a team of contributors that can help you, join our chat group",
+          icon: "People",
+          link: "https://discord.gg/KB3bwpw",
+          blank: true
         }
       ],
       contribute: [
@@ -265,11 +259,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   @apply absolute flex justify-center items-center rounded-full bg-accent-75 cursor-pointer;
-}
-
-.card {
-  min-height: 172px;
-  @apply shadow-lg bg-white-100 p-6 rounded-lg;
 }
 
 .iframe {
