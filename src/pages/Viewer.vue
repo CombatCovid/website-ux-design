@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .li {
   margin-bottom: 1em !important;
 }

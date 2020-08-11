@@ -75,7 +75,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 /*
   *todo* somehow we should have Tailwind automatically doing normal markup as default...
