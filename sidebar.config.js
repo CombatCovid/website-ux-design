@@ -28,6 +28,8 @@ module.exports = [
         items:[
           '/docs/contrib/intro/',
           '/docs/contrib/app-stack/',
+          '/docs/contrib/issues/',
+
         ]
       },
       {

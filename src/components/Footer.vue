@@ -13,7 +13,7 @@
     <p class="text-md text-white-100 text-center issues-msg">
       Should you find issues in using this application,
       please report them in the Open Source way, via
-      <a href="https://github.com/CombatCovid/website-ux-design/issues" target="_blank">
+      <a href="https://github.com/CombatCovid/combat-covid-issues/issues" target="_blank">
         <b><u>Combat Covid Issues</u></b></a>,
       thank you.
     </p>
