@@ -19,7 +19,7 @@ const postcssPlugins = [tailwind()];
 module.exports = {
   siteName: 'CombatCovid',
   // pathPrefix: '/SPA-website', // NO NO NO NO NO! At least for general use. Completely explodes the build manifest
-
+  siteDescription: 'Combat Covid is a web application to help you discover, investigate, and obtain open source designs so that you can produce medical equipment to fit needs in your area, for dealing with the Covid-19 virus.',
   settings:{
     sidebar: sidebarConfig,
   },
