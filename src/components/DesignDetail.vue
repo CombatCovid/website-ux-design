@@ -360,7 +360,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../sass/button.scss";
 /*
     here are the filter-translated equivalents for the converted Markdown:
