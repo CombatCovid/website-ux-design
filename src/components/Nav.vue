@@ -28,7 +28,7 @@
     </div>
 
     <div class="navbar w-screen h-16 fixed top-0 text-white z-10 md:hidden">
-      <div class="container px-2 sm:px-0 mx-auto flex items-center justify-between h-full">
+      <div class="container px-2 sm:px-2 mx-auto flex items-center justify-between h-full">
         <g-link to="/" class="text-white-100 font-bold mr-4">{{ $static.metadata.siteName }}</g-link>
 
         <button class="mr-4" @click="toggleMenu">
