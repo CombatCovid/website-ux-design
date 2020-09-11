@@ -10,6 +10,7 @@ sidebar: 'docs'
 - [**Algolia**](https://www.algolia.com/solutions/site-search/)Algolia Site Search is a content discovery platform that enables businesses to build, manage and deliver customer centric, content based experiences on every channel.
 
 ## Backend application
+## At the moment we have the backend repository is still private for security reasons, but it will be also released soon.
 - [**Habitat**](https://community.chef.io/products/chef-habitat/)
   > Soon this will be better explained....
   

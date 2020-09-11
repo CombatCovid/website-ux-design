@@ -1,7 +1,7 @@
 <template>
   <HomeLayout>
     <main class="w-screen bg-primary-100 bg-image">
-      <div class="container px-2 sm:px-0 mx-auto py-32 md:flex md:pr-6">
+      <div class="container px-2 sm:px-2 mx-auto py-32 md:flex md:pr-6">
         <div class="flex-3 mt-20 md:mt-0">
           <h1
             class="text-white font-semibold text-3xl md:text-5xl"
@@ -43,7 +43,7 @@
       </div>
     </main>
 
-    <section class="container px-2 sm:px-0 mx-auto py-20">
+    <section class="container px-2 sm:px-2 mx-auto py-20">
       <h2 class="text-center text-2xl md:text-3xl font-bold text-primary-75">HOW THE APP WORKS</h2>
       <hr class="mx-auto w-32 rounded-full mt-2 h-2 bg-primary-75" />
       <div class="grid md:grid-cols-2 gap-12 mt-16">
@@ -81,7 +81,7 @@
       </section>
     </div>
 
-    <section class="container px-2 sm:px-0 mx-auto py-20">
+    <section class="container px-2 sm:px-2 mx-auto py-20">
       <h2
         class="text-center text-2xl md:text-3xl font-bold text-accent-75"
       >CONTRIBUTE TO THE PROJECT</h2>
